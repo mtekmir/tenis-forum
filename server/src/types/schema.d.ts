@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-02-25T22:28:29+03:00
+// Generated in 2019-02-27T20:15:47+03:00
 export type Maybe<T> = T | null;
 
 
@@ -28,7 +28,7 @@ export interface ResetPasswordInput {
   
   newPassword: string;
   
-  key: string;
+  pwResetToken: string;
 }
 
 export enum UserPermissions {

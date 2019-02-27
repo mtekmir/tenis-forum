@@ -1,14 +1,10 @@
 import { v4 } from 'uuid';
-import { resetPasswordPrefix } from '../../../../constants';
-import { redis } from '../../../../services/redis';
 
-type CreateResetPasswordLink = (url: string, userId: string) => Promise<string>;
-
-
-
-export const createResetPasswordLink: CreateResetPasswordLink = async (url, userId) => {
+export const createResetPasswordLink = async (url: string) => {
   const id = v4();
-  await redis.set(`${resetPasswordPrefix}${id}`, userId, 'ex', 60 * 20);
-  return `${url}/change-password/${id}`;
+  return {
+    url: `${url}/change-password/${id}`,
+    pwResetToken: id,
+    pwResetTokenExpiry: Date.now() + 60 * 60 * 30
+  };
 };
-

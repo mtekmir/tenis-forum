@@ -34,8 +34,11 @@ export class User extends BaseEntity {
   @Column('boolean', { default: false })
   confirmed: boolean;
 
-  @Column('boolean', { default: false })
-  resetPasswordLocked: boolean;
+  @Column('varchar', { nullable: true })
+  pwResetToken: string;
+
+  @Column('bigint', { nullable: true })
+  pwResetTokenExpiry: number;
 
   @BeforeInsert()
   async hashPasswordBeforeInser() {

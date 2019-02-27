@@ -1,11 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { MutationResolvers } from '../../../../types/schema';
 import { User } from '../../../../models/User';
-import {
-  invalidLogin,
-  confirmEmailErr,
-  resetPasswordLockedError
-} from '../../errorMessages';
+import { invalidLogin, confirmEmailErr } from '../../errorMessages';
 import generateToken from './generateToken';
 import { respond } from '../../../common/genericResponse';
 
@@ -21,10 +17,6 @@ export const login: MutationResolvers.LoginResolver = async (
 
   if (!user.confirmed) {
     return respond('login', confirmEmailErr);
-  }
-
-  if (user.resetPasswordLocked) {
-    return respond('login', resetPasswordLockedError);
   }
 
   const valid = await bcrypt.compare(password, user.password);

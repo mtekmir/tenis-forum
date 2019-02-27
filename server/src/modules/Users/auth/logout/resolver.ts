@@ -1,18 +1,14 @@
 import { IContext } from '../../../../types/types';
-import * as Jwt from 'jsonwebtoken';
 import { MutationResolvers } from '../../../../types/schema';
-import { blacklistedPrefix } from '../../../../constants';
+import { respond } from '../../../common/genericResponse';
 
-const { JWT_KEY } = process.env;
-
-const logout: MutationResolvers.LogoutResolver = async (_, __, { redis, request }: IContext) => {
-  const token = request.headers.authorization;
-
-  const { id, exp, iat }: any = Jwt.verify(token, JWT_KEY);
-
-  await redis.set(`${blacklistedPrefix}${id}`, 'loggedOut', 'ex', exp - iat);
-
-  return { success: true, error: null };
+const logout: MutationResolvers.LogoutResolver = async (
+  _,
+  __,
+  { response }: IContext
+) => {
+  response.clearCookie('token');
+  return respond();
 };
 
 export default logout;

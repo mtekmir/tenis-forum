@@ -7,9 +7,11 @@ type Context = (
   arg1: { request: Request; response: Response }
 ) => Promise<IContext>;
 
+const { URL } = process.env;
 export const context: Context = async ({ request, response }) => ({
   redis,
   request,
   response,
+  url: URL,
   userId: await authenticateUser(request)
 });

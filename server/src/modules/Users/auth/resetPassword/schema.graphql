@@ -9,5 +9,5 @@ input RequestResetPasswordInput {
 
 input ResetPasswordInput {
   newPassword: String!
-  key: String!
+  pwResetToken: String!
 }

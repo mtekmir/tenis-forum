@@ -15,6 +15,7 @@ export interface IContext {
   redis: Redis;
   request: Request;
   response: Response;
+  url: string;
   userId: string | null;
 }
 
