@@ -1,0 +1,11 @@
+input CreateCategoryInput {
+  name: String!
+}
+
+type Mutation {
+  categoryCreate(input: CreateCategoryInput!): CreateCategoryResponse!
+}
+
+type CreateCategoryResponse {
+  category: Category
+}

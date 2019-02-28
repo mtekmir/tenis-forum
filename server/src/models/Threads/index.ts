@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany
+  OneToMany,
+  Entity
 } from 'typeorm';
 import { Topic } from '../Topics';
 import { Post } from '../Posts';
 
+@Entity()
 export class Thread extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;

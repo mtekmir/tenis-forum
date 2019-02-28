@@ -1,7 +1,12 @@
 ./types#IContext
-// Generated in 2019-02-27T20:15:47+03:00
+// Generated in 2019-02-28T23:46:18+03:00
 export type Maybe<T> = T | null;
 
+
+export interface CreateCategoryInput {
+  
+  name: string;
+}
 
 export interface LoginInput {
   
@@ -70,15 +75,33 @@ export interface User {
 
 export interface Mutation {
   
+  categoryCreate: CreateCategoryResponse;
+  
   login: Response;
   
-  logout: LogoutResponse;
+  logout: Response;
   
   register: Response;
   
   requestResetPassword: Response;
   
   resetPassword: Response;
+}
+
+
+export interface CreateCategoryResponse {
+  
+  success?: Maybe<boolean>;
+  
+  category?: Maybe<Category>;
+}
+
+
+export interface Category {
+  
+  id: number;
+  
+  name: string;
 }
 
 
@@ -98,11 +121,35 @@ export interface Error {
 }
 
 
-export interface LogoutResponse {
+export interface Forum {
   
-  error?: Maybe<Error[]>;
+  id: number;
   
-  success: boolean;
+  name: string;
+}
+
+
+export interface Post {
+  
+  id: number;
+  
+  name: string;
+}
+
+
+export interface Thread {
+  
+  id: number;
+  
+  name: string;
+}
+
+
+export interface Topic {
+  
+  id: number;
+  
+  name: string;
 }
 
 
@@ -111,6 +158,10 @@ export interface LogoutResponse {
 // Arguments
 // ====================================================
 
+export interface CategoryCreateMutationArgs {
+  
+  input: CreateCategoryInput;
+}
 export interface LoginMutationArgs {
   
   input: LoginInput;
@@ -213,15 +264,24 @@ export namespace UserResolvers {
 export namespace MutationResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
+    categoryCreate?: CategoryCreateResolver<CreateCategoryResponse, TypeParent, Context>;
+    
     login?: LoginResolver<Response, TypeParent, Context>;
     
-    logout?: LogoutResolver<LogoutResponse, TypeParent, Context>;
+    logout?: LogoutResolver<Response, TypeParent, Context>;
     
     register?: RegisterResolver<Response, TypeParent, Context>;
     
     requestResetPassword?: RequestResetPasswordResolver<Response, TypeParent, Context>;
     
     resetPassword?: ResetPasswordResolver<Response, TypeParent, Context>;
+  }
+
+
+  export type CategoryCreateResolver<R = CreateCategoryResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, CategoryCreateArgs>;
+  export interface CategoryCreateArgs {
+    
+    input: CreateCategoryInput;
   }
 
 
@@ -232,7 +292,7 @@ export namespace MutationResolvers {
   }
 
 
-  export type LogoutResolver<R = LogoutResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type LogoutResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type RegisterResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, RegisterArgs>;
   export interface RegisterArgs {
     
@@ -254,6 +314,32 @@ export namespace MutationResolvers {
   }
 
   
+}
+
+export namespace CreateCategoryResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = CreateCategoryResponse> {
+    
+    success?: SuccessResolver<Maybe<boolean>, TypeParent, Context>;
+    
+    category?: CategoryResolver<Maybe<Category>, TypeParent, Context>;
+  }
+
+
+  export type SuccessResolver<R = Maybe<boolean>, Parent = CreateCategoryResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoryResolver<R = Maybe<Category>, Parent = CreateCategoryResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace CategoryResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Category> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace ResponseResolvers {
@@ -282,17 +368,56 @@ export namespace ErrorResolvers {
   export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace LogoutResponseResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = LogoutResponse> {
+export namespace ForumResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Forum> {
     
-    error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
+    id?: IdResolver<number, TypeParent, Context>;
     
-    success?: SuccessResolver<boolean, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, Context>;
   }
 
 
-  export type ErrorResolver<R = Maybe<Error[]>, Parent = LogoutResponse, Context = IContext> = Resolver<R, Parent, Context>;
-  export type SuccessResolver<R = boolean, Parent = LogoutResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type IdResolver<R = number, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace PostResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Post> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ThreadResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Thread> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace TopicResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Topic> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Topic, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Topic, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 
@@ -324,9 +449,14 @@ export interface IResolvers {
     Query?: QueryResolvers.Resolvers;
     User?: UserResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
+    CreateCategoryResponse?: CreateCategoryResponseResolvers.Resolvers;
+    Category?: CategoryResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
-    LogoutResponse?: LogoutResponseResolvers.Resolvers;
+    Forum?: ForumResolvers.Resolvers;
+    Post?: PostResolvers.Resolvers;
+    Thread?: ThreadResolvers.Resolvers;
+    Topic?: TopicResolvers.Resolvers;
 }
 
 export interface IDirectiveResolvers<Result> {

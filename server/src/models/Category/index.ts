@@ -3,10 +3,13 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
+  Column,
+  Entity
 } from 'typeorm';
 import { Forum } from '../Forums';
 
+@Entity()
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -16,6 +19,9 @@ export class Category extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column('varchar', { nullable: false, unique: true })
+  name: string;
 
   @OneToMany(() => Forum, Forum => Forum.category)
   forums: Forum[];
