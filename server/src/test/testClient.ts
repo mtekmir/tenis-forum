@@ -1,5 +1,6 @@
+import { decode } from 'jsonwebtoken';
 import faker from 'faker';
-import { graphql } from 'graphql';
+import { graphql, GraphQLSchema } from 'graphql';
 import Redis from 'ioredis';
 import {
   testRegisterMutation,
@@ -25,20 +26,27 @@ const mockResponse: { [key: string]: any } = {
   cookies: {},
   cookie(key: string, val: string, opts: any) {
     this.cookies[key] = val;
+  },
+  clearCookie(key: string) {
+    delete this.cookies[key];
   }
 };
 
 export class TestClient {
-  schema = genSchema();
-  context: { [key: string]: any } = {
-    request: mockRequest,
-    response: mockResponse,
-    redis: new Redis(REDIS_URL)
-  };
-
-  constructor() {}
+  schema: GraphQLSchema;
+  context: { [key: string]: any };
+  constructor() {
+    this.context = {
+      request: mockRequest,
+      response: mockResponse,
+      redis: new Redis(REDIS_URL),
+      userId: null
+    };
+    this.schema = genSchema();
+  }
 
   async gqlCall({ source, variableValues }: Options) {
+    await this.authenticate();
     return graphql({
       schema: this.schema,
       source,
@@ -59,10 +67,13 @@ export class TestClient {
     return response.data;
   }
 
-  async authenticate(id: string) {
-    this.context = {
-      userId: id
-    };
+  async authenticate() {
+    if (this.context.response.cookies.token) {
+      const { id }: any = await decode(this.context.response.cookies.token);
+      this.context.userId = id;
+    } else {
+      this.context.userId = null;
+    }
   }
 
   async login(email: string, password: string) {
@@ -90,7 +101,6 @@ export class TestClient {
 
   async logout() {
     const response = await this.gqlCall({ source: testLogoutMutation });
-    this.context.user = null;
 
     return response.data;
   }
@@ -116,8 +126,8 @@ export class TestClient {
   async registerAndLogin() {
     const users = await this.createUser();
     const { email, password, username, id } = users[0];
+    await this.login(email, password);
 
-    await this.authenticate(id);
     return { id, username, email, password };
   }
 

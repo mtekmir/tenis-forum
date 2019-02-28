@@ -1,6 +1,6 @@
 import { register } from './auth/register';
 import { login } from './auth/login';
-import logout from './auth/logout/resolver';
+import { logout } from './auth/logout';
 import { requestResetPassword } from './auth/resetPassword/requestResetPasswordResolver';
 import { resetPassword } from './auth/resetPassword/resetPasswordResolver';
 import { me } from './auth/me';

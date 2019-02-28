@@ -1,5 +1,5 @@
 import { redis } from '../../../services/redis';
-import { User } from '../../../models/User';
+// import { User } from '../../../models/User';
 
 export enum AccountLockReason {
   passwordReset = 'passwordReset'
@@ -17,7 +17,7 @@ export const lockUserAccount: LockUserAccount = async (
   duration
 ) => {
   if (reason === AccountLockReason.passwordReset) {
-    await User.update({ id: userId }, { resetPasswordLocked: true });
+    // await User.update({ id: userId });
     duration = 20 * 60;
   }
 

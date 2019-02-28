@@ -1,0 +1,5 @@
+- Categories
+  - Forums
+    - Topics
+      - Threads
+        - Posts
