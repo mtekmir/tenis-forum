@@ -27,7 +27,7 @@ describe('[me]', () => {
   test('me query', async () => {
     const { email, id, username } = await client.registerAndLogin();
     const res = await client.query(meQuery);
-    expect(res.me).toEqual({
+    expect(res.data.me).toEqual({
       email,
       id,
       username,

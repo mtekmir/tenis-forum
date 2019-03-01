@@ -1,0 +1,8 @@
+input CreateForumInput {
+  name: String!
+  categoryId: Int!
+}
+
+type Mutation {
+  forumCreate(input: CreateForumInput!): Forum!
+}

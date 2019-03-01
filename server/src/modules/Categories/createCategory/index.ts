@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../types/schema';
-import { isAuthenticated } from '../../Users/auth/authenticateUser';
+import { isAdmin } from '../../Users/auth/authenticateUser';
 import { getConnection } from 'typeorm';
 import { Category } from '../../../models/Category';
 
@@ -8,7 +8,7 @@ export const categoryCreate: MutationResolvers.CategoryCreateResolver = async (
   { input: { name } },
   { userId }
 ) => {
-  isAuthenticated(userId);
+  await isAdmin(userId);
 
   let category: Category;
   await getConnection().transaction(async manager => {
@@ -17,5 +17,5 @@ export const categoryCreate: MutationResolvers.CategoryCreateResolver = async (
       .create({ name })
       .save();
   });
-  return { category };
+  return category;
 };

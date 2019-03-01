@@ -2,6 +2,7 @@ import faker from 'faker';
 import { Connection } from 'typeorm';
 import { createDbConnection } from '../../../../utils/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
+import { Category } from '../../../../models/Category';
 import { UserPermissions } from '../../../../models/User/permissions';
 
 const client = new TestClient();
@@ -17,19 +18,21 @@ afterAll(async () => {
 });
 
 const mutation = `
-  mutation($name: String!) {
-    categoryCreate(input: { name: $name }) {
-      category {
-        name
-      }
+  mutation($id: Int!) {
+    categoryDelete(id: $id) {
+      success
     }
   }
 `;
 
-describe('[Create Category]', () => {
-  test('Create Category', async () => {
+describe('[Delete Category]', () => {
+  test('Delete', async () => {
     const name = faker.company.companyName();
-    const res: any = await client.mutation(mutation, { name });
-    expect(res.data.categoryCreate.category.name).toBe(name);
+    const { id } = await Category.create({ name }).save();
+    const res = await client.mutation(mutation, { id });
+
+    expect(res.data.categoryDelete.success).toBeTruthy();
+    const category = await Category.findOne({ name });
+    expect(category).toBeUndefined();
   });
 });

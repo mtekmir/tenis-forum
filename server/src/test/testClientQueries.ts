@@ -42,26 +42,24 @@ mutation {
 }
 `;
 
-export const testCreateWorkspaceMutation = `
-  mutation($name: String!) {
-    createWorkspace(input: { name: $name }) {
-      success
-      error {
-        path
-        message
+export const testCreateForumMutation = `
+  mutation($name: String!, $categoryId: Int!) {
+    forumCreate(input: { name: $name, categoryId: $categoryId }) {
+      id
+      name
+      category {
+        id
+        name
       }
     }
   }
 `;
 
-export const testCreateChannelMutation = `
-    mutation($workspaceId: Int!, $name: String!, $type: ChannelType!, $members: [String!]) {
-    createChannel(input: { name: $name, workspaceId: $workspaceId, type: $type, members: $members }) {
-      success
-      error {
-        path
-        message
-      }
+export const testCreateCategoryMutation = `
+  mutation($name: String!) {
+    categoryCreate(input: { name: $name }) {
+      id
+      name
     }
   }
 `;

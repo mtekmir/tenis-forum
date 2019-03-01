@@ -38,13 +38,13 @@ const logout = `
 describe('[Logout]', () => {
   test('logout', async () => {
     await client.login(email, password);
-    const { me }: any = await client.query(meQuery);
+    const { data }: any = await client.query(meQuery);
 
-    expect(me.email).toBe(email);
+    expect(data.me.email).toBe(email);
     const res: any = await client.mutation(logout);
-    expect(res.logout.success).toBeTruthy();
+    expect(res.data.logout.success).toBeTruthy();
 
     const res2 = await client.query(meQuery);
-    expect(res2.me).toBeNull();
+    expect(res2.data.me).toBeNull();
   });
 });

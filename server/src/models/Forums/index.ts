@@ -5,7 +5,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
-  Entity
+  Entity,
+  Column
 } from 'typeorm';
 import { Category } from '../Category';
 import { Topic } from '../Topics';
@@ -21,7 +22,12 @@ export class Forum extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Category, Category => Category.forums)
+  @Column('varchar', { nullable: false, unique: true })
+  name: string;
+
+  @ManyToOne(() => Category, Category => Category.forums, {
+    onDelete: 'CASCADE'
+  })
   category: Category;
 
   @OneToMany(() => Topic, Topic => Topic.forum)

@@ -6,7 +6,9 @@ import {
   testRegisterMutation,
   testLoginMutation,
   testResetPasswordMutation,
-  testLogoutMutation
+  testLogoutMutation,
+  testCreateForumMutation,
+  testCreateCategoryMutation
 } from './testClientQueries';
 import { genSchema } from '../schema';
 import { User } from '../models/User';
@@ -105,7 +107,7 @@ export class TestClient {
     return response.data;
   }
 
-  async createUser(count: number = 1) {
+  async createUser(count: number = 1, permission = UserPermissions.User) {
     const users = [];
     for (let i = 0; i < count; i++) {
       const username = faker.internet.userName();
@@ -116,34 +118,45 @@ export class TestClient {
         email,
         password,
         confirmed: true,
-        permissions: [UserPermissions.User]
+        permissions: [permission]
       }).save();
       users.push({ id: user.id, username, email, password });
     }
     return users;
   }
 
-  async registerAndLogin() {
-    const users = await this.createUser();
+  async createCategory() {
+    const res = await this.gqlCall({
+      source: testCreateCategoryMutation,
+      variableValues: { name: faker.company.companyName() }
+    });
+    return res.data.categoryCreate;
+  }
+
+  async createForum(categoryId: number) {
+    const res = await this.gqlCall({
+      source: testCreateForumMutation,
+      variableValues: { name: faker.company.companyName(), categoryId }
+    });
+    return res.data.forumCreate;
+  }
+
+  async registerAndLogin(permission = UserPermissions.User) {
+    const users = await this.createUser(1, permission);
     const { email, password, username, id } = users[0];
     await this.login(email, password);
 
     return { id, username, email, password };
   }
 
-  async mutation<TData, TVars = {}>(
-    mutation: string,
-    variableValues?: TVars
-  ): Promise<{ [key: string]: TData }> {
+  async mutation<TVars>(mutation: string, variableValues?: TVars) {
     const response = await this.gqlCall({ source: mutation, variableValues });
-    return response.data;
+
+    return response;
   }
 
-  async query<TData, TVars>(
-    query: string,
-    variableValues?: TVars
-  ): Promise<{ [key: string]: TData }> {
+  async query<TVars>(query: string, variableValues?: TVars) {
     const response = await this.gqlCall({ source: query, variableValues });
-    return response.data;
+    return response;
   }
 }
