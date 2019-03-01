@@ -1,4 +1,4 @@
 type Thread {
   id: Int!
-  name: String!
+  title: String!
 }

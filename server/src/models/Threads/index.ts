@@ -5,9 +5,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
-  Entity
+  Entity,
+  Column
 } from 'typeorm';
-import { Topic } from '../Topics';
+import { Forum } from '../Forums';
 import { Post } from '../Posts';
 
 @Entity()
@@ -21,8 +22,11 @@ export class Thread extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Topic)
-  topic: Topic;
+  @Column()
+  title: string;
+
+  @ManyToOne(() => Forum, Forum => Forum)
+  forum: Forum;
 
   @OneToMany(() => Post, post => post.thread)
   posts: Post[];

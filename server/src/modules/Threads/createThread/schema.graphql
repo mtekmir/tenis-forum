@@ -1,0 +1,8 @@
+input CreateThreadInput {
+  originalPost: String!
+  title: String!
+}
+
+type Mutation {
+  threadCreate(input: CreateThreadInput!): Thread!
+}

@@ -9,7 +9,7 @@ import {
   Column
 } from 'typeorm';
 import { Category } from '../Category';
-import { Topic } from '../Topics';
+import { Thread } from '../Threads';
 
 @Entity()
 export class Forum extends BaseEntity {
@@ -30,6 +30,6 @@ export class Forum extends BaseEntity {
   })
   category: Category;
 
-  @OneToMany(() => Topic, Topic => Topic.forum)
-  topics: Topic[];
+  @OneToMany(() => Thread, thread => thread.forum)
+  threads: Thread[];
 }
