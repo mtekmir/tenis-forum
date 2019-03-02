@@ -4,9 +4,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  Entity
+  Entity,
+  Column
 } from 'typeorm';
 import { Thread } from '../Threads';
+import { User } from '../User';
 
 @Entity()
 export class Post extends BaseEntity {
@@ -19,6 +21,12 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Thread, thread => thread.posts)
+  @Column('text', { nullable: false })
+  text: String;
+
+  @ManyToOne(() => User, user => user.posts, { nullable: true })
+  author: User;
+
+  @ManyToOne(() => Thread, thread => thread.posts, { onDelete: 'CASCADE' })
   thread: Thread;
 }

@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-01T19:40:03+03:00
+// Generated in 2019-03-02T22:13:33+03:00
 export type Maybe<T> = T | null;
 
 
@@ -17,9 +17,11 @@ export interface CreateForumInput {
 
 export interface CreateThreadInput {
   
-  op: string;
+  text: string;
   
   title: string;
+  
+  forumId: number;
 }
 
 export interface LoginInput {
@@ -97,7 +99,9 @@ export interface Mutation {
   
   forumDelete: Response;
   
-  threadCreate: Thread;
+  threadCreate: CreateThreadResponse;
+  
+  deleteThread: Response;
   
   login: Response;
   
@@ -145,7 +149,7 @@ export interface Forum {
 }
 
 
-export interface Thread {
+export interface CreateThreadResponse {
   
   id: number;
   
@@ -153,11 +157,27 @@ export interface Thread {
 }
 
 
-export interface Topic {
+export interface Post {
   
   id: number;
   
-  name: string;
+  text: string;
+  
+  author: User;
+}
+
+
+export interface Thread {
+  
+  id: number;
+  
+  Forum: Forum;
+  
+  originalPost: Post;
+  
+  posts: Post[];
+  
+  title: string;
 }
 
 
@@ -185,6 +205,10 @@ export interface ForumDeleteMutationArgs {
 export interface ThreadCreateMutationArgs {
   
   input: CreateThreadInput;
+}
+export interface DeleteThreadMutationArgs {
+  
+  id: number;
 }
 export interface LoginMutationArgs {
   
@@ -296,7 +320,9 @@ export namespace MutationResolvers {
     
     forumDelete?: ForumDeleteResolver<Response, TypeParent, Context>;
     
-    threadCreate?: ThreadCreateResolver<Thread, TypeParent, Context>;
+    threadCreate?: ThreadCreateResolver<CreateThreadResponse, TypeParent, Context>;
+    
+    deleteThread?: DeleteThreadResolver<Response, TypeParent, Context>;
     
     login?: LoginResolver<Response, TypeParent, Context>;
     
@@ -338,10 +364,17 @@ export namespace MutationResolvers {
   }
 
 
-  export type ThreadCreateResolver<R = Thread, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadCreateArgs>;
+  export type ThreadCreateResolver<R = CreateThreadResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadCreateArgs>;
   export interface ThreadCreateArgs {
     
     input: CreateThreadInput;
+  }
+
+
+  export type DeleteThreadResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, DeleteThreadArgs>;
+  export interface DeleteThreadArgs {
+    
+    id: number;
   }
 
 
@@ -431,8 +464,8 @@ export namespace ForumResolvers {
   export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace ThreadResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Thread> {
+export namespace CreateThreadResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = CreateThreadResponse> {
     
     id?: IdResolver<number, TypeParent, Context>;
     
@@ -440,21 +473,46 @@ export namespace ThreadResolvers {
   }
 
 
-  export type IdResolver<R = number, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
-  export type TitleResolver<R = string, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type IdResolver<R = number, Parent = CreateThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TitleResolver<R = string, Parent = CreateThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace TopicResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Topic> {
+export namespace PostResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Post> {
     
     id?: IdResolver<number, TypeParent, Context>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    text?: TextResolver<string, TypeParent, Context>;
+    
+    author?: AuthorResolver<User, TypeParent, Context>;
   }
 
 
-  export type IdResolver<R = number, Parent = Topic, Context = IContext> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Topic, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type IdResolver<R = number, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TextResolver<R = string, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type AuthorResolver<R = User, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ThreadResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Thread> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    Forum?: ForumResolver<Forum, TypeParent, Context>;
+    
+    originalPost?: OriginalPostResolver<Post, TypeParent, Context>;
+    
+    posts?: PostsResolver<Post[], TypeParent, Context>;
+    
+    title?: TitleResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ForumResolver<R = Forum, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type OriginalPostResolver<R = Post, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PostsResolver<R = Post[], Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TitleResolver<R = string, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 
@@ -490,8 +548,9 @@ export interface IResolvers {
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
     Forum?: ForumResolvers.Resolvers;
+    CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
+    Post?: PostResolvers.Resolvers;
     Thread?: ThreadResolvers.Resolvers;
-    Topic?: TopicResolvers.Resolvers;
 }
 
 export interface IDirectiveResolvers<Result> {

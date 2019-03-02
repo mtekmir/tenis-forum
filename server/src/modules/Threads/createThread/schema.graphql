@@ -1,8 +1,14 @@
 input CreateThreadInput {
-  originalPost: String!
+  text: String!
   title: String!
+  forumId: Int!
 }
 
 type Mutation {
-  threadCreate(input: CreateThreadInput!): Thread!
+  threadCreate(input: CreateThreadInput!): CreateThreadResponse!
+}
+
+type CreateThreadResponse {
+  id: Int!
+  title: String!
 }

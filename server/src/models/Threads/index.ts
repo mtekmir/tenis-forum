@@ -6,10 +6,12 @@ import {
   ManyToOne,
   OneToMany,
   Entity,
-  Column
+  Column,
+  OneToOne
 } from 'typeorm';
 import { Forum } from '../Forums';
 import { Post } from '../Posts';
+import { User } from '../User';
 
 @Entity()
 export class Thread extends BaseEntity {
@@ -25,8 +27,14 @@ export class Thread extends BaseEntity {
   @Column()
   title: string;
 
+  @OneToOne(() => Post, post => post.thread)
+  originalPost: Post;
+
   @ManyToOne(() => Forum, Forum => Forum)
   forum: Forum;
+
+  @ManyToOne(() => User, { nullable: true })
+  owner: User;
 
   @OneToMany(() => Post, post => post.thread)
   posts: Post[];

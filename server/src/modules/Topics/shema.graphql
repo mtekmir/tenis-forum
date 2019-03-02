@@ -1,4 +1,0 @@
-type Topic {
-  id: Int!
-  name: String!
-}

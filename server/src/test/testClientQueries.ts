@@ -63,3 +63,12 @@ export const testCreateCategoryMutation = `
     }
   }
 `;
+
+export const testCreateThreadMutation = `
+  mutation($title: String!, $text: String!, $forumId: Int!) {
+    threadCreate(input:  { title: $title, text: $text, forumId: $forumId }) {
+      id
+      title
+    }
+  }
+`;

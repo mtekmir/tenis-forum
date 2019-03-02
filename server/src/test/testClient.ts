@@ -8,7 +8,8 @@ import {
   testResetPasswordMutation,
   testLogoutMutation,
   testCreateForumMutation,
-  testCreateCategoryMutation
+  testCreateCategoryMutation,
+  testCreateThreadMutation
 } from './testClientQueries';
 import { genSchema } from '../schema';
 import { User } from '../models/User';
@@ -139,6 +140,19 @@ export class TestClient {
       variableValues: { name: faker.company.companyName(), categoryId }
     });
     return res.data.forumCreate;
+  }
+
+  async createThread(forumId: number) {
+    const res = await this.gqlCall({
+      source: testCreateThreadMutation,
+      variableValues: {
+        title: faker.lorem.sentence(),
+        text: faker.lorem.paragraph(),
+        forumId
+      }
+    });
+
+    return res.data.threadCreate;
   }
 
   async registerAndLogin(permission = UserPermissions.User) {

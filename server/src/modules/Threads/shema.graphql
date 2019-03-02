@@ -1,4 +1,7 @@
 type Thread {
   id: Int!
+  Forum: Forum!
+  originalPost: Post!
+  posts: [Post!]!
   title: String!
 }

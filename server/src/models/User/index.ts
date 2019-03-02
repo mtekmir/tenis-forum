@@ -4,9 +4,12 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BaseEntity,
-  BeforeInsert
+  BeforeInsert,
+  OneToMany
 } from 'typeorm';
 import { UserPermissions } from './permissions';
+import { Post } from '../Posts';
+import { Thread } from '../Threads';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -40,8 +43,14 @@ export class User extends BaseEntity {
   @Column('bigint', { nullable: true })
   pwResetTokenExpiry: number;
 
+  @OneToMany(() => Post, post => post.author)
+  posts: Post[];
+
+  @OneToMany(() => Thread, thread => thread.owner)
+  threads: Thread[];
+
   @BeforeInsert()
-  async hashPasswordBeforeInser() {
+  async hashPasswordBeforeInsert() {
     if (this.password) {
       this.password = await bcrypt.hash(this.password, 10);
     }
