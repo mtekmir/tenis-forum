@@ -4,3 +4,4 @@ tmp/
 temp/
 dev.env
 test.env
+.next

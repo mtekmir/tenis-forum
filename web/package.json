@@ -1,0 +1,36 @@
+{
+  "name": "tenis-forum-web",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@zeit/next-typescript": "^1.1.1",
+    "apollo-boost": "^0.3.1",
+    "apollo-link-context": "^1.0.14",
+    "apollo-link-http": "^1.5.11",
+    "apollo-link-http-common": "^0.2.10",
+    "apollo-utilities": "^1.2.1",
+    "cookie": "^0.3.1",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^7.0.2",
+    "react": "^16.7.0",
+    "react-apollo": "^2.5.1",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.3.2",
+    "@types/next": "^7.0.6",
+    "@types/react": "^16.4.16",
+    "@types/react-dom": "16.0.11",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "3.2.4"
+  },
+  "license": "ISC"
+}

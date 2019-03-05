@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR /app/web
+COPY ./package.json ./package.json
+
+RUN yarn install
+
+COPY .next .next
+COPY .next/server/pages-manifest.json .next/pages-manifest.json
+COPY . .
+EXPOSE 3000
+CMD ["yarn", "dev"]
