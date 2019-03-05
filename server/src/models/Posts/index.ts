@@ -5,7 +5,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
   Entity,
-  Column
+  Column,
+  JoinColumn
 } from 'typeorm';
 import { Thread } from '../Threads';
 import { User } from '../User';
@@ -22,11 +23,15 @@ export class Post extends BaseEntity {
   updatedAt: Date;
 
   @Column('text', { nullable: false })
-  text: String;
+  text: string;
 
   @ManyToOne(() => User, user => user.posts, { nullable: true })
   author: User;
 
+  @Column('int', { nullable: true })
+  threadId: number;
+
   @ManyToOne(() => Thread, thread => thread.posts, { onDelete: 'CASCADE' })
+  @JoinColumn()
   thread: Thread;
 }

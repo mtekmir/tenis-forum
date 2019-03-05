@@ -1,24 +1,21 @@
 import { MutationResolvers } from '../../../types/schema';
 import { isAuthenticated } from '../../Users/auth/authenticateUser';
-import { Thread } from '../../../models/Threads';
+import { Post } from '../../../models/Posts';
 import { AuthenticationError } from 'apollo-server-core';
 
-export const threadDelete: MutationResolvers.ThreadDeleteResolver = async (
+export const postDelete: MutationResolvers.PostDeleteResolver = async (
   _,
   { id },
   { userId }
 ) => {
   isAuthenticated(userId);
 
-  const thread = await Thread.findOne({
-    where: { owner: userId }
-  });
-
-  if (thread.owner.id !== userId) {
+  const post = await Post.findOne({ where: { id }, relations: ['author'] });
+  if (post.author.id !== userId) {
     throw new AuthenticationError('UNAUTHORIZED');
   }
 
-  await Thread.delete({ id });
+  await Post.delete({ id });
 
   return { error: null, success: true };
 };

@@ -43,6 +43,9 @@ export class User extends BaseEntity {
   @Column('bigint', { nullable: true })
   pwResetTokenExpiry: number;
 
+  @Column('varchar', { nullable: true })
+  profileImageId: string;
+
   @OneToMany(() => Post, post => post.author)
   posts: Post[];
 

@@ -72,3 +72,12 @@ export const testCreateThreadMutation = `
     }
   }
 `;
+
+export const testCreatePostMutation = `
+  mutation($text: String!, $threadId: Int!) {
+    postCreate(input:  { text: $text, threadId: $threadId }) {
+      id
+      text
+    }
+  }
+`;

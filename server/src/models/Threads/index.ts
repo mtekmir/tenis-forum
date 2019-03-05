@@ -24,7 +24,7 @@ export class Thread extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column('varchar', { nullable: false })
   title: string;
 
   @OneToOne(() => Post, post => post.thread)
@@ -33,7 +33,7 @@ export class Thread extends BaseEntity {
   @ManyToOne(() => Forum, Forum => Forum)
   forum: Forum;
 
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, { nullable: true, eager: true })
   owner: User;
 
   @OneToMany(() => Post, post => post.thread)

@@ -1,0 +1,11 @@
+enum UserPermissions {
+  ADMIN
+  USER
+}
+
+type User {
+  id: String!
+  username: String!
+  email: String!
+  permissions: [UserPermissions!]!
+}

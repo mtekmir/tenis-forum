@@ -19,9 +19,7 @@ afterAll(async () => {
 const mutation = `
   mutation($name: String!) {
     categoryCreate(input: { name: $name }) {
-      category {
         name
-      }
     }
   }
 `;
@@ -29,7 +27,7 @@ const mutation = `
 describe('[Create Category]', () => {
   test('Create Category', async () => {
     const name = faker.company.companyName();
-    const res: any = await client.mutation(mutation, { name });
-    expect(res.data.categoryCreate.category.name).toBe(name);
+    const res = await client.mutation(mutation, { name });
+    expect(res.data.categoryCreate.name).toBe(name);
   });
 });

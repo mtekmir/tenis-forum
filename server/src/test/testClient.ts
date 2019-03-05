@@ -9,7 +9,8 @@ import {
   testLogoutMutation,
   testCreateForumMutation,
   testCreateCategoryMutation,
-  testCreateThreadMutation
+  testCreateThreadMutation,
+  testCreatePostMutation
 } from './testClientQueries';
 import { genSchema } from '../schema';
 import { User } from '../models/User';
@@ -151,8 +152,15 @@ export class TestClient {
         forumId
       }
     });
-
     return res.data.threadCreate;
+  }
+
+  async createPost(threadId: number) {
+    const res = await this.gqlCall({
+      source: testCreatePostMutation,
+      variableValues: { threadId, text: faker.lorem.paragraph() }
+    });
+    return res.data.postCreate;
   }
 
   async registerAndLogin(permission = UserPermissions.User) {

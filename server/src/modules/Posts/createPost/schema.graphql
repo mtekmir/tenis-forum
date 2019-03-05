@@ -1,0 +1,8 @@
+input CreatePostInput {
+  text: String!
+  threadId: Int!
+}
+
+type Mutation {
+  postCreate(input: CreatePostInput!): Post!
+}
