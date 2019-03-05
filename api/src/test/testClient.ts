@@ -23,16 +23,13 @@ interface Options {
 
 const { REDIS_URL } = process.env;
 const mockRequest: { [key: string]: any } = {
-  get: (): any => null
-};
-
-const mockResponse: { [key: string]: any } = {
-  cookies: {},
-  cookie(key: string, val: string, opts: any) {
-    this.cookies[key] = val;
-  },
-  clearCookie(key: string) {
-    delete this.cookies[key];
+  get: (): any => null,
+  session: {
+    token: '',
+    destroy(cb: any) {
+      this.token = '';
+      cb();
+    }
   }
 };
 
@@ -42,7 +39,6 @@ export class TestClient {
   constructor() {
     this.context = {
       request: mockRequest,
-      response: mockResponse,
       redis: new Redis(REDIS_URL),
       userId: null
     };
@@ -72,8 +68,8 @@ export class TestClient {
   }
 
   async authenticate() {
-    if (this.context.response.cookies.token) {
-      const { id }: any = await decode(this.context.response.cookies.token);
+    if (this.context.request.session.token) {
+      const { id }: any = await decode(this.context.request.session.token);
       this.context.userId = id;
     } else {
       this.context.userId = null;

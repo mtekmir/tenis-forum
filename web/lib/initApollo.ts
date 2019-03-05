@@ -29,7 +29,7 @@ function create(initialState: any, { getToken }: Options) {
     return {
       headers: {
         ...headers,
-        cookie: token ? `token=${token}` : ''
+        cookie: token ? `qid=${token}` : ''
       }
     };
   });

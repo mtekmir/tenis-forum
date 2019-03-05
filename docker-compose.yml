@@ -28,13 +28,13 @@ services:
   api:
     build:
       dockerfile: Dockerfile.dev
-      context: ./server
-    env_file: ./server/config/dev.env
+      context: ./api
+    env_file: ./api/config/dev.env
     ports:
       - '5000:5000'
     volumes:
       - /app/api/node_modules
-      - ./server:/app/api
+      - ./api:/app/api
     depends_on:
       - db
       - redis

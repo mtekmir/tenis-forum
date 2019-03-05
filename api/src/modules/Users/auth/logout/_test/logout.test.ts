@@ -41,7 +41,8 @@ describe('[Logout]', () => {
     const { data }: any = await client.query(meQuery);
 
     expect(data.me.email).toBe(email);
-    const res: any = await client.mutation(logout);
+    const res = await client.mutation(logout);
+    console.log(res.errors);
     expect(res.data.logout.success).toBeTruthy();
 
     const res2 = await client.query(meQuery);

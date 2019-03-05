@@ -9,7 +9,7 @@ const client = new TestClient();
 
 let email: string;
 const mockRequest: any = {
-  cookies: { token: '' }
+  session: { token: '' }
 };
 
 let connection: Connection;
@@ -18,7 +18,7 @@ beforeAll(async () => {
   const users = await client.createUser(1);
   email = users[0].email;
   const token = generateToken(users[0].id);
-  mockRequest.cookies.token = token;
+  mockRequest.session.token = token;
 });
 
 afterAll(async () => {
