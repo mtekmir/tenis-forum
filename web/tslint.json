@@ -6,15 +6,15 @@
     "no-console": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [true, "single"],
+    "quotemark": [true, "single", "jsx-double"],
     "semicolon": true,
     "no-submodule-imports": false,
     "member-access": false,
     "no-implicit-dependencies": false,
     "interface-name": [true, "never-prefix"],
-    "trailing-comma": true
+    "prettier": true,
+    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }]
   },
-  "rulesDirectory": [],
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts"]
   }

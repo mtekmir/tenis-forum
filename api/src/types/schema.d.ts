@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-05T17:46:35+03:00
+// Generated in 2019-03-06T21:22:57+03:00
 export type Maybe<T> = T | null;
 
 
@@ -113,6 +113,8 @@ export interface Mutation {
   threadCreate: CreateThreadResponse;
   
   threadDelete: Response;
+  
+  confirmUserEmail: Response;
   
   login: Response;
   
@@ -228,6 +230,10 @@ export interface ThreadCreateMutationArgs {
 export interface ThreadDeleteMutationArgs {
   
   id: number;
+}
+export interface ConfirmUserEmailMutationArgs {
+  
+  token: string;
 }
 export interface LoginMutationArgs {
   
@@ -347,6 +353,8 @@ export namespace MutationResolvers {
     
     threadDelete?: ThreadDeleteResolver<Response, TypeParent, Context>;
     
+    confirmUserEmail?: ConfirmUserEmailResolver<Response, TypeParent, Context>;
+    
     login?: LoginResolver<Response, TypeParent, Context>;
     
     logout?: LogoutResolver<Response, TypeParent, Context>;
@@ -412,6 +420,13 @@ export namespace MutationResolvers {
   export interface ThreadDeleteArgs {
     
     id: number;
+  }
+
+
+  export type ConfirmUserEmailResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ConfirmUserEmailArgs>;
+  export interface ConfirmUserEmailArgs {
+    
+    token: string;
   }
 
 

@@ -8,8 +8,9 @@ import { respond } from '../../../common/genericResponse';
 export const login: MutationResolvers.LoginResolver = async (
   _,
   { input: { email, password } },
-  { request }
+  { request, response }
 ) => {
+  console.log(response);
   const user = await User.findOne({ where: { email: email.toLowerCase() } });
   if (!user) {
     return respond('login', invalidLogin);

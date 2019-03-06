@@ -1,4 +1,3 @@
-import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import RateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
@@ -26,7 +25,6 @@ export const middlewares = (express: any) => {
       origin: `api:${PORT}`
     })
   );
-  express.use(cookieParser());
   express.use(
     session({
       store: new RedisStore({

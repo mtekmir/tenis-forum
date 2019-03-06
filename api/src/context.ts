@@ -3,15 +3,13 @@ import { IContext } from './types/types';
 import { redis } from './services/redis';
 import { authenticateUser } from './modules/Users/auth/authenticateUser/index';
 
-type Context = (
-  arg1: { request: Request; response: Response }
-) => Promise<IContext>;
+type Context = (arg1: { req: Request; res: Response }) => Promise<IContext>;
 
 const { URL } = process.env;
-export const context: Context = async ({ request, response }) => ({
+export const context: Context = async ({ req, res }) => ({
   redis,
-  request,
-  response,
+  request: req,
+  response: res,
   url: URL,
-  userId: await authenticateUser(request)
+  userId: await authenticateUser(req)
 });

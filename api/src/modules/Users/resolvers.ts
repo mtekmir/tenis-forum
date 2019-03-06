@@ -4,6 +4,7 @@ import { logout } from './auth/logout';
 import { requestResetPassword } from './auth/resetPassword/requestResetPasswordResolver';
 import { resetPassword } from './auth/resetPassword/resetPasswordResolver';
 import { me } from './auth/me';
+import { confirmUserEmail } from './auth/confirmUserEmail';
 
 export const resolvers = {
   Mutation: {
@@ -11,7 +12,8 @@ export const resolvers = {
     login,
     logout,
     requestResetPassword,
-    resetPassword
+    resetPassword,
+    confirmUserEmail
   },
   Query: {
     me

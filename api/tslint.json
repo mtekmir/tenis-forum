@@ -12,7 +12,7 @@
     "member-access": false,
     "no-implicit-dependencies": false,
     "interface-name": [true, "never-prefix"],
-    "trailing-comma": true
+    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }]
   },
   "rulesDirectory": [],
   "linterOptions": {
