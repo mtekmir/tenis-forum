@@ -1,3 +1,4 @@
+/* tslint:disable */
 export type Maybe<T> = T | null;
 
 export interface CreateCategoryInput {
@@ -57,6 +58,32 @@ export enum UserPermissions {
 // Documents
 // ====================================================
 
+export type ConfirmEmailVariables = {
+  token: string;
+};
+
+export type ConfirmEmailMutation = {
+  __typename?: "Mutation";
+
+  confirmUserEmail: ConfirmEmailConfirmUserEmail;
+};
+
+export type ConfirmEmailConfirmUserEmail = {
+  __typename?: "Response";
+
+  success: boolean;
+
+  error: Maybe<ConfirmEmailError[]>;
+};
+
+export type ConfirmEmailError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
 export type LoginVariables = {
   email: string;
   password: string;
@@ -82,6 +109,34 @@ export type LoginError = {
   message: string;
 };
 
+export type RegisterVariables = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export type RegisterMutation = {
+  __typename?: "Mutation";
+
+  register: RegisterRegister;
+};
+
+export type RegisterRegister = {
+  __typename?: "Response";
+
+  success: boolean;
+
+  error: Maybe<RegisterError[]>;
+};
+
+export type RegisterError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
 import gql from "graphql-tag";
 import * as React from "react";
 import * as ReactApollo from "react-apollo";
@@ -90,6 +145,56 @@ import * as ReactApollo from "react-apollo";
 // Components
 // ====================================================
 
+export const ConfirmEmailDocument = gql`
+  mutation ConfirmEmail($token: String!) {
+    confirmUserEmail(token: $token) {
+      success
+      error {
+        path
+        message
+      }
+    }
+  }
+`;
+export class ConfirmEmailComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<ConfirmEmailMutation, ConfirmEmailVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<ConfirmEmailMutation, ConfirmEmailVariables>
+        mutation={ConfirmEmailDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type ConfirmEmailProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<ConfirmEmailMutation, ConfirmEmailVariables>
+> &
+  TChildProps;
+export type ConfirmEmailMutationFn = ReactApollo.MutationFn<
+  ConfirmEmailMutation,
+  ConfirmEmailVariables
+>;
+export function ConfirmEmailHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        ConfirmEmailMutation,
+        ConfirmEmailVariables,
+        ConfirmEmailProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    ConfirmEmailMutation,
+    ConfirmEmailVariables,
+    ConfirmEmailProps<TChildProps>
+  >(ConfirmEmailDocument, operationOptions);
+}
 export const LoginDocument = gql`
   mutation Login($email: String!, $password: String!) {
     login(input: { email: $email, password: $password }) {
@@ -136,4 +241,54 @@ export function LoginHOC<TProps, TChildProps = any>(
     LoginVariables,
     LoginProps<TChildProps>
   >(LoginDocument, operationOptions);
+}
+export const RegisterDocument = gql`
+  mutation Register($username: String!, $email: String!, $password: String!) {
+    register(
+      input: { email: $email, username: $username, password: $password }
+    ) {
+      success
+      error {
+        path
+        message
+      }
+    }
+  }
+`;
+export class RegisterComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<RegisterMutation, RegisterVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<RegisterMutation, RegisterVariables>
+        mutation={RegisterDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type RegisterProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<RegisterMutation, RegisterVariables>
+> &
+  TChildProps;
+export type RegisterMutationFn = ReactApollo.MutationFn<
+  RegisterMutation,
+  RegisterVariables
+>;
+export function RegisterHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        RegisterMutation,
+        RegisterVariables,
+        RegisterProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    RegisterMutation,
+    RegisterVariables,
+    RegisterProps<TChildProps>
+  >(RegisterDocument, operationOptions);
 }

@@ -15,6 +15,7 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./web
+    env_file: ./web/config/dev.env
     ports:
       - '4000:4000'
     volumes:
