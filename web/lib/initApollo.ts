@@ -7,6 +7,8 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import fetch from 'isomorphic-unfetch';
 import { isBrowser } from './isBrowser';
+import getConfig from 'next/config';
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -20,8 +22,11 @@ interface Options {
 
 function create(initialState: any, { getToken }: Options) {
   const httpLink = createHttpLink({
-    uri: 'api/3000',
+    uri: isBrowser
+      ? publicRuntimeConfig.BACKEND_URL
+      : serverRuntimeConfig.BACKEND_URL,
     credentials: 'include',
+    headers: {},
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -30,13 +35,14 @@ function create(initialState: any, { getToken }: Options) {
       headers: {
         ...headers,
         cookie: token ? `qid=${token}` : '',
+        'Access-Control-Allow-Origin': serverRuntimeConfig.BACKEND_URL,
       },
     };
   });
 
   return new ApolloClient({
     connectToDevTools: isBrowser,
-    ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
+    ssrMode: !isBrowser,
     link: authLink.concat(httpLink),
     cache: new InMemoryCache().restore(initialState || {}),
   });

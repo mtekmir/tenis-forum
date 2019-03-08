@@ -4,15 +4,15 @@ import * as express from 'express';
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const { PORT } = process.env;
+const PORT = 4000;
 
 app
   .prepare()
   .then(() => {
     const server = express();
 
-    server.get('/user/confirm/:token', (req, res) => {
-      const actualPage = '/';
+    server.get('/uyelik/dogrulama/:token', (req, res) => {
+      const actualPage = '/uyelik/dogrula';
       const queryParams = { token: req.params.token };
       app.render(req, res, actualPage, queryParams);
     });

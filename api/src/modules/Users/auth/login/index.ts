@@ -8,7 +8,7 @@ import { respond } from '../../../common/genericResponse';
 export const login: MutationResolvers.LoginResolver = async (
   _,
   { input: { email, password } },
-  { request, response }
+  { request, response },
 ) => {
   console.log(response);
   const user = await User.findOne({ where: { email: email.toLowerCase() } });
@@ -27,6 +27,7 @@ export const login: MutationResolvers.LoginResolver = async (
   }
 
   const token = generateToken(user.id);
-  request.session.token = token;
+  console.log(token);
+  response.cookie('token', token);
   return respond();
 };

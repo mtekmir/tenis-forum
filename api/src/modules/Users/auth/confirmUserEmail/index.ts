@@ -1,11 +1,11 @@
-import { MutationResolvers } from '../../../../types/schema';
 import { User } from '../../../../models/User';
 import { respond } from '../../../common/genericResponse';
+import { MutationResolvers } from '../../../../types/schema';
 
 export const confirmUserEmail: MutationResolvers.ConfirmUserEmailResolver = async (
   _,
   { token },
-  { redis }
+  { redis },
 ) => {
   const userId = await redis.get(token);
 

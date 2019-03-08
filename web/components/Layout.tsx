@@ -1,6 +1,6 @@
-import * as React from "react";
-import Link from "next/link";
-import Head from "next/head";
+import * as React from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
 
 interface Props {
   title?: string;
@@ -8,7 +8,7 @@ interface Props {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = "This is the default title"
+  title = 'This is the default title',
 }) => (
   <div>
     <Head>
@@ -19,13 +19,17 @@ const Layout: React.FunctionComponent<Props> = ({
     <header>
       <nav>
         <Link href="/">
-          <a>Home</a>
-        </Link>{" "}
-        |{" "}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{" "}
-        |{" "}
+          <a>Anasayfa</a>
+        </Link>{' '}
+        |{' '}
+        <Link href="/uyelik/kayit-ol">
+          <a>Kayıt Ol</a>
+        </Link>{' '}
+        |{' '}
+        <Link href="/uyelik/giris">
+          <a>Giriş</a>
+        </Link>{' '}
+        |{' '}
       </nav>
     </header>
     {children}

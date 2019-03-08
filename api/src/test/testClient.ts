@@ -10,7 +10,7 @@ import {
   testCreateForumMutation,
   testCreateCategoryMutation,
   testCreateThreadMutation,
-  testCreatePostMutation
+  testCreatePostMutation,
 } from './testClientQueries';
 import { genSchema } from '../schema';
 import { User } from '../models/User';
@@ -24,13 +24,14 @@ interface Options {
 const { REDIS_URL } = process.env;
 const mockRequest: { [key: string]: any } = {
   get: (): any => null,
-  session: {
-    token: '',
-    destroy(cb: any) {
-      this.token = '';
-      cb();
-    }
-  }
+};
+
+const mockResponse: { [key: string]: any } = {
+  cookies: {},
+  // tslint:disable-next-line
+  cookie: function(key: string, val: string) {
+    this.cookies[key] = val;
+  },
 };
 
 export class TestClient {
@@ -39,8 +40,9 @@ export class TestClient {
   constructor() {
     this.context = {
       request: mockRequest,
+      response: mockResponse,
       redis: new Redis(REDIS_URL),
-      userId: null
+      userId: null,
     };
     this.schema = genSchema();
   }
@@ -51,7 +53,7 @@ export class TestClient {
       schema: this.schema,
       source,
       variableValues,
-      contextValue: this.context
+      contextValue: this.context,
     });
   }
 
@@ -61,15 +63,15 @@ export class TestClient {
       variableValues: {
         username,
         email,
-        password
-      }
+        password,
+      },
     });
     return response.data;
   }
 
   async authenticate() {
-    if (this.context.request.session.token) {
-      const { id }: any = await decode(this.context.request.session.token);
+    if (this.context.request.cookies.token) {
+      const { id }: any = await decode(this.context.request.cookies.token);
       this.context.userId = id;
     } else {
       this.context.userId = null;
@@ -81,8 +83,8 @@ export class TestClient {
       source: testLoginMutation,
       variableValues: {
         email,
-        password
-      }
+        password,
+      },
     });
     return response.data;
   }
@@ -92,8 +94,8 @@ export class TestClient {
       source: testResetPasswordMutation,
       variableValues: {
         newPassword,
-        key
-      }
+        key,
+      },
     });
 
     return response.data;
@@ -116,7 +118,7 @@ export class TestClient {
         email,
         password,
         confirmed: true,
-        permissions: [permission]
+        permissions: [permission],
       }).save();
       users.push({ id: user.id, username, email, password });
     }
@@ -126,7 +128,7 @@ export class TestClient {
   async createCategory() {
     const res = await this.gqlCall({
       source: testCreateCategoryMutation,
-      variableValues: { name: faker.company.companyName() }
+      variableValues: { name: faker.company.companyName() },
     });
     return res.data.categoryCreate;
   }
@@ -134,7 +136,7 @@ export class TestClient {
   async createForum(categoryId: number) {
     const res = await this.gqlCall({
       source: testCreateForumMutation,
-      variableValues: { name: faker.company.companyName(), categoryId }
+      variableValues: { name: faker.company.companyName(), categoryId },
     });
     return res.data.forumCreate;
   }
@@ -145,8 +147,8 @@ export class TestClient {
       variableValues: {
         title: faker.lorem.sentence(),
         text: faker.lorem.paragraph(),
-        forumId
-      }
+        forumId,
+      },
     });
     return res.data.threadCreate;
   }
@@ -154,7 +156,7 @@ export class TestClient {
   async createPost(threadId: number) {
     const res = await this.gqlCall({
       source: testCreatePostMutation,
-      variableValues: { threadId, text: faker.lorem.paragraph() }
+      variableValues: { threadId, text: faker.lorem.paragraph() },
     });
     return res.data.postCreate;
   }

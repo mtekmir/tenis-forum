@@ -13,9 +13,9 @@ export const resolvers = {
     logout,
     requestResetPassword,
     resetPassword,
-    confirmUserEmail
+    confirmUserEmail,
   },
   Query: {
-    me
-  }
+    me,
+  },
 };

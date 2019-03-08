@@ -11,7 +11,7 @@ import { ApolloClient } from 'apollo-boost';
 function parseCookies(req?: any, options = {}) {
   return cookie.parse(
     req ? req.headers.cookie || '' : document.cookie,
-    options
+    options,
   );
 }
 
@@ -19,20 +19,20 @@ export default (App: any) => {
   return class WithData extends React.Component {
     static displayName = `WithData(${App.displayName})`;
     static propTypes = {
-      apolloState: PropTypes.object.isRequired
+      apolloState: PropTypes.object.isRequired,
     };
 
     static async getInitialProps(ctx: any) {
       const {
         Component,
         router,
-        ctx: { req, res }
+        ctx: { req, res },
       } = ctx;
       const apollo = initApollo(
         {},
         {
-          getToken: () => parseCookies(req).token
-        }
+          getToken: () => parseCookies(req).token,
+        },
       );
 
       ctx.ctx.apolloClient = apollo;
@@ -59,7 +59,7 @@ export default (App: any) => {
               Component={Component}
               router={router}
               apolloClient={apollo}
-            />
+            />,
           );
         } catch (error) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
@@ -78,7 +78,7 @@ export default (App: any) => {
 
       return {
         ...appProps,
-        apolloState
+        apolloState,
       };
     }
 
@@ -91,7 +91,7 @@ export default (App: any) => {
       this.apolloClient = initApollo(props.apolloState, {
         getToken: () => {
           return parseCookies().token;
-        }
+        },
       });
     }
 

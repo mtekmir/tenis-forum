@@ -12,7 +12,7 @@ export const authenticateUser = async (request: Request) => {
   if (!request) {
     return null;
   }
-  const { token } = request.session;
+  const { token } = request.cookies;
   if (!token) {
     return null;
   }

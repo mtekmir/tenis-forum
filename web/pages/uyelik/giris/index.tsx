@@ -1,37 +1,37 @@
 import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
-import Layout from '../../components/Layout';
-import { TextInput } from '../../components/forms/TextInput';
-import { RegisterComponent } from '../../generated/apolloComponents';
+import Layout from '../../../components/Layout';
+import { TextInput } from '../../../components/forms/TextInput';
+import { LoginComponent } from '../../../generated/apolloComponents';
 import { Button } from '@material-ui/core';
+import Router from 'next/router';
 
 interface Props {}
-const Register: React.FunctionComponent<Props> = () => {
+const Login: React.FunctionComponent<Props> = () => {
   return (
-    <Layout title="Üye Ol | Tenis Forum">
-      <RegisterComponent>
-        {register => (
+    <Layout title="Üye Girişi | Tenis Forum">
+      <LoginComponent>
+        {login => (
           <Formik
-            onSubmit={async vals => {
+            onSubmit={async variables => {
               try {
-                const response = await register({ variables: vals });
-                console.log(response);
+                const response = await login({ variables });
+                if (response && response.data && response.data.login.error) {
+                  console.log(response.data.login.error);
+                } else {
+                  Router.push('/');
+                }
               } catch (err) {
                 console.log(err.graphQLErrors);
               }
             }}
-            initialValues={{ email: '', username: '', password: '' }}
+            initialValues={{ email: '', password: '' }}
           >
             {() => (
               <Form>
                 <Field
                   name="email"
                   placeholder="E-Posta"
-                  component={TextInput}
-                />
-                <Field
-                  name="username"
-                  placeholder="Kullanıcı Adı"
                   component={TextInput}
                 />
                 <Field
@@ -47,9 +47,9 @@ const Register: React.FunctionComponent<Props> = () => {
             )}
           </Formik>
         )}
-      </RegisterComponent>
+      </LoginComponent>
     </Layout>
   );
 };
 
-export default Register;
+export default Login;
