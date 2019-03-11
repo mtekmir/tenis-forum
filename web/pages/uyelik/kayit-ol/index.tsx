@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
-import Layout from '../../../components/Layout';
+import Layout from '../../../components/Layout/index';
 import { TextInput } from '../../../components/forms/TextInput';
 import { RegisterComponent } from '../../../generated/apolloComponents';
 import { Button } from '@material-ui/core';

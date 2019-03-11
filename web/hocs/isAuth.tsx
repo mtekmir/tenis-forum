@@ -4,7 +4,9 @@ import { MeQuery } from '../generated/apolloComponents';
 import { meQuery } from '../graphql/query/meQuery';
 import { AppContext } from '../context/AppContext';
 
+// -----------------------------
 // Not using this
+// ------------------------------
 
 export const withAuth = <T extends object>(C: React.ComponentClass<T>) => {
   return class AuthComponent extends React.Component<T> {

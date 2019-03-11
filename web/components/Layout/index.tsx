@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Link from 'next/link';
 import Head from 'next/head';
+import { DrawerContainer } from './Drawer/drawerContainer';
 
 interface Props {
   title?: string;
@@ -16,23 +16,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
-      <nav>
-        <Link href="/">
-          <a>Anasayfa</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/uyelik/kayit-ol">
-          <a>Kayıt Ol</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/uyelik/giris">
-          <a>Giriş</a>
-        </Link>{' '}
-        |{' '}
-      </nav>
-    </header>
-    {children}
+    <DrawerContainer children={children} />
     <footer>
       <hr />
       <span>I'm here to stay (Footer)</span>

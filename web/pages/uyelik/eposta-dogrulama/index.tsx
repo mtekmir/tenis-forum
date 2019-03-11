@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Layout from '../../../components/Layout';
+import Layout from '../../../components/Layout/index';
 
 interface Props {}
 const CheckEmail: React.FunctionComponent<Props> = () => {

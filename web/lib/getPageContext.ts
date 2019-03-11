@@ -1,11 +1,11 @@
-import { SheetsRegistry } from "jss";
+import { SheetsRegistry } from 'jss';
 import {
   createMuiTheme,
-  createGenerateClassName
-} from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-import { isBrowser } from "./isBrowser";
+  createGenerateClassName,
+} from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
+import { isBrowser } from './isBrowser';
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -14,17 +14,25 @@ const theme = createMuiTheme({
     primary: {
       light: purple[300],
       main: purple[500],
-      dark: purple[700]
+      dark: purple[700],
     },
     secondary: {
       light: green[300],
       main: green[500],
-      dark: green[700]
-    }
+      dark: green[700],
+    },
   },
   typography: {
-    useNextVariants: true
-  }
+    useNextVariants: true,
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14) !important',
+        borderRadius: '0 !important',
+      },
+    },
+  },
 });
 
 function createPageContext() {
@@ -35,7 +43,7 @@ function createPageContext() {
     // This is needed in order to inject the critical CSS.
     sheetsRegistry: new SheetsRegistry(),
     // The standard class name generator.
-    generateClassName: createGenerateClassName()
+    generateClassName: createGenerateClassName(),
   };
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/index';
 
 const IndexPage: React.FunctionComponent = () => {
   return (
