@@ -3,20 +3,23 @@ import { User } from '../../../../models/User';
 import { createResetPasswordLink } from './createResetPasswordLink';
 import { getConnection } from 'typeorm';
 import { respond } from '../../../common/genericResponse';
+import { sendPasswordResetEmail } from '../../../../services/email/sendPasswordResetEmail';
 
 export const requestResetPassword: MutationResolvers.RequestResetPasswordResolver = async (
   _,
   { input: { email } },
-  { url }
+  { url },
 ) => {
   const user = await User.findOne({ where: { email } });
   if (!user) {
     return respond();
   }
-  // create the link on front end
-  const { pwResetToken, pwResetTokenExpiry } = await createResetPasswordLink(
-    url
-  );
+
+  const {
+    pwResetToken,
+    pwResetTokenExpiry,
+    link,
+  } = await createResetPasswordLink(url);
 
   await getConnection()
     .createQueryBuilder()
@@ -25,5 +28,7 @@ export const requestResetPassword: MutationResolvers.RequestResetPasswordResolve
     .where('email = :email', { email })
     .execute();
   // send email
+
+  await sendPasswordResetEmail(email, link);
   return respond();
 };

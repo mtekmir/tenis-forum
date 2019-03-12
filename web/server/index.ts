@@ -17,6 +17,12 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
+    server.get('/uyelik/yeni-sifre/:token', (req, res) => {
+      const actualPage = '/uyelik/yeni-sifre';
+      const queryParams = { token: req.params.token };
+      app.render(req, res, actualPage, queryParams);
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

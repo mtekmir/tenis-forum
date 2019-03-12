@@ -54,7 +54,7 @@ function create(initialState: any, { getToken }: Options) {
     return {
       headers: {
         ...headers,
-        cookie: token ? `qid=${token}` : '',
+        cookie: token ? `token=${token}` : '',
         'Access-Control-Allow-Origin': serverRuntimeConfig.BACKEND_URL,
       },
     };

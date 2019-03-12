@@ -14,4 +14,8 @@ export default (theme: Theme) => ({
       display: 'none',
     },
   },
+  headerContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });

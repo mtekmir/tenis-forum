@@ -137,6 +137,59 @@ export type RegisterError = {
   message: string;
 };
 
+export type RequestResetPasswordVariables = {
+  email: string;
+};
+
+export type RequestResetPasswordMutation = {
+  __typename?: "Mutation";
+
+  requestResetPassword: RequestResetPasswordRequestResetPassword;
+};
+
+export type RequestResetPasswordRequestResetPassword = {
+  __typename?: "Response";
+
+  success: boolean;
+
+  error: Maybe<RequestResetPasswordError[]>;
+};
+
+export type RequestResetPasswordError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
+export type ResetPasswordVariables = {
+  newPassword: string;
+  pwResetToken: string;
+};
+
+export type ResetPasswordMutation = {
+  __typename?: "Mutation";
+
+  resetPassword: ResetPasswordResetPassword;
+};
+
+export type ResetPasswordResetPassword = {
+  __typename?: "Response";
+
+  success: boolean;
+
+  error: Maybe<ResetPasswordError[]>;
+};
+
+export type ResetPasswordError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
 export type MeVariables = {};
 
 export type MeQuery = {
@@ -307,6 +360,117 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterVariables,
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
+}
+export const RequestResetPasswordDocument = gql`
+  mutation RequestResetPassword($email: String!) {
+    requestResetPassword(input: { email: $email }) {
+      success
+      error {
+        path
+        message
+      }
+    }
+  }
+`;
+export class RequestResetPasswordComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<
+      RequestResetPasswordMutation,
+      RequestResetPasswordVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<
+        RequestResetPasswordMutation,
+        RequestResetPasswordVariables
+      >
+        mutation={RequestResetPasswordDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type RequestResetPasswordProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<
+    RequestResetPasswordMutation,
+    RequestResetPasswordVariables
+  >
+> &
+  TChildProps;
+export type RequestResetPasswordMutationFn = ReactApollo.MutationFn<
+  RequestResetPasswordMutation,
+  RequestResetPasswordVariables
+>;
+export function RequestResetPasswordHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        RequestResetPasswordMutation,
+        RequestResetPasswordVariables,
+        RequestResetPasswordProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    RequestResetPasswordMutation,
+    RequestResetPasswordVariables,
+    RequestResetPasswordProps<TChildProps>
+  >(RequestResetPasswordDocument, operationOptions);
+}
+export const ResetPasswordDocument = gql`
+  mutation ResetPassword($newPassword: String!, $pwResetToken: String!) {
+    resetPassword(
+      input: { newPassword: $newPassword, pwResetToken: $pwResetToken }
+    ) {
+      success
+      error {
+        path
+        message
+      }
+    }
+  }
+`;
+export class ResetPasswordComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<ResetPasswordMutation, ResetPasswordVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<ResetPasswordMutation, ResetPasswordVariables>
+        mutation={ResetPasswordDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type ResetPasswordProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<ResetPasswordMutation, ResetPasswordVariables>
+> &
+  TChildProps;
+export type ResetPasswordMutationFn = ReactApollo.MutationFn<
+  ResetPasswordMutation,
+  ResetPasswordVariables
+>;
+export function ResetPasswordHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        ResetPasswordMutation,
+        ResetPasswordVariables,
+        ResetPasswordProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    ResetPasswordMutation,
+    ResetPasswordVariables,
+    ResetPasswordProps<TChildProps>
+  >(ResetPasswordDocument, operationOptions);
 }
 export const MeDocument = gql`
   query Me {

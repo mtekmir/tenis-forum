@@ -16,6 +16,8 @@ import { MENU } from './menuItems';
 import Link from 'next/link';
 import { Header } from '../Header';
 import { withRouter, WithRouterProps } from 'next/router';
+import { UserContextConsumer } from '../../../context/userContext';
+import { MeMe } from '../../../generated/apolloComponents';
 
 interface Props extends WithStyles<typeof drawerStyle>, WithRouterProps {}
 interface State {
@@ -103,11 +105,13 @@ class DrawerC extends React.PureComponent<Props, State> {
     });
   }
 
-  signOut = () => {
+  signOut = (user?: MeMe) => {
     return (
-      <ListItem button>
-        <ListItemText inset primary="Sign Out" />
-      </ListItem>
+      user && (
+        <ListItem button>
+          <ListItemText inset primary="Sign Out" />
+        </ListItem>
+      )
     );
   }
 
@@ -116,54 +120,56 @@ class DrawerC extends React.PureComponent<Props, State> {
     const { mobileOpen } = this.state;
 
     return (
-      <React.Fragment>
-        <div className={classes.root}>
-          <Header handleDrawerToggle={this.handleDrawerToggle} />
-          <React.Fragment>
-            <Hidden lgUp implementation="css">
-              <Drawer
-                variant="temporary"
-                open={mobileOpen}
-                onClose={this.handleDrawerToggle}
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-                ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
-                }}
-              >
-                <List component="nav">
-                  <div className={classes.toolbar} />
-                  {this.renderMenu()}
-                  <Divider />
-                  {this.signOut()}
-                </List>
-              </Drawer>
-            </Hidden>
-            <Hidden mdDown implementation="css">
-              <Drawer
-                variant="permanent"
-                open
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-              >
-                <List component="nav">
-                  <div className={classes.toolbar} />
-                  {this.renderMenu()}
-                  <Divider />
-                  {this.signOut()}
-                </List>
-              </Drawer>
-            </Hidden>
-          </React.Fragment>
+      <UserContextConsumer>
+        {({ user }) => (
+          <div className={classes.root}>
+            <Header handleDrawerToggle={this.handleDrawerToggle} />
+            <React.Fragment>
+              <Hidden lgUp implementation="css">
+                <Drawer
+                  variant="temporary"
+                  open={mobileOpen}
+                  onClose={this.handleDrawerToggle}
+                  classes={{
+                    paper: classes.drawerPaper,
+                  }}
+                  ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                  }}
+                >
+                  <List component="nav">
+                    <div className={classes.toolbar} />
+                    {this.renderMenu()}
+                    <Divider />
+                    {this.signOut(user)}
+                  </List>
+                </Drawer>
+              </Hidden>
+              <Hidden mdDown implementation="css">
+                <Drawer
+                  variant="permanent"
+                  open
+                  classes={{
+                    paper: classes.drawerPaper,
+                  }}
+                >
+                  <List component="nav">
+                    <div className={classes.toolbar} />
+                    {this.renderMenu()}
+                    <Divider />
+                    {this.signOut(user)}
+                  </List>
+                </Drawer>
+              </Hidden>
+            </React.Fragment>
 
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            {children}
-          </main>
-        </div>
-      </React.Fragment>
+            <main className={classes.content}>
+              <div className={classes.toolbar} />
+              {children}
+            </main>
+          </div>
+        )}
+      </UserContextConsumer>
     );
   }
 }

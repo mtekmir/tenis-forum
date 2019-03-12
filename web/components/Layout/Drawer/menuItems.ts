@@ -12,8 +12,8 @@ export const MENU: MenuItem[] = [
         url: '/uyelik/giris',
       },
       {
-        text: 'Sales History',
-        url: '/sales/salesHistory',
+        text: 'Şifre Değiştir',
+        url: '/uyelik/sifre-degistir',
       },
     ],
   },

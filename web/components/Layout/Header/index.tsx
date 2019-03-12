@@ -10,7 +10,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import headerStyle from './headerStyle';
-import { User } from './User';
+import { Avatar } from './avatar';
 
 interface Props extends WithStyles<typeof headerStyle> {
   handleDrawerToggle: () => void;
@@ -32,14 +32,14 @@ class HeaderC extends React.PureComponent<Props> {
               <MenuIcon />
             </IconButton>
           </React.Fragment>
-          <Grid container>
-            <Grid xs={5} item className={classes.leftContainer}>
+          <Grid container className={classes.headerContainer}>
+            <Grid xs={10} item>
               <Typography variant="title" color="inherit" noWrap>
                 Tenis Forum
               </Typography>
             </Grid>
-            <Grid xs={3} item>
-              <User />
+            <Grid xs={2} item>
+              <Avatar />
             </Grid>
           </Grid>
         </Toolbar>

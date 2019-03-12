@@ -12,11 +12,11 @@ export const authenticateUser = async (request: Request) => {
   if (!request) {
     return null;
   }
+  console.log(request.cookies);
   const { token } = request.cookies;
   if (!token) {
     return null;
   }
-
   let userId: string;
   try {
     const decoded: any = Jwt.verify(token, JWT_KEY);
