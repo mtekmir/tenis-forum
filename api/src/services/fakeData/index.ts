@@ -1,11 +1,7 @@
-import faker from 'faker';
-import { Category } from '../../models/Category';
-
-const NUM_CATEGORIES = 5;
+import { createCategories } from './categories';
+import { createForums } from './forums';
 
 (async () => {
-  const categories = await Category.find();
-
-  if (categories.length < NUM_CATEGORIES) {
-  }
+  await createCategories();
+  await createForums();
 })();

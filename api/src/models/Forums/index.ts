@@ -6,7 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   Entity,
-  Column
+  Column,
 } from 'typeorm';
 import { Category } from '../Category';
 import { Thread } from '../Threads';
@@ -25,8 +25,8 @@ export class Forum extends BaseEntity {
   @Column('varchar', { nullable: false, unique: true })
   name: string;
 
-  @ManyToOne(() => Category, Category => Category.forums, {
-    onDelete: 'CASCADE'
+  @ManyToOne(() => Category, category => category.forums, {
+    onDelete: 'CASCADE',
   })
   category: Category;
 
