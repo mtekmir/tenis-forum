@@ -1,19 +1,13 @@
 import * as React from 'react';
-import Link from 'next/link';
 import Layout from '../components/Layout/index';
+import { Grid } from '@material-ui/core';
 
 const IndexPage: React.FunctionComponent = () => {
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
-      <h1>Hello Next.js 👋</h1>
-      <p>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-        <Link href="/newPage">
-          <a>New Page</a>
-        </Link>
-      </p>
+    <Layout title="Ana Sayfa | Tenis Forum">
+      <Grid spacing={24} container>
+        <Grid item xs={12} />
+      </Grid>
     </Layout>
   );
 };

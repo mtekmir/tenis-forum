@@ -6,8 +6,7 @@ import { RequestResetPasswordComponent } from '../../../generated/apolloComponen
 import { Button } from '@material-ui/core';
 import Router from 'next/router';
 
-interface Props {}
-const RequestResetPassword: React.FunctionComponent<Props> = () => {
+const RequestResetPassword: React.FunctionComponent = () => {
   return (
     <Layout title="Şifre Değiştir | Tenis Forum">
       <RequestResetPasswordComponent>
@@ -27,7 +26,7 @@ const RequestResetPassword: React.FunctionComponent<Props> = () => {
                   component={TextInput}
                 />
                 <Button variant="contained" type="submit">
-                  Şifre Değiştir
+                  E-Posta Gönder
                 </Button>
               </Form>
             )}

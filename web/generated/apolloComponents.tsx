@@ -109,6 +109,20 @@ export type LoginError = {
   message: string;
 };
 
+export type LogoutVariables = {};
+
+export type LogoutMutation = {
+  __typename?: "Mutation";
+
+  logout: LogoutLogout;
+};
+
+export type LogoutLogout = {
+  __typename?: "Response";
+
+  success: boolean;
+};
+
 export type RegisterVariables = {
   username: string;
   email: string;
@@ -310,6 +324,50 @@ export function LoginHOC<TProps, TChildProps = any>(
     LoginVariables,
     LoginProps<TChildProps>
   >(LoginDocument, operationOptions);
+}
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout {
+      success
+    }
+  }
+`;
+export class LogoutComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<LogoutMutation, LogoutVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<LogoutMutation, LogoutVariables>
+        mutation={LogoutDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type LogoutProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<LogoutMutation, LogoutVariables>
+> &
+  TChildProps;
+export type LogoutMutationFn = ReactApollo.MutationFn<
+  LogoutMutation,
+  LogoutVariables
+>;
+export function LogoutHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        LogoutMutation,
+        LogoutVariables,
+        LogoutProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    LogoutMutation,
+    LogoutVariables,
+    LogoutProps<TChildProps>
+  >(LogoutDocument, operationOptions);
 }
 export const RegisterDocument = gql`
   mutation Register($username: String!, $email: String!, $password: String!) {

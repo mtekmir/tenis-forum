@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-08T17:05:09+03:00
+// Generated in 2019-03-23T17:25:29+03:00
 export type Maybe<T> = T | null;
 
 
@@ -78,9 +78,27 @@ export enum UserPermissions {
 
 export interface Query {
   
+  getCategories: GetCategoriesResponse;
+  
   hello: string;
   
   me?: Maybe<User>;
+}
+
+
+export interface GetCategoriesResponse {
+  
+  success: boolean;
+  
+  categories: Category;
+}
+
+
+export interface Category {
+  
+  id: number;
+  
+  name: string;
 }
 
 
@@ -125,14 +143,6 @@ export interface Mutation {
   requestResetPassword: Response;
   
   resetPassword: Response;
-}
-
-
-export interface Category {
-  
-  id: number;
-  
-  name: string;
 }
 
 
@@ -305,14 +315,43 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 export namespace QueryResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
+    getCategories?: GetCategoriesResolver<GetCategoriesResponse, TypeParent, Context>;
+    
     hello?: HelloResolver<string, TypeParent, Context>;
     
     me?: MeResolver<Maybe<User>, TypeParent, Context>;
   }
 
 
+  export type GetCategoriesResolver<R = GetCategoriesResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type MeResolver<R = Maybe<User>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace GetCategoriesResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = GetCategoriesResponse> {
+    
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+    
+    categories?: CategoriesResolver<Category, TypeParent, Context>;
+  }
+
+
+  export type SuccessResolver<R = boolean, Parent = GetCategoriesResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoriesResolver<R = Category, Parent = GetCategoriesResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace CategoryResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Category> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace UserResolvers {
@@ -461,19 +500,6 @@ export namespace MutationResolvers {
   
 }
 
-export namespace CategoryResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Category> {
-    
-    id?: IdResolver<number, TypeParent, Context>;
-    
-    name?: NameResolver<string, TypeParent, Context>;
-  }
-
-
-  export type IdResolver<R = number, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
 export namespace ResponseResolvers {
   export interface Resolvers<Context = IContext, TypeParent = Response> {
     
@@ -594,9 +620,10 @@ export interface DeprecatedDirectiveArgs {
 
 export interface IResolvers {
     Query?: QueryResolvers.Resolvers;
+    GetCategoriesResponse?: GetCategoriesResponseResolvers.Resolvers;
+    Category?: CategoryResolvers.Resolvers;
     User?: UserResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
-    Category?: CategoryResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
     Forum?: ForumResolvers.Resolvers;

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { MeMe } from '../generated/apolloComponents';
 
 interface UserContext {
-  user?: MeMe;
+  user?: MeMe | null;
 }
 
 const userContext = React.createContext<UserContext>({
-  user: undefined,
+  user: null,
 });
 
 export const UserContextProvider = userContext.Provider;

@@ -5,7 +5,7 @@ import { Category } from '../../../models/Category';
 export const categoryDelete: MutationResolvers.CategoryDeleteResolver = async (
   _,
   { id },
-  { userId }
+  { userId },
 ) => {
   await isAdmin(userId);
 
@@ -13,6 +13,6 @@ export const categoryDelete: MutationResolvers.CategoryDeleteResolver = async (
 
   return {
     error: null,
-    success: true
+    success: true,
   };
 };

@@ -105,10 +105,14 @@ class DrawerC extends React.PureComponent<Props, State> {
     });
   }
 
-  signOut = (user?: MeMe) => {
+  signOut = (user?: MeMe | null) => {
     return (
       user && (
-        <ListItem button>
+        <ListItem
+          onClick={() => this.handleCloseMenu()}
+          component={CustomLink('/uyelik/cikis')}
+          button
+        >
           <ListItemText inset primary="Sign Out" />
         </ListItem>
       )

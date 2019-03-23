@@ -9,7 +9,7 @@ import { sendConfirmationEmail } from '../../../../services/email/sendConfirmati
 export const register: MutationResolvers.RegisterResolver = async (
   _,
   { input: { username, email, password } },
-  { url }
+  { url },
 ) => {
   const error = await validateRegister({ email, password });
   if (error) {
@@ -20,7 +20,7 @@ export const register: MutationResolvers.RegisterResolver = async (
     username,
     email: email.toLowerCase(),
     password,
-    permissions: [UserPermissions.User]
+    permissions: [UserPermissions.User],
   }).save();
 
   const link = await createConfirmEmailLink(url, user.id);

@@ -1,0 +1,8 @@
+type Query {
+  categoryGet: CategoryGetResponse!
+}
+
+type CategoryGetResponse {
+  success: Boolean!
+  categories: Category!
+}

@@ -10,8 +10,7 @@ import { meQuery } from '../../../graphql/query/meQuery';
 import Router from 'next/router';
 import { LoginUI } from './LoginUI';
 
-interface Props {}
-const LoginContainer: React.FunctionComponent<Props> = () => {
+const LoginContainer: React.FunctionComponent = () => {
   const onSubmit = (login: MutationFn<LoginMutation, LoginVariables>) => async (
     variables: LoginVariables,
   ) => {

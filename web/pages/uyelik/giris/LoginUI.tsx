@@ -24,6 +24,7 @@ const LoginC: React.FunctionComponent<Props> = ({ classes, onSubmit }) => {
                 placeholder="E-Posta"
                 className={classes.input}
                 component={TextInput}
+                type="email"
               />
               <Field
                 name="password"

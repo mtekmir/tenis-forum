@@ -5,7 +5,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   Column,
-  Entity
+  Entity,
 } from 'typeorm';
 import { Forum } from '../Forums';
 
@@ -23,6 +23,6 @@ export class Category extends BaseEntity {
   @Column('varchar', { nullable: false, unique: true })
   name: string;
 
-  @OneToMany(() => Forum, Forum => Forum.category)
+  @OneToMany(() => Forum, forum => forum.category)
   forums: Forum[];
 }

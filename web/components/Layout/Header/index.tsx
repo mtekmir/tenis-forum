@@ -34,7 +34,7 @@ class HeaderC extends React.PureComponent<Props> {
           </React.Fragment>
           <Grid container className={classes.headerContainer}>
             <Grid xs={10} item>
-              <Typography variant="title" color="inherit" noWrap>
+              <Typography variant="h6" color="inherit" noWrap>
                 Tenis Forum
               </Typography>
             </Grid>

@@ -5,8 +5,12 @@ import { respond } from '../../../common/genericResponse';
 export const logout: MutationResolvers.LogoutResolver = async (
   _,
   __,
-  { response }: IContext,
+  { response, userId }: IContext,
 ) => {
+  if (!userId) {
+    return respond();
+  }
+
   response.clearCookie('token');
   return respond();
 };

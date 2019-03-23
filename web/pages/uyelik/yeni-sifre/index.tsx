@@ -5,18 +5,18 @@ import { TextInput } from '../../../components/forms/TextInput';
 import { ResetPasswordComponent } from '../../../generated/apolloComponents';
 import { Button } from '@material-ui/core';
 import Router from 'next/router';
+import { AppContext } from '../../../context/AppContext';
 
-interface Props {
-  token: string;
-}
-const PasswordReset: React.FunctionComponent<Props> = () => {
+const PasswordReset = ({ token }: { token: string }) => {
   return (
     <Layout title="Şifre Değiştir | Tenis Forum">
       <ResetPasswordComponent>
         {request => (
           <Formik
             onSubmit={async ({ newPassword }) => {
-              await request({ variables: { newPassword, pwResetToken: '' } });
+              await request({
+                variables: { newPassword, pwResetToken: token },
+              });
               Router.push('/');
             }}
             initialValues={{ newPassword: '' }}
@@ -39,5 +39,9 @@ const PasswordReset: React.FunctionComponent<Props> = () => {
     </Layout>
   );
 };
+
+PasswordReset.getInitialProps = ({ query: { token } }: AppContext) => ({
+  token,
+});
 
 export default PasswordReset;
