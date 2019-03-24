@@ -1,7 +1,13 @@
+type ThreadOwner {
+  username: String!
+}
+
 type Thread {
   id: Int!
   Forum: Forum!
   originalPost: Post!
+  createdAt: Date!
   posts: [Post!]!
   title: String!
+  owner: ThreadOwner!
 }

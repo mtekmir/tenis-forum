@@ -3,5 +3,5 @@ input CreateCategoryInput {
 }
 
 type Mutation {
-  categoryCreate(input: CreateCategoryInput!): Category!
+  categoryCreate(input: CreateCategoryInput!): Response!
 }

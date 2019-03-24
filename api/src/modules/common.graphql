@@ -11,3 +11,6 @@ type Response {
   error: [Error!]
   success: Boolean!
 }
+
+scalar Date
+scalar DateTime

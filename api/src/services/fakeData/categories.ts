@@ -10,14 +10,16 @@ export const createCategories = async () => {
 
   if (categories.length < NUM_CATEGORIES) {
     for (let i = 0; i < NUM_CATEGORIES - categories.length; i++) {
-      newCategories.push({ name: `${faker.internet.domainWord} Category` });
+      newCategories.push({ name: `${faker.internet.domainWord()} Category` });
     }
 
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Category)
-      .values(newCategories)
-      .execute();
+    if (newCategories.length) {
+      await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(Category)
+        .values(newCategories)
+        .execute();
+    }
   }
 };

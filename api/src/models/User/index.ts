@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   BeforeInsert,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 import { UserPermissions } from './permissions';
 import { Post } from '../Posts';
@@ -30,7 +30,7 @@ export class User extends BaseEntity {
 
   @Column('enum', {
     array: true,
-    enum: UserPermissions
+    enum: UserPermissions,
   })
   permissions: UserPermissions[];
 

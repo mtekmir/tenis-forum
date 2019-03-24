@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-23T17:25:29+03:00
+// Generated in 2019-03-24T14:02:40+03:00
 export type Maybe<T> = T | null;
 
 
@@ -78,19 +78,21 @@ export enum UserPermissions {
 
 export interface Query {
   
-  getCategories: GetCategoriesResponse;
+  categoryGet: CategoryGetResponse;
   
   hello: string;
+  
+  forumGet?: Maybe<Forum>;
   
   me?: Maybe<User>;
 }
 
 
-export interface GetCategoriesResponse {
+export interface CategoryGetResponse {
   
   success: boolean;
   
-  categories: Category;
+  categories: Category[];
 }
 
 
@@ -99,6 +101,18 @@ export interface Category {
   id: number;
   
   name: string;
+  
+  forums: Forum[];
+}
+
+
+export interface Forum {
+  
+  id: number;
+  
+  name: string;
+  
+  category: Category;
 }
 
 
@@ -116,9 +130,11 @@ export interface User {
 
 export interface Mutation {
   
-  categoryCreate: Category;
+  categoryCreate: Response;
   
   categoryDelete: Response;
+  
+  fakeData: boolean;
   
   forumCreate: Forum;
   
@@ -131,6 +147,8 @@ export interface Mutation {
   threadCreate: CreateThreadResponse;
   
   threadDelete: Response;
+  
+  createAdmin: DemoAdmin;
   
   confirmUserEmail: Response;
   
@@ -162,16 +180,6 @@ export interface Error {
 }
 
 
-export interface Forum {
-  
-  id: number;
-  
-  name: string;
-  
-  category: Category;
-}
-
-
 export interface Post {
   
   id: number;
@@ -187,6 +195,16 @@ export interface CreateThreadResponse {
   id: number;
   
   title: string;
+}
+
+
+export interface DemoAdmin {
+  
+  username: string;
+  
+  password: string;
+  
+  email: string;
 }
 
 
@@ -209,6 +227,10 @@ export interface Thread {
 // Arguments
 // ====================================================
 
+export interface ForumGetQueryArgs {
+  
+  id: number;
+}
 export interface CategoryCreateMutationArgs {
   
   input: CreateCategoryInput;
@@ -315,30 +337,39 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 export namespace QueryResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
-    getCategories?: GetCategoriesResolver<GetCategoriesResponse, TypeParent, Context>;
+    categoryGet?: CategoryGetResolver<CategoryGetResponse, TypeParent, Context>;
     
     hello?: HelloResolver<string, TypeParent, Context>;
+    
+    forumGet?: ForumGetResolver<Maybe<Forum>, TypeParent, Context>;
     
     me?: MeResolver<Maybe<User>, TypeParent, Context>;
   }
 
 
-  export type GetCategoriesResolver<R = GetCategoriesResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoryGetResolver<R = CategoryGetResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
-  export type MeResolver<R = Maybe<User>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
-export namespace GetCategoriesResponseResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = GetCategoriesResponse> {
+  export type ForumGetResolver<R = Maybe<Forum>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumGetArgs>;
+  export interface ForumGetArgs {
     
-    success?: SuccessResolver<boolean, TypeParent, Context>;
-    
-    categories?: CategoriesResolver<Category, TypeParent, Context>;
+    id: number;
   }
 
 
-  export type SuccessResolver<R = boolean, Parent = GetCategoriesResponse, Context = IContext> = Resolver<R, Parent, Context>;
-  export type CategoriesResolver<R = Category, Parent = GetCategoriesResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type MeResolver<R = Maybe<User>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace CategoryGetResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = CategoryGetResponse> {
+    
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+    
+    categories?: CategoriesResolver<Category[], TypeParent, Context>;
+  }
+
+
+  export type SuccessResolver<R = boolean, Parent = CategoryGetResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoriesResolver<R = Category[], Parent = CategoryGetResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace CategoryResolvers {
@@ -347,11 +378,30 @@ export namespace CategoryResolvers {
     id?: IdResolver<number, TypeParent, Context>;
     
     name?: NameResolver<string, TypeParent, Context>;
+    
+    forums?: ForumsResolver<Forum[], TypeParent, Context>;
   }
 
 
   export type IdResolver<R = number, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type NameResolver<R = string, Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ForumsResolver<R = Forum[], Parent = Category, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ForumResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Forum> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    name?: NameResolver<string, TypeParent, Context>;
+    
+    category?: CategoryResolver<Category, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace UserResolvers {
@@ -376,9 +426,11 @@ export namespace UserResolvers {
 export namespace MutationResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
-    categoryCreate?: CategoryCreateResolver<Category, TypeParent, Context>;
+    categoryCreate?: CategoryCreateResolver<Response, TypeParent, Context>;
     
     categoryDelete?: CategoryDeleteResolver<Response, TypeParent, Context>;
+    
+    fakeData?: FakeDataResolver<boolean, TypeParent, Context>;
     
     forumCreate?: ForumCreateResolver<Forum, TypeParent, Context>;
     
@@ -391,6 +443,8 @@ export namespace MutationResolvers {
     threadCreate?: ThreadCreateResolver<CreateThreadResponse, TypeParent, Context>;
     
     threadDelete?: ThreadDeleteResolver<Response, TypeParent, Context>;
+    
+    createAdmin?: CreateAdminResolver<DemoAdmin, TypeParent, Context>;
     
     confirmUserEmail?: ConfirmUserEmailResolver<Response, TypeParent, Context>;
     
@@ -406,7 +460,7 @@ export namespace MutationResolvers {
   }
 
 
-  export type CategoryCreateResolver<R = Category, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, CategoryCreateArgs>;
+  export type CategoryCreateResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, CategoryCreateArgs>;
   export interface CategoryCreateArgs {
     
     input: CreateCategoryInput;
@@ -420,6 +474,7 @@ export namespace MutationResolvers {
   }
 
 
+  export type FakeDataResolver<R = boolean, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type ForumCreateResolver<R = Forum, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumCreateArgs>;
   export interface ForumCreateArgs {
     
@@ -462,6 +517,7 @@ export namespace MutationResolvers {
   }
 
 
+  export type CreateAdminResolver<R = DemoAdmin, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type ConfirmUserEmailResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ConfirmUserEmailArgs>;
   export interface ConfirmUserEmailArgs {
     
@@ -526,22 +582,6 @@ export namespace ErrorResolvers {
   export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace ForumResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Forum> {
-    
-    id?: IdResolver<number, TypeParent, Context>;
-    
-    name?: NameResolver<string, TypeParent, Context>;
-    
-    category?: CategoryResolver<Category, TypeParent, Context>;
-  }
-
-
-  export type IdResolver<R = number, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
-  export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
 export namespace PostResolvers {
   export interface Resolvers<Context = IContext, TypeParent = Post> {
     
@@ -569,6 +609,22 @@ export namespace CreateThreadResponseResolvers {
 
   export type IdResolver<R = number, Parent = CreateThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;
   export type TitleResolver<R = string, Parent = CreateThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace DemoAdminResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = DemoAdmin> {
+    
+    username?: UsernameResolver<string, TypeParent, Context>;
+    
+    password?: PasswordResolver<string, TypeParent, Context>;
+    
+    email?: EmailResolver<string, TypeParent, Context>;
+  }
+
+
+  export type UsernameResolver<R = string, Parent = DemoAdmin, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PasswordResolver<R = string, Parent = DemoAdmin, Context = IContext> = Resolver<R, Parent, Context>;
+  export type EmailResolver<R = string, Parent = DemoAdmin, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace ThreadResolvers {
@@ -620,15 +676,16 @@ export interface DeprecatedDirectiveArgs {
 
 export interface IResolvers {
     Query?: QueryResolvers.Resolvers;
-    GetCategoriesResponse?: GetCategoriesResponseResolvers.Resolvers;
+    CategoryGetResponse?: CategoryGetResponseResolvers.Resolvers;
     Category?: CategoryResolvers.Resolvers;
+    Forum?: ForumResolvers.Resolvers;
     User?: UserResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
-    Forum?: ForumResolvers.Resolvers;
     Post?: PostResolvers.Resolvers;
     CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
+    DemoAdmin?: DemoAdminResolvers.Resolvers;
     Thread?: ThreadResolvers.Resolvers;
 }
 

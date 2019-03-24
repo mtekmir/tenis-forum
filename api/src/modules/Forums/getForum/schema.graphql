@@ -1,0 +1,3 @@
+type Query {
+  forumGet(id: Int!): Forum
+}

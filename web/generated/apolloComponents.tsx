@@ -54,6 +54,10 @@ export enum UserPermissions {
   User = "USER"
 }
 
+export type Date = any;
+
+export type DateTime = any;
+
 // ====================================================
 // Documents
 // ====================================================
@@ -202,6 +206,78 @@ export type ResetPasswordError = {
   path: string;
 
   message: string;
+};
+
+export type GetCategoriesVariables = {};
+
+export type GetCategoriesQuery = {
+  __typename?: "Query";
+
+  categoryGet: GetCategoriesCategoryGet;
+};
+
+export type GetCategoriesCategoryGet = {
+  __typename?: "CategoryGetResponse";
+
+  success: boolean;
+
+  categories: GetCategoriesCategories[];
+};
+
+export type GetCategoriesCategories = {
+  __typename?: "Category";
+
+  id: number;
+
+  name: string;
+
+  forums: GetCategoriesForums[];
+};
+
+export type GetCategoriesForums = {
+  __typename?: "Forum";
+
+  id: number;
+
+  name: string;
+};
+
+export type GetForumVariables = {
+  id: number;
+};
+
+export type GetForumQuery = {
+  __typename?: "Query";
+
+  forumGet: Maybe<GetForumForumGet>;
+};
+
+export type GetForumForumGet = {
+  __typename?: "Forum";
+
+  id: number;
+
+  name: string;
+
+  threads: GetForumThreads[];
+};
+
+export type GetForumThreads = {
+  __typename?: "Thread";
+
+  id: number;
+
+  title: string;
+
+  owner: GetForumOwner;
+
+  createdAt: Date;
+};
+
+export type GetForumOwner = {
+  __typename?: "ThreadOwner";
+
+  username: string;
 };
 
 export type MeVariables = {};
@@ -529,6 +605,103 @@ export function ResetPasswordHOC<TProps, TChildProps = any>(
     ResetPasswordVariables,
     ResetPasswordProps<TChildProps>
   >(ResetPasswordDocument, operationOptions);
+}
+export const GetCategoriesDocument = gql`
+  query GetCategories {
+    categoryGet {
+      success
+      categories {
+        id
+        name
+        forums {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export class GetCategoriesComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetCategoriesQuery, GetCategoriesVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetCategoriesQuery, GetCategoriesVariables>
+        query={GetCategoriesDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetCategoriesProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetCategoriesQuery, GetCategoriesVariables>
+> &
+  TChildProps;
+export function GetCategoriesHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetCategoriesQuery,
+        GetCategoriesVariables,
+        GetCategoriesProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetCategoriesQuery,
+    GetCategoriesVariables,
+    GetCategoriesProps<TChildProps>
+  >(GetCategoriesDocument, operationOptions);
+}
+export const GetForumDocument = gql`
+  query GetForum($id: Int!) {
+    forumGet(id: $id) {
+      id
+      name
+      threads {
+        id
+        title
+        owner {
+          username
+        }
+        createdAt
+      }
+    }
+  }
+`;
+export class GetForumComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetForumQuery, GetForumVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetForumQuery, GetForumVariables>
+        query={GetForumDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetForumProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetForumQuery, GetForumVariables>
+> &
+  TChildProps;
+export function GetForumHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetForumQuery,
+        GetForumVariables,
+        GetForumProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetForumQuery,
+    GetForumVariables,
+    GetForumProps<TChildProps>
+  >(GetForumDocument, operationOptions);
 }
 export const MeDocument = gql`
   query Me {

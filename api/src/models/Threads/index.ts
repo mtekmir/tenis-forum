@@ -7,11 +7,15 @@ import {
   OneToMany,
   Entity,
   Column,
-  OneToOne
+  OneToOne,
 } from 'typeorm';
 import { Forum } from '../Forums';
 import { Post } from '../Posts';
 import { User } from '../User';
+
+interface ThreadOwner {
+  username: string;
+}
 
 @Entity()
 export class Thread extends BaseEntity {
@@ -30,11 +34,11 @@ export class Thread extends BaseEntity {
   @OneToOne(() => Post, post => post.thread)
   originalPost: Post;
 
-  @ManyToOne(() => Forum, Forum => Forum)
+  @ManyToOne(() => Forum, forum => forum.threads)
   forum: Forum;
 
   @ManyToOne(() => User, { nullable: true, eager: true })
-  owner: User;
+  owner: ThreadOwner;
 
   @OneToMany(() => Post, post => post.thread)
   posts: Post[];

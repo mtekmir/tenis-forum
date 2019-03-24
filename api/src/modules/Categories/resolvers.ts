@@ -1,6 +1,6 @@
 import { categoryCreate } from './createCategory';
 import { categoryDelete } from './deleteCategory';
-import { categoryGet } from './getCategories';
+import { categoryGet } from './getCategory';
 
 export const resolvers = {
   Mutation: {

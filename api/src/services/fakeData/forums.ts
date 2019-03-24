@@ -13,15 +13,17 @@ export const createForums = async () => {
   for (const category of categories) {
     if (category.forums.length < NUM_FORUMS) {
       for (let i = 0; i < NUM_FORUMS - category.forums.length; i++) {
-        newForums.push({ name: faker.lorem.sentence, category });
+        newForums.push({ name: faker.lorem.sentence(), category });
       }
     }
   }
 
-  await getConnection()
-    .createQueryBuilder()
-    .insert()
-    .into(Forum)
-    .values(newForums)
-    .execute();
+  if (newForums.length) {
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Forum)
+      .values(newForums)
+      .execute();
+  }
 };
