@@ -5,6 +5,11 @@ export const meQuery = gql`
     me {
       username
       email
+      profileImageUrl
+      profile {
+        id
+        gender
+      }
     }
   }
 `;

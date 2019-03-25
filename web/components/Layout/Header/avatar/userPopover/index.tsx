@@ -13,15 +13,21 @@ import { CustomLink } from '../../../../customLink';
 
 interface Props extends WithStyles<typeof userPopoverStyle> {
   user: MeMe | undefined | null;
+  onClose: () => void;
 }
 
-const UserPopoverC: React.FunctionComponent<Props> = ({ user, classes }) => {
+const UserPopoverC: React.FunctionComponent<Props> = ({
+  user,
+  classes,
+  onClose,
+}) => {
   const renderMenuItems = () => {
     const menuItems = USER_POPOVER_ITEMS[user ? 'loggedIn' : 'notLoggedIn'];
     return menuItems.map(({ label, url }, idx) => (
       <ListItem
         className={classes.listItem}
         component={CustomLink(url)}
+        onClick={onClose}
         key={idx}
         button
       >

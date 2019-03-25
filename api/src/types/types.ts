@@ -16,6 +16,7 @@ export interface IContext {
   request: Request;
   response: Response;
   url: string;
+  s3BucketUrl: string;
   userId: string | null;
 }
 

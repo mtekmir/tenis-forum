@@ -357,11 +357,23 @@ export type MeQuery = {
 };
 
 export type MeMe = {
-  __typename?: "User";
+  __typename?: "Me";
 
   username: string;
 
   email: string;
+
+  profileImageUrl: string;
+
+  profile: MeProfile;
+};
+
+export type MeProfile = {
+  __typename?: "UserProfile";
+
+  id: number;
+
+  gender: string;
 };
 
 import gql from "graphql-tag";
@@ -837,6 +849,11 @@ export const MeDocument = gql`
     me {
       username
       email
+      profileImageUrl
+      profile {
+        id
+        gender
+      }
     }
   }
 `;

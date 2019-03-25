@@ -2,7 +2,7 @@ export const USER_POPOVER_ITEMS = {
   loggedIn: [
     {
       label: 'Hesabım',
-      url: '/hesabım',
+      url: '/hesabim',
     },
     {
       label: 'Çıkış',

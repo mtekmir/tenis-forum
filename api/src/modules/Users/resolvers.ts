@@ -7,6 +7,7 @@ import { me } from './auth/me';
 import { confirmUserEmail } from './auth/confirmUserEmail';
 import { createAdmin } from './auth/admin';
 import { userProfileGet } from './profile/getUserProfile';
+import { profileImageUrl } from './getProfileImageUrl';
 
 export const resolvers = {
   Mutation: {
@@ -21,5 +22,8 @@ export const resolvers = {
   Query: {
     me,
     userProfileGet,
+  },
+  User: {
+    profileImageUrl,
   },
 };

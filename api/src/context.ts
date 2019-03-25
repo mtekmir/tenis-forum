@@ -11,5 +11,6 @@ export const context: Context = async ({ req, res }) => ({
   request: req,
   response: res,
   url: FRONTEND_URL,
+  s3BucketUrl: '',
   userId: await authenticateUser(req),
 });

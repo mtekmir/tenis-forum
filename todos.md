@@ -1,3 +1,5 @@
 error handling
-thread detail page
-test confirm user email resolver
+
+profile page
+profile page error
+s3 bucket

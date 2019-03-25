@@ -6,19 +6,19 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import profileFormStyle from './profileFormStyle';
 import { Formik, Form, Field } from 'formik';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import { PhotoCameraOutlined } from '@material-ui/icons';
 import { TextInput } from '../../../components/forms/TextInput';
 import { MeMe } from '../../../generated/apolloComponents';
+import profileFormStyles from './profileFormStyles';
 
-interface Props extends WithStyles<typeof profileFormStyle> {
-  user: MeMe;
+interface Props extends WithStyles<typeof profileFormStyles> {
+  user: MeMe | null | undefined;
   onSubmit: (v: FormValues) => void;
   dropzoneHover: boolean;
-  file: IFile;
+  file: IFile | null;
   onDropzoneHover: () => void;
   onClose: () => void;
   onDrop: (files: File[]) => void;
@@ -35,7 +35,7 @@ const ProfileFormC: React.ComponentType<Props> = ({
   classes,
   onSubmit,
   dropzoneHover,
-  user: { username, profileImageUrl, profile },
+  user: { username, profileImageUrl },
   onDropzoneHover,
   onClose,
   file,
@@ -161,4 +161,4 @@ const ProfileFormC: React.ComponentType<Props> = ({
   );
 };
 
-export const ProfileForm = withStyles(profileFormStyle)(ProfileFormC);
+export const ProfileForm = withStyles(profileFormStyles)(ProfileFormC);

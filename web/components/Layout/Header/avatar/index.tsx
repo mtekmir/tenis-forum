@@ -44,7 +44,7 @@ class AvatarC extends React.PureComponent<Props> {
         anchorEl={anchorEl}
         onClose={this.handlePopoverClose}
       >
-        <UserPopover user={user} />
+        <UserPopover onClose={this.handlePopoverClose} user={user} />
       </Popover>
     );
   }
