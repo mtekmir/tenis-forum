@@ -1,21 +1,15 @@
 export const MENU: MenuItem[] = [
   {
-    text: 'Dashboard',
-    url: '/',
+    text: 'Giris',
+    url: '/uyelik/giris',
   },
   {
-    text: 'Uyelik',
-    rootUrl: '/uyelik',
-    subMenus: [
-      {
-        text: 'Giriş',
-        url: '/uyelik/giris',
-      },
-      {
-        text: 'Şifre Değiştir',
-        url: '/uyelik/sifre-degistir',
-      },
-    ],
+    text: 'Kayıt Ol',
+    url: '/uyelik/kayit-ol',
+  },
+  {
+    text: 'Forum',
+    url: '/',
   },
 ];
 

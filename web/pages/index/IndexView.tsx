@@ -9,6 +9,7 @@ import {
 import { GetCategoriesCategories } from '../../generated/apolloComponents';
 import indexStyle from './indexStyle';
 import Link from 'next/link';
+import { CustomLink } from '../../components/customLink';
 
 interface Props extends WithStyles<typeof indexStyle> {
   categories: GetCategoriesCategories[];
@@ -22,14 +23,20 @@ const IndexViewC: React.FunctionComponent<Props> = ({
     return categories.map(({ id, name, forums }) => (
       <Grid key={id} item xs={12}>
         <Paper>
-          <Typography classes={{ root: classes.categoryTitle }}>
-            {name}
-          </Typography>
+          <div className={classes.categoryDiv}>
+            <Typography classes={{ root: classes.categoryTitle }}>
+              {name}
+            </Typography>
+          </div>
           {forums.map(({ id, name }) => (
-            <div key={id}>
-              <Link href={`/forum/${id}`}>
-                <a>{name}</a>
-              </Link>
+            <div key={id} className={classes.forumDiv}>
+              <Typography
+                color="primary"
+                className={classes.forumTitle}
+                component={CustomLink(`/forum/${id}`)}
+              >
+                {name}
+              </Typography>
             </div>
           ))}
         </Paper>

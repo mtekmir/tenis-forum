@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-24T14:02:40+03:00
+// Generated in 2019-03-25T18:29:03+03:00
 export type Maybe<T> = T | null;
 
 
@@ -65,6 +65,18 @@ export enum UserPermissions {
 }
 
 
+export type Date = any;
+
+
+export type DateTime = any;
+
+
+
+// ====================================================
+// Scalars
+// ====================================================
+
+
 
 
 
@@ -80,11 +92,13 @@ export interface Query {
   
   categoryGet: CategoryGetResponse;
   
-  hello: string;
-  
   forumGet?: Maybe<Forum>;
   
+  threadGet: Thread;
+  
   me?: Maybe<User>;
+  
+  userProfileGet: UserProfile;
 }
 
 
@@ -113,6 +127,38 @@ export interface Forum {
   name: string;
   
   category: Category;
+  
+  threads: Thread[];
+}
+
+
+export interface Thread {
+  
+  id: number;
+  
+  forum: Forum;
+  
+  originalPost: Post;
+  
+  createdAt: Date;
+  
+  posts: Post[];
+  
+  title: string;
+  
+  owner: ThreadOwner;
+}
+
+
+export interface Post {
+  
+  id: number;
+  
+  text: string;
+  
+  createdAt: Date;
+  
+  author: User;
 }
 
 
@@ -125,6 +171,24 @@ export interface User {
   email: string;
   
   permissions: UserPermissions[];
+}
+
+
+export interface ThreadOwner {
+  
+  username: string;
+}
+
+
+export interface UserProfile {
+  
+  id: number;
+  
+  location: string;
+  
+  gender: string;
+  
+  occupation: string;
 }
 
 
@@ -180,16 +244,6 @@ export interface Error {
 }
 
 
-export interface Post {
-  
-  id: number;
-  
-  text: string;
-  
-  author: User;
-}
-
-
 export interface CreateThreadResponse {
   
   id: number;
@@ -208,20 +262,6 @@ export interface DemoAdmin {
 }
 
 
-export interface Thread {
-  
-  id: number;
-  
-  Forum: Forum;
-  
-  originalPost: Post;
-  
-  posts: Post[];
-  
-  title: string;
-}
-
-
 
 // ====================================================
 // Arguments
@@ -230,6 +270,14 @@ export interface Thread {
 export interface ForumGetQueryArgs {
   
   id: number;
+}
+export interface ThreadGetQueryArgs {
+  
+  id: number;
+}
+export interface UserProfileGetQueryArgs {
+  
+  id: string;
 }
 export interface CategoryCreateMutationArgs {
   
@@ -285,7 +333,7 @@ export interface ResetPasswordMutationArgs {
 }
 
 
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 
 
 
@@ -339,16 +387,17 @@ export namespace QueryResolvers {
     
     categoryGet?: CategoryGetResolver<CategoryGetResponse, TypeParent, Context>;
     
-    hello?: HelloResolver<string, TypeParent, Context>;
-    
     forumGet?: ForumGetResolver<Maybe<Forum>, TypeParent, Context>;
     
+    threadGet?: ThreadGetResolver<Thread, TypeParent, Context>;
+    
     me?: MeResolver<Maybe<User>, TypeParent, Context>;
+    
+    userProfileGet?: UserProfileGetResolver<UserProfile, TypeParent, Context>;
   }
 
 
   export type CategoryGetResolver<R = CategoryGetResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
-  export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type ForumGetResolver<R = Maybe<Forum>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumGetArgs>;
   export interface ForumGetArgs {
     
@@ -356,7 +405,21 @@ export namespace QueryResolvers {
   }
 
 
-  export type MeResolver<R = Maybe<User>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type ThreadGetResolver<R = Thread, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadGetArgs>;
+  export interface ThreadGetArgs {
+    
+    id: number;
+  }
+
+
+  export type MeResolver<R = Maybe<User>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type UserProfileGetResolver<R = UserProfile, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, UserProfileGetArgs>;
+  export interface UserProfileGetArgs {
+    
+    id: string;
+  }
+
+  
 }
 
 export namespace CategoryGetResponseResolvers {
@@ -396,12 +459,62 @@ export namespace ForumResolvers {
     name?: NameResolver<string, TypeParent, Context>;
     
     category?: CategoryResolver<Category, TypeParent, Context>;
+    
+    threads?: ThreadsResolver<Thread[], TypeParent, Context>;
   }
 
 
   export type IdResolver<R = number, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
   export type NameResolver<R = string, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
-  export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ThreadsResolver<R = Thread[], Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ThreadResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Thread> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    forum?: ForumResolver<Forum, TypeParent, Context>;
+    
+    originalPost?: OriginalPostResolver<Post, TypeParent, Context>;
+    
+    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    
+    posts?: PostsResolver<Post[], TypeParent, Context>;
+    
+    title?: TitleResolver<string, TypeParent, Context>;
+    
+    owner?: OwnerResolver<ThreadOwner, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ForumResolver<R = Forum, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type OriginalPostResolver<R = Post, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<R = Date, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PostsResolver<R = Post[], Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TitleResolver<R = string, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
+  export type OwnerResolver<R = ThreadOwner, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace PostResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = Post> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    text?: TextResolver<string, TypeParent, Context>;
+    
+    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    
+    author?: AuthorResolver<User, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TextResolver<R = string, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<R = Date, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
+  export type AuthorResolver<R = User, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace UserResolvers {
@@ -421,6 +534,35 @@ export namespace UserResolvers {
   export type UsernameResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type EmailResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type PermissionsResolver<R = UserPermissions[], Parent = User, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ThreadOwnerResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = ThreadOwner> {
+    
+    username?: UsernameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type UsernameResolver<R = string, Parent = ThreadOwner, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace UserProfileResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = UserProfile> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    location?: LocationResolver<string, TypeParent, Context>;
+    
+    gender?: GenderResolver<string, TypeParent, Context>;
+    
+    occupation?: OccupationResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
+  export type LocationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
+  export type GenderResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
+  export type OccupationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace MutationResolvers {
@@ -582,22 +724,6 @@ export namespace ErrorResolvers {
   export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace PostResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Post> {
-    
-    id?: IdResolver<number, TypeParent, Context>;
-    
-    text?: TextResolver<string, TypeParent, Context>;
-    
-    author?: AuthorResolver<User, TypeParent, Context>;
-  }
-
-
-  export type IdResolver<R = number, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
-  export type TextResolver<R = string, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;
-  export type AuthorResolver<R = User, Parent = Post, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
 export namespace CreateThreadResponseResolvers {
   export interface Resolvers<Context = IContext, TypeParent = CreateThreadResponse> {
     
@@ -627,28 +753,6 @@ export namespace DemoAdminResolvers {
   export type EmailResolver<R = string, Parent = DemoAdmin, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
-export namespace ThreadResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Thread> {
-    
-    id?: IdResolver<number, TypeParent, Context>;
-    
-    Forum?: ForumResolver<Forum, TypeParent, Context>;
-    
-    originalPost?: OriginalPostResolver<Post, TypeParent, Context>;
-    
-    posts?: PostsResolver<Post[], TypeParent, Context>;
-    
-    title?: TitleResolver<string, TypeParent, Context>;
-  }
-
-
-  export type IdResolver<R = number, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
-  export type ForumResolver<R = Forum, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
-  export type OriginalPostResolver<R = Post, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
-  export type PostsResolver<R = Post[], Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;
-  export type TitleResolver<R = string, Parent = Thread, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
 
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
@@ -673,20 +777,30 @@ export interface DeprecatedDirectiveArgs {
 }
 
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
+  name: 'Date'
+}
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, any> {
+  name: 'DateTime'
+}
 
 export interface IResolvers {
     Query?: QueryResolvers.Resolvers;
     CategoryGetResponse?: CategoryGetResponseResolvers.Resolvers;
     Category?: CategoryResolvers.Resolvers;
     Forum?: ForumResolvers.Resolvers;
+    Thread?: ThreadResolvers.Resolvers;
+    Post?: PostResolvers.Resolvers;
     User?: UserResolvers.Resolvers;
+    ThreadOwner?: ThreadOwnerResolvers.Resolvers;
+    UserProfile?: UserProfileResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
-    Post?: PostResolvers.Resolvers;
     CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
     DemoAdmin?: DemoAdminResolvers.Resolvers;
-    Thread?: ThreadResolvers.Resolvers;
+    Date?: GraphQLScalarType;
+    DateTime?: GraphQLScalarType;
 }
 
 export interface IDirectiveResolvers<Result> {

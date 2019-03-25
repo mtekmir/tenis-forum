@@ -5,6 +5,9 @@ export const getForum = gql`
     forumGet(id: $id) {
       id
       name
+      category {
+        name
+      }
       threads {
         id
         title

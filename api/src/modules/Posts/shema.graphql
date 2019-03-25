@@ -1,5 +1,6 @@
 type Post {
   id: Int!
   text: String!
+  createdAt: Date!
   author: User!
 }

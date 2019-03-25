@@ -6,10 +6,12 @@ import {
   BaseEntity,
   BeforeInsert,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { UserPermissions } from './permissions';
 import { Post } from '../Posts';
 import { Thread } from '../Threads';
+import { UserProfile } from '../UserProfile';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -43,14 +45,17 @@ export class User extends BaseEntity {
   @Column('bigint', { nullable: true })
   pwResetTokenExpiry: number;
 
-  @Column('varchar', { nullable: true })
-  profileImageId: string;
-
   @OneToMany(() => Post, post => post.author)
   posts: Post[];
 
   @OneToMany(() => Thread, thread => thread.owner)
   threads: Thread[];
+
+  @Column('varchar', { nullable: true })
+  profileImageKey: string;
+
+  @OneToOne(() => UserProfile, profile => profile.user)
+  profile: UserProfile;
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {

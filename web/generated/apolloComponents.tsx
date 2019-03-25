@@ -259,7 +259,15 @@ export type GetForumForumGet = {
 
   name: string;
 
+  category: GetForumCategory;
+
   threads: GetForumThreads[];
+};
+
+export type GetForumCategory = {
+  __typename?: "Category";
+
+  name: string;
 };
 
 export type GetForumThreads = {
@@ -276,6 +284,66 @@ export type GetForumThreads = {
 
 export type GetForumOwner = {
   __typename?: "ThreadOwner";
+
+  username: string;
+};
+
+export type GetThreadVariables = {
+  id: number;
+};
+
+export type GetThreadQuery = {
+  __typename?: "Query";
+
+  threadGet: GetThreadThreadGet;
+};
+
+export type GetThreadThreadGet = {
+  __typename?: "Thread";
+
+  id: number;
+
+  title: string;
+
+  createdAt: Date;
+
+  owner: GetThreadOwner;
+
+  originalPost: GetThreadOriginalPost;
+
+  posts: GetThreadPosts[];
+};
+
+export type GetThreadOwner = {
+  __typename?: "ThreadOwner";
+
+  username: string;
+};
+
+export type GetThreadOriginalPost = {
+  __typename?: "Post";
+
+  id: number;
+
+  text: string;
+};
+
+export type GetThreadPosts = {
+  __typename?: "Post";
+
+  id: number;
+
+  text: string;
+
+  createdAt: Date;
+
+  author: GetThreadAuthor;
+};
+
+export type GetThreadAuthor = {
+  __typename?: "User";
+
+  id: string;
 
   username: string;
 };
@@ -659,6 +727,9 @@ export const GetForumDocument = gql`
     forumGet(id: $id) {
       id
       name
+      category {
+        name
+      }
       threads {
         id
         title
@@ -702,6 +773,64 @@ export function GetForumHOC<TProps, TChildProps = any>(
     GetForumVariables,
     GetForumProps<TChildProps>
   >(GetForumDocument, operationOptions);
+}
+export const GetThreadDocument = gql`
+  query GetThread($id: Int!) {
+    threadGet(id: $id) {
+      id
+      title
+      createdAt
+      owner {
+        username
+      }
+      originalPost {
+        id
+        text
+      }
+      posts {
+        id
+        text
+        createdAt
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+export class GetThreadComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetThreadQuery, GetThreadVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetThreadQuery, GetThreadVariables>
+        query={GetThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetThreadProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetThreadQuery, GetThreadVariables>
+> &
+  TChildProps;
+export function GetThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetThreadQuery,
+        GetThreadVariables,
+        GetThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetThreadQuery,
+    GetThreadVariables,
+    GetThreadProps<TChildProps>
+  >(GetThreadDocument, operationOptions);
 }
 export const MeDocument = gql`
   query Me {

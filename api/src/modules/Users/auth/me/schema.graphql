@@ -1,3 +1,11 @@
+type Me {
+  id: String!
+  username: String!
+  email: String!
+  permissions: [UserPermissions!]!
+  profile: UserProfile!
+}
+
 type Query {
-  me: User
+  me: Me
 }

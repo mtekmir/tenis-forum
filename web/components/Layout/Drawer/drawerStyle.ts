@@ -17,17 +17,17 @@ export default (theme: Theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     background: 'primary',
   },
-  navIconHide: {
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
-    },
-  },
+  // navIconHide: {
+  //   [theme.breakpoints.up('lg')]: {
+  //     display: 'none',
+  //   },
+  // },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    [theme.breakpoints.up('lg')]: {
-      position: 'fixed' as PositionProperty,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   position: 'fixed' as PositionProperty,
+    // },
     height: '101vh',
     marginLeft: -theme.spacing.unit * 5,
     marginTop: -theme.spacing.unit,
@@ -42,9 +42,9 @@ export default (theme: Theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: drawerWidth - theme.spacing.unit * 5,
-    },
-    maxHeight: '100vh',
+    // [theme.breakpoints.up('lg')]: {
+    //   marginLeft: drawerWidth - theme.spacing.unit * 5,
+    // },
+    overflow: 'hidden',
   },
 });

@@ -1,4 +1,4 @@
 export enum UserPermissions {
   Admin = 'ADMIN',
-  User = 'USER'
+  User = 'USER',
 }

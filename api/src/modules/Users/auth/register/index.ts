@@ -5,6 +5,9 @@ import { createConfirmEmailLink } from './createConfirmEmailLink';
 import { respond } from '../../../common/genericResponse';
 import { UserPermissions } from '../../../../models/User/permissions';
 import { sendConfirmationEmail } from '../../../../services/email/sendConfirmationEmail';
+import { getConnection } from 'typeorm';
+import { UserProfile } from '../../../../models/UserProfile';
+import { generateProfileImage } from './generateProfileImage';
 
 export const register: MutationResolvers.RegisterResolver = async (
   _,
@@ -15,13 +18,25 @@ export const register: MutationResolvers.RegisterResolver = async (
   if (error) {
     return { error, success: false };
   }
+  let user: User;
+  await getConnection().transaction(async manager => {
+    const profile = await manager
+      .getRepository(UserProfile)
+      .create({})
+      .save();
 
-  const user = await User.create({
-    username,
-    email: email.toLowerCase(),
-    password,
-    permissions: [UserPermissions.User],
-  }).save();
+    user = await manager
+      .getRepository(User)
+      .create({
+        username,
+        email: email.toLowerCase(),
+        password,
+        permissions: [UserPermissions.User],
+        profile,
+        profileImageKey: generateProfileImage(),
+      })
+      .save();
+  });
 
   const link = await createConfirmEmailLink(url, user.id);
 

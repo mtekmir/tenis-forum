@@ -1,0 +1,6 @@
+type UserProfile {
+  id: Int!
+  location: String!
+  gender: String!
+  occupation: String!
+}

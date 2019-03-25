@@ -14,6 +14,7 @@ import { Post } from '../Posts';
 import { User } from '../User';
 
 interface ThreadOwner {
+  id: string;
   username: string;
 }
 

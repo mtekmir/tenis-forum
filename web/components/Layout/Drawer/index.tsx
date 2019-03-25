@@ -13,26 +13,17 @@ import {
 import drawerStyle from './drawerStyle';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { MENU } from './menuItems';
-import Link from 'next/link';
 import { Header } from '../Header';
 import { withRouter, WithRouterProps } from 'next/router';
 import { UserContextConsumer } from '../../../context/userContext';
 import { MeMe } from '../../../generated/apolloComponents';
+import { CustomLink } from '../../customLink';
 
 interface Props extends WithStyles<typeof drawerStyle>, WithRouterProps {}
 interface State {
   mobileOpen: boolean;
   [key: string]: any;
 }
-
-const CustomLink = (pathname?: string) => (props: any) => {
-  return (
-    <Link href={{ pathname }}>
-      <a {...props}>{props.children}</a>
-    </Link>
-  );
-};
-
 class DrawerC extends React.PureComponent<Props, State> {
   public readonly state: State = {
     mobileOpen: false,
@@ -149,7 +140,7 @@ class DrawerC extends React.PureComponent<Props, State> {
                   </List>
                 </Drawer>
               </Hidden>
-              <Hidden mdDown implementation="css">
+              {/* <Hidden mdDown implementation="css">
                 <Drawer
                   variant="permanent"
                   open
@@ -164,7 +155,7 @@ class DrawerC extends React.PureComponent<Props, State> {
                     {this.signOut(user)}
                   </List>
                 </Drawer>
-              </Hidden>
+              </Hidden> */}
             </React.Fragment>
 
             <main className={classes.content}>

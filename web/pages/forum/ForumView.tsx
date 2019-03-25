@@ -13,7 +13,7 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
   const renderThreads = () => {
     return forum.threads.map(({ id, title, owner, createdAt }) => (
       <div key={id} className={classes.forumContainer}>
-        <Link href={`/thread/${id}`}>
+        <Link href={`/thread/${id}`} as={`/thread/${id}`}>
           <a>{title}</a>
         </Link>
         <div className={classes.ownerDateContainer}>
@@ -30,7 +30,16 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
   };
 
   return (
-    <Layout title={`${forum.name} | Tenis Forum`}>{renderThreads()}</Layout>
+    <Layout title={`${forum.name} | Tenis Forum`}>
+      <div className={classes.topDiv}>
+        <div>
+          <Typography>Forum > {forum.category.name} ></Typography>
+        </div>
+        <Typography variant="h5">{forum.name}</Typography>
+        <div className={classes.divider} />
+      </div>
+      {renderThreads()}
+    </Layout>
   );
 };
 

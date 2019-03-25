@@ -10,12 +10,15 @@ export default (theme: Theme) => ({
     background: 'primary',
   },
   navIconHide: {
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   display: 'none',
+    // },
   },
   headerContainer: {
     display: 'flex',
     alignItems: 'center',
+  },
+  title: {
+    textDecoration: 'none',
   },
 });

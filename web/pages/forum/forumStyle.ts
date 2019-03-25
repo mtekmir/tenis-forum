@@ -11,4 +11,12 @@ export default ({ spacing }: Theme) => ({
   ownerDateContainer: {
     display: 'flex',
   },
+  topDiv: {
+    padding: spacing.unit * 2,
+  },
+  divider: {
+    width: '100%',
+    height: 30,
+    background: '#efefef',
+  },
 });

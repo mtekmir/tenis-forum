@@ -6,7 +6,7 @@ import {
   ManyToOne,
   Entity,
   Column,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { Thread } from '../Threads';
 import { User } from '../User';

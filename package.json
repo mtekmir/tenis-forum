@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "next-routes": "^1.4.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.10",
-    "ts-node": "^8.0.2"
-  }
-}

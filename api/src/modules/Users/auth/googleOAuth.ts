@@ -15,7 +15,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: `/auth/google/callback`
+      callbackURL: `/auth/google/callback`,
     },
     async (_: any, __: any, { id, emails }: GoogleProfile, done: any) => {
       const email = emails[0].value;
@@ -31,7 +31,7 @@ passport.use(
         await User.create({
           googleId: id,
           email,
-          confirmed: true
+          confirmed: true,
         }).save();
       } else if (!user.googleId) {
         // user logged in before but not with google
@@ -41,6 +41,6 @@ passport.use(
       }
 
       return done(null, user);
-    }
-  )
+    },
+  ),
 );

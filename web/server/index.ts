@@ -28,6 +28,11 @@ app
       app.render(req, res, '/forum', queryParams);
     });
 
+    server.get('/thread/:id', (req, res) => {
+      const queryParams = { id: req.params.id };
+      app.render(req, res, '/thread', queryParams);
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

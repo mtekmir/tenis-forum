@@ -1,8 +1,17 @@
 import { Theme } from '@material-ui/core';
 
-export default (theme: Theme) => ({
+export default ({ palette, spacing }: Theme) => ({
+  categoryDiv: {
+    background: palette.primary.main,
+    padding: spacing.unit,
+  },
   categoryTitle: {
-    background: 'blue',
     color: 'white',
+  },
+  forumDiv: {
+    padding: spacing.unit,
+  },
+  forumTitle: {
+    textDecoration: 'none',
   },
 });

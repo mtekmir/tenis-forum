@@ -1,0 +1,29 @@
+import gql from 'graphql-tag';
+
+export const getThread = gql`
+  query GetThread($id: Int!) {
+    threadGet(id: $id) {
+      id
+      title
+      createdAt
+      owner {
+        username
+      }
+
+      originalPost {
+        id
+        text
+      }
+
+      posts {
+        id
+        text
+        createdAt
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+`;

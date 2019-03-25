@@ -1,3 +1,3 @@
 error handling
-complete fake data
+thread detail page
 test confirm user email resolver

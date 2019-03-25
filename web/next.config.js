@@ -1,5 +1,5 @@
 const withTypescript = require('@zeit/next-typescript');
-module.exports = module.exports = {
+module.exports = {
   serverRuntimeConfig: {
     BACKEND_URL: 'http://api:5000/'
   },
