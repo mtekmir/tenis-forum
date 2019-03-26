@@ -1,6 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
+import { SnackbarProvider } from 'notistack';
 import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../lib/getPageContext';
@@ -27,7 +28,9 @@ class MyApp extends App {
               sheetsManager={this.pageContext.sheetsManager}
             >
               <CssBaseline />
-              <Component {...pageProps} />
+              <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+                <Component {...pageProps} />
+              </SnackbarProvider>
             </MuiThemeProvider>
           </JssProvider>
         </ApolloProvider>

@@ -8,6 +8,7 @@ import { confirmUserEmail } from './auth/confirmUserEmail';
 import { createAdmin } from './auth/admin';
 import { userProfileGet } from './profile/getUserProfile';
 import { profileImageUrl } from './getProfileImageUrl';
+import { editUserProfile } from './profile/editUserProfile';
 
 export const resolvers = {
   Mutation: {
@@ -18,6 +19,7 @@ export const resolvers = {
     resetPassword,
     confirmUserEmail,
     createAdmin,
+    editUserProfile,
   },
   Query: {
     me,

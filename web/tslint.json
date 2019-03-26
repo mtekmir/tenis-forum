@@ -11,7 +11,7 @@
     "no-submodule-imports": false,
     "member-access": false,
     "no-implicit-dependencies": false,
-    "interface-name": [true, "never-prefix"],
+    "interface-name": false,
     "prettier": true,
     "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }]
   },

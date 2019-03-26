@@ -5,12 +5,19 @@ export const me: QueryResolvers.MeResolver = async (_, __, { userId }) => {
   if (!userId) {
     return null;
   }
-  const { id, username, email, permissions, profile } = await User.findOne({
+  const {
+    id,
+    username,
+    email,
+    permissions,
+    profile,
+    profileImageKey,
+  } = await User.findOne({
     where: {
       id: userId,
     },
     relations: ['profile'],
   });
 
-  return { id, username, email, permissions, profile };
+  return { id, username, email, permissions, profile, profileImageKey };
 };

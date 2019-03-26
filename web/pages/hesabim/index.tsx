@@ -1,76 +1,62 @@
 import * as React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
-import { ProfileForm, FormValues } from './profileForm';
-import profileStyle from './profileStyle';
-import { UserContextConsumer } from '../../context/userContext';
+import axios from 'axios';
+import { MutationFn, ApolloConsumer } from 'react-apollo';
+import ApolloClient from 'apollo-client';
+import { ProfileView } from './profileView';
+import { getUploadUrlQuery } from '../../graphql/query/getUploadUrl';
+import {
+  EditUserProfileMutation,
+  EditUserProfileVariables,
+  EditUserProfileComponent,
+} from '../../generated/apolloComponents';
+import { withSnackbar, withSnackbarProps } from 'notistack';
 
-interface Props extends WithStyles<typeof profileStyle> {
-  onClose: () => void;
-  onSubmit: (v: any, profileImage: File | null) => void;
-}
+interface Props extends withSnackbarProps {}
+const ProfileContainer: React.FunctionComponent<Props> = ({
+  enqueueSnackbar,
+}) => {
+  const onCompleted = async ({ editUserProfile }: EditUserProfileMutation) => {
+    if (!editUserProfile.error) {
+      enqueueSnackbar('Profil Güncellendi.', { variant: 'success' });
+    } else {
+      enqueueSnackbar('Beklenmedik bir hata oluştu.', { variant: 'error' });
+    }
+  };
+  const onSubmit = (
+    mutation: MutationFn<EditUserProfileMutation, EditUserProfileVariables>,
+    client: ApolloClient<any>,
+  ) => async (
+    variables: EditUserProfileVariables,
+    profileImage: File | null,
+  ) => {
+    if (Object.keys(variables).length || profileImage) {
+      if (profileImage) {
+        const {
+          data: { getUploadUrl },
+        } = await client.query({
+          query: getUploadUrlQuery,
+          variables: {
+            contentType: profileImage.type,
+            extention: profileImage.name.split('.')[1],
+          },
+        });
 
-export interface IFile extends File {
-  preview: string;
-}
-
-interface State {
-  file: IFile | null;
-  dropzoneHover: boolean;
-}
-
-class ProfileDialogC extends React.PureComponent<Props, State> {
-  public readonly state: State = {
-    file: null,
-    dropzoneHover: false,
+        await axios.put(getUploadUrl.uploadUrl, profileImage);
+        variables.profileImageKey = getUploadUrl.uploadKey;
+      }
+      return mutation({ variables });
+    }
   };
 
-  onDrop = (files: File[]) => {
-    this.setState({
-      // tslint:disable-next-line
-      file: Object.assign(files[0], {
-        preview: URL.createObjectURL(files[0]),
-      }),
-    });
-  }
+  return (
+    <ApolloConsumer>
+      {client => (
+        <EditUserProfileComponent onCompleted={onCompleted}>
+          {mutation => <ProfileView onSubmit={onSubmit(mutation, client)} />}
+        </EditUserProfileComponent>
+      )}
+    </ApolloConsumer>
+  );
+};
 
-  componentWillUnmount() {
-    const { file } = this.state;
-    // tslint:disable-next-line
-    file && URL.revokeObjectURL(file.preview);
-  }
-
-  onDropzoneHover = () => {
-    this.setState(prevState => ({ dropzoneHover: !prevState.dropzoneHover }));
-  }
-
-  onSubmit = (formValues: FormValues) => {
-    const variables: { [key: string]: any } = formValues;
-    this.props.onSubmit(variables, this.state.file);
-  }
-
-  render() {
-    const { onClose, classes } = this.props;
-    const { dropzoneHover, file } = this.state;
-    return (
-      <UserContextConsumer>
-        {({ user }) => (
-          <div className={classes.root}>
-            <div className={classes.div}>
-              <ProfileForm
-                dropzoneHover={dropzoneHover}
-                user={user}
-                onDrop={this.onDrop}
-                onSubmit={this.onSubmit}
-                file={file}
-                onClose={onClose}
-                onDropzoneHover={this.onDropzoneHover}
-              />
-            </div>
-          </div>
-        )}
-      </UserContextConsumer>
-    );
-  }
-}
-
-export default withStyles(profileStyle)(ProfileDialogC);
+export default withSnackbar(ProfileContainer);

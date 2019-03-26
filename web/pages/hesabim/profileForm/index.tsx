@@ -5,14 +5,15 @@ import {
   Grid,
   Typography,
   Button,
+  LinearProgress,
 } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import Dropzone from 'react-dropzone';
-import classNames from 'classnames';
-import { PhotoCameraOutlined } from '@material-ui/icons';
 import { TextInput } from '../../../components/forms/TextInput';
 import { MeMe } from '../../../generated/apolloComponents';
 import profileFormStyles from './profileFormStyles';
+import { DropzoneComponent } from './DropzoneComponent';
+import { PROFILE_FIELDS } from './profileFields';
+import { SelectInput } from '../../../components/forms/SelectInput';
 
 interface Props extends WithStyles<typeof profileFormStyles> {
   user: MeMe | null | undefined;
@@ -20,7 +21,6 @@ interface Props extends WithStyles<typeof profileFormStyles> {
   dropzoneHover: boolean;
   file: IFile | null;
   onDropzoneHover: () => void;
-  onClose: () => void;
   onDrop: (files: File[]) => void;
 }
 
@@ -29,20 +29,17 @@ export interface IFile extends File {
 }
 
 export interface FormValues {
-  displayName: string;
+  username: string;
 }
 const ProfileFormC: React.ComponentType<Props> = ({
   classes,
   onSubmit,
-  dropzoneHover,
-  user: { username, profileImageUrl },
-  onDropzoneHover,
-  onClose,
-  file,
-  onDrop,
+  user,
+  // tslint:disable-next-line
+  ...rest
 }) => {
   const initialValues = {
-    displayName: username,
+    username: user && user.username ? user.username : '',
   };
 
   const handleSubmit = (v: FormValues) => {
@@ -56,6 +53,48 @@ const ProfileFormC: React.ComponentType<Props> = ({
     });
     onSubmit(variables as FormValues);
   };
+
+  const renderFields = () => {
+    return PROFILE_FIELDS.map(({ label, name, type, options }) => {
+      const labelText = (
+        <Typography key={label} className={classes.label}>
+          {label}
+        </Typography>
+      );
+      let field: any;
+      if (type === 'select') {
+        field = (
+          <Field
+            key={name}
+            name={name}
+            placeholder={label}
+            options={options}
+            type="select"
+            component={SelectInput}
+            labelWitdh={classes.selectWidth}
+          />
+        );
+      } else if (type === 'text') {
+        field = (
+          <Field
+            key={name}
+            name={name}
+            placeholder={label}
+            type={type}
+            component={TextInput}
+            className={classes.input}
+            variant="outlined"
+          />
+        );
+      }
+      return [labelText, field];
+    });
+  };
+
+  if (!user) {
+    return <LinearProgress />;
+  }
+
   return (
     <div>
       <Formik<FormValues>
@@ -65,86 +104,20 @@ const ProfileFormC: React.ComponentType<Props> = ({
         {() => (
           <Form>
             <div>
-              <Grid container spacing={16}>
-                <Grid item xs={8}>
-                  <Typography className={classes.label}>
-                    Display Name
-                  </Typography>
-                  <Field
-                    name="displayName"
-                    placeholder="Display Name"
-                    type="text"
-                    component={TextInput}
-                    className={classes.input}
-                    variant="outlined"
-                  />
+              <Grid container spacing={24}>
+                <Grid item xs={8} md={8}>
+                  {renderFields()}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} md={4}>
                   <Typography className={classes.label}>
-                    Profile photo
+                    Profil Resmi
                   </Typography>
-                  <Dropzone
-                    accept="image/jpeg, image/png"
-                    multiple={false}
-                    onDrop={onDrop}
-                  >
-                    {({ getRootProps, getInputProps }) => {
-                      return (
-                        <div
-                          onMouseEnter={onDropzoneHover}
-                          onMouseLeave={onDropzoneHover}
-                          {...getRootProps({
-                            className: classes.dropzone,
-                          })}
-                        >
-                          <input {...getInputProps()} />
-                          <div
-                            className={classes.dropzoneHoverContentDiv}
-                            style={{
-                              backgroundImage: `${
-                                dropzoneHover
-                                  ? 'linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),'
-                                  : ''
-                              }url(${file ? file.preview : profileImageUrl})`,
-                              backgroundSize: '192px 192px',
-                            }}
-                          >
-                            <div
-                              className={classNames({
-                                [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                                [classes.dropzoneHoverInnerDiv]: true,
-                              })}
-                            >
-                              <PhotoCameraOutlined
-                                className={classNames({
-                                  [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                                  [classes.dropzoneHoverIcon]: true,
-                                })}
-                              />
-                              <Typography
-                                align="center"
-                                classes={{
-                                  root: classes.dropzoneHoverText,
-                                }}
-                                className={classNames({
-                                  [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                                })}
-                              >
-                                Change your profile photo
-                              </Typography>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    }}
-                  </Dropzone>
+                  <DropzoneComponent {...rest} user={user} />
                 </Grid>
               </Grid>
             </div>
             <div className={classes.buttomDiv}>
-              <Button variant="contained" onClick={onClose}>
-                Cancel
-              </Button>
+              <Button variant="contained">Cancel</Button>
               <Button
                 type="submit"
                 style={{ marginLeft: 10 }}

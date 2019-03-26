@@ -1,6 +1,12 @@
 /* tslint:disable */
 export type Maybe<T> = T | null;
 
+export interface GetUploadUrlInput {
+  contentType?: Maybe<string>;
+
+  extention?: Maybe<string>;
+}
+
 export interface CreateCategoryInput {
   name: string;
 }
@@ -49,6 +55,12 @@ export interface ResetPasswordInput {
   pwResetToken: string;
 }
 
+export interface EditUserProfileInput {
+  profileImageKey?: Maybe<string>;
+
+  username?: Maybe<string>;
+}
+
 export enum UserPermissions {
   Admin = "ADMIN",
   User = "USER"
@@ -57,6 +69,8 @@ export enum UserPermissions {
 export type Date = any;
 
 export type DateTime = any;
+
+export type Upload = any;
 
 // ====================================================
 // Documents
@@ -81,6 +95,33 @@ export type ConfirmEmailConfirmUserEmail = {
 };
 
 export type ConfirmEmailError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
+export type EditUserProfileVariables = {
+  profileImageKey?: Maybe<string>;
+  username?: Maybe<string>;
+};
+
+export type EditUserProfileMutation = {
+  __typename?: "Mutation";
+
+  editUserProfile: EditUserProfileEditUserProfile;
+};
+
+export type EditUserProfileEditUserProfile = {
+  __typename?: "Response";
+
+  error: Maybe<EditUserProfileError[]>;
+
+  success: boolean;
+};
+
+export type EditUserProfileError = {
   __typename?: "Error";
 
   path: string;
@@ -348,6 +389,27 @@ export type GetThreadAuthor = {
   username: string;
 };
 
+export type GetUploadUrlQueryVariables = {
+  contentType: string;
+  extention: string;
+};
+
+export type GetUploadUrlQueryQuery = {
+  __typename?: "Query";
+
+  getUploadUrl: GetUploadUrlQueryGetUploadUrl;
+};
+
+export type GetUploadUrlQueryGetUploadUrl = {
+  __typename?: "GetUploadUrlResponse";
+
+  success: boolean;
+
+  uploadKey: Maybe<string>;
+
+  uploadUrl: Maybe<string>;
+};
+
 export type MeVariables = {};
 
 export type MeQuery = {
@@ -357,13 +419,13 @@ export type MeQuery = {
 };
 
 export type MeMe = {
-  __typename?: "Me";
+  __typename?: "User";
 
   username: string;
 
   email: string;
 
-  profileImageUrl: string;
+  profileImageUrl: Maybe<string>;
 
   profile: MeProfile;
 };
@@ -433,6 +495,58 @@ export function ConfirmEmailHOC<TProps, TChildProps = any>(
     ConfirmEmailVariables,
     ConfirmEmailProps<TChildProps>
   >(ConfirmEmailDocument, operationOptions);
+}
+export const EditUserProfileDocument = gql`
+  mutation EditUserProfile($profileImageKey: String, $username: String) {
+    editUserProfile(
+      input: { profileImageKey: $profileImageKey, username: $username }
+    ) {
+      error {
+        path
+        message
+      }
+      success
+    }
+  }
+`;
+export class EditUserProfileComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<EditUserProfileMutation, EditUserProfileVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<EditUserProfileMutation, EditUserProfileVariables>
+        mutation={EditUserProfileDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type EditUserProfileProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<EditUserProfileMutation, EditUserProfileVariables>
+> &
+  TChildProps;
+export type EditUserProfileMutationFn = ReactApollo.MutationFn<
+  EditUserProfileMutation,
+  EditUserProfileVariables
+>;
+export function EditUserProfileHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        EditUserProfileMutation,
+        EditUserProfileVariables,
+        EditUserProfileProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    EditUserProfileMutation,
+    EditUserProfileVariables,
+    EditUserProfileProps<TChildProps>
+  >(EditUserProfileDocument, operationOptions);
 }
 export const LoginDocument = gql`
   mutation Login($email: String!, $password: String!) {
@@ -843,6 +957,50 @@ export function GetThreadHOC<TProps, TChildProps = any>(
     GetThreadVariables,
     GetThreadProps<TChildProps>
   >(GetThreadDocument, operationOptions);
+}
+export const GetUploadUrlQueryDocument = gql`
+  query GetUploadUrlQuery($contentType: String!, $extention: String!) {
+    getUploadUrl(input: { contentType: $contentType, extention: $extention }) {
+      success
+      uploadKey
+      uploadUrl
+    }
+  }
+`;
+export class GetUploadUrlQueryComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<GetUploadUrlQueryQuery, GetUploadUrlQueryVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetUploadUrlQueryQuery, GetUploadUrlQueryVariables>
+        query={GetUploadUrlQueryDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetUploadUrlQueryProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetUploadUrlQueryQuery, GetUploadUrlQueryVariables>
+> &
+  TChildProps;
+export function GetUploadUrlQueryHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetUploadUrlQueryQuery,
+        GetUploadUrlQueryVariables,
+        GetUploadUrlQueryProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetUploadUrlQueryQuery,
+    GetUploadUrlQueryVariables,
+    GetUploadUrlQueryProps<TChildProps>
+  >(GetUploadUrlQueryDocument, operationOptions);
 }
 export const MeDocument = gql`
   query Me {

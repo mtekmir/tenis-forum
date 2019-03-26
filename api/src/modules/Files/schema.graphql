@@ -1,0 +1,16 @@
+scalar Upload
+
+input GetUploadUrlInput {
+  contentType: String
+  extention: String
+}
+
+type Query {
+  getUploadUrl(input: GetUploadUrlInput!): GetUploadUrlResponse!
+}
+
+type GetUploadUrlResponse {
+  success: Boolean!
+  uploadKey: String
+  uploadUrl: String
+}

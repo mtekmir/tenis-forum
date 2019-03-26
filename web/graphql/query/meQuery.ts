@@ -9,6 +9,8 @@ export const meQuery = gql`
       profile {
         id
         gender
+        location
+        occupation
       }
     }
   }

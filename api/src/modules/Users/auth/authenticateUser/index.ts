@@ -12,7 +12,6 @@ export const authenticateUser = async (request: Request) => {
   if (!request) {
     return null;
   }
-  console.log(request.cookies);
   const { token } = request.cookies;
   if (!token) {
     return null;

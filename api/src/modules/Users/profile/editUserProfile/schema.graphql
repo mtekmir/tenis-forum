@@ -1,0 +1,8 @@
+input EditUserProfileInput {
+  profileImageKey: String
+  username: String
+}
+
+type Mutation {
+  editUserProfile(input: EditUserProfileInput!): Response!
+}

@@ -6,11 +6,11 @@ export default ({ spacing, typography }: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as FlexDirectionProperty,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: spacing.unit * 10,
+    justifyContent: 'center',
+    padding: spacing.unit * 10,
   },
   div: {
-    width: 630,
+    width: '100%',
     minHeight: '85vh',
   },
   topDiv: {

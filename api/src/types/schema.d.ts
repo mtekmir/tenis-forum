@@ -1,7 +1,14 @@
 ./types#IContext
-// Generated in 2019-03-25T18:29:03+03:00
+// Generated in 2019-03-26T09:09:47+03:00
 export type Maybe<T> = T | null;
 
+
+export interface GetUploadUrlInput {
+  
+  contentType?: Maybe<string>;
+  
+  extention?: Maybe<string>;
+}
 
 export interface CreateCategoryInput {
   
@@ -59,6 +66,15 @@ export interface ResetPasswordInput {
   pwResetToken: string;
 }
 
+export interface EditUserProfileInput {
+  
+  profileImage?: Maybe<Upload>;
+  
+  profileImageKey?: Maybe<string>;
+  
+  username?: Maybe<string>;
+}
+
 export enum UserPermissions {
   Admin = "ADMIN",
   User = "USER",
@@ -66,6 +82,9 @@ export enum UserPermissions {
 
 
 export type Date = any;
+
+
+export type Upload = any;
 
 
 export type DateTime = any;
@@ -91,6 +110,8 @@ export type DateTime = any;
 export interface Query {
   
   categoryGet: CategoryGetResponse;
+  
+  getUploadUrl: GetUploadUrlResponse;
   
   forumGet?: Maybe<Forum>;
   
@@ -171,12 +192,10 @@ export interface User {
   email: string;
   
   permissions: UserPermissions[];
-}
-
-
-export interface ThreadOwner {
   
-  username: string;
+  profileImageUrl?: Maybe<string>;
+  
+  profile: UserProfile;
 }
 
 
@@ -189,6 +208,22 @@ export interface UserProfile {
   gender: string;
   
   occupation: string;
+}
+
+
+export interface ThreadOwner {
+  
+  username: string;
+}
+
+
+export interface GetUploadUrlResponse {
+  
+  success: boolean;
+  
+  uploadKey?: Maybe<string>;
+  
+  uploadUrl?: Maybe<string>;
 }
 
 
@@ -225,6 +260,8 @@ export interface Mutation {
   requestResetPassword: Response;
   
   resetPassword: Response;
+  
+  editUserProfile: Response;
 }
 
 
@@ -267,6 +304,10 @@ export interface DemoAdmin {
 // Arguments
 // ====================================================
 
+export interface GetUploadUrlQueryArgs {
+  
+  input: GetUploadUrlInput;
+}
 export interface ForumGetQueryArgs {
   
   id: number;
@@ -331,6 +372,10 @@ export interface ResetPasswordMutationArgs {
   
   input: ResetPasswordInput;
 }
+export interface EditUserProfileMutationArgs {
+  
+  input: EditUserProfileInput;
+}
 
 
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
@@ -387,6 +432,8 @@ export namespace QueryResolvers {
     
     categoryGet?: CategoryGetResolver<CategoryGetResponse, TypeParent, Context>;
     
+    getUploadUrl?: GetUploadUrlResolver<GetUploadUrlResponse, TypeParent, Context>;
+    
     forumGet?: ForumGetResolver<Maybe<Forum>, TypeParent, Context>;
     
     threadGet?: ThreadGetResolver<Thread, TypeParent, Context>;
@@ -398,6 +445,13 @@ export namespace QueryResolvers {
 
 
   export type CategoryGetResolver<R = CategoryGetResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type GetUploadUrlResolver<R = GetUploadUrlResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, GetUploadUrlArgs>;
+  export interface GetUploadUrlArgs {
+    
+    input: GetUploadUrlInput;
+  }
+
+
   export type ForumGetResolver<R = Maybe<Forum>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumGetArgs>;
   export interface ForumGetArgs {
     
@@ -527,23 +581,19 @@ export namespace UserResolvers {
     email?: EmailResolver<string, TypeParent, Context>;
     
     permissions?: PermissionsResolver<UserPermissions[], TypeParent, Context>;
+    
+    profileImageUrl?: ProfileImageUrlResolver<Maybe<string>, TypeParent, Context>;
+    
+    profile?: ProfileResolver<UserProfile, TypeParent, Context>;
   }
 
 
   export type IdResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type UsernameResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type EmailResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
-  export type PermissionsResolver<R = UserPermissions[], Parent = User, Context = IContext> = Resolver<R, Parent, Context>;  
-}
-
-export namespace ThreadOwnerResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = ThreadOwner> {
-    
-    username?: UsernameResolver<string, TypeParent, Context>;
-  }
-
-
-  export type UsernameResolver<R = string, Parent = ThreadOwner, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type PermissionsResolver<R = UserPermissions[], Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ProfileImageUrlResolver<R = Maybe<string>, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ProfileResolver<R = UserProfile, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace UserProfileResolvers {
@@ -563,6 +613,32 @@ export namespace UserProfileResolvers {
   export type LocationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
   export type GenderResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
   export type OccupationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ThreadOwnerResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = ThreadOwner> {
+    
+    username?: UsernameResolver<string, TypeParent, Context>;
+  }
+
+
+  export type UsernameResolver<R = string, Parent = ThreadOwner, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace GetUploadUrlResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = GetUploadUrlResponse> {
+    
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+    
+    uploadKey?: UploadKeyResolver<Maybe<string>, TypeParent, Context>;
+    
+    uploadUrl?: UploadUrlResolver<Maybe<string>, TypeParent, Context>;
+  }
+
+
+  export type SuccessResolver<R = boolean, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type UploadKeyResolver<R = Maybe<string>, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type UploadUrlResolver<R = Maybe<string>, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace MutationResolvers {
@@ -599,6 +675,8 @@ export namespace MutationResolvers {
     requestResetPassword?: RequestResetPasswordResolver<Response, TypeParent, Context>;
     
     resetPassword?: ResetPasswordResolver<Response, TypeParent, Context>;
+    
+    editUserProfile?: EditUserProfileResolver<Response, TypeParent, Context>;
   }
 
 
@@ -695,6 +773,13 @@ export namespace MutationResolvers {
     input: ResetPasswordInput;
   }
 
+
+  export type EditUserProfileResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, EditUserProfileArgs>;
+  export interface EditUserProfileArgs {
+    
+    input: EditUserProfileInput;
+  }
+
   
 }
 
@@ -780,6 +865,9 @@ export interface DeprecatedDirectiveArgs {
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
   name: 'Date'
 }
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<Upload, any> {
+  name: 'Upload'
+}
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, any> {
   name: 'DateTime'
 }
@@ -792,14 +880,16 @@ export interface IResolvers {
     Thread?: ThreadResolvers.Resolvers;
     Post?: PostResolvers.Resolvers;
     User?: UserResolvers.Resolvers;
-    ThreadOwner?: ThreadOwnerResolvers.Resolvers;
     UserProfile?: UserProfileResolvers.Resolvers;
+    ThreadOwner?: ThreadOwnerResolvers.Resolvers;
+    GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;
     CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
     DemoAdmin?: DemoAdminResolvers.Resolvers;
     Date?: GraphQLScalarType;
+    Upload?: GraphQLScalarType;
     DateTime?: GraphQLScalarType;
 }
 
