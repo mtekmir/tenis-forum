@@ -16,7 +16,10 @@ export default ({ spacing }: Theme) => ({
   },
   divider: {
     width: '100%',
-    height: 30,
+    height: 45,
     background: '#efefef',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    padding: spacing.unit,
   },
 });

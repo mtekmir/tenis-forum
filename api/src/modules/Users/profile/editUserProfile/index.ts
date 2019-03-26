@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../auth/authenticateUser';
-// import { UserProfile } from '../../../../models/UserProfile';
+import { UserProfile } from '../../../../models/UserProfile';
 import { User } from '../../../../models/User';
 import { getConnection } from 'typeorm';
 import { respond } from '../../../common/genericResponse';
@@ -7,7 +7,7 @@ import { MutationResolvers } from '../../../../types/schema';
 
 export const editUserProfile: MutationResolvers.EditUserProfileResolver = async (
   _,
-  { input: { username, profileImageKey } },
+  { input: { username, profileImageKey, ...rest } },
   { userId },
 ) => {
   isAuthenticated(userId);
@@ -21,26 +21,29 @@ export const editUserProfile: MutationResolvers.EditUserProfileResolver = async 
       userUpdates.profileImageKey = profileImageKey;
     }
 
+    if (Object.keys(userUpdates).length) {
+      await getConnection()
+        .createQueryBuilder()
+        .update(User)
+        .set({ ...userUpdates })
+        .where('id = :userId', { userId })
+        .execute();
+    }
+
+    if (!Object.keys(rest).length) {
+      return respond();
+    }
+
     await getConnection()
       .createQueryBuilder()
-      .update(User)
-      .set({ ...userUpdates })
-      .where('id = :userId', { userId })
+      .update(UserProfile)
+      .set({ ...rest })
+      .where('"userId" = :userId', { userId })
       .execute();
-
-    // if (!Object.keys(rest).length) {
-    //   return respond();
-    // }
-    // await getConnection()
-    //   .createQueryBuilder()
-    //   .update(UserProfile)
-    //   .set({ ...rest })
-    //   .where('"userId" = :userId', { userId })
-    //   .execute();
 
     return respond();
   } catch (err) {
     console.log(err);
-    return respond('editUserProfile', 'Unable to edit profile');
+    throw new Error('Unable to edit profile');
   }
 };

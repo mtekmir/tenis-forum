@@ -1,14 +1,15 @@
 import { Theme } from '@material-ui/core';
 import { FlexWrapProperty, FlexDirectionProperty } from 'csstype';
+import spacing from '@material-ui/core/styles/spacing';
 
 const imageWidth = (breakpoints: any) => ({
   [breakpoints.up('md')]: {
-    width: '20%',
-    height: '20%',
+    width: 192,
+    height: 192,
   },
   [breakpoints.down('md')]: {
-    width: 130,
-    heigth: 130,
+    width: 140,
+    height: 140,
   },
 });
 export default ({ typography, breakpoints }: Theme) => ({
@@ -37,13 +38,26 @@ export default ({ typography, breakpoints }: Theme) => ({
     color: '#fff',
   },
   dropzoneHoverIcon: {
-    width: 50,
-    height: 50,
+    [breakpoints.up('md')]: {
+      width: 50,
+      height: 50,
+    },
+    [breakpoints.down('md')]: {
+      width: 35,
+      height: 35,
+    },
     color: '#fff',
+    paddingTop: spacing.unit,
   },
   dropzoneHoverInnerDiv: {
-    width: 120,
-    height: 120,
+    [breakpoints.up('md')]: {
+      width: 120,
+      height: 120,
+    },
+    [breakpoints.down('md')]: {
+      width: 80,
+      height: 80,
+    },
     display: 'flex',
     flexDirection: 'column' as FlexDirectionProperty,
     alignItems: 'center',

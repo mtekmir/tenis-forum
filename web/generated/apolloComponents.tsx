@@ -59,11 +59,23 @@ export interface EditUserProfileInput {
   profileImageKey?: Maybe<string>;
 
   username?: Maybe<string>;
+
+  location?: Maybe<string>;
+
+  occupation?: Maybe<string>;
+
+  gender?: Maybe<Gender>;
 }
 
 export enum UserPermissions {
   Admin = "ADMIN",
   User = "USER"
+}
+
+export enum Gender {
+  NotSelected = "NOT_SELECTED",
+  Female = "FEMALE",
+  Male = "MALE"
 }
 
 export type Date = any;
@@ -102,9 +114,32 @@ export type ConfirmEmailError = {
   message: string;
 };
 
+export type CreateThreadVariables = {
+  text: string;
+  title: string;
+  forumId: number;
+};
+
+export type CreateThreadMutation = {
+  __typename?: "Mutation";
+
+  threadCreate: CreateThreadThreadCreate;
+};
+
+export type CreateThreadThreadCreate = {
+  __typename?: "CreateThreadResponse";
+
+  id: number;
+
+  title: string;
+};
+
 export type EditUserProfileVariables = {
   profileImageKey?: Maybe<string>;
   username?: Maybe<string>;
+  location?: Maybe<string>;
+  gender?: Maybe<Gender>;
+  occupation?: Maybe<string>;
 };
 
 export type EditUserProfileMutation = {
@@ -436,6 +471,10 @@ export type MeProfile = {
   id: number;
 
   gender: string;
+
+  location: Maybe<string>;
+
+  occupation: Maybe<string>;
 };
 
 import gql from "graphql-tag";
@@ -496,10 +535,69 @@ export function ConfirmEmailHOC<TProps, TChildProps = any>(
     ConfirmEmailProps<TChildProps>
   >(ConfirmEmailDocument, operationOptions);
 }
+export const CreateThreadDocument = gql`
+  mutation createThread($text: String!, $title: String!, $forumId: Int!) {
+    threadCreate(input: { text: $text, title: $title, forumId: $forumId }) {
+      id
+      title
+    }
+  }
+`;
+export class CreateThreadComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<CreateThreadMutation, CreateThreadVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreateThreadMutation, CreateThreadVariables>
+        mutation={CreateThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreateThreadProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreateThreadMutation, CreateThreadVariables>
+> &
+  TChildProps;
+export type CreateThreadMutationFn = ReactApollo.MutationFn<
+  CreateThreadMutation,
+  CreateThreadVariables
+>;
+export function CreateThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreateThreadMutation,
+        CreateThreadVariables,
+        CreateThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreateThreadMutation,
+    CreateThreadVariables,
+    CreateThreadProps<TChildProps>
+  >(CreateThreadDocument, operationOptions);
+}
 export const EditUserProfileDocument = gql`
-  mutation EditUserProfile($profileImageKey: String, $username: String) {
+  mutation EditUserProfile(
+    $profileImageKey: String
+    $username: String
+    $location: String
+    $gender: Gender
+    $occupation: String
+  ) {
     editUserProfile(
-      input: { profileImageKey: $profileImageKey, username: $username }
+      input: {
+        profileImageKey: $profileImageKey
+        username: $username
+        location: $location
+        gender: $gender
+        occupation: $occupation
+      }
     ) {
       error {
         path
@@ -1011,6 +1109,8 @@ export const MeDocument = gql`
       profile {
         id
         gender
+        location
+        occupation
       }
     }
   }

@@ -1,6 +1,9 @@
 input EditUserProfileInput {
   profileImageKey: String
   username: String
+  location: String
+  occupation: String
+  gender: Gender
 }
 
 type Mutation {

@@ -28,7 +28,7 @@ class MyApp extends App {
               sheetsManager={this.pageContext.sheetsManager}
             >
               <CssBaseline />
-              <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+              <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
                 <Component {...pageProps} />
               </SnackbarProvider>
             </MuiThemeProvider>

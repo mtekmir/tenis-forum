@@ -1,9 +1,21 @@
 import gql from 'graphql-tag';
 
 export const editUserProfile = gql`
-  mutation EditUserProfile($profileImageKey: String, $username: String) {
+  mutation EditUserProfile(
+    $profileImageKey: String
+    $username: String
+    $location: String
+    $gender: Gender
+    $occupation: String
+  ) {
     editUserProfile(
-      input: { profileImageKey: $profileImageKey, username: $username }
+      input: {
+        profileImageKey: $profileImageKey
+        username: $username
+        location: $location
+        gender: $gender
+        occupation: $occupation
+      }
     ) {
       error {
         path

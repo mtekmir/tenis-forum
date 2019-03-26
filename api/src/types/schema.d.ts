@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-26T09:09:47+03:00
+// Generated in 2019-03-26T17:56:59+03:00
 export type Maybe<T> = T | null;
 
 
@@ -68,11 +68,15 @@ export interface ResetPasswordInput {
 
 export interface EditUserProfileInput {
   
-  profileImage?: Maybe<Upload>;
-  
   profileImageKey?: Maybe<string>;
   
   username?: Maybe<string>;
+  
+  location?: Maybe<string>;
+  
+  occupation?: Maybe<string>;
+  
+  gender?: Maybe<Gender>;
 }
 
 export enum UserPermissions {
@@ -80,14 +84,20 @@ export enum UserPermissions {
   User = "USER",
 }
 
+export enum Gender {
+  NotSelected = "NOT_SELECTED",
+  Female = "FEMALE",
+  Male = "MALE",
+}
+
 
 export type Date = any;
 
 
-export type Upload = any;
-
-
 export type DateTime = any;
+
+
+export type Upload = any;
 
 
 
@@ -203,11 +213,11 @@ export interface UserProfile {
   
   id: number;
   
-  location: string;
+  location?: Maybe<string>;
   
   gender: string;
   
-  occupation: string;
+  occupation?: Maybe<string>;
 }
 
 
@@ -601,18 +611,18 @@ export namespace UserProfileResolvers {
     
     id?: IdResolver<number, TypeParent, Context>;
     
-    location?: LocationResolver<string, TypeParent, Context>;
+    location?: LocationResolver<Maybe<string>, TypeParent, Context>;
     
     gender?: GenderResolver<string, TypeParent, Context>;
     
-    occupation?: OccupationResolver<string, TypeParent, Context>;
+    occupation?: OccupationResolver<Maybe<string>, TypeParent, Context>;
   }
 
 
   export type IdResolver<R = number, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
-  export type LocationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
+  export type LocationResolver<R = Maybe<string>, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
   export type GenderResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;
-  export type OccupationResolver<R = string, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type OccupationResolver<R = Maybe<string>, Parent = UserProfile, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace ThreadOwnerResolvers {
@@ -865,11 +875,11 @@ export interface DeprecatedDirectiveArgs {
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
   name: 'Date'
 }
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<Upload, any> {
-  name: 'Upload'
-}
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, any> {
   name: 'DateTime'
+}
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<Upload, any> {
+  name: 'Upload'
 }
 
 export interface IResolvers {
@@ -889,8 +899,8 @@ export interface IResolvers {
     CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
     DemoAdmin?: DemoAdminResolvers.Resolvers;
     Date?: GraphQLScalarType;
-    Upload?: GraphQLScalarType;
     DateTime?: GraphQLScalarType;
+    Upload?: GraphQLScalarType;
 }
 
 export interface IDirectiveResolvers<Result> {

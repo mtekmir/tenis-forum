@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { GetCategoriesCategories } from '../../generated/apolloComponents';
 import indexStyle from './indexStyle';
-import Link from 'next/link';
 import { CustomLink } from '../../components/customLink';
 
 interface Props extends WithStyles<typeof indexStyle> {

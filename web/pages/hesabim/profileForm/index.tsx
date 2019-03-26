@@ -38,15 +38,24 @@ const ProfileFormC: React.ComponentType<Props> = ({
   // tslint:disable-next-line
   ...rest
 }) => {
+  if (!user) {
+    return <LinearProgress />;
+  }
+  const {
+    profile: { gender, location, occupation },
+  } = user;
   const initialValues = {
-    username: user && user.username ? user.username : '',
+    username: user.username ? user.username : '',
+    gender: gender ? gender : '',
+    location: location ? location : '',
+    occupation: occupation ? occupation : '',
   };
 
   const handleSubmit = (v: FormValues) => {
     const variables = {};
     Object.keys(v).forEach(k => {
       // @ts-ignore
-      if (v[k] !== initialValues[k]) {
+      if (v[k].trim() !== initialValues[k]) {
         // @ts-ignore
         variables[k] = v[k];
       }
@@ -55,40 +64,22 @@ const ProfileFormC: React.ComponentType<Props> = ({
   };
 
   const renderFields = () => {
-    return PROFILE_FIELDS.map(({ label, name, type, options }) => {
-      const labelText = (
+    return PROFILE_FIELDS.map(({ label, name, type, options }) => (
+      <React.Fragment key={name}>
         <Typography key={label} className={classes.label}>
           {label}
         </Typography>
-      );
-      let field: any;
-      if (type === 'select') {
-        field = (
-          <Field
-            key={name}
-            name={name}
-            placeholder={label}
-            options={options}
-            type="select"
-            component={SelectInput}
-            labelWitdh={classes.selectWidth}
-          />
-        );
-      } else if (type === 'text') {
-        field = (
-          <Field
-            key={name}
-            name={name}
-            placeholder={label}
-            type={type}
-            component={TextInput}
-            className={classes.input}
-            variant="outlined"
-          />
-        );
-      }
-      return [labelText, field];
-    });
+        <Field
+          name={name}
+          placeholder={label}
+          type={type}
+          options={options}
+          component={type === 'text' ? TextInput : SelectInput}
+          className={classes.input}
+          variant="outlined"
+        />
+      </React.Fragment>
+    ));
   };
 
   if (!user) {

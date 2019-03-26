@@ -19,11 +19,11 @@ export const PROFILE_FIELDS = [
         label: 'Seçilmedi',
       },
       {
-        value: 'Male',
+        value: 'MALE',
         label: 'Erkek',
       },
       {
-        value: 'Female',
+        value: 'FEMALE',
         label: 'Kadın',
       },
     ],

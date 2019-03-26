@@ -28,9 +28,13 @@ app
       app.render(req, res, '/forum', queryParams);
     });
 
-    server.get('/thread/:id', (req, res) => {
+    server.get('/baslik/yeni', (req, res) => {
+      app.render(req, res, '/baslik/yeni');
+    });
+
+    server.get('/baslik/:id', (req, res) => {
       const queryParams = { id: req.params.id };
-      app.render(req, res, '/thread', queryParams);
+      app.render(req, res, '/baslik', queryParams);
     });
 
     server.get('*', (req, res) => {

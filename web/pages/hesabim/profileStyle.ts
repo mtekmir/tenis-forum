@@ -1,13 +1,19 @@
 import { Theme } from '@material-ui/core';
 import { FlexDirectionProperty, PositionProperty } from 'csstype';
 
-export default ({ spacing, typography }: Theme) => ({
+export default ({ spacing, typography, breakpoints }: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column' as FlexDirectionProperty,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: spacing.unit * 10,
+    [breakpoints.down('md')]: {
+      padding: spacing.unit * 5,
+    },
+
+    [breakpoints.up('md')]: {
+      padding: spacing.unit * 10,
+    },
   },
   div: {
     width: '100%',

@@ -18,15 +18,12 @@ export const SelectInput = ({
       {...field}
       {...props}
       error={Boolean(error)}
-      input={
-        <OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />
-      }
+      input={<OutlinedInput labelWidth={0} name="age" />}
     >
-      <MenuItem value="">
-        <em>None</em>
-      </MenuItem>
       {props.options.map(({ value, label }) => (
-        <MenuItem value={value}>{label}</MenuItem>
+        <MenuItem key={label} value={value}>
+          {label}
+        </MenuItem>
       ))}
     </Select>
   );

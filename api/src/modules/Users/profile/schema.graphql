@@ -1,6 +1,12 @@
+enum Gender {
+  NOT_SELECTED
+  FEMALE
+  MALE
+}
+
 type UserProfile {
   id: Int!
-  location: String!
+  location: String
   gender: String!
-  occupation: String!
+  occupation: String
 }
