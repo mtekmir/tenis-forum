@@ -9,7 +9,7 @@ import { Forum } from '../../../models/Forums';
 export const threadCreate: MutationResolvers.ThreadCreateResolver = async (
   _,
   { input: { text, title, forumId } },
-  { userId }
+  { userId },
 ) => {
   isAuthenticated(userId);
 

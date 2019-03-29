@@ -6,7 +6,9 @@ import {
 } from '../../../generated/apolloComponents';
 import { CreateThreadView, NewThreadValues } from './createThreadView';
 import { AppContext } from '../../../context/AppContext';
-import { MutationFn } from 'react-apollo';
+import { MutationFn, MutationUpdaterFn } from 'react-apollo';
+import Router from 'next/router';
+import { getThread } from '../../../graphql/query/getThread';
 
 interface Props {
   forumId: string;
@@ -19,8 +21,14 @@ const NewThread = ({ forumId }: Props) => {
     submit({ variables: { forumId: parseInt(forumId, 10), ...v } });
   };
 
+  const OnCompleted = (data: CreateThreadMutation) => {
+    if (data.threadCreate.id) {
+      Router.push(`/forum/${forumId}`);
+    }
+  };
+
   return (
-    <CreateThreadComponent>
+    <CreateThreadComponent onCompleted={OnCompleted}>
       {mutation => <CreateThreadView onSubmit={onSubmit(mutation)} />}
     </CreateThreadComponent>
   );
