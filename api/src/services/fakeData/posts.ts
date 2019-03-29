@@ -18,7 +18,7 @@ export const createPosts = async () => {
         await getConnection().transaction(async manager => {
           const post = await manager
             .getRepository(Post)
-            .create({ text: faker.lorem.sentence() })
+            .create({ text: JSON.stringify(faker.lorem.sentence()) })
             .save();
 
           await manager

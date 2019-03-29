@@ -28,8 +28,9 @@ app
       app.render(req, res, '/forum', queryParams);
     });
 
-    server.get('/baslik/yeni', (req, res) => {
-      app.render(req, res, '/baslik/yeni');
+    server.get('/forum/:id/baslik/yeni', (req, res) => {
+      const queryParams = { forumId: req.params.id };
+      app.render(req, res, '/baslik/yeni', queryParams);
     });
 
     server.get('/baslik/:id', (req, res) => {

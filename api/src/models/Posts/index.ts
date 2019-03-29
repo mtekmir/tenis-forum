@@ -22,7 +22,7 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('text', { nullable: false })
+  @Column('json', { nullable: false })
   text: string;
 
   @ManyToOne(() => User, user => user.posts, { nullable: true })

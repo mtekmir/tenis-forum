@@ -42,7 +42,7 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
             variant="contained"
             size="small"
             color="primary"
-            component={CustomLink('/baslik/yeni')}
+            component={CustomLink(`/forum/${forum.id}/baslik/yeni`)}
           >
             Yeni Başlık
           </Button>

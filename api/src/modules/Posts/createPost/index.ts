@@ -8,7 +8,7 @@ import { User } from '../../../models/User';
 export const postCreate: MutationResolvers.PostCreateResolver = async (
   _,
   { input: { text, threadId } },
-  { userId }
+  { userId },
 ) => {
   isAuthenticated(userId);
 
@@ -16,7 +16,7 @@ export const postCreate: MutationResolvers.PostCreateResolver = async (
   await getConnection().transaction(async manager => {
     post = await manager
       .getRepository(Post)
-      .create({ text })
+      .create({ text: JSON.stringify(text) })
       .save();
 
     await manager
