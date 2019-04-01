@@ -12,12 +12,13 @@ import Layout from '../../components/Layout';
 import { Post } from './post';
 import { format } from 'date-fns';
 import { Person, DateRange } from '@material-ui/icons';
+import { NewPost } from '../../components/newPost';
 
 interface Props extends WithStyles<typeof threadStyle> {
   thread: GetThreadThreadGet;
 }
 const ThreadViewC: React.FunctionComponent<Props> = ({
-  thread: { owner, posts, title, originalPost, ...rest },
+  thread: { owner, posts, title, ...rest },
   classes,
 }) => {
   const renderPosts = () => {
@@ -47,13 +48,8 @@ const ThreadViewC: React.FunctionComponent<Props> = ({
         </div>
       </Paper>
       <Grid container spacing={24} className={classes.postsContainer}>
-        <Post
-          username={owner.username}
-          createdAt={rest.createdAt}
-          text={originalPost.text}
-          index={1}
-        />
         {renderPosts()}
+        <NewPost />
       </Grid>
     </Layout>
   );

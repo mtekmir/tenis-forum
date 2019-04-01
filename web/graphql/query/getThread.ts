@@ -10,11 +10,6 @@ export const getThread = gql`
         username
       }
 
-      originalPost {
-        id
-        text
-      }
-
       posts {
         id
         text

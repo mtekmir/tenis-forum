@@ -19,6 +19,7 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (_, { id }) => {
       'owner.username',
     ])
     .where('forum.id = :id', { id })
+    .orderBy('thread.createdAt', 'DESC')
     .getOne();
 
   return forum;

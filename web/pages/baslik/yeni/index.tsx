@@ -6,9 +6,8 @@ import {
 } from '../../../generated/apolloComponents';
 import { CreateThreadView, NewThreadValues } from './createThreadView';
 import { AppContext } from '../../../context/AppContext';
-import { MutationFn, MutationUpdaterFn } from 'react-apollo';
+import { MutationFn } from 'react-apollo';
 import Router from 'next/router';
-import { getThread } from '../../../graphql/query/getThread';
 
 interface Props {
   forumId: string;

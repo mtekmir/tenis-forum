@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // Generic
   'generic.add': 'Ekle',
   'generic.cancel': 'İptal',

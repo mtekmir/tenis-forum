@@ -68,14 +68,14 @@ export interface EditUserProfileInput {
 }
 
 export enum UserPermissions {
-  Admin = 'ADMIN',
-  User = 'USER'
+  Admin = "ADMIN",
+  User = "USER"
 }
 
 export enum Gender {
-  NotSelected = 'NOT_SELECTED',
-  Female = 'FEMALE',
-  Male = 'MALE'
+  NotSelected = "NOT_SELECTED",
+  Female = "FEMALE",
+  Male = "MALE"
 }
 
 export type Date = any;
@@ -93,13 +93,13 @@ export type ConfirmEmailVariables = {
 };
 
 export type ConfirmEmailMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   confirmUserEmail: ConfirmEmailConfirmUserEmail;
 };
 
 export type ConfirmEmailConfirmUserEmail = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 
@@ -107,7 +107,7 @@ export type ConfirmEmailConfirmUserEmail = {
 };
 
 export type ConfirmEmailError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   path: string;
 
@@ -121,13 +121,13 @@ export type CreateThreadVariables = {
 };
 
 export type CreateThreadMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   threadCreate: CreateThreadThreadCreate;
 };
 
 export type CreateThreadThreadCreate = {
-  __typename?: 'CreateThreadResponse';
+  __typename?: "CreateThreadResponse";
 
   id: number;
 
@@ -143,13 +143,13 @@ export type EditUserProfileVariables = {
 };
 
 export type EditUserProfileMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   editUserProfile: EditUserProfileEditUserProfile;
 };
 
 export type EditUserProfileEditUserProfile = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   error: Maybe<EditUserProfileError[]>;
 
@@ -157,7 +157,7 @@ export type EditUserProfileEditUserProfile = {
 };
 
 export type EditUserProfileError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   path: string;
 
@@ -170,13 +170,13 @@ export type LoginVariables = {
 };
 
 export type LoginMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   login: LoginLogin;
 };
 
 export type LoginLogin = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 
@@ -184,7 +184,7 @@ export type LoginLogin = {
 };
 
 export type LoginError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   message: string;
 };
@@ -192,13 +192,13 @@ export type LoginError = {
 export type LogoutVariables = {};
 
 export type LogoutMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   logout: LogoutLogout;
 };
 
 export type LogoutLogout = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 };
@@ -210,13 +210,13 @@ export type RegisterVariables = {
 };
 
 export type RegisterMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   register: RegisterRegister;
 };
 
 export type RegisterRegister = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 
@@ -224,7 +224,7 @@ export type RegisterRegister = {
 };
 
 export type RegisterError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   path: string;
 
@@ -236,13 +236,13 @@ export type RequestResetPasswordVariables = {
 };
 
 export type RequestResetPasswordMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   requestResetPassword: RequestResetPasswordRequestResetPassword;
 };
 
 export type RequestResetPasswordRequestResetPassword = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 
@@ -250,7 +250,7 @@ export type RequestResetPasswordRequestResetPassword = {
 };
 
 export type RequestResetPasswordError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   path: string;
 
@@ -263,13 +263,13 @@ export type ResetPasswordVariables = {
 };
 
 export type ResetPasswordMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
 
   resetPassword: ResetPasswordResetPassword;
 };
 
 export type ResetPasswordResetPassword = {
-  __typename?: 'Response';
+  __typename?: "Response";
 
   success: boolean;
 
@@ -277,7 +277,7 @@ export type ResetPasswordResetPassword = {
 };
 
 export type ResetPasswordError = {
-  __typename?: 'Error';
+  __typename?: "Error";
 
   path: string;
 
@@ -287,13 +287,13 @@ export type ResetPasswordError = {
 export type GetCategoriesVariables = {};
 
 export type GetCategoriesQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
 
   categoryGet: GetCategoriesCategoryGet;
 };
 
 export type GetCategoriesCategoryGet = {
-  __typename?: 'CategoryGetResponse';
+  __typename?: "CategoryGetResponse";
 
   success: boolean;
 
@@ -301,7 +301,7 @@ export type GetCategoriesCategoryGet = {
 };
 
 export type GetCategoriesCategories = {
-  __typename?: 'Category';
+  __typename?: "Category";
 
   id: number;
 
@@ -311,7 +311,7 @@ export type GetCategoriesCategories = {
 };
 
 export type GetCategoriesForums = {
-  __typename?: 'Forum';
+  __typename?: "Forum";
 
   id: number;
 
@@ -323,13 +323,13 @@ export type GetForumVariables = {
 };
 
 export type GetForumQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
 
   forumGet: Maybe<GetForumForumGet>;
 };
 
 export type GetForumForumGet = {
-  __typename?: 'Forum';
+  __typename?: "Forum";
 
   id: number;
 
@@ -341,13 +341,13 @@ export type GetForumForumGet = {
 };
 
 export type GetForumCategory = {
-  __typename?: 'Category';
+  __typename?: "Category";
 
   name: string;
 };
 
 export type GetForumThreads = {
-  __typename?: 'Thread';
+  __typename?: "Thread";
 
   id: number;
 
@@ -359,7 +359,7 @@ export type GetForumThreads = {
 };
 
 export type GetForumOwner = {
-  __typename?: 'ThreadOwner';
+  __typename?: "ThreadOwner";
 
   username: string;
 };
@@ -369,13 +369,13 @@ export type GetThreadVariables = {
 };
 
 export type GetThreadQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
 
   threadGet: GetThreadThreadGet;
 };
 
 export type GetThreadThreadGet = {
-  __typename?: 'Thread';
+  __typename?: "Thread";
 
   id: number;
 
@@ -385,27 +385,17 @@ export type GetThreadThreadGet = {
 
   owner: GetThreadOwner;
 
-  originalPost: GetThreadOriginalPost;
-
   posts: GetThreadPosts[];
 };
 
 export type GetThreadOwner = {
-  __typename?: 'ThreadOwner';
+  __typename?: "ThreadOwner";
 
   username: string;
 };
 
-export type GetThreadOriginalPost = {
-  __typename?: 'Post';
-
-  id: number;
-
-  text: string;
-};
-
 export type GetThreadPosts = {
-  __typename?: 'Post';
+  __typename?: "Post";
 
   id: number;
 
@@ -417,7 +407,7 @@ export type GetThreadPosts = {
 };
 
 export type GetThreadAuthor = {
-  __typename?: 'User';
+  __typename?: "User";
 
   id: string;
 
@@ -430,13 +420,13 @@ export type GetUploadUrlQueryVariables = {
 };
 
 export type GetUploadUrlQueryQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
 
   getUploadUrl: GetUploadUrlQueryGetUploadUrl;
 };
 
 export type GetUploadUrlQueryGetUploadUrl = {
-  __typename?: 'GetUploadUrlResponse';
+  __typename?: "GetUploadUrlResponse";
 
   success: boolean;
 
@@ -448,13 +438,13 @@ export type GetUploadUrlQueryGetUploadUrl = {
 export type MeVariables = {};
 
 export type MeQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
 
   me: Maybe<MeMe>;
 };
 
 export type MeMe = {
-  __typename?: 'User';
+  __typename?: "User";
 
   username: string;
 
@@ -466,7 +456,7 @@ export type MeMe = {
 };
 
 export type MeProfile = {
-  __typename?: 'UserProfile';
+  __typename?: "UserProfile";
 
   id: number;
 
@@ -477,9 +467,9 @@ export type MeProfile = {
   occupation: Maybe<string>;
 };
 
-import gql from 'graphql-tag';
-import * as React from 'react';
-import * as ReactApollo from 'react-apollo';
+import gql from "graphql-tag";
+import * as React from "react";
+import * as ReactApollo from "react-apollo";
 
 // ====================================================
 // Components
@@ -505,7 +495,7 @@ export class ConfirmEmailComponent extends React.Component<
     return (
       <ReactApollo.Mutation<ConfirmEmailMutation, ConfirmEmailVariables>
         mutation={ConfirmEmailDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -552,7 +542,7 @@ export class CreateThreadComponent extends React.Component<
     return (
       <ReactApollo.Mutation<CreateThreadMutation, CreateThreadVariables>
         mutation={CreateThreadDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -616,7 +606,7 @@ export class EditUserProfileComponent extends React.Component<
     return (
       <ReactApollo.Mutation<EditUserProfileMutation, EditUserProfileVariables>
         mutation={EditUserProfileDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -663,7 +653,7 @@ export class LoginComponent extends React.Component<
     return (
       <ReactApollo.Mutation<LoginMutation, LoginVariables>
         mutation={LoginDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -707,7 +697,7 @@ export class LogoutComponent extends React.Component<
     return (
       <ReactApollo.Mutation<LogoutMutation, LogoutVariables>
         mutation={LogoutDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -757,7 +747,7 @@ export class RegisterComponent extends React.Component<
     return (
       <ReactApollo.Mutation<RegisterMutation, RegisterVariables>
         mutation={RegisterDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -813,7 +803,7 @@ export class RequestResetPasswordComponent extends React.Component<
         RequestResetPasswordVariables
       >
         mutation={RequestResetPasswordDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -868,7 +858,7 @@ export class ResetPasswordComponent extends React.Component<
     return (
       <ReactApollo.Mutation<ResetPasswordMutation, ResetPasswordVariables>
         mutation={ResetPasswordDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -920,7 +910,7 @@ export class GetCategoriesComponent extends React.Component<
     return (
       <ReactApollo.Query<GetCategoriesQuery, GetCategoriesVariables>
         query={GetCategoriesDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -972,7 +962,7 @@ export class GetForumComponent extends React.Component<
     return (
       <ReactApollo.Query<GetForumQuery, GetForumVariables>
         query={GetForumDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -1007,10 +997,6 @@ export const GetThreadDocument = gql`
       owner {
         username
       }
-      originalPost {
-        id
-        text
-      }
       posts {
         id
         text
@@ -1030,7 +1016,7 @@ export class GetThreadComponent extends React.Component<
     return (
       <ReactApollo.Query<GetThreadQuery, GetThreadVariables>
         query={GetThreadDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -1074,7 +1060,7 @@ export class GetUploadUrlQueryComponent extends React.Component<
     return (
       <ReactApollo.Query<GetUploadUrlQueryQuery, GetUploadUrlQueryVariables>
         query={GetUploadUrlQueryDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
@@ -1122,7 +1108,7 @@ export class MeComponent extends React.Component<
     return (
       <ReactApollo.Query<MeQuery, MeVariables>
         query={MeDocument}
-        {...(this as any)['props'] as any}
+        {...(this as any)["props"] as any}
       />
     );
   }
