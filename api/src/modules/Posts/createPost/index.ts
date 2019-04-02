@@ -32,5 +32,8 @@ export const postCreate: MutationResolvers.PostCreateResolver = async (
       .add(post.id);
   });
 
+  const user = await User.findOne({ where: { id: userId } });
+  post.author = user;
+
   return post;
 };

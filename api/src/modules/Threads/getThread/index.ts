@@ -26,7 +26,7 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
       'originalPost.text',
     ])
     .where('thread.id = :id', { id })
-    .orderBy('post.createdAt', 'DESC')
+    .orderBy('post.createdAt', 'ASC')
     .getOne();
 
   return thread;

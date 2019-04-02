@@ -114,6 +114,37 @@ export type ConfirmEmailError = {
   message: string;
 };
 
+export type CreatePostVariables = {
+  text: string;
+  threadId: number;
+};
+
+export type CreatePostMutation = {
+  __typename?: "Mutation";
+
+  postCreate: CreatePostPostCreate;
+};
+
+export type CreatePostPostCreate = {
+  __typename?: "Post";
+
+  id: number;
+
+  text: string;
+
+  createdAt: Date;
+
+  author: CreatePostAuthor;
+};
+
+export type CreatePostAuthor = {
+  __typename?: "User";
+
+  username: string;
+
+  profileImageUrl: Maybe<string>;
+};
+
 export type CreateThreadVariables = {
   text: string;
   title: string;
@@ -524,6 +555,56 @@ export function ConfirmEmailHOC<TProps, TChildProps = any>(
     ConfirmEmailVariables,
     ConfirmEmailProps<TChildProps>
   >(ConfirmEmailDocument, operationOptions);
+}
+export const CreatePostDocument = gql`
+  mutation createPost($text: String!, $threadId: Int!) {
+    postCreate(input: { text: $text, threadId: $threadId }) {
+      id
+      text
+      createdAt
+      author {
+        username
+        profileImageUrl
+      }
+    }
+  }
+`;
+export class CreatePostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<CreatePostMutation, CreatePostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreatePostMutation, CreatePostVariables>
+        mutation={CreatePostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreatePostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreatePostMutation, CreatePostVariables>
+> &
+  TChildProps;
+export type CreatePostMutationFn = ReactApollo.MutationFn<
+  CreatePostMutation,
+  CreatePostVariables
+>;
+export function CreatePostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreatePostMutation,
+        CreatePostVariables,
+        CreatePostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreatePostMutation,
+    CreatePostVariables,
+    CreatePostProps<TChildProps>
+  >(CreatePostDocument, operationOptions);
 }
 export const CreateThreadDocument = gql`
   mutation createThread($text: String!, $title: String!, $forumId: Int!) {

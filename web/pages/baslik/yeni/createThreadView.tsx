@@ -1,5 +1,4 @@
 import * as React from 'react';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import createThreadStyles from './createThreadStyles';
 import { WithStyles, withStyles, Typography, Button } from '@material-ui/core';
 import { EditorState } from 'draft-js';

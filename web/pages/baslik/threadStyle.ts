@@ -20,4 +20,7 @@ export default ({ spacing }: Theme) => ({
     width: 15,
     height: 15,
   },
+  newPostContainer: {
+    // height: 250,
+  },
 });

@@ -1,45 +1,55 @@
 import * as React from 'react';
-import { EditorState } from 'draft-js';
-import { EditorComponent } from '../editor';
-import { Button, WithStyles, withStyles } from '@material-ui/core';
-import newPostStyle from './newPostStyle';
+import {
+  CreatePostComponent,
+  CreatePostMutation,
+  CreatePostVariables,
+} from '../../generated/apolloComponents';
+import { NewPostView } from './NewPostView';
+import { MutationFn } from 'react-apollo';
+import { getThread } from '../../graphql/query/getThread';
 
-interface State {
-  editorState: EditorState;
+interface Props {
+  threadId: number;
 }
 
-interface Props extends WithStyles<typeof newPostStyle> {}
-
-class NewPostC extends React.PureComponent<Props, State> {
-  state = {
-    editorState: EditorState.createEmpty(),
+export const NewPostContainer: React.FunctionComponent<Props> = ({
+  threadId,
+}) => {
+  const submit = (
+    mutation: MutationFn<CreatePostMutation, CreatePostVariables>,
+  ) => (text: string) => {
+    if (!text.trim()) {
+      return;
+    }
+    mutation({ variables: { text, threadId } });
   };
 
-  onEditorStateChange = (editorState: EditorState) => {
-    this.setState({
-      editorState,
-    });
-  }
+  // const update: MutationUpdaterFn<CreatePostMutation> = (
+  //   cache,
+  //   { data: { postCreate } },
+  // ) => {
+  //   console.log(
+  //     cache.readQuery({ query: getThread, variables: { id: threadId } }),
+  //   );
+  //   const { threadGet } = cache.readQuery({
+  //     query: getThread,
+  //     variables: { id: threadId },
+  //   });
 
-  render() {
-    const { editorState } = this.state;
-    const { classes } = this.props;
-    return (
-      <div className={classes.editorDiv}>
-        <div>
-          <EditorComponent
-            onEditorStateChange={this.onEditorStateChange}
-            editorState={editorState}
-          />
-        </div>
-        <div className={classes.buttonDiv}>
-          <Button type="submit" color="secondary" variant="contained">
-            Cevap Gönder
-          </Button>
-        </div>
-      </div>
-    );
-  }
-}
+  //   cache.writeQuery({
+  //     query: getThread,
+  //     data: {
+  //       ...threadGet,
+  //       posts: [...threadGet.posts, postCreate],
+  //     },
+  //   });
+  // };
 
-export const NewPost = withStyles(newPostStyle)(NewPostC);
+  return (
+    <CreatePostComponent
+      refetchQueries={[{ query: getThread, variables: { id: threadId } }]}
+    >
+      {mutation => <NewPostView onSubmit={submit(mutation)} />}
+    </CreatePostComponent>
+  );
+};

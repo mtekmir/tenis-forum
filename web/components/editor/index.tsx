@@ -1,4 +1,5 @@
 import * as React from 'react';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
 import editorTranslations from './editorTranslations';
 import { Editor } from 'react-draft-wysiwyg';
@@ -28,9 +29,6 @@ export class EditorComponent extends React.PureComponent<Props> {
           <Editor
             localization={{ translations: editorTranslations }}
             editorState={editorState}
-            toolbarClassName="toolbarClassName"
-            wrapperClassName="wrapperClassName"
-            editorClassName="editorClassName"
             onEditorStateChange={onEditorStateChange}
             wrapperStyle={{
               border: '1px solid #c4c5c6',
