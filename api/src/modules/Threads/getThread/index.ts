@@ -20,6 +20,7 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
       'post.text',
       'author.id',
       'author.username',
+      'author.profileImageKey',
       'owner.username',
       'owner.id',
       'originalPost.id',

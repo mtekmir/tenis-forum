@@ -2,6 +2,7 @@ import faker from 'faker';
 import { User } from '../../models/User';
 import { getConnection } from 'typeorm';
 import { UserPermissions } from '../../models/User/permissions';
+import { generateProfileImage } from '../../modules/Users/auth/register/generateProfileImage';
 
 const NUM_USERS = 100;
 
@@ -16,6 +17,7 @@ export const createUsers = async () => {
         email: faker.internet.email().toLowerCase(),
         password: faker.internet.password(),
         permissions: [UserPermissions.User],
+        profileImageKey: generateProfileImage(),
       });
     }
   }

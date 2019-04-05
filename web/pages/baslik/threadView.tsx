@@ -25,6 +25,7 @@ const ThreadViewC: React.FunctionComponent<Props> = ({
     return posts.map(({ author, text, id, createdAt }, idx) => (
       <Post
         username={author.username}
+        profileImageUrl={author.profileImageUrl}
         createdAt={createdAt}
         text={text}
         key={id}

@@ -17,6 +17,7 @@ export const getThread = gql`
         author {
           id
           username
+          profileImageUrl
         }
       }
     }

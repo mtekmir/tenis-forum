@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  Grid,
   Typography,
   Paper,
   WithStyles,
@@ -15,19 +14,22 @@ interface Props extends WithStyles<typeof postStyle> {
   username: string;
   text: string;
   createdAt: Date;
+  profileImageUrl: string;
 }
 
 const PostC: React.FunctionComponent<Props> = ({
   username,
   text,
   createdAt,
+  profileImageUrl,
   index,
   classes,
 }) => {
   return (
     <div className={classes.postContainer}>
       <div className={classes.userDiv}>
-        <Typography>{username}</Typography>
+        <img src={profileImageUrl} className={classes.profileImage} />
+        <Typography className={classes.username}>{username}</Typography>
       </div>
       <Paper className={classes.postContent}>
         <div className={classes.postContent_topDiv}>

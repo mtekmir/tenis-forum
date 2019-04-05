@@ -38,7 +38,7 @@ export class Thread extends BaseEntity {
   @ManyToOne(() => Forum, forum => forum.threads)
   forum: Forum;
 
-  @ManyToOne(() => User, { nullable: true, eager: true })
+  @ManyToOne(() => User, { nullable: true, eager: true, onDelete: 'SET NULL' })
   owner: ThreadOwner;
 
   @OneToMany(() => Post, post => post.thread)

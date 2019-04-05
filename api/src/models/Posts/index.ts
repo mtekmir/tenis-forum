@@ -25,7 +25,10 @@ export class Post extends BaseEntity {
   @Column('json', { nullable: false })
   text: string;
 
-  @ManyToOne(() => User, user => user.posts, { nullable: true })
+  @ManyToOne(() => User, user => user.posts, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   author: User;
 
   @Column('int', { nullable: true })

@@ -443,6 +443,8 @@ export type GetThreadAuthor = {
   id: string;
 
   username: string;
+
+  profileImageUrl: Maybe<string>;
 };
 
 export type GetUploadUrlQueryVariables = {
@@ -1085,6 +1087,7 @@ export const GetThreadDocument = gql`
         author {
           id
           username
+          profileImageUrl
         }
       }
     }
