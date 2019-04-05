@@ -40,7 +40,7 @@ export default ({ spacing: { unit }, breakpoints }: Theme) => ({
     [breakpoints.up('sm')]: {
       minHeight: 60,
       width: '20%',
-      flexDirection: 'column',
+      flexDirection: 'column' as FlexDirectionProperty,
       alignItems: 'center',
     },
     display: 'flex',

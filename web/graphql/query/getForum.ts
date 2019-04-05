@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const getForum = gql`
-  query GetForum($id: Int!) {
-    forumGet(id: $id) {
+  query GetForum($id: Int!, $cursor: Date) {
+    forumGet(id: $id, cursor: $cursor) {
       id
       name
       category {

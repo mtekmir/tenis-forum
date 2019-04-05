@@ -5,7 +5,7 @@ import { User } from '../../models/User';
 import { getConnection } from 'typeorm';
 import { Thread } from '../../models/Threads';
 
-const NUM_THREADS = 20;
+const NUM_THREADS = 50;
 
 export const createThreads = async () => {
   const forums = await Forum.find({ relations: ['threads'] });

@@ -351,6 +351,7 @@ export type GetCategoriesForums = {
 
 export type GetForumVariables = {
   id: number;
+  cursor?: Maybe<Date>;
 };
 
 export type GetForumQuery = {
@@ -397,6 +398,7 @@ export type GetForumOwner = {
 
 export type GetThreadVariables = {
   id: number;
+  cursor?: Maybe<Date>;
 };
 
 export type GetThreadQuery = {
@@ -1020,8 +1022,8 @@ export function GetCategoriesHOC<TProps, TChildProps = any>(
   >(GetCategoriesDocument, operationOptions);
 }
 export const GetForumDocument = gql`
-  query GetForum($id: Int!) {
-    forumGet(id: $id) {
+  query GetForum($id: Int!, $cursor: Date) {
+    forumGet(id: $id, cursor: $cursor) {
       id
       name
       category {
@@ -1072,8 +1074,8 @@ export function GetForumHOC<TProps, TChildProps = any>(
   >(GetForumDocument, operationOptions);
 }
 export const GetThreadDocument = gql`
-  query GetThread($id: Int!) {
-    threadGet(id: $id) {
+  query GetThread($id: Int!, $cursor: Date) {
+    threadGet(id: $id, cursor: $cursor) {
       id
       title
       createdAt

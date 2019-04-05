@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-03-26T17:56:59+03:00
+// Generated in 2019-04-05T20:03:36+03:00
 export type Maybe<T> = T | null;
 
 
@@ -321,10 +321,14 @@ export interface GetUploadUrlQueryArgs {
 export interface ForumGetQueryArgs {
   
   id: number;
+  
+  cursor: Date;
 }
 export interface ThreadGetQueryArgs {
   
   id: number;
+  
+  cursor?: Maybe<Date>;
 }
 export interface UserProfileGetQueryArgs {
   
@@ -466,6 +470,8 @@ export namespace QueryResolvers {
   export interface ForumGetArgs {
     
     id: number;
+    
+    cursor: Date;
   }
 
 
@@ -473,6 +479,8 @@ export namespace QueryResolvers {
   export interface ThreadGetArgs {
     
     id: number;
+    
+    cursor?: Maybe<Date>;
   }
 
 

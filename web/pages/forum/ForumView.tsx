@@ -6,9 +6,11 @@ import Layout from '../../components/Layout';
 import { Typography, WithStyles, withStyles, Button } from '@material-ui/core';
 import forumStyle from './forumStyle';
 import { CustomLink } from '../../components/customLink';
+import { Pagination } from '../../components/pagination';
 
 interface Props extends WithStyles<typeof forumStyle> {
   forum: GetForumForumGet;
+  fetchMore: (opts: any) => void;
 }
 const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
   const renderThreads = () => {
@@ -36,8 +38,8 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
         <div>
           <Typography>Forum > {forum.category.name} ></Typography>
         </div>
-        <Typography variant="h5">{forum.name}</Typography>
-        <div className={classes.divider}>
+        <div className={classes.titleDiv}>
+          <Typography variant="h5">{forum.name}</Typography>
           <Button
             variant="contained"
             size="small"
@@ -46,6 +48,9 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
           >
             Yeni Başlık
           </Button>
+        </div>
+        <div className={classes.divider}>
+          <Pagination page={1} rowCount={25} />
         </div>
       </div>
       {renderThreads()}

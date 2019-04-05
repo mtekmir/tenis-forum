@@ -2,8 +2,11 @@ import { QueryResolvers } from '../../../types/schema';
 import { Forum } from '../../../models/Forums';
 import { getConnection } from 'typeorm';
 
-export const forumGet: QueryResolvers.ForumGetResolver = async (_, { id }) => {
-  const forum = await getConnection()
+export const forumGet: QueryResolvers.ForumGetResolver = async (
+  _,
+  { id, cursor },
+) => {
+  const query = getConnection()
     .getRepository(Forum)
     .createQueryBuilder('forum')
     .leftJoinAndSelect('forum.category', 'category')
@@ -18,9 +21,13 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (_, { id }) => {
       'thread.forum',
       'owner.username',
     ])
-    .where('forum.id = :id', { id })
-    .orderBy('thread.createdAt', 'DESC')
-    .getOne();
+    .where('forum.id = :id', { id });
+
+  if (cursor) {
+    query.andWhere('thread.createdAt < :cursor', { cursor });
+  }
+
+  const forum = await query.orderBy('thread.createdAt', 'DESC').getOne();
 
   return forum;
 };

@@ -7,13 +7,13 @@ import { AppContext } from '../../context/AppContext';
 const ThreadContainer = ({ id }: { id: string }) => {
   return (
     <GetThreadComponent variables={{ id: parseInt(id, 10) }}>
-      {({ data, loading }) => {
+      {({ data, loading, fetchMore }) => {
         if (loading) {
           return <LinearProgress />;
         }
 
         if (data && data.threadGet) {
-          return <ThreadView thread={data.threadGet} />;
+          return <ThreadView fetchMore={fetchMore} thread={data.threadGet} />;
         }
       }}
     </GetThreadComponent>

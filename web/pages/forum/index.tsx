@@ -7,13 +7,13 @@ import { AppContext } from '../../context/AppContext';
 const ForumContainer = ({ id }: { id: string }) => {
   return (
     <GetForumComponent variables={{ id: parseInt(id, 10) }}>
-      {({ data, loading }) => {
+      {({ data, loading, fetchMore }) => {
         if (loading) {
           return <LinearProgress />;
         }
 
         if (data && data.forumGet) {
-          return <ForumView forum={data.forumGet} />;
+          return <ForumView fetchMore={fetchMore} forum={data.forumGet} />;
         }
       }}
     </GetForumComponent>

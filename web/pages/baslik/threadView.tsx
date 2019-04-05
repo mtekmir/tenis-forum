@@ -16,6 +16,7 @@ import { NewPostContainer } from '../../components/newPost';
 
 interface Props extends WithStyles<typeof threadStyle> {
   thread: GetThreadThreadGet;
+  fetchMore: (opts: any) => void;
 }
 const ThreadViewC: React.FunctionComponent<Props> = ({
   thread: { owner, posts, title, ...rest },

@@ -4,9 +4,9 @@ import { Thread } from '../../../models/Threads';
 
 export const threadGet: QueryResolvers.ThreadGetResolver = async (
   _,
-  { id },
+  { id, cursor },
 ) => {
-  const thread = await getConnection()
+  const query = getConnection()
     .getRepository(Thread)
     .createQueryBuilder('thread')
     .leftJoinAndSelect('thread.posts', 'post')
@@ -26,9 +26,13 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
       'originalPost.id',
       'originalPost.text',
     ])
-    .where('thread.id = :id', { id })
-    .orderBy('post.createdAt', 'ASC')
-    .getOne();
+    .where('thread.id = :id', { id });
+
+  if (cursor) {
+    query.andWhere('post.createdAt < :cursor', { cursor });
+  }
+
+  const thread = await query.orderBy('post.createdAt', 'ASC').getOne();
 
   return thread;
 };

@@ -8,6 +8,11 @@ export default ({ spacing }: Theme) => ({
     padding: spacing.unit * 2,
     borderBottom: '1px solid #8f91ad',
   },
+  titleDiv: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: spacing.unit * 2,
+  },
   ownerDateContainer: {
     display: 'flex',
   },
