@@ -1,11 +1,19 @@
 import { QueryResolvers } from '../../../types/schema';
 import { Forum } from '../../../models/Forums';
 import { getConnection } from 'typeorm';
+import { Thread } from '../../../models/Threads';
 
 export const forumGet: QueryResolvers.ForumGetResolver = async (
   _,
-  { id, cursor },
+  { id, offset = 0 },
 ) => {
+  const threadCountQuery = await getConnection()
+    .getRepository(Thread)
+    .createQueryBuilder('thread')
+    .select('COUNT(thread.id) as count')
+    .where('thread."forumId" = :id', { id })
+    .getRawOne();
+
   const query = getConnection()
     .getRepository(Forum)
     .createQueryBuilder('forum')
@@ -23,11 +31,14 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (
     ])
     .where('forum.id = :id', { id });
 
-  if (cursor) {
-    query.andWhere('thread.createdAt < :cursor', { cursor });
-  }
+  const forum = await query
+    .orderBy('thread.createdAt', 'DESC')
+    .limit(25)
+    .offset(offset)
+    .getOne();
 
-  const forum = await query.orderBy('thread.createdAt', 'DESC').getOne();
-
-  return forum;
+  return {
+    forum,
+    threadCount: threadCountQuery.count,
+  };
 };

@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-04-05T20:03:36+03:00
+// Generated in 2019-04-06T14:49:36+03:00
 export type Maybe<T> = T | null;
 
 
@@ -123,7 +123,7 @@ export interface Query {
   
   getUploadUrl: GetUploadUrlResponse;
   
-  forumGet?: Maybe<Forum>;
+  forumGet: GetForumResponse;
   
   threadGet: Thread;
   
@@ -237,6 +237,14 @@ export interface GetUploadUrlResponse {
 }
 
 
+export interface GetForumResponse {
+  
+  forum: Forum;
+  
+  threadCount: number;
+}
+
+
 export interface Mutation {
   
   categoryCreate: Response;
@@ -322,7 +330,7 @@ export interface ForumGetQueryArgs {
   
   id: number;
   
-  cursor: Date;
+  offset?: Maybe<number>;
 }
 export interface ThreadGetQueryArgs {
   
@@ -448,7 +456,7 @@ export namespace QueryResolvers {
     
     getUploadUrl?: GetUploadUrlResolver<GetUploadUrlResponse, TypeParent, Context>;
     
-    forumGet?: ForumGetResolver<Maybe<Forum>, TypeParent, Context>;
+    forumGet?: ForumGetResolver<GetForumResponse, TypeParent, Context>;
     
     threadGet?: ThreadGetResolver<Thread, TypeParent, Context>;
     
@@ -466,12 +474,12 @@ export namespace QueryResolvers {
   }
 
 
-  export type ForumGetResolver<R = Maybe<Forum>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumGetArgs>;
+  export type ForumGetResolver<R = GetForumResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ForumGetArgs>;
   export interface ForumGetArgs {
     
     id: number;
     
-    cursor: Date;
+    offset?: Maybe<number>;
   }
 
 
@@ -657,6 +665,19 @@ export namespace GetUploadUrlResponseResolvers {
   export type SuccessResolver<R = boolean, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;
   export type UploadKeyResolver<R = Maybe<string>, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;
   export type UploadUrlResolver<R = Maybe<string>, Parent = GetUploadUrlResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace GetForumResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = GetForumResponse> {
+    
+    forum?: ForumResolver<Forum, TypeParent, Context>;
+    
+    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type ForumResolver<R = Forum, Parent = GetForumResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ThreadCountResolver<R = number, Parent = GetForumResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace MutationResolvers {
@@ -901,6 +922,7 @@ export interface IResolvers {
     UserProfile?: UserProfileResolvers.Resolvers;
     ThreadOwner?: ThreadOwnerResolvers.Resolvers;
     GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers;
+    GetForumResponse?: GetForumResponseResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;

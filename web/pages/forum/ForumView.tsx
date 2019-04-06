@@ -1,18 +1,28 @@
 import { format } from 'date-fns';
 import * as React from 'react';
-import { GetForumForumGet } from '../../generated/apolloComponents';
+import {
+  GetForumForumGet,
+  GetForumQuery,
+} from '../../generated/apolloComponents';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { Typography, WithStyles, withStyles, Button } from '@material-ui/core';
 import forumStyle from './forumStyle';
 import { CustomLink } from '../../components/customLink';
 import { Pagination } from '../../components/pagination';
+import { FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-boost';
 
 interface Props extends WithStyles<typeof forumStyle> {
   forum: GetForumForumGet;
-  fetchMore: (opts: any) => void;
+  fetchMore: (
+    opts: FetchMoreOptions & FetchMoreQueryOptions<GetForumQuery, any>,
+  ) => void;
 }
-const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
+const ForumViewC: React.FunctionComponent<Props> = ({
+  forum: { forum, threadCount },
+  fetchMore,
+  classes,
+}) => {
   const renderThreads = () => {
     return forum.threads.map(({ id, title, owner, createdAt }) => (
       <div key={id} className={classes.forumContainer}>
@@ -30,6 +40,19 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
         </div>
       </div>
     ));
+  };
+
+  const handleFetchMore = (offset: number) => {
+    fetchMore({
+      variables: { id: forum.id, offset },
+      updateQuery: (prevRes, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return prevRes;
+        }
+
+        return fetchMoreResult;
+      },
+    });
   };
 
   return (
@@ -50,7 +73,10 @@ const ForumViewC: React.FunctionComponent<Props> = ({ forum, classes }) => {
           </Button>
         </div>
         <div className={classes.divider}>
-          <Pagination page={1} rowCount={25} />
+          <Pagination
+            count={threadCount}
+            getRows={offset => handleFetchMore(offset)}
+          />
         </div>
       </div>
       {renderThreads()}

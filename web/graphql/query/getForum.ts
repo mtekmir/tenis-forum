@@ -1,21 +1,24 @@
 import gql from 'graphql-tag';
 
 export const getForum = gql`
-  query GetForum($id: Int!, $cursor: Date) {
-    forumGet(id: $id, cursor: $cursor) {
-      id
-      name
-      category {
-        name
-      }
-      threads {
+  query GetForum($id: Int!, $offset: Int) {
+    forumGet(id: $id, offset: $offset) {
+      forum {
         id
-        title
-        owner {
-          username
+        name
+        category {
+          name
         }
-        createdAt
+        threads {
+          id
+          title
+          owner {
+            username
+          }
+          createdAt
+        }
       }
+      threadCount
     }
   }
 `;

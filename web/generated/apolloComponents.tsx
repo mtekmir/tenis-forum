@@ -351,16 +351,24 @@ export type GetCategoriesForums = {
 
 export type GetForumVariables = {
   id: number;
-  cursor?: Maybe<Date>;
+  offset?: Maybe<number>;
 };
 
 export type GetForumQuery = {
   __typename?: "Query";
 
-  forumGet: Maybe<GetForumForumGet>;
+  forumGet: GetForumForumGet;
 };
 
 export type GetForumForumGet = {
+  __typename?: "GetForumResponse";
+
+  forum: GetForumForum;
+
+  threadCount: number;
+};
+
+export type GetForumForum = {
   __typename?: "Forum";
 
   id: number;
@@ -1022,21 +1030,24 @@ export function GetCategoriesHOC<TProps, TChildProps = any>(
   >(GetCategoriesDocument, operationOptions);
 }
 export const GetForumDocument = gql`
-  query GetForum($id: Int!, $cursor: Date) {
-    forumGet(id: $id, cursor: $cursor) {
-      id
-      name
-      category {
-        name
-      }
-      threads {
+  query GetForum($id: Int!, $offset: Int) {
+    forumGet(id: $id, offset: $offset) {
+      forum {
         id
-        title
-        owner {
-          username
+        name
+        category {
+          name
         }
-        createdAt
+        threads {
+          id
+          title
+          owner {
+            username
+          }
+          createdAt
+        }
       }
+      threadCount
     }
   }
 `;
