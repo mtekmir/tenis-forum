@@ -349,6 +349,28 @@ export type GetCategoriesForums = {
   name: string;
 };
 
+export type GetDashboardVariables = {};
+
+export type GetDashboardQuery = {
+  __typename?: "Query";
+
+  dashboardGet: GetDashboardDashboardGet;
+};
+
+export type GetDashboardDashboardGet = {
+  __typename?: "GetDashboardResponse";
+
+  userCount: number;
+
+  categoryCount: number;
+
+  forumCount: number;
+
+  threadCount: number;
+
+  postCount: number;
+};
+
 export type GetForumVariables = {
   id: number;
   offset?: Maybe<number>;
@@ -1036,6 +1058,50 @@ export function GetCategoriesHOC<TProps, TChildProps = any>(
     GetCategoriesVariables,
     GetCategoriesProps<TChildProps>
   >(GetCategoriesDocument, operationOptions);
+}
+export const GetDashboardDocument = gql`
+  query GetDashboard {
+    dashboardGet {
+      userCount
+      categoryCount
+      forumCount
+      threadCount
+      postCount
+    }
+  }
+`;
+export class GetDashboardComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetDashboardQuery, GetDashboardVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetDashboardQuery, GetDashboardVariables>
+        query={GetDashboardDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetDashboardProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetDashboardQuery, GetDashboardVariables>
+> &
+  TChildProps;
+export function GetDashboardHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetDashboardQuery,
+        GetDashboardVariables,
+        GetDashboardProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetDashboardQuery,
+    GetDashboardVariables,
+    GetDashboardProps<TChildProps>
+  >(GetDashboardDocument, operationOptions);
 }
 export const GetForumDocument = gql`
   query GetForum($id: Int!, $offset: Int) {
