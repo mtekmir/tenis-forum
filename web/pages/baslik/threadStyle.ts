@@ -23,4 +23,12 @@ export default ({ spacing }: Theme) => ({
   newPostContainer: {
     // height: 250,
   },
+  divider: {
+    width: '100%',
+    height: 45,
+    background: '#efefef',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    padding: spacing.unit,
+  },
 });

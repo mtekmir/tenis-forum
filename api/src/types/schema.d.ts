@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-04-06T14:49:36+03:00
+// Generated in 2019-04-08T21:13:31+03:00
 export type Maybe<T> = T | null;
 
 
@@ -119,17 +119,33 @@ export type Upload = any;
 
 export interface Query {
   
+  dashboardGet: GetDashboardResponse;
+  
   categoryGet: CategoryGetResponse;
   
   getUploadUrl: GetUploadUrlResponse;
   
   forumGet: GetForumResponse;
   
-  threadGet: Thread;
+  threadGet: GetThreadResponse;
   
   me?: Maybe<User>;
   
   userProfileGet: UserProfile;
+}
+
+
+export interface GetDashboardResponse {
+  
+  userCount: number;
+  
+  postCount: number;
+  
+  threadCount: number;
+  
+  forumCount: number;
+  
+  categoryCount: number;
 }
 
 
@@ -245,6 +261,14 @@ export interface GetForumResponse {
 }
 
 
+export interface GetThreadResponse {
+  
+  thread: Thread;
+  
+  postCount: number;
+}
+
+
 export interface Mutation {
   
   categoryCreate: Response;
@@ -336,7 +360,7 @@ export interface ThreadGetQueryArgs {
   
   id: number;
   
-  cursor?: Maybe<Date>;
+  offset?: Maybe<number>;
 }
 export interface UserProfileGetQueryArgs {
   
@@ -452,13 +476,15 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 export namespace QueryResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
+    dashboardGet?: DashboardGetResolver<GetDashboardResponse, TypeParent, Context>;
+    
     categoryGet?: CategoryGetResolver<CategoryGetResponse, TypeParent, Context>;
     
     getUploadUrl?: GetUploadUrlResolver<GetUploadUrlResponse, TypeParent, Context>;
     
     forumGet?: ForumGetResolver<GetForumResponse, TypeParent, Context>;
     
-    threadGet?: ThreadGetResolver<Thread, TypeParent, Context>;
+    threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, Context>;
     
     me?: MeResolver<Maybe<User>, TypeParent, Context>;
     
@@ -466,6 +492,7 @@ export namespace QueryResolvers {
   }
 
 
+  export type DashboardGetResolver<R = GetDashboardResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type CategoryGetResolver<R = CategoryGetResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
   export type GetUploadUrlResolver<R = GetUploadUrlResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, GetUploadUrlArgs>;
   export interface GetUploadUrlArgs {
@@ -483,12 +510,12 @@ export namespace QueryResolvers {
   }
 
 
-  export type ThreadGetResolver<R = Thread, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadGetArgs>;
+  export type ThreadGetResolver<R = GetThreadResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadGetArgs>;
   export interface ThreadGetArgs {
     
     id: number;
     
-    cursor?: Maybe<Date>;
+    offset?: Maybe<number>;
   }
 
 
@@ -500,6 +527,28 @@ export namespace QueryResolvers {
   }
 
   
+}
+
+export namespace GetDashboardResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = GetDashboardResponse> {
+    
+    userCount?: UserCountResolver<number, TypeParent, Context>;
+    
+    postCount?: PostCountResolver<number, TypeParent, Context>;
+    
+    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+    
+    forumCount?: ForumCountResolver<number, TypeParent, Context>;
+    
+    categoryCount?: CategoryCountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type UserCountResolver<R = number, Parent = GetDashboardResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PostCountResolver<R = number, Parent = GetDashboardResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ThreadCountResolver<R = number, Parent = GetDashboardResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ForumCountResolver<R = number, Parent = GetDashboardResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CategoryCountResolver<R = number, Parent = GetDashboardResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace CategoryGetResponseResolvers {
@@ -678,6 +727,19 @@ export namespace GetForumResponseResolvers {
 
   export type ForumResolver<R = Forum, Parent = GetForumResponse, Context = IContext> = Resolver<R, Parent, Context>;
   export type ThreadCountResolver<R = number, Parent = GetForumResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace GetThreadResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = GetThreadResponse> {
+    
+    thread?: ThreadResolver<Thread, TypeParent, Context>;
+    
+    postCount?: PostCountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type ThreadResolver<R = Thread, Parent = GetThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PostCountResolver<R = number, Parent = GetThreadResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace MutationResolvers {
@@ -913,6 +975,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<Upload, any>
 
 export interface IResolvers {
     Query?: QueryResolvers.Resolvers;
+    GetDashboardResponse?: GetDashboardResponseResolvers.Resolvers;
     CategoryGetResponse?: CategoryGetResponseResolvers.Resolvers;
     Category?: CategoryResolvers.Resolvers;
     Forum?: ForumResolvers.Resolvers;
@@ -923,6 +986,7 @@ export interface IResolvers {
     ThreadOwner?: ThreadOwnerResolvers.Resolvers;
     GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers;
     GetForumResponse?: GetForumResponseResolvers.Resolvers;
+    GetThreadResponse?: GetThreadResponseResolvers.Resolvers;
     Mutation?: MutationResolvers.Resolvers;
     Response?: ResponseResolvers.Resolvers;
     Error?: ErrorResolvers.Resolvers;

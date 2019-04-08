@@ -1,12 +1,20 @@
 import { QueryResolvers } from '../../../types/schema';
 import { getConnection } from 'typeorm';
 import { Thread } from '../../../models/Threads';
+import { Post } from '../../../models/Posts';
 
 export const threadGet: QueryResolvers.ThreadGetResolver = async (
   _,
-  { id, cursor },
+  { id, offset },
 ) => {
-  const query = getConnection()
+  const postCountQuery = await getConnection()
+    .getRepository(Post)
+    .createQueryBuilder('post')
+    .select('COUNT(post.id) as count')
+    .where('post."threadId" = :id', { id })
+    .getRawOne();
+
+  const thread = await getConnection()
     .getRepository(Thread)
     .createQueryBuilder('thread')
     .leftJoinAndSelect('thread.posts', 'post')
@@ -26,13 +34,14 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
       'originalPost.id',
       'originalPost.text',
     ])
-    .where('thread.id = :id', { id });
+    .where('thread.id = :id', { id })
+    .orderBy('post.createdAt', 'ASC')
+    .limit(25)
+    .offset(offset)
+    .getOne();
 
-  if (cursor) {
-    query.andWhere('post.createdAt < :cursor', { cursor });
-  }
-
-  const thread = await query.orderBy('post.createdAt', 'ASC').getOne();
-
-  return thread;
+  return {
+    thread,
+    postCount: postCountQuery.count,
+  };
 };

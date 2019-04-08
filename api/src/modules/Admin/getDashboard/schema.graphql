@@ -1,0 +1,11 @@
+type Query {
+  dashboardGet: GetDashboardResponse!
+}
+
+type GetDashboardResponse {
+  userCount: Int!
+  postCount: Int!
+  threadCount: Int!
+  forumCount: Int!
+  categoryCount: Int!
+}

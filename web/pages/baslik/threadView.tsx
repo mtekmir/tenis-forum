@@ -7,19 +7,30 @@ import {
   Grid,
 } from '@material-ui/core';
 import threadStyle from './threadStyle';
-import { GetThreadThreadGet } from '../../generated/apolloComponents';
+import {
+  GetThreadThreadGet,
+  GetThreadQuery,
+} from '../../generated/apolloComponents';
 import Layout from '../../components/Layout';
 import { Post } from './post';
 import { format } from 'date-fns';
 import { Person, DateRange } from '@material-ui/icons';
 import { NewPostContainer } from '../../components/newPost';
+import { FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-boost';
+import { Pagination } from '../../components/pagination';
 
 interface Props extends WithStyles<typeof threadStyle> {
   thread: GetThreadThreadGet;
-  fetchMore: (opts: any) => void;
+  fetchMore: (
+    opts: FetchMoreOptions & FetchMoreQueryOptions<GetThreadQuery, any>,
+  ) => void;
 }
 const ThreadViewC: React.FunctionComponent<Props> = ({
-  thread: { owner, posts, title, ...rest },
+  thread: {
+    thread: { owner, posts, title, ...rest },
+    postCount,
+  },
+  fetchMore,
   classes,
 }) => {
   const renderPosts = () => {
@@ -33,6 +44,19 @@ const ThreadViewC: React.FunctionComponent<Props> = ({
         index={idx + 2}
       />
     ));
+  };
+
+  const handleFetchMore = (offset: number) => {
+    fetchMore({
+      variables: { id: rest.id, offset },
+      updateQuery: (prevRes, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return prevRes;
+        }
+
+        return fetchMoreResult;
+      },
+    });
   };
 
   return (
@@ -50,6 +74,12 @@ const ThreadViewC: React.FunctionComponent<Props> = ({
         </div>
       </Paper>
       <Grid container spacing={24} className={classes.postsContainer}>
+        <div className={classes.divider}>
+          <Pagination
+            count={postCount}
+            getRows={offset => handleFetchMore(offset)}
+          />
+        </div>
         <Grid item xs={12} className={classes.newPostContainer}>
           {renderPosts()}
           <NewPostContainer threadId={rest.id} />

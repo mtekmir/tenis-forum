@@ -406,7 +406,7 @@ export type GetForumOwner = {
 
 export type GetThreadVariables = {
   id: number;
-  cursor?: Maybe<Date>;
+  offset?: Maybe<number>;
 };
 
 export type GetThreadQuery = {
@@ -416,6 +416,14 @@ export type GetThreadQuery = {
 };
 
 export type GetThreadThreadGet = {
+  __typename?: "GetThreadResponse";
+
+  thread: GetThreadThread;
+
+  postCount: number;
+};
+
+export type GetThreadThread = {
   __typename?: "Thread";
 
   id: number;
@@ -1085,24 +1093,27 @@ export function GetForumHOC<TProps, TChildProps = any>(
   >(GetForumDocument, operationOptions);
 }
 export const GetThreadDocument = gql`
-  query GetThread($id: Int!, $cursor: Date) {
-    threadGet(id: $id, cursor: $cursor) {
-      id
-      title
-      createdAt
-      owner {
-        username
-      }
-      posts {
+  query GetThread($id: Int!, $offset: Int) {
+    threadGet(id: $id, offset: $offset) {
+      thread {
         id
-        text
+        title
         createdAt
-        author {
-          id
+        owner {
           username
-          profileImageUrl
+        }
+        posts {
+          id
+          text
+          createdAt
+          author {
+            id
+            username
+            profileImageUrl
+          }
         }
       }
+      postCount
     }
   }
 `;

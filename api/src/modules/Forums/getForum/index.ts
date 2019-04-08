@@ -14,7 +14,7 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (
     .where('thread."forumId" = :id', { id })
     .getRawOne();
 
-  const query = getConnection()
+  const forum = await getConnection()
     .getRepository(Forum)
     .createQueryBuilder('forum')
     .leftJoinAndSelect('forum.category', 'category')
@@ -29,9 +29,7 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (
       'thread.forum',
       'owner.username',
     ])
-    .where('forum.id = :id', { id });
-
-  const forum = await query
+    .where('forum.id = :id', { id })
     .orderBy('thread.createdAt', 'DESC')
     .limit(25)
     .offset(offset)

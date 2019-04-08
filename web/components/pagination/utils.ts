@@ -14,7 +14,7 @@ export const setPagePrefix = (
     pagePrefix = page + 3;
   }
 
-  if (page < 5) {
+  if (page <= 5) {
     pagePrefix = 6;
   }
 
