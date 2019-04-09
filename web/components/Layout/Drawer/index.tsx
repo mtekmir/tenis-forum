@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import drawerStyle from './drawerStyle';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import { MENU } from './menuItems';
+import { MENU, ADMIN_MENU } from './menuItems';
 import { Header } from '../Header';
 import { withRouter, WithRouterProps } from 'next/router';
 import { UserContextConsumer } from '../../../context/userContext';
@@ -43,9 +43,11 @@ class DrawerC extends React.PureComponent<Props, State> {
 
   renderMenu = () => {
     const { classes, router } = this.props;
-    // @ts-ignore
+
     const { pathname } = router;
-    return MENU.map(({ text, url, subMenus, rootUrl }, index) => {
+
+    const menu = pathname.split('/')[1] === 'admin' ? ADMIN_MENU : MENU;
+    return menu.map(({ text, url, subMenus, rootUrl }, index) => {
       if (subMenus) {
         return (
           <React.Fragment key={text}>

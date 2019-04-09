@@ -20,23 +20,24 @@ class DashboardViewC extends React.PureComponent<Props> {
         </div>
         <div>
           <Typography
-            variant="subheading"
+            variant="body1"
             align="right"
             className={classes.statLabel}
             style={{ color: '#757575' }}
           >
             {label}
-            <Typography variant="title" align="right" className={classes.stat}>
-              {dashboard[id]}
-            </Typography>{' '}
           </Typography>
+          <Typography variant="h6" align="right" className={classes.stat}>
+            {dashboard[id]}
+          </Typography>{' '}
         </div>
       </div>
     ));
   }
 
   render() {
-    return <div>{this.renderStats()}</div>;
+    const { classes } = this.props;
+    return <div className={classes.statsContainer}>{this.renderStats()}</div>;
   }
 }
 

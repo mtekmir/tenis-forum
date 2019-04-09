@@ -13,6 +13,29 @@ export const MENU: MenuItem[] = [
   },
 ];
 
+export const ADMIN_MENU: MenuItem[] = [
+  {
+    text: 'Dashboard',
+    url: '/admin/dashboard',
+  },
+  {
+    text: 'Categories',
+    url: '/admin/categories',
+  },
+  {
+    text: 'Forums',
+    url: '/admin/forums',
+  },
+  {
+    text: 'Users',
+    url: '/admin/users',
+  },
+  {
+    text: 'Threads',
+    url: '/admin/threads',
+  },
+];
+
 interface MenuItem {
   text: string;
   url?: string;

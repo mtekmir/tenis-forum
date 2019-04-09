@@ -315,6 +315,28 @@ export type ResetPasswordError = {
   message: string;
 };
 
+export type GetAllCategoriesVariables = {};
+
+export type GetAllCategoriesQuery = {
+  __typename?: "Query";
+
+  categoryGetAll: GetAllCategoriesCategoryGetAll;
+};
+
+export type GetAllCategoriesCategoryGetAll = {
+  __typename?: "CategoryGetAllResponse";
+
+  categories: GetAllCategoriesCategories[];
+};
+
+export type GetAllCategoriesCategories = {
+  __typename?: "Category";
+
+  id: number;
+
+  name: string;
+};
+
 export type GetCategoriesVariables = {};
 
 export type GetCategoriesQuery = {
@@ -1010,6 +1032,51 @@ export function ResetPasswordHOC<TProps, TChildProps = any>(
     ResetPasswordVariables,
     ResetPasswordProps<TChildProps>
   >(ResetPasswordDocument, operationOptions);
+}
+export const GetAllCategoriesDocument = gql`
+  query GetAllCategories {
+    categoryGetAll {
+      categories {
+        id
+        name
+      }
+    }
+  }
+`;
+export class GetAllCategoriesComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<GetAllCategoriesQuery, GetAllCategoriesVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllCategoriesQuery, GetAllCategoriesVariables>
+        query={GetAllCategoriesDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllCategoriesProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllCategoriesQuery, GetAllCategoriesVariables>
+> &
+  TChildProps;
+export function GetAllCategoriesHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllCategoriesQuery,
+        GetAllCategoriesVariables,
+        GetAllCategoriesProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllCategoriesQuery,
+    GetAllCategoriesVariables,
+    GetAllCategoriesProps<TChildProps>
+  >(GetAllCategoriesDocument, operationOptions);
 }
 export const GetCategoriesDocument = gql`
   query GetCategories {
