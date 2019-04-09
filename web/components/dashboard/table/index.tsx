@@ -1,11 +1,7 @@
 import * as React from 'react';
 import TableBody from './components/tableBody';
 import TableHeader from './components/TableHeader';
-
-export interface IMenuItem {
-  name: string;
-  path: string;
-}
+import { IMenuItem, TableHeaders, Category } from './types';
 
 interface State {
   filterPopoverAnchor: any;
@@ -17,7 +13,7 @@ interface State {
 }
 
 interface Props {
-  filterFor: string;
+  filterFor?: string;
   getRows: (args: {
     page: number;
     rowsPerPage: number;
@@ -27,9 +23,10 @@ interface Props {
   }) => void;
   count: number;
   menuItems: IMenuItem[];
-  filterProps: { [key: string]: string };
+  filterProps?: { [key: string]: string };
   isFetching: boolean;
-  tableHeaders: { [key: string]: string };
+  tableHeaders: TableHeaders[];
+  categories: Category[];
 }
 
 class TableC extends React.Component<Props, State> {
@@ -190,6 +187,7 @@ class TableC extends React.Component<Props, State> {
       count,
       filterProps,
       tableHeaders,
+      categories,
     } = this.props;
     return (
       <React.Fragment>
@@ -213,6 +211,7 @@ class TableC extends React.Component<Props, State> {
           order={order}
           orderBy={orderBy}
           tableHeaders={tableHeaders}
+          categories={categories}
           {...this.props}
           handleSort={this.handleSort}
         />

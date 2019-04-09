@@ -6,6 +6,9 @@ export const getAllCategories = gql`
       categories {
         id
         name
+        createdAt
+        updatedAt
+        forumCount
       }
     }
   }

@@ -5,7 +5,7 @@ import Filter from './components/filter';
 import { Pagination } from './components/Pagination';
 import { TableMenu } from './components/TableMenu';
 import tableHeaderStyle from './tableHeaderStyle';
-import { IMenuItem } from '../..';
+import { IMenuItem } from '../../types';
 
 interface Props extends WithStyles<typeof tableHeaderStyle> {
   filterPopoverAnchor: any;
@@ -14,8 +14,8 @@ interface Props extends WithStyles<typeof tableHeaderStyle> {
   rowsPerPage: number;
   menuItems: IMenuItem[];
   count: number;
-  filterProps: { [key: string]: any };
-  filterFor: string;
+  filterProps?: { [key: string]: any };
+  filterFor?: string;
   onAddFilter: (args: { [key: string]: any }) => void;
   onRemoveFilter: (filterCategory: string) => void;
   handleClick: (e: any) => void;
@@ -43,16 +43,18 @@ const TableHeaderComponent: React.FunctionComponent<Props> = ({
 }) => {
   return (
     <Paper className={classes.menuDiv}>
-      <Filter
-        filterFor={filterFor}
-        filterProps={filterProps}
-        filters={filters}
-        onAddFilter={onAddFilter}
-        onRemoveFilter={onRemoveFilter}
-        anchorEl={filterPopoverAnchor}
-        handleClick={handleClick}
-        handleClose={handleClose}
-      />
+      {filterProps && (
+        <Filter
+          filterFor={filterFor}
+          filterProps={filterProps}
+          filters={filters}
+          onAddFilter={onAddFilter}
+          onRemoveFilter={onRemoveFilter}
+          anchorEl={filterPopoverAnchor}
+          handleClick={handleClick}
+          handleClose={handleClose}
+        />
+      )}
       <Pagination
         onPerPageChange={onPerPageChange}
         onPageChange={onPageChange}

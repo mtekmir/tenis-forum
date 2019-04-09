@@ -330,11 +330,17 @@ export type GetAllCategoriesCategoryGetAll = {
 };
 
 export type GetAllCategoriesCategories = {
-  __typename?: "Category";
+  __typename?: "CategoryInfo";
 
   id: number;
 
   name: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  forumCount: number;
 };
 
 export type GetCategoriesVariables = {};
@@ -1039,6 +1045,9 @@ export const GetAllCategoriesDocument = gql`
       categories {
         id
         name
+        createdAt
+        updatedAt
+        forumCount
       }
     }
   }

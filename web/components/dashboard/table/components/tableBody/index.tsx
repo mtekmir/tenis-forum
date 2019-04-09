@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 
 import tableStyle from './tableStyle';
+import { Category } from '../../types';
+import { formatDate } from '../../../../../utils/formatDate';
 
 interface Props extends WithStyles<typeof tableStyle> {
   order: string;
@@ -20,10 +22,12 @@ interface Props extends WithStyles<typeof tableStyle> {
   handleSort: (e: any, id: string) => void;
   tableHeaders: { [key: string]: any };
   isFetching: boolean;
+  categories: Category[];
 }
 
 const TableComponent: React.FunctionComponent<Props> = ({
   classes,
+  categories,
   order,
   orderBy,
   handleSort,
@@ -49,11 +53,20 @@ const TableComponent: React.FunctionComponent<Props> = ({
   );
 
   const renderTableRows = () => {
-    return (
-      <Fragment>
-        <TableRow hover className={classes.row} />
-      </Fragment>
-    );
+    if (categories) {
+      return categories.map(
+        ({ id, name, createdAt, forumCount, updatedAt }) => (
+          <Fragment key={id}>
+            <TableRow>
+              <TableCell>{name}</TableCell>
+              <TableCell>{forumCount}</TableCell>
+              <TableCell>{formatDate(createdAt)}</TableCell>
+              <TableCell>{formatDate(updatedAt)}</TableCell>
+            </TableRow>
+          </Fragment>
+        ),
+      );
+    }
   };
 
   return (

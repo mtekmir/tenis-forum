@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { LinearProgress } from '@material-ui/core';
 import { CategoriesView } from './CategoriesView';
 import { GetAllCategoriesComponent } from '../../../generated/apolloComponents';
 
@@ -9,12 +8,13 @@ const CategoriesContainer: React.FunctionComponent<Props> = () => {
     <div>
       <GetAllCategoriesComponent>
         {({ data, loading }) => {
-          if (loading) {
-            return <LinearProgress />;
-          }
-
-          if (data && data.categoryGetAll) {
-            return <CategoriesView categories={data.categoryGetAll} />;
+          if (data && data.categoryGetAll && data.categoryGetAll.categories) {
+            return (
+              <CategoriesView
+                isFetching={loading}
+                categories={data.categoryGetAll.categories}
+              />
+            );
           }
         }}
       </GetAllCategoriesComponent>

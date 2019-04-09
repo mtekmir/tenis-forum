@@ -12,7 +12,8 @@
     "member-access": false,
     "no-implicit-dependencies": false,
     "interface-name": [true, "never-prefix"],
-    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }]
+    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }],
+    "forin": false
   },
   "rulesDirectory": [],
   "linterOptions": {
