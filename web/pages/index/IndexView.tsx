@@ -1,53 +1,29 @@
 import * as React from 'react';
-import {
-  Grid,
-  Typography,
-  Paper,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
 import { GetCategoriesCategories } from '../../generated/apolloComponents';
-import indexStyle from './indexStyle';
-import { CustomLink } from '../../components/customLink';
+import { CategoryTitle, ForumDiv, ForumTitle, CategoryDiv } from './indexStyle';
+import Link from 'next/link';
 
-interface Props extends WithStyles<typeof indexStyle> {
+interface Props {
   categories: GetCategoriesCategories[];
 }
 
-const IndexViewC: React.FunctionComponent<Props> = ({
-  categories,
-  classes,
-}) => {
+export const IndexView: React.FunctionComponent<Props> = ({ categories }) => {
   const renderCategories = () => {
     return categories.map(({ id, name, forums }) => (
-      <Grid key={id} item xs={12}>
-        <Paper>
-          <div className={classes.categoryDiv}>
-            <Typography classes={{ root: classes.categoryTitle }}>
-              {name}
-            </Typography>
-          </div>
-          {forums.map(({ id, name }) => (
-            <div key={id} className={classes.forumDiv}>
-              <Typography
-                color="primary"
-                className={classes.forumTitle}
-                component={CustomLink(`/forum/${id}`)}
-              >
-                {name}
-              </Typography>
-            </div>
-          ))}
-        </Paper>
-      </Grid>
+      <CategoryDiv key={id}>
+        <CategoryTitle>{name}</CategoryTitle>
+        {forums.map(({ id, name }) => (
+          <ForumDiv key={id}>
+            <ForumTitle>
+              <Link href={`/forum/${id}`}>
+                <a>{name}</a>
+              </Link>
+            </ForumTitle>
+          </ForumDiv>
+        ))}
+      </CategoryDiv>
     ));
   };
 
-  return (
-    <Grid spacing={24} container>
-      {renderCategories()}
-    </Grid>
-  );
+  return <React.Fragment>{renderCategories()}</React.Fragment>;
 };
-
-export const IndexView = withStyles(indexStyle)(IndexViewC);

@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { Theme } from '@material-ui/core';
 
 export default ({ spacing: { unit } }: Theme) => ({
@@ -20,3 +21,12 @@ export default ({ spacing: { unit } }: Theme) => ({
     backgroundColor: '#ffddc1',
   },
 });
+
+export const PaginationDiv = styled.div`
+  width: 100%;
+  height: 3em;
+  background-color: #efefef;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.9em;
+`;

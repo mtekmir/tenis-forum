@@ -1,23 +1,16 @@
-import { Theme } from '@material-ui/core';
+import styled from 'styled-components';
 
-export default ({ spacing }: Theme) => ({
-  container: {
-    display: 'flex',
-    width: '100%',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    width: '80%',
-    marginTop: spacing.unit,
-    marginBottom: spacing.unit,
-  },
-  innerContainer: {
-    width: 300,
-    height: 300,
-    padding: spacing.unit * 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+export const SignupDiv = styled.div`
+  position: absolute;
+  bottom: 1em;
+  font-size: 0.9em;
+  color: #c9c9c9;
+  display: flex;
+  align-items: center;
+
+  span {
+    cursor: pointer;
+    color: #414141;
+    margin-left: 0.3em;
+  }
+`;

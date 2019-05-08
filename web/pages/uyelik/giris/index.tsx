@@ -11,6 +11,7 @@ import Router from 'next/router';
 import { LoginUI } from './LoginUI';
 
 const LoginContainer: React.FunctionComponent = () => {
+  const [error, setError] = React.useState('');
   const onSubmit = (login: MutationFn<LoginMutation, LoginVariables>) => async (
     variables: LoginVariables,
   ) => {
@@ -20,11 +21,18 @@ const LoginContainer: React.FunctionComponent = () => {
         refetchQueries: [{ query: meQuery }],
       });
       if (response && response.data && response.data.login.error) {
-        console.log(response.data.login.error);
+        setError(response.data.login.error[0].message);
+        setTimeout(() => {
+          setError('');
+        }, 3000);
       } else {
         Router.push('/');
       }
     } catch (err) {
+      setError('Üzgünüz, bir hata oluştu.');
+      setTimeout(() => {
+        setError('');
+      }, 3000);
       console.log(err.graphQLErrors);
     }
   };
@@ -32,7 +40,7 @@ const LoginContainer: React.FunctionComponent = () => {
   return (
     <Layout title="Üye Girişi | Tenis Forum">
       <LoginComponent>
-        {login => <LoginUI onSubmit={onSubmit(login)} />}
+        {login => <LoginUI error={error} onSubmit={onSubmit(login)} />}
       </LoginComponent>
     </Layout>
   );

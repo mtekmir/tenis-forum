@@ -1,12 +1,12 @@
 import * as React from 'react';
-import createThreadStyles from './createThreadStyles';
-import { WithStyles, withStyles, Typography, Button } from '@material-ui/core';
+import { BottomDiv, TitleDiv, CreateThreadDiv } from './createThreadStyles';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import Layout from '../../../components/Layout';
 import { Formik, Form, Field } from 'formik';
 import { TextInput } from '../../../components/forms/TextInput';
 import { EditorComponent } from '../../../components/editor';
+import { Button } from '../../../components/Button';
 
 export interface NewThreadValues {
   title: string;
@@ -16,11 +16,12 @@ export interface NewThreadValues {
 interface State {
   editorState: EditorState;
 }
-interface Props extends WithStyles<typeof createThreadStyles> {
+interface Props {
   onSubmit: (vals: NewThreadValues) => void;
+  forumId: string;
 }
 
-class CreateThreadViewC extends React.PureComponent<Props, State> {
+export class CreateThreadView extends React.PureComponent<Props, State> {
   state = {
     editorState: EditorState.createEmpty(),
   };
@@ -39,16 +40,14 @@ class CreateThreadViewC extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { classes } = this.props;
+    const { forumId } = this.props;
     const { editorState } = this.state;
     return (
       <Layout title="Yeni Başlık | Tenis Forum">
-        <div className={classes.root}>
-          <div className={classes.titleDiv}>
-            <Typography variant="h6" gutterBottom>
-              Yeni Başlık
-            </Typography>
-          </div>
+        <CreateThreadDiv>
+          <TitleDiv>
+            <h4>Yeni Başlık</h4>
+          </TitleDiv>
           <Formik onSubmit={this.handleSubmit} initialValues={{ title: '' }}>
             {() => (
               <Form>
@@ -57,28 +56,24 @@ class CreateThreadViewC extends React.PureComponent<Props, State> {
                   onEditorStateChange={this.onEditorStateChange}
                   editorState={editorState}
                 />
-                <div className={classes.bottomDiv}>
-                  <Button className={classes.btn} variant="contained">
+                <BottomDiv>
+                  <Button
+                    url={`/forum/${forumId}`}
+                    marginRight
+                    color="red_gradient"
+                    text="İptal"
+                  >
                     İptal
                   </Button>
-                  <Button
-                    className={classes.btn}
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                  >
+                  <Button color="green_gradient" text="Kaydet" type="submit">
                     Kaydet
                   </Button>
-                </div>
+                </BottomDiv>
               </Form>
             )}
           </Formik>
-        </div>
+        </CreateThreadDiv>
       </Layout>
     );
   }
 }
-
-export const CreateThreadView = withStyles(createThreadStyles)(
-  CreateThreadViewC,
-);

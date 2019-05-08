@@ -1,17 +1,23 @@
-import { Theme } from '@material-ui/core';
+import styled from 'styled-components';
 
-export default ({ palette, spacing }: Theme) => ({
-  categoryDiv: {
-    background: palette.primary.main,
-    padding: spacing.unit,
-  },
-  categoryTitle: {
-    color: 'white',
-  },
-  forumDiv: {
-    padding: spacing.unit,
-  },
-  forumTitle: {
-    textDecoration: 'none',
-  },
-});
+export const CategoryDiv = styled.div`
+  padding: 1em;
+  background: white;
+`;
+
+export const CategoryTitle = styled.div`
+  color: white;
+  background-color: ${({ theme: { palette } }) => palette.primary};
+  padding: 1em;
+`;
+
+export const ForumDiv = styled.div`
+  padding: 1em;
+  border-bottom: 1px solid #efefef;
+`;
+
+export const ForumTitle = styled.div`
+  color: ${({ theme: { palette } }) => palette.primary};
+  font-weight: 700;
+  font-size: 1.1em;
+`;

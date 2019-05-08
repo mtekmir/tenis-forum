@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
 import { ProfileForm, FormValues } from './profileForm';
-import profileStyle from './profileStyle';
+import { Root, InnerDiv } from './profileStyle';
 import Layout from '../../components/Layout';
 import { UserContextConsumer } from '../../context/userContext';
 
-interface Props extends WithStyles<typeof profileStyle> {
+interface Props {
   onSubmit: (v: any, profileImage: File | null) => void;
 }
 
@@ -18,7 +17,7 @@ interface State {
   dropzoneHover: boolean;
 }
 
-class ProfileC extends React.PureComponent<Props, State> {
+export class ProfileView extends React.PureComponent<Props, State> {
   public readonly state: State = {
     file: null,
     dropzoneHover: false,
@@ -49,14 +48,13 @@ class ProfileC extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { classes } = this.props;
     const { dropzoneHover, file } = this.state;
     return (
       <Layout title="Hesabım | Tenis Forum">
         <UserContextConsumer>
           {({ user }) => (
-            <div className={classes.root}>
-              <div className={classes.div}>
+            <Root>
+              <InnerDiv>
                 <ProfileForm
                   dropzoneHover={dropzoneHover}
                   user={user}
@@ -65,13 +63,11 @@ class ProfileC extends React.PureComponent<Props, State> {
                   file={file}
                   onDropzoneHover={this.onDropzoneHover}
                 />
-              </div>
-            </div>
+              </InnerDiv>
+            </Root>
           )}
         </UserContextConsumer>
       </Layout>
     );
   }
 }
-
-export const ProfileView = withStyles(profileStyle)(ProfileC);

@@ -1,30 +1,57 @@
 import * as React from 'react';
-import { Select, OutlinedInput, MenuItem } from '@material-ui/core';
+import styled from 'styled-components';
+import Select from 'react-select';
 import { FieldProps } from 'formik';
 
 interface Props extends FieldProps {
   options: Array<{ label: string; value: string }>;
 }
-export const SelectInput = ({
-  field,
-  form: { errors, touched },
-  // tslint:disable-next-line
-  ...props
-}: Props) => {
-  const error = touched[field.name] && errors[field.name];
-
-  return (
+export const SelectInput: React.FunctionComponent<Props> = props => (
+  <React.Fragment>
     <Select
-      {...field}
+      styles={selectStyles}
+      isClearable
       {...props}
-      error={Boolean(error)}
-      input={<OutlinedInput labelWidth={0} name="age" />}
-    >
-      {props.options.map(({ value, label }) => (
-        <MenuItem key={label} value={value}>
-          {label}
-        </MenuItem>
-      ))}
-    </Select>
-  );
+      defaultValue={props.options[0]}
+    />
+  </React.Fragment>
+);
+
+interface SelectProps extends React.DetailedHTMLProps<any, any> {
+  error: boolean;
+}
+
+const selectStyles = {
+  control: (styles: any) => ({
+    ...styles,
+    backgroundColor: '#eef6ea',
+    padding: '.65em',
+    borderRadius: '10px',
+    border: 'none',
+    'box-shadow': '3px 3px 6px 1px rgba(0, 0, 0, 0.14)',
+  }),
+  option: (styles: any, { isFocused, isSelected }: any) => ({
+    ...styles,
+    backgroundColor: isFocused || isSelected ? '#eef6ea' : 'white',
+    color: 'black',
+    ':active': {
+      ...styles[':active'],
+      backgroundColor: isFocused || isSelected ? '#eef6ea' : 'white',
+    },
+  }),
 };
+
+const SelectStyles = styled.select<SelectProps>`
+  background: #eef6ea;
+  padding: 2em;
+  font-size: 0.7em;
+  margin: 0.3em 0.3em 0.3em 0.2em;
+  border-radius: 10px;
+  width: 90%;
+  cursor: auto;
+  box-shadow: 3px 3px 6px 1px rgba(0, 0, 0, 0.14);
+  :focus {
+    border: 0 0 50px #fff;
+  }
+  ${({ error }) => error && `border: 1px solid red`};
+`;

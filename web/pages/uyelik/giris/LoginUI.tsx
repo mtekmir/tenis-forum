@@ -1,47 +1,105 @@
 import * as React from 'react';
-import { Formik, Form, Field } from 'formik';
-import { TextInput } from '../../../components/forms/TextInput';
-import { Button, withStyles, WithStyles, Paper } from '@material-ui/core';
-import girisStyle from './girisStyle';
 import { LoginVariables } from '../../../generated/apolloComponents';
+import { validateLogin } from './loginSchema';
+import { Input } from '../components/Input';
+import { ErrorMessage } from './components/ErrorMessage';
+import { FormDiv } from '../components/FormDiv';
+import { FormContainer } from '../components/FormContainer';
+import { Button } from '../components/Button';
 
-interface Props extends WithStyles<typeof girisStyle> {
+interface Props {
   onSubmit: (input: LoginVariables) => void;
+  error?: string;
 }
+export class LoginUI extends React.PureComponent<Props> {
+  state = {
+    email: '',
+    password: '',
+    emailValidated: false,
+    emailValid: false,
+    passwordValidated: false,
+    passwordValid: false,
+  };
 
-const LoginC: React.FunctionComponent<Props> = ({ classes, onSubmit }) => {
-  return (
-    <Formik
-      onSubmit={variables => onSubmit(variables)}
-      initialValues={{ email: '', password: '' }}
-    >
-      {() => (
-        <div className={classes.container}>
-          <Paper className={classes.innerContainer}>
-            <Form>
-              <Field
-                name="email"
-                placeholder="E-Posta"
-                className={classes.input}
-                component={TextInput}
-                type="email"
-              />
-              <Field
-                name="password"
-                placeholder="Şifre"
-                className={classes.input}
-                component={TextInput}
-                type="password"
-              />
-              <Button variant="contained" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Paper>
-        </div>
-      )}
-    </Formik>
-  );
-};
+  onInputChange = ({ target: { name, value } }: React.ChangeEvent<any>) => {
+    this.setState(() => ({ [name]: value }));
+    this.validate(value, name);
+  }
 
-export const LoginUI = withStyles(girisStyle)(LoginC);
+  validate = async (value: string, name: string) => {
+    const valid = await validateLogin[name].isValid(value);
+    this.setState(() => ({
+      [`${name}Validated`]: true,
+      [`${name}Valid`]: valid,
+    }));
+  }
+
+  onSubmit = (e: any) => {
+    const {
+      email,
+      password,
+      emailValid,
+      passwordValid,
+      emailValidated,
+      passwordValidated,
+    } = this.state;
+
+    e.preventDefault();
+    console.log(emailValidated);
+    if (!emailValidated || !passwordValidated) {
+      this.validate(email, 'email');
+      this.validate(password, 'password');
+    }
+    if (emailValid && passwordValid) {
+      this.props.onSubmit({ email, password });
+    }
+  }
+
+  render() {
+    const {
+      email,
+      password,
+      emailValid,
+      emailValidated,
+      passwordValid,
+      passwordValidated,
+    } = this.state;
+    const { error } = this.props;
+    return (
+      <FormContainer>
+        <FormDiv>
+          <form onSubmit={this.onSubmit}>
+            <Input
+              onBlur={({ target: { value, name } }: any) =>
+                this.validate(value, name)
+              }
+              valid={emailValid}
+              validated={emailValidated}
+              value={email}
+              placeholder="Email"
+              name="email"
+              onChange={this.onInputChange}
+              type="text"
+            />
+            <Input
+              onBlur={({ target: { value, name } }: any) =>
+                this.validate(value, name)
+              }
+              valid={passwordValid}
+              validated={passwordValidated}
+              value={password}
+              name="password"
+              placeholder="Şifre"
+              onChange={this.onInputChange}
+              type="password"
+            />
+            <ErrorMessage error={error} />
+            <Button type="submit" error={error}>
+              Giriş Yap
+            </Button>
+          </form>
+        </FormDiv>
+      </FormContainer>
+    );
+  }
+}

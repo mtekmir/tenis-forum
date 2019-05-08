@@ -6,6 +6,8 @@ import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../lib/getPageContext';
 import withApollo from '../lib/withApollo';
+import { ThemeProvider } from 'styled-components';
+import { theme, GlobalStyles } from '../styles/theme';
 class MyApp extends App {
   pageContext: any;
   constructor() {
@@ -28,8 +30,11 @@ class MyApp extends App {
               sheetsManager={this.pageContext.sheetsManager}
             >
               <CssBaseline />
+              <GlobalStyles />
               <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
-                <Component {...pageProps} />
+                <ThemeProvider theme={theme}>
+                  <Component {...pageProps} />
+                </ThemeProvider>
               </SnackbarProvider>
             </MuiThemeProvider>
           </JssProvider>

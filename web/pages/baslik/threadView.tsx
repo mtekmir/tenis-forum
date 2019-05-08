@@ -1,37 +1,31 @@
 import * as React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  Paper,
-  Typography,
-  Grid,
-} from '@material-ui/core';
-import threadStyle from './threadStyle';
+import { PostsDiv, UserDiv, UserDivDate, ThreadTitle } from './threadStyle';
 import {
   GetThreadThreadGet,
   GetThreadQuery,
 } from '../../generated/apolloComponents';
+import { TiUser, TiCalendarOutline } from 'react-icons/ti';
 import Layout from '../../components/Layout';
 import { Post } from './post';
 import { format } from 'date-fns';
-import { Person, DateRange } from '@material-ui/icons';
 import { NewPostContainer } from '../../components/newPost';
 import { FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-boost';
 import { Pagination } from '../../components/pagination';
+import { Paper } from '../../components/Paper';
 
-interface Props extends WithStyles<typeof threadStyle> {
+interface Props {
   thread: GetThreadThreadGet;
   fetchMore: (
     opts: FetchMoreOptions & FetchMoreQueryOptions<GetThreadQuery, any>,
   ) => void;
 }
-const ThreadViewC: React.FunctionComponent<Props> = ({
+
+export const ThreadView: React.FunctionComponent<Props> = ({
   thread: {
     thread: { owner, posts, title, ...rest },
     postCount,
   },
   fetchMore,
-  classes,
 }) => {
   const renderPosts = () => {
     return posts.map(({ author, text, id, createdAt }, idx) => (
@@ -62,31 +56,25 @@ const ThreadViewC: React.FunctionComponent<Props> = ({
   return (
     <Layout title={`${title} | Tenis Forum`}>
       <Paper>
-        <Typography variant="h4">{title}</Typography>
-        <div className={classes.threadUserDateDiv}>
-          <Person className={classes.threadUserDate_icon} />
-          <Typography>{owner.username}</Typography>
-          <text>&#183;</text>
-          <div className={classes.threadUserDate_dateDiv}>
-            <DateRange className={classes.threadUserDate_icon} />
-            <Typography>{format(rest.createdAt, 'MMM DD, YYYY')}</Typography>
-          </div>
-        </div>
+        <ThreadTitle>{title}</ThreadTitle>
+        <UserDiv>
+          <TiUser />
+          <div>{owner.username}</div>
+          &#183;
+          <UserDivDate>
+            <TiCalendarOutline />
+            <div>{format(rest.createdAt, 'MMM DD, YYYY')}</div>
+          </UserDivDate>
+        </UserDiv>
       </Paper>
-      <Grid container spacing={24} className={classes.postsContainer}>
-        <div className={classes.divider}>
-          <Pagination
-            count={postCount}
-            getRows={offset => handleFetchMore(offset)}
-          />
-        </div>
-        <Grid item xs={12} className={classes.newPostContainer}>
-          {renderPosts()}
-          <NewPostContainer threadId={rest.id} />
-        </Grid>
-      </Grid>
+      <PostsDiv>
+        <Pagination
+          count={postCount}
+          getRows={offset => handleFetchMore(offset)}
+        />
+        {renderPosts()}
+        <NewPostContainer threadId={rest.id} />
+      </PostsDiv>
     </Layout>
   );
 };
-
-export const ThreadView = withStyles(threadStyle)(ThreadViewC);

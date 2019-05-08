@@ -6,39 +6,40 @@ import {
 } from '../../generated/apolloComponents';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
-import { Typography, WithStyles, withStyles, Button } from '@material-ui/core';
-import forumStyle from './forumStyle';
-import { CustomLink } from '../../components/customLink';
+import {
+  ForumDiv,
+  OwnerAndDate,
+  TopDiv,
+  ForumTitle,
+  Breadcrumbs,
+  TitleDiv,
+} from './forumStyle';
 import { Pagination } from '../../components/pagination';
 import { FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-boost';
+import { Button } from '../../components/Button';
 
-interface Props extends WithStyles<typeof forumStyle> {
+interface Props {
   forum: GetForumForumGet;
   fetchMore: (
     opts: FetchMoreOptions & FetchMoreQueryOptions<GetForumQuery, any>,
   ) => void;
 }
-const ForumViewC: React.FunctionComponent<Props> = ({
+export const ForumView: React.FunctionComponent<Props> = ({
   forum: { forum, threadCount },
   fetchMore,
-  classes,
 }) => {
   const renderThreads = () => {
     return forum.threads.map(({ id, title, owner, createdAt }) => (
-      <div key={id} className={classes.forumContainer}>
-        <Link href={`/thread/${id}`} as={`/baslik/${id}`}>
+      <ForumDiv key={id}>
+        <Link href={`/baslik/${id}`}>
           <a>{title}</a>
         </Link>
-        <div className={classes.ownerDateContainer}>
-          <div>
-            <Typography>{owner.username}</Typography>
-          </div>
-          <text>&#183;</text>
-          <div>
-            <Typography>{format(createdAt, 'MMM DD, YYYY')}</Typography>
-          </div>
-        </div>
-      </div>
+        <OwnerAndDate>
+          <div>{owner.username}</div>
+          &#183;
+          <div>{format(createdAt, 'MMM DD, YYYY')}</div>
+        </OwnerAndDate>
+      </ForumDiv>
     ));
   };
 
@@ -57,31 +58,24 @@ const ForumViewC: React.FunctionComponent<Props> = ({
 
   return (
     <Layout title={`${forum.name} | Tenis Forum`}>
-      <div className={classes.topDiv}>
-        <div>
-          <Typography>Forum > {forum.category.name} ></Typography>
-        </div>
-        <div className={classes.titleDiv}>
-          <Typography variant="h5">{forum.name}</Typography>
+      <div>
+        <TopDiv>
+          <TitleDiv>
+            <Breadcrumbs>Forum > {forum.category.name} ></Breadcrumbs>
+            <ForumTitle>{forum.name}</ForumTitle>
+          </TitleDiv>
           <Button
-            variant="contained"
-            size="small"
             color="primary"
-            component={CustomLink(`/forum/${forum.id}/baslik/yeni`)}
-          >
-            Yeni Başlık
-          </Button>
-        </div>
-        <div className={classes.divider}>
-          <Pagination
-            count={threadCount}
-            getRows={offset => handleFetchMore(offset)}
+            url={`/forum/${forum.id}/baslik/yeni`}
+            text="Yeni Başlık"
           />
-        </div>
+        </TopDiv>
+        <Pagination
+          count={threadCount}
+          getRows={offset => handleFetchMore(offset)}
+        />
       </div>
       {renderThreads()}
     </Layout>
   );
 };
-
-export const ForumView = withStyles(forumStyle)(ForumViewC);

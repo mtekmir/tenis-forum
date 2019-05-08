@@ -10,7 +10,7 @@ import {
 import { Formik, Form, Field } from 'formik';
 import { TextInput } from '../../../components/forms/TextInput';
 import { MeMe } from '../../../generated/apolloComponents';
-import profileFormStyles from './profileFormStyles';
+import profileFormStyles, { Label, InputDiv } from './profileFormStyles';
 import { DropzoneComponent } from './DropzoneComponent';
 import { PROFILE_FIELDS } from './profileFields';
 import { SelectInput } from '../../../components/forms/SelectInput';
@@ -65,10 +65,8 @@ const ProfileFormC: React.ComponentType<Props> = ({
 
   const renderFields = () => {
     return PROFILE_FIELDS.map(({ label, name, type, options }) => (
-      <React.Fragment key={name}>
-        <Typography key={label} className={classes.label}>
-          {label}
-        </Typography>
+      <InputDiv key={name}>
+        <Label>{label}</Label>
         <Field
           name={name}
           placeholder={label}
@@ -78,7 +76,7 @@ const ProfileFormC: React.ComponentType<Props> = ({
           className={classes.input}
           variant="outlined"
         />
-      </React.Fragment>
+      </InputDiv>
     ));
   };
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography, WithStyles, withStyles } from '@material-ui/core';
 import classNames from 'classnames';
-import paginationStyle from './paginationStyle';
+import paginationStyle, { PaginationDiv } from './paginationStyle';
 import { GoToPage } from './goToPage';
 import { setPagePrefix, setKeys } from './utils';
 
@@ -68,7 +68,9 @@ class PaginationC extends React.PureComponent<Props, State> {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.paginationContainer}>{this.renderPages()}</div>
+      <PaginationDiv>
+        <div className={classes.paginationContainer}>{this.renderPages()}</div>
+      </PaginationDiv>
     );
   }
 }

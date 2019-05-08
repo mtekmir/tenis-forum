@@ -28,7 +28,9 @@ const NewThread = ({ forumId }: Props) => {
 
   return (
     <CreateThreadComponent onCompleted={OnCompleted}>
-      {mutation => <CreateThreadView onSubmit={onSubmit(mutation)} />}
+      {mutation => (
+        <CreateThreadView forumId={forumId} onSubmit={onSubmit(mutation)} />
+      )}
     </CreateThreadComponent>
   );
 };

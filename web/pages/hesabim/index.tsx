@@ -22,6 +22,7 @@ const ProfileContainer: React.FunctionComponent<Props> = ({
       enqueueSnackbar('Beklenmedik bir hata oluştu.', { variant: 'error' });
     }
   };
+  
   const onSubmit = (
     mutation: MutationFn<EditUserProfileMutation, EditUserProfileVariables>,
     client: ApolloClient<any>,

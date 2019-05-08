@@ -1,43 +1,13 @@
-import { Theme } from '@material-ui/core';
-import { FlexDirectionProperty, PositionProperty } from 'csstype';
+import styled from 'styled-components';
 
-export default ({ spacing, typography, breakpoints }: Theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column' as FlexDirectionProperty,
-    alignItems: 'center',
-    justifyContent: 'center',
-    [breakpoints.down('md')]: {
-      padding: spacing.unit * 5,
-    },
+export const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
-    [breakpoints.up('md')]: {
-      padding: spacing.unit * 10,
-    },
-  },
-  div: {
-    width: '100%',
-    minHeight: '85vh',
-  },
-  topDiv: {
-    height: 50,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: -spacing.unit * 3,
-  },
-  closeDiv: {
-    position: 'absolute' as PositionProperty,
-    top: 15,
-    right: 25,
-  },
-  closeIcon: {
-    width: 30,
-    height: 30,
-    cursor: 'pointer',
-  },
-  title: {
-    fontWeight: 800,
-    fontSize: typography.h5.fontSize,
-  },
-});
+export const InnerDiv = styled.div`
+  width: 100%;
+  min-height: 85vh;
+`;
