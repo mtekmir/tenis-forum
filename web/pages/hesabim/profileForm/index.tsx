@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  Grid,
-  Typography,
-  Button,
-  LinearProgress,
-} from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { TextInput } from '../../../components/forms/TextInput';
 import { MeMe } from '../../../generated/apolloComponents';
-import profileFormStyles, { Label, InputDiv } from './profileFormStyles';
+import {
+  Label,
+  InputDiv,
+  FormDiv,
+  LeftDiv,
+  RightDiv,
+  BottomDiv,
+} from './profileFormStyles';
 import { DropzoneComponent } from './DropzoneComponent';
 import { PROFILE_FIELDS } from './profileFields';
 import { SelectInput } from '../../../components/forms/SelectInput';
+import { Button } from '../../../components/Button';
 
-interface Props extends WithStyles<typeof profileFormStyles> {
+interface Props {
   user: MeMe | null | undefined;
   onSubmit: (v: FormValues) => void;
   dropzoneHover: boolean;
@@ -31,16 +31,16 @@ export interface IFile extends File {
 export interface FormValues {
   username: string;
 }
-const ProfileFormC: React.ComponentType<Props> = ({
-  classes,
+export const ProfileForm: React.ComponentType<Props> = ({
   onSubmit,
   user,
   // tslint:disable-next-line
   ...rest
 }) => {
   if (!user) {
-    return <LinearProgress />;
+    return <div>Loading</div>;
   }
+
   const {
     profile: { gender, location, occupation },
   } = user;
@@ -73,15 +73,13 @@ const ProfileFormC: React.ComponentType<Props> = ({
           type={type}
           options={options}
           component={type === 'text' ? TextInput : SelectInput}
-          className={classes.input}
-          variant="outlined"
         />
       </InputDiv>
     ));
   };
 
   if (!user) {
-    return <LinearProgress />;
+    return <div>Loading</div>;
   }
 
   return (
@@ -93,34 +91,21 @@ const ProfileFormC: React.ComponentType<Props> = ({
         {() => (
           <Form>
             <div>
-              <Grid container spacing={24}>
-                <Grid item xs={8} md={8}>
-                  {renderFields()}
-                </Grid>
-                <Grid item xs={4} md={4}>
-                  <Typography className={classes.label}>
-                    Profil Resmi
-                  </Typography>
+              <FormDiv>
+                <LeftDiv>{renderFields()}</LeftDiv>
+                <RightDiv>
+                  <Label>Profil Resmi</Label>
                   <DropzoneComponent {...rest} user={user} />
-                </Grid>
-              </Grid>
+                </RightDiv>
+              </FormDiv>
             </div>
-            <div className={classes.buttomDiv}>
-              <Button variant="contained">Cancel</Button>
-              <Button
-                type="submit"
-                style={{ marginLeft: 10 }}
-                variant="contained"
-                color="secondary"
-              >
-                Save Changes
-              </Button>
-            </div>
+            <BottomDiv>
+              <Button text="İptal" url="/" color="red_gradient" marginRight />
+              <Button type="submit" text="Kaydet" color="green_gradient" />
+            </BottomDiv>
           </Form>
         )}
       </Formik>
     </div>
   );
 };
-
-export const ProfileForm = withStyles(profileFormStyles)(ProfileFormC);

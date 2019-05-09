@@ -1,43 +1,8 @@
 import styled from 'styled-components';
-import { Theme } from '@material-ui/core';
-
-export default ({ spacing, breakpoints }: Theme) => ({
-  label: {
-    fontWeight: 600,
-    marginTop: spacing.unit * 2,
-  },
-  input: {
-    [breakpoints.down('md')]: {
-      width: '100%',
-    },
-    [breakpoints.up('md')]: {
-      width: '60%',
-    },
-    [breakpoints.up('lg')]: {
-      width: '40%',
-    },
-  },
-  selectWidth: {
-    [breakpoints.down('md')]: {
-      width: '100%',
-    },
-    [breakpoints.up('md')]: {
-      width: '60%',
-    },
-    [breakpoints.up('lg')]: {
-      width: '40%',
-    },
-  },
-  buttomDiv: {
-    marginTop: 60,
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-});
 
 export const Label = styled.div`
   font-weight: 700;
-  margin-top: 1em;
+  margin: 1em 0 0.5em 0.5em;
 `;
 
 export const InputDiv = styled.div`
@@ -46,6 +11,8 @@ export const InputDiv = styled.div`
 `;
 
 export const FormDiv = styled.div`
+  padding: 1em;
+  max-width: 100%;
   @media (${({ theme }) => theme.breakpoints.phone}) {
     width: 100%;
     display: flex;
@@ -55,4 +22,18 @@ export const FormDiv = styled.div`
 export const LeftDiv = styled.div`
   display: flex;
   flex-direction: column;
+  width: 70%;
+`;
+
+export const RightDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-left: 1em;
+`;
+
+export const BottomDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 2em;
 `;

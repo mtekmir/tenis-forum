@@ -1,13 +1,15 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
-import classNames from 'classnames';
-import dropzoneStyle from './dropzoneStyle';
-import { PhotoCameraOutlined } from '@material-ui/icons';
-import { Typography, WithStyles, withStyles } from '@material-ui/core';
+import {
+  DropzoneHoverContentDiv,
+  DropzoneDiv,
+  DropzoneHoverInnerDiv,
+} from './dropzoneStyle';
+import { TiCamera } from 'react-icons/ti';
 import { IFile } from '../../profileView';
 import { MeMe } from '../../../../generated/apolloComponents';
 
-interface Props extends WithStyles<typeof dropzoneStyle> {
+interface Props {
   user: MeMe | null | undefined;
   dropzoneHover: boolean;
   file: IFile | null;
@@ -15,8 +17,7 @@ interface Props extends WithStyles<typeof dropzoneStyle> {
   onDrop: (files: File[]) => void;
 }
 
-const DropzoneComponentC: React.FunctionComponent<Props> = ({
-  classes,
+export const DropzoneComponent: React.FunctionComponent<Props> = ({
   dropzoneHover,
   onDrop,
   onDropzoneHover,
@@ -27,54 +28,24 @@ const DropzoneComponentC: React.FunctionComponent<Props> = ({
     <Dropzone accept="image/jpeg, image/png" multiple={false} onDrop={onDrop}>
       {({ getRootProps, getInputProps }) => {
         return (
-          <div
+          <DropzoneDiv
             onMouseEnter={onDropzoneHover}
             onMouseLeave={onDropzoneHover}
-            {...getRootProps({
-              className: classes.dropzone,
-            })}
+            {...getRootProps()}
           >
             <input {...getInputProps()} />
-            <div
-              className={classes.dropzoneHoverContentDiv}
-              style={{
-                backgroundImage: `${
-                  dropzoneHover
-                    ? 'linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),'
-                    : ''
-                }url(${file ? file.preview : user.profileImageUrl})`,
-                backgroundSize: '192px 192px',
-              }}
+            <DropzoneHoverContentDiv
+              imageUrl={file ? file.preview : user.profileImageUrl}
+              dropzoneHover={dropzoneHover}
             >
-              <div
-                className={classNames({
-                  [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                  [classes.dropzoneHoverInnerDiv]: true,
-                })}
-              >
-                <PhotoCameraOutlined
-                  className={classNames({
-                    [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                    [classes.dropzoneHoverIcon]: true,
-                  })}
-                />
-                <Typography
-                  align="center"
-                  classes={{
-                    root: classes.dropzoneHoverText,
-                  }}
-                  className={classNames({
-                    [classes.hideDropzoneHoverContent]: !dropzoneHover,
-                  })}
-                >
-                  Profil Resmini Değiştir
-                </Typography>
-              </div>
-            </div>
-          </div>
+              <DropzoneHoverInnerDiv dropzoneHover={dropzoneHover}>
+                <TiCamera />
+                <span>Profil Resmini Değiştir</span>
+              </DropzoneHoverInnerDiv>
+            </DropzoneHoverContentDiv>
+          </DropzoneDiv>
         );
       }}
     </Dropzone>
   );
 };
-export const DropzoneComponent = withStyles(dropzoneStyle)(DropzoneComponentC);
