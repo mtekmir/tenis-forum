@@ -2,6 +2,7 @@ import * as React from 'react';
 import { MeMe } from '../../../../../generated/apolloComponents';
 import { Button } from './Button';
 import { ButtonsDiv, AccountDiv } from './styles';
+import { LoggedInView } from './loggedIn/LoggedInView';
 
 interface Props {
   me: MeMe | null;
@@ -10,7 +11,7 @@ interface Props {
 export const Account: React.FunctionComponent<Props> = ({ me }) => {
   const renderContent = () => {
     return me ? (
-      <div>LoggedIn</div>
+      <LoggedInView />
     ) : (
       <ButtonsDiv>
         <Button url="/uyelik/giris" text="Giriş" />

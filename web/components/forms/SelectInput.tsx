@@ -4,13 +4,13 @@ import { FieldProps } from 'formik';
 
 interface Props extends FieldProps {
   options: Array<{ label: string; value: string }>;
+  isClearable?: boolean;
 }
 export const SelectInput: React.FunctionComponent<Props> = props => (
   <React.Fragment>
     <Select
       instanceId="1"
       styles={selectStyles}
-      isClearable
       {...props}
       defaultValue={props.options[0]}
     />
