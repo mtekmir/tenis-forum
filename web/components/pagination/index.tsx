@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Typography, WithStyles, withStyles } from '@material-ui/core';
-import classNames from 'classnames';
-import paginationStyle, { PaginationDiv } from './paginationStyle';
+import {
+  PaginationDiv,
+  PaginationContainer,
+  PageButton,
+} from './paginationStyle';
 import { GoToPage } from './goToPage';
 import { setPagePrefix, setKeys } from './utils';
 
-interface Props extends WithStyles<typeof paginationStyle> {
+interface Props {
   count: number;
   getRows: (offset: number) => void;
 }
@@ -14,7 +16,7 @@ interface State {
   page: number;
 }
 
-class PaginationC extends React.PureComponent<Props, State> {
+export class Pagination extends React.PureComponent<Props, State> {
   public readonly state: State = {
     page: 1,
   };
@@ -25,20 +27,17 @@ class PaginationC extends React.PureComponent<Props, State> {
   }
 
   renderPages = () => {
-    const { count, classes } = this.props;
+    const { count } = this.props;
     const { page } = this.state;
     const pageCount = Math.ceil(count / 25);
 
     const btn = (pageNumber: number) => (
-      <div
-        className={classNames({
-          [classes.pageButton]: true,
-          [classes.pageButton_selected]: pageNumber === page,
-        })}
+      <PageButton
+        selected={pageNumber === page}
         onClick={() => this.onPageChange(pageNumber)}
       >
-        <Typography>{pageNumber}</Typography>
-      </div>
+        <span>{pageNumber}</span>
+      </PageButton>
     );
 
     if (pageCount > 5) {
@@ -66,13 +65,10 @@ class PaginationC extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <PaginationDiv>
-        <div className={classes.paginationContainer}>{this.renderPages()}</div>
+        <PaginationContainer>{this.renderPages()}</PaginationContainer>
       </PaginationDiv>
     );
   }
 }
-
-export const Pagination = withStyles(paginationStyle)(PaginationC);

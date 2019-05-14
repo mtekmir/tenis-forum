@@ -371,6 +371,36 @@ export type GetAllForumsForums = {
   threadCount: number;
 };
 
+export type GetAllPostsVariables = {};
+
+export type GetAllPostsQuery = {
+  __typename?: "Query";
+
+  postGetAll: GetAllPostsPostGetAll;
+};
+
+export type GetAllPostsPostGetAll = {
+  __typename?: "PostGetAllResponse";
+
+  posts: GetAllPostsPosts[];
+};
+
+export type GetAllPostsPosts = {
+  __typename?: "PostInfo";
+
+  id: number;
+
+  createdAt: Date;
+
+  authorId: string;
+
+  authorUsername: string;
+
+  threadId: string;
+
+  threadTitle: string;
+};
+
 export type GetAllThreadsVariables = {};
 
 export type GetAllThreadsQuery = {
@@ -1218,6 +1248,53 @@ export function GetAllForumsHOC<TProps, TChildProps = any>(
     GetAllForumsVariables,
     GetAllForumsProps<TChildProps>
   >(GetAllForumsDocument, operationOptions);
+}
+export const GetAllPostsDocument = gql`
+  query GetAllPosts {
+    postGetAll {
+      posts {
+        id
+        createdAt
+        authorId
+        authorUsername
+        threadId
+        threadTitle
+      }
+    }
+  }
+`;
+export class GetAllPostsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetAllPostsQuery, GetAllPostsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllPostsQuery, GetAllPostsVariables>
+        query={GetAllPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllPostsQuery, GetAllPostsVariables>
+> &
+  TChildProps;
+export function GetAllPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllPostsQuery,
+        GetAllPostsVariables,
+        GetAllPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllPostsQuery,
+    GetAllPostsVariables,
+    GetAllPostsProps<TChildProps>
+  >(GetAllPostsDocument, operationOptions);
 }
 export const GetAllThreadsDocument = gql`
   query GetAllThreads {

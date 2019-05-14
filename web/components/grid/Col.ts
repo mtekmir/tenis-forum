@@ -23,9 +23,8 @@ export const Col = styled.div<Props>`
   flex: 1 0 auto;
   max-width: 100%;
   display: flex;
-  ${({ alignItems }) => `align-items: ${alignItems}`}
-  ${({ justifyContent }) =>
-    `justify-content: ${justifyContent}`}
+  ${({ alignItems }) => `align-items: ${alignItems}`};
+  justify-content: ${({ justifyContent }) => justifyContent || 'flex-start'};
   @media (max-width: 599px) {
     ${({ xs }) => (xs ? getWidth(xs) : 'width: 100%')};
   }

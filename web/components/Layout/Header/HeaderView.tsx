@@ -49,10 +49,18 @@ export class HeaderView extends Component<Props> {
         <AppBar onClick={() => menuOpen && this.closeMenu()}>
           <Container>
             <Row alignItems="center">
-              <Col xs={9} sm={8} md={10} lg={10} xl={10.5}>
+              <Col xs={8} sm={8} md={10} lg={10} xl={10.5}>
                 <Logo open={menuOpen}>Tenis Forum</Logo>
               </Col>
-              <Col xs={3} sm={4} md={2} lg={2} xl={1.5} alignItems="center">
+              <Col
+                xs={4}
+                sm={4}
+                md={2}
+                lg={2}
+                xl={1.5}
+                alignItems="center"
+                justifyContent="flex-end"
+              >
                 <Account me={me} />
                 <MenuIcon
                   openMenu={this.openMenu}

@@ -8,9 +8,8 @@ class Dashboard extends React.PureComponent {
   render() {
     return (
       <Layout title="Admin Dashboard | Tenis Forum">
-        <div>Dashboard</div>
         <GetDashboardComponent>
-          {({ data, loading, error }) => {
+          {({ data, loading }) => {
             if (loading) {
               return <LinearProgress />;
             }

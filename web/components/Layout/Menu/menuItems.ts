@@ -63,6 +63,10 @@ export const ADMIN_MENU: MenuItem[] = [
         label: 'Threads',
         url: `/${ADMIN_PATH}/threads`,
       },
+      {
+        label: 'Posts',
+        url: `/${ADMIN_PATH}/posts`,
+      },
     ],
   },
 ];

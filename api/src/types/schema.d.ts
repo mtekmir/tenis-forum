@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-05-14T17:55:05+03:00
+// Generated in 2019-05-14T22:47:26+03:00
 export type Maybe<T> = T | null;
 
 
@@ -130,6 +130,8 @@ export interface Query {
   forumGet: GetForumResponse;
   
   forumGetAll: ForumGetAllResponse;
+  
+  postGetAll: PostGetAllResponse;
   
   threadGetAll: ThreadGetAllResponse;
   
@@ -309,6 +311,28 @@ export interface ForumInfo {
 }
 
 
+export interface PostGetAllResponse {
+  
+  posts: PostInfo[];
+}
+
+
+export interface PostInfo {
+  
+  id: number;
+  
+  createdAt: Date;
+  
+  authorId: string;
+  
+  authorUsername: string;
+  
+  threadId: string;
+  
+  threadTitle: string;
+}
+
+
 export interface ThreadGetAllResponse {
   
   threads: ThreadInfo[];
@@ -319,7 +343,7 @@ export interface ThreadInfo {
   
   id: number;
   
-  name: string;
+  title: string;
   
   createdAt: Date;
   
@@ -443,6 +467,10 @@ export interface GetUploadUrlQueryArgs {
 export interface ForumGetQueryArgs {
   
   id: number;
+  
+  offset?: Maybe<number>;
+}
+export interface PostGetAllQueryArgs {
   
   offset?: Maybe<number>;
 }
@@ -582,6 +610,8 @@ export namespace QueryResolvers {
     
     forumGetAll?: ForumGetAllResolver<ForumGetAllResponse, TypeParent, Context>;
     
+    postGetAll?: PostGetAllResolver<PostGetAllResponse, TypeParent, Context>;
+    
     threadGetAll?: ThreadGetAllResolver<ThreadGetAllResponse, TypeParent, Context>;
     
     threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, Context>;
@@ -614,6 +644,13 @@ export namespace QueryResolvers {
 
 
   export type ForumGetAllResolver<R = ForumGetAllResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type PostGetAllResolver<R = PostGetAllResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, PostGetAllArgs>;
+  export interface PostGetAllArgs {
+    
+    offset?: Maybe<number>;
+  }
+
+
   export type ThreadGetAllResolver<R = ThreadGetAllResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadGetAllArgs>;
   export interface ThreadGetAllArgs {
     
@@ -905,6 +942,41 @@ export namespace ForumInfoResolvers {
   export type ThreadCountResolver<R = number, Parent = ForumInfo, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
+export namespace PostGetAllResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = PostGetAllResponse> {
+    
+    posts?: PostsResolver<PostInfo[], TypeParent, Context>;
+  }
+
+
+  export type PostsResolver<R = PostInfo[], Parent = PostGetAllResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace PostInfoResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = PostInfo> {
+    
+    id?: IdResolver<number, TypeParent, Context>;
+    
+    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    
+    authorId?: AuthorIdResolver<string, TypeParent, Context>;
+    
+    authorUsername?: AuthorUsernameResolver<string, TypeParent, Context>;
+    
+    threadId?: ThreadIdResolver<string, TypeParent, Context>;
+    
+    threadTitle?: ThreadTitleResolver<string, TypeParent, Context>;
+  }
+
+
+  export type IdResolver<R = number, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<R = Date, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type AuthorIdResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type AuthorUsernameResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ThreadIdResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type ThreadTitleResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
 export namespace ThreadGetAllResponseResolvers {
   export interface Resolvers<Context = IContext, TypeParent = ThreadGetAllResponse> {
     
@@ -920,7 +992,7 @@ export namespace ThreadInfoResolvers {
     
     id?: IdResolver<number, TypeParent, Context>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    title?: TitleResolver<string, TypeParent, Context>;
     
     createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
     
@@ -931,7 +1003,7 @@ export namespace ThreadInfoResolvers {
 
 
   export type IdResolver<R = number, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TitleResolver<R = string, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type CreatedAtResolver<R = Date, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type UpdatedAtResolver<R = Date, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type PostCountResolver<R = number, Parent = ThreadInfo, Context = IContext> = Resolver<R, Parent, Context>;  
@@ -1233,6 +1305,8 @@ export interface IResolvers {
     GetForumResponse?: GetForumResponseResolvers.Resolvers;
     ForumGetAllResponse?: ForumGetAllResponseResolvers.Resolvers;
     ForumInfo?: ForumInfoResolvers.Resolvers;
+    PostGetAllResponse?: PostGetAllResponseResolvers.Resolvers;
+    PostInfo?: PostInfoResolvers.Resolvers;
     ThreadGetAllResponse?: ThreadGetAllResponseResolvers.Resolvers;
     ThreadInfo?: ThreadInfoResolvers.Resolvers;
     GetThreadResponse?: GetThreadResponseResolvers.Resolvers;

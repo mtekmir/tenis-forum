@@ -12,4 +12,5 @@ type PostInfo {
   authorId: String!
   authorUsername: String!
   threadId: String!
+  threadTitle: String!
 }

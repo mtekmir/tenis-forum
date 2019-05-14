@@ -1,40 +1,40 @@
 import {
-  Category,
-  Person,
-  Forum,
-  GroupWork,
-  LocalPostOffice,
-} from '@material-ui/icons';
+  TiNews,
+  TiGroup,
+  TiMail,
+  TiMessages,
+  TiDocumentText,
+} from 'react-icons/ti';
 
 export const STAT_PROPS = [
   {
     label: 'Categories',
     id: 'categoryCount',
-    Icon: Category,
+    Icon: TiNews,
     color: '#D56062',
   },
   {
     label: 'Users',
     id: 'userCount',
-    Icon: Person,
+    Icon: TiGroup,
     color: '#02394A',
   },
   {
     label: 'Forums',
     id: 'forumCount',
-    Icon: Forum,
+    Icon: TiMessages,
     color: '#386FA4',
   },
   {
     label: 'Threads',
     id: 'threadCount',
-    Icon: GroupWork,
+    Icon: TiDocumentText,
     color: '#DB504A',
   },
   {
     label: 'Posts',
     id: 'postCount',
-    Icon: LocalPostOffice,
+    Icon: TiMail,
     color: '#DB504A',
   },
 ];

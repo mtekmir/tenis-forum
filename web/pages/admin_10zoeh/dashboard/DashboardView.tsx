@@ -1,44 +1,35 @@
 import * as React from 'react';
-import { withStyles, WithStyles, Tooltip, Typography } from '@material-ui/core';
-import dashboardStyle from './dashboardStyle';
+import {
+  StatsContainer,
+  StatsDiv,
+  IconDiv,
+  Title,
+  Stat,
+} from './dashboardStyle';
 import { GetDashboardDashboardGet } from '../../../generated/apolloComponents';
 import { STAT_PROPS } from './stats';
 
-interface Props extends WithStyles<typeof dashboardStyle> {
+interface Props {
   dashboard: GetDashboardDashboardGet;
 }
 
-class DashboardViewC extends React.PureComponent<Props> {
+export class DashboardView extends React.PureComponent<Props> {
   renderStats = () => {
-    const { classes, dashboard } = this.props;
+    const { dashboard } = this.props;
     return STAT_PROPS.map(({ label, id, Icon, color }) => (
-      <div className={classes.statDiv} key={label}>
-        <div className={classes.iconDiv} style={{ background: color }}>
-          <Tooltip title={label}>
-            <Icon className={classes.icon} />
-          </Tooltip>
-        </div>
+      <StatsDiv key={label}>
+        <IconDiv style={{ background: color }}>
+          <Icon />
+        </IconDiv>
         <div>
-          <Typography
-            variant="body1"
-            align="right"
-            className={classes.statLabel}
-            style={{ color: '#757575' }}
-          >
-            {label}
-          </Typography>
-          <Typography variant="h6" align="right" className={classes.stat}>
-            {dashboard[id]}
-          </Typography>{' '}
+          <Title>{label}</Title>
+          <Stat>{dashboard[id]}</Stat>
         </div>
-      </div>
+      </StatsDiv>
     ));
   }
 
   render() {
-    const { classes } = this.props;
-    return <div className={classes.statsContainer}>{this.renderStats()}</div>;
+    return <StatsContainer>{this.renderStats()}</StatsContainer>;
   }
 }
-
-export const DashboardView = withStyles(dashboardStyle)(DashboardViewC);
