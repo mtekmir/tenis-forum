@@ -7,6 +7,7 @@ import {
   BeforeInsert,
   OneToMany,
   OneToOne,
+  CreateDateColumn,
 } from 'typeorm';
 import { UserPermissions } from './permissions';
 import { Post } from '../Posts';
@@ -20,6 +21,9 @@ export class User extends BaseEntity {
 
   @Column('text', { nullable: true })
   googleId: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Column('varchar', { length: 100, nullable: false })
   username: string;

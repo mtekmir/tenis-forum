@@ -1,0 +1,15 @@
+type Query {
+  threadGetAll(offset: Int): ThreadGetAllResponse!
+}
+
+type ThreadGetAllResponse {
+  threads: [ThreadInfo!]!
+}
+
+type ThreadInfo {
+  id: Int!
+  title: String!
+  createdAt: Date!
+  updatedAt: Date!
+  postCount: Int!
+}

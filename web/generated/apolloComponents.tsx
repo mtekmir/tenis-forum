@@ -343,6 +343,92 @@ export type GetAllCategoriesCategories = {
   forumCount: number;
 };
 
+export type GetAllForumsVariables = {};
+
+export type GetAllForumsQuery = {
+  __typename?: "Query";
+
+  forumGetAll: GetAllForumsForumGetAll;
+};
+
+export type GetAllForumsForumGetAll = {
+  __typename?: "ForumGetAllResponse";
+
+  forums: GetAllForumsForums[];
+};
+
+export type GetAllForumsForums = {
+  __typename?: "ForumInfo";
+
+  id: number;
+
+  name: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  threadCount: number;
+};
+
+export type GetAllThreadsVariables = {};
+
+export type GetAllThreadsQuery = {
+  __typename?: "Query";
+
+  threadGetAll: GetAllThreadsThreadGetAll;
+};
+
+export type GetAllThreadsThreadGetAll = {
+  __typename?: "ThreadGetAllResponse";
+
+  threads: GetAllThreadsThreads[];
+};
+
+export type GetAllThreadsThreads = {
+  __typename?: "ThreadInfo";
+
+  id: number;
+
+  title: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  postCount: number;
+};
+
+export type GetAllUsersVariables = {};
+
+export type GetAllUsersQuery = {
+  __typename?: "Query";
+
+  userGetAll: GetAllUsersUserGetAll;
+};
+
+export type GetAllUsersUserGetAll = {
+  __typename?: "UserGetAllResponse";
+
+  users: GetAllUsersUsers[];
+};
+
+export type GetAllUsersUsers = {
+  __typename?: "UserInfo";
+
+  id: string;
+
+  username: string;
+
+  email: string;
+
+  registerDate: Date;
+
+  threadCount: number;
+
+  postCount: number;
+};
+
 export type GetCategoriesVariables = {};
 
 export type GetCategoriesQuery = {
@@ -1086,6 +1172,145 @@ export function GetAllCategoriesHOC<TProps, TChildProps = any>(
     GetAllCategoriesVariables,
     GetAllCategoriesProps<TChildProps>
   >(GetAllCategoriesDocument, operationOptions);
+}
+export const GetAllForumsDocument = gql`
+  query GetAllForums {
+    forumGetAll {
+      forums {
+        id
+        name
+        createdAt
+        updatedAt
+        threadCount
+      }
+    }
+  }
+`;
+export class GetAllForumsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetAllForumsQuery, GetAllForumsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllForumsQuery, GetAllForumsVariables>
+        query={GetAllForumsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllForumsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllForumsQuery, GetAllForumsVariables>
+> &
+  TChildProps;
+export function GetAllForumsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllForumsQuery,
+        GetAllForumsVariables,
+        GetAllForumsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllForumsQuery,
+    GetAllForumsVariables,
+    GetAllForumsProps<TChildProps>
+  >(GetAllForumsDocument, operationOptions);
+}
+export const GetAllThreadsDocument = gql`
+  query GetAllThreads {
+    threadGetAll {
+      threads {
+        id
+        title
+        createdAt
+        updatedAt
+        postCount
+      }
+    }
+  }
+`;
+export class GetAllThreadsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetAllThreadsQuery, GetAllThreadsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllThreadsQuery, GetAllThreadsVariables>
+        query={GetAllThreadsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllThreadsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllThreadsQuery, GetAllThreadsVariables>
+> &
+  TChildProps;
+export function GetAllThreadsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllThreadsQuery,
+        GetAllThreadsVariables,
+        GetAllThreadsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllThreadsQuery,
+    GetAllThreadsVariables,
+    GetAllThreadsProps<TChildProps>
+  >(GetAllThreadsDocument, operationOptions);
+}
+export const GetAllUsersDocument = gql`
+  query GetAllUsers {
+    userGetAll {
+      users {
+        id
+        username
+        email
+        registerDate
+        threadCount
+        postCount
+      }
+    }
+  }
+`;
+export class GetAllUsersComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetAllUsersQuery, GetAllUsersVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllUsersQuery, GetAllUsersVariables>
+        query={GetAllUsersDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllUsersProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllUsersQuery, GetAllUsersVariables>
+> &
+  TChildProps;
+export function GetAllUsersHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllUsersQuery,
+        GetAllUsersVariables,
+        GetAllUsersProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllUsersQuery,
+    GetAllUsersVariables,
+    GetAllUsersProps<TChildProps>
+  >(GetAllUsersDocument, operationOptions);
 }
 export const GetCategoriesDocument = gql`
   query GetCategories {

@@ -1,3 +1,5 @@
+import { ADMIN_PATH } from '../../../constants';
+
 export interface MenuItem {
   type: string;
   label?: string;
@@ -10,7 +12,7 @@ export interface SubMenuItem {
   url: string;
 }
 
-export const MENU_ITEMS: MenuItem[] = [
+export const MENU: MenuItem[] = [
   {
     type: 'menu_item',
     label: 'Forum',
@@ -39,7 +41,7 @@ export const ADMIN_MENU: MenuItem[] = [
   {
     type: 'menu_item',
     label: 'Dashboard',
-    url: '/admin/dashboard',
+    url: `/${ADMIN_PATH}/dashboard`,
   },
   {
     type: 'menu_item',
@@ -47,19 +49,19 @@ export const ADMIN_MENU: MenuItem[] = [
     subMenus: [
       {
         label: 'Categories',
-        url: '/admin/categories',
+        url: `/${ADMIN_PATH}/categories`,
       },
       {
         label: 'Forums',
-        url: '/admin/forums',
+        url: `/${ADMIN_PATH}/forums`,
       },
       {
         label: 'Users',
-        url: '/admin/users',
+        url: `/${ADMIN_PATH}/users`,
       },
       {
         label: 'Threads',
-        url: '/admin/threads',
+        url: `/${ADMIN_PATH}/threads`,
       },
     ],
   },

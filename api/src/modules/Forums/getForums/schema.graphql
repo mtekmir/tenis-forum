@@ -1,0 +1,15 @@
+type Query {
+  forumGetAll: ForumGetAllResponse!
+}
+
+type ForumGetAllResponse {
+  forums: [ForumInfo!]!
+}
+
+type ForumInfo {
+  id: Int!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+  threadCount: Int!
+}

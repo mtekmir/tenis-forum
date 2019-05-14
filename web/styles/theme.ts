@@ -4,6 +4,7 @@ export const GlobalStyles = createGlobalStyle`
   html {
     font-size: 10px;
     box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   body {
@@ -19,10 +20,10 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 
-  button, input, select {
+  button, input, select, table, tbody, thead, td, tr {
     border: none;
   }
-
+  table { border-collapse:collapse }
   button:active {
     border:none;
   }

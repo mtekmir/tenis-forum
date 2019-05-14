@@ -8,12 +8,12 @@ const CategoriesContainer: React.FunctionComponent<Props> = () => {
     <div>
       <GetAllCategoriesComponent>
         {({ data, loading }) => {
+          if (loading) {
+            return <div>Loading...</div>;
+          }
           if (data && data.categoryGetAll && data.categoryGetAll.categories) {
             return (
-              <CategoriesView
-                isFetching={loading}
-                categories={data.categoryGetAll.categories}
-              />
+              <CategoriesView categories={data.categoryGetAll.categories} />
             );
           }
         }}

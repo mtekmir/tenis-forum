@@ -1,0 +1,15 @@
+type Query {
+  postGetAll(offset: Int): PostGetAllResponse!
+}
+
+type PostGetAllResponse {
+  posts: [PostInfo!]!
+}
+
+type PostInfo {
+  id: Int!
+  createdAt: Date!
+  authorId: String!
+  authorUsername: String!
+  threadId: String!
+}

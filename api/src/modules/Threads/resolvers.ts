@@ -1,6 +1,7 @@
 import { threadCreate } from './createThread';
 import { threadDelete } from './deleteThread';
 import { threadGet } from './getThread';
+import { threadGetAll } from './getAllThreads';
 
 export const resolvers = {
   Mutation: {
@@ -9,5 +10,6 @@ export const resolvers = {
   },
   Query: {
     threadGet,
+    threadGetAll,
   },
 };

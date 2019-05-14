@@ -1,22 +1,23 @@
 import * as React from 'react';
 import { MenuContainer } from './styles';
-import { MENU_ITEMS } from './menuItems';
+import { ADMIN_MENU, MENU } from './menuItems';
 import { MenuItem } from './components/menuItem';
 import { Divider } from '../../Divider';
 import { MeMe } from '../../../generated/apolloComponents';
+import { withRouter, WithRouterProps } from 'next/router';
 
 interface State {
   [key: string]: boolean;
 }
 
-interface Props {
+interface Props extends WithRouterProps {
   open: boolean;
   me: MeMe | null;
   outerRef: any;
   closeMenu: () => void;
 }
 
-export class Menu extends React.Component<Props, State> {
+class MenuC extends React.Component<Props, State> {
   state: State = {};
 
   componentDidMount() {
@@ -39,8 +40,11 @@ export class Menu extends React.Component<Props, State> {
   }
 
   renderContent = () => {
-    const { closeMenu } = this.props;
-    return MENU_ITEMS.map(({ type, ...props }, idx) => {
+    const { closeMenu, router } = this.props;
+    const menu = router.pathname.split('/')[1].includes('admin')
+      ? ADMIN_MENU
+      : MENU;
+    return menu.map(({ type, ...props }, idx) => {
       if (type === 'divider') {
         return <Divider key={type} />;
       }
@@ -86,3 +90,5 @@ export class Menu extends React.Component<Props, State> {
     );
   }
 }
+
+export const Menu = withRouter(MenuC);
