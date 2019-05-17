@@ -8,12 +8,15 @@ interface Props {
   url?: string;
   marginRight?: boolean;
   type?: string;
+  wide?: boolean;
+  onClick?: () => void;
 }
 
 export const Button: React.FunctionComponent<Props> = ({
   url,
   text,
-  ...props,
+  // tslint:disable-next-line
+  ...props
 }) => {
   return (
     <React.Fragment>
@@ -32,10 +35,15 @@ export const Button: React.FunctionComponent<Props> = ({
   );
 };
 
-const Styles = styled.div<{ color: string; marginRight?: boolean }>`
+const Styles = styled.div<{
+  color: string;
+  marginRight?: boolean;
+  wide?: boolean;
+}>`
   background: ${({ theme: { palette }, color }) => palette[color]};
   color: white;
   padding: 0.5em;
+  ${({ wide }) => wide && 'padding: 0.5em 1.5em'};
   border-radius: 5px;
   cursor: pointer;
   ${({ marginRight }) => marginRight && `margin-right: .5em`};

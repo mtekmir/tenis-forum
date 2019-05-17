@@ -18,7 +18,7 @@ export const setPagePrefix = (
     pagePrefix = 6;
   }
 
-  if (pageCount - page < 4) {
+  if (pageCount - page < 4 && pageCount > 16) {
     pagePrefix = 16;
   }
   return pagePrefix;

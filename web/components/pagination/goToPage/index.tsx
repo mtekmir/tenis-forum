@@ -1,45 +1,43 @@
 import * as React from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import {
-  withStyles,
-  WithStyles,
-  Typography,
+  PageButton,
+  GoToPageContainer,
+  GoToPageBottomDiv,
+  GoToPageInput,
   Popover,
-  Divider,
-  IconButton,
-  Button,
-  Input,
-} from '@material-ui/core';
-import goToPageStyle from './goToPageStyle';
-import { Add, Remove } from '@material-ui/icons';
+} from './goToPageStyle';
+import { TiPlus, TiMinus } from 'react-icons/ti';
+import { Button } from '../../Button';
 
-interface Props extends WithStyles<typeof goToPageStyle> {
+interface Props {
   pageCount: number;
   pagePrefix: number;
   onPageChange: (page: number) => void;
 }
 
 interface State {
-  anchorEl: any;
+  open: boolean;
   pageInput: number;
 }
 
-class GoToPageC extends React.PureComponent<Props, State> {
+export class GoToPage extends React.PureComponent<Props, State> {
   public readonly state: State = {
-    anchorEl: null,
+    open: false,
     pageInput: 1,
   };
 
-  openModal = (event: any) => {
+  openModal = () => {
     const { pagePrefix } = this.props;
     this.setState({
-      anchorEl: event.currentTarget,
+      open: true,
       pageInput: pagePrefix,
     });
   }
 
   closeModal = () => {
     this.setState({
-      anchorEl: null,
+      open: false,
     });
   }
 
@@ -58,75 +56,45 @@ class GoToPageC extends React.PureComponent<Props, State> {
   }
 
   handleGo = () => {
-    this.setState({
-      anchorEl: null,
-    });
+    this.closeModal();
     this.props.onPageChange(this.state.pageInput);
   }
 
   render() {
-    const { classes } = this.props;
-    const { anchorEl, pageInput } = this.state;
+    const { open, pageInput } = this.state;
     return (
-      <React.Fragment>
-        <div className={classes.pageButton} onClick={this.openModal}>
-          <Typography>...</Typography>
-        </div>
-        <Popover
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          onClose={this.closeModal}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-        >
-          <div className={classes.goToPageContainer}>
+      <OutsideClickHandler onOutsideClick={this.closeModal}>
+        <Popover>
+          <PageButton
+            onClick={() => (open ? this.closeModal() : this.openModal())}
+          >
+            <span>...</span>
+          </PageButton>
+          <GoToPageContainer open={open}>
             <div>
-              <Typography color="primary" variant="body1">
-                Sayfaya Git
-              </Typography>
-              <Divider />
+              <span>Sayfaya Git</span>
+              <hr />
             </div>
-            <div className={classes.goToPageBottomDiv}>
-              <Input
+            <GoToPageBottomDiv>
+              <GoToPageInput
                 value={pageInput}
-                classes={{
-                  root: classes.goToPageInput,
-                  input: classes.goToPageInput_input,
-                }}
-                color="primary"
-                type="number"
                 onChange={e =>
                   this.setState({ pageInput: parseInt(e.target.value, 10) })
                 }
-                disableUnderline
               />
-              <IconButton onClick={() => this.changePage(1)}>
-                <Add />
-              </IconButton>
-              <IconButton onClick={() => this.changePage(-1)}>
-                <Remove />
-              </IconButton>
+
+              <TiPlus onClick={() => this.changePage(1)} />
+              <TiMinus onClick={() => this.changePage(-1)} />
               <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                classes={{ text: classes.goToPageBtnText }}
+                text="Git"
+                color="green_gradient"
+                wide
                 onClick={() => this.handleGo()}
-              >
-                Git
-              </Button>
-            </div>
-          </div>
+              />
+            </GoToPageBottomDiv>
+          </GoToPageContainer>
         </Popover>
-      </React.Fragment>
+      </OutsideClickHandler>
     );
   }
 }
-
-export const GoToPage = withStyles(goToPageStyle)(GoToPageC);

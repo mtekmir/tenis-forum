@@ -114,6 +114,49 @@ export type ConfirmEmailError = {
   message: string;
 };
 
+export type CreateCategoryVariables = {
+  name: string;
+};
+
+export type CreateCategoryMutation = {
+  __typename?: "Mutation";
+
+  categoryCreate: CreateCategoryCategoryCreate;
+};
+
+export type CreateCategoryCategoryCreate = {
+  __typename?: "Response";
+
+  error: Maybe<CreateCategoryError[]>;
+
+  success: boolean;
+};
+
+export type CreateCategoryError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
+
+export type CreateForumVariables = {
+  name: string;
+  categoryId: number;
+};
+
+export type CreateForumMutation = {
+  __typename?: "Mutation";
+
+  forumCreate: CreateForumForumCreate;
+};
+
+export type CreateForumForumCreate = {
+  __typename?: "Forum";
+
+  id: number;
+};
+
 export type CreatePostVariables = {
   text: string;
   threadId: number;
@@ -741,6 +784,100 @@ export function ConfirmEmailHOC<TProps, TChildProps = any>(
     ConfirmEmailVariables,
     ConfirmEmailProps<TChildProps>
   >(ConfirmEmailDocument, operationOptions);
+}
+export const CreateCategoryDocument = gql`
+  mutation CreateCategory($name: String!) {
+    categoryCreate(input: { name: $name }) {
+      error {
+        path
+        message
+      }
+      success
+    }
+  }
+`;
+export class CreateCategoryComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<CreateCategoryMutation, CreateCategoryVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreateCategoryMutation, CreateCategoryVariables>
+        mutation={CreateCategoryDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreateCategoryProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreateCategoryMutation, CreateCategoryVariables>
+> &
+  TChildProps;
+export type CreateCategoryMutationFn = ReactApollo.MutationFn<
+  CreateCategoryMutation,
+  CreateCategoryVariables
+>;
+export function CreateCategoryHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreateCategoryMutation,
+        CreateCategoryVariables,
+        CreateCategoryProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreateCategoryMutation,
+    CreateCategoryVariables,
+    CreateCategoryProps<TChildProps>
+  >(CreateCategoryDocument, operationOptions);
+}
+export const CreateForumDocument = gql`
+  mutation CreateForum($name: String!, $categoryId: Int!) {
+    forumCreate(input: { name: $name, categoryId: $categoryId }) {
+      id
+    }
+  }
+`;
+export class CreateForumComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<CreateForumMutation, CreateForumVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreateForumMutation, CreateForumVariables>
+        mutation={CreateForumDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreateForumProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreateForumMutation, CreateForumVariables>
+> &
+  TChildProps;
+export type CreateForumMutationFn = ReactApollo.MutationFn<
+  CreateForumMutation,
+  CreateForumVariables
+>;
+export function CreateForumHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreateForumMutation,
+        CreateForumVariables,
+        CreateForumProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreateForumMutation,
+    CreateForumVariables,
+    CreateForumProps<TChildProps>
+  >(CreateForumDocument, operationOptions);
 }
 export const CreatePostDocument = gql`
   mutation createPost($text: String!, $threadId: Int!) {
