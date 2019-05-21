@@ -4,10 +4,11 @@ import {
   GetAllCategoriesComponent,
 } from '../../../../../generated/apolloComponents';
 import { AddForumView } from './AddForumView';
+import { getForums } from '../../../../../graphql/query/admin/getForums';
 
 export const AddForumContainer: React.FunctionComponent = () => {
   return (
-    <CreateForumComponent>
+    <CreateForumComponent refetchQueries={[{ query: getForums }]}>
       {mutate => (
         <GetAllCategoriesComponent>
           {({ data, loading }) => {
@@ -18,7 +19,7 @@ export const AddForumContainer: React.FunctionComponent = () => {
             if (data && data.categoryGetAll && data.categoryGetAll.categories) {
               return (
                 <AddForumView
-                  mutate={mutate}
+                  mutate={variables => mutate({ variables })}
                   categories={data.categoryGetAll.categories}
                 />
               );

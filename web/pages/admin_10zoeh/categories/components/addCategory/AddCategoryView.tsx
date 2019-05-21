@@ -15,6 +15,7 @@ export const AddCategoryView: React.FunctionComponent<Props> = ({ mutate }) => {
   const onSubmit = () => {
     if (name) {
       mutate(name);
+      openCloseModal(false);
     }
   };
 

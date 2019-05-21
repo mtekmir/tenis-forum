@@ -5,7 +5,7 @@ import { Thread } from '../../../models/Threads';
 
 export const forumGet: QueryResolvers.ForumGetResolver = async (
   _,
-  { id, offset = 0 },
+  { id, offset = 0, limit = 25 },
 ) => {
   const threadCountQuery = await getConnection()
     .getRepository(Thread)
@@ -31,7 +31,7 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (
     ])
     .where('forum.id = :id', { id })
     .orderBy('thread.createdAt', 'DESC')
-    .limit(25)
+    .limit(limit)
     .offset(offset)
     .getOne();
 

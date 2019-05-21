@@ -5,6 +5,7 @@ export const meQuery = gql`
     me {
       username
       email
+      permissions
       profileImageUrl
       profile {
         id

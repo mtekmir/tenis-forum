@@ -1,13 +1,13 @@
 import { MutationResolvers } from '../../../types/schema';
-import { isAdmin } from '../../Users/auth/authenticateUser';
 import { Forum } from '../../../models/Forums';
 import { getConnection } from 'typeorm';
 import { Category } from '../../../models/Category';
+import { isAdmin } from '../../Admin/isAdmin';
 
 export const forumCreate: MutationResolvers.ForumCreateResolver = async (
   _,
   { input: { name, categoryId } },
-  { userId }
+  { userId },
 ) => {
   await isAdmin(userId);
   let forum: Forum;

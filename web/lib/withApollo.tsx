@@ -35,7 +35,6 @@ export default (App: any) => {
           getToken: () => parseCookies(req).token,
         },
       );
-
       ctx.ctx.apolloClient = apollo;
 
       let appProps = {};
@@ -67,9 +66,7 @@ export default (App: any) => {
           // Handle them in components via the data.error prop:
           // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
           console.error('Error while running `getDataFromTree`', error);
-          console.log('cathc');
           if (error.message.includes('Unauthorized')) {
-            console.log('asdasdadasds');
             redirect(ctx.ctx, '/uyelik/giris');
           }
         }

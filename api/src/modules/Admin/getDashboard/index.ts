@@ -5,8 +5,14 @@ import { Forum } from '../../../models/Forums';
 import { Thread } from '../../../models/Threads';
 import { Post } from '../../../models/Posts';
 import { User } from '../../../models/User';
+import { isAdmin } from '../isAdmin';
 
-export const dashboardGet: QueryResolvers.DashboardGetResolver = async () => {
+export const dashboardGet: QueryResolvers.DashboardGetResolver = async (
+  _,
+  __,
+  { userId },
+) => {
+  await isAdmin(userId);
   const countsQuery = await getConnection()
     .createQueryBuilder()
     .select('COUNT(thread.id)', 'threadCount')

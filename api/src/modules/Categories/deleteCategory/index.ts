@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../types/schema';
-import { isAdmin } from '../../Users/auth/authenticateUser';
 import { Category } from '../../../models/Category';
+import { isAdmin } from '../../Admin/isAdmin';
 
 export const categoryDelete: MutationResolvers.CategoryDeleteResolver = async (
   _,

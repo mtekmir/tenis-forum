@@ -7,6 +7,12 @@ export interface GetUploadUrlInput {
   extention?: Maybe<string>;
 }
 
+export interface LoginInput {
+  email: string;
+
+  password: string;
+}
+
 export interface CreateCategoryInput {
   name: string;
 }
@@ -29,12 +35,6 @@ export interface CreateThreadInput {
   title: string;
 
   forumId: number;
-}
-
-export interface LoginInput {
-  email: string;
-
-  password: string;
 }
 
 export interface RegisterInput {
@@ -87,6 +87,33 @@ export type Upload = any;
 // ====================================================
 // Documents
 // ====================================================
+
+export type AdminLoginVariables = {
+  email: string;
+  password: string;
+};
+
+export type AdminLoginMutation = {
+  __typename?: "Mutation";
+
+  adminLogin: AdminLoginAdminLogin;
+};
+
+export type AdminLoginAdminLogin = {
+  __typename?: "Response";
+
+  error: Maybe<AdminLoginError[]>;
+
+  success: boolean;
+};
+
+export type AdminLoginError = {
+  __typename?: "Error";
+
+  path: string;
+
+  message: string;
+};
 
 export type ConfirmEmailVariables = {
   token: string;
@@ -561,6 +588,7 @@ export type GetDashboardDashboardGet = {
 export type GetForumVariables = {
   id: number;
   offset?: Maybe<number>;
+  limit?: Maybe<number>;
 };
 
 export type GetForumQuery = {
@@ -710,9 +738,11 @@ export type MeMe = {
 
   email: string;
 
+  permissions: UserPermissions[];
+
   profileImageUrl: Maybe<string>;
 
-  profile: MeProfile;
+  profile: Maybe<MeProfile>;
 };
 
 export type MeProfile = {
@@ -735,6 +765,54 @@ import * as ReactApollo from "react-apollo";
 // Components
 // ====================================================
 
+export const AdminLoginDocument = gql`
+  mutation AdminLogin($email: String!, $password: String!) {
+    adminLogin(input: { email: $email, password: $password }) {
+      error {
+        path
+        message
+      }
+      success
+    }
+  }
+`;
+export class AdminLoginComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<AdminLoginMutation, AdminLoginVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<AdminLoginMutation, AdminLoginVariables>
+        mutation={AdminLoginDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type AdminLoginProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<AdminLoginMutation, AdminLoginVariables>
+> &
+  TChildProps;
+export type AdminLoginMutationFn = ReactApollo.MutationFn<
+  AdminLoginMutation,
+  AdminLoginVariables
+>;
+export function AdminLoginHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        AdminLoginMutation,
+        AdminLoginVariables,
+        AdminLoginProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    AdminLoginMutation,
+    AdminLoginVariables,
+    AdminLoginProps<TChildProps>
+  >(AdminLoginDocument, operationOptions);
+}
 export const ConfirmEmailDocument = gql`
   mutation ConfirmEmail($token: String!) {
     confirmUserEmail(token: $token) {
@@ -1619,8 +1697,8 @@ export function GetDashboardHOC<TProps, TChildProps = any>(
   >(GetDashboardDocument, operationOptions);
 }
 export const GetForumDocument = gql`
-  query GetForum($id: Int!, $offset: Int) {
-    forumGet(id: $id, offset: $offset) {
+  query GetForum($id: Int!, $offset: Int, $limit: Int) {
+    forumGet(id: $id, offset: $offset, limit: $limit) {
       forum {
         id
         name
@@ -1780,6 +1858,7 @@ export const MeDocument = gql`
     me {
       username
       email
+      permissions
       profileImageUrl
       profile {
         id

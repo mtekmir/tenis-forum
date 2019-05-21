@@ -1,29 +1,43 @@
 import * as React from 'react';
-import Select from 'react-select';
+import ReactSelect from 'react-select';
 import { FieldProps } from 'formik';
 
-interface Props extends FieldProps {
+interface Props {
   options: Array<{ label: string; value: string }>;
   isClearable?: boolean;
+  width?: string;
+  onChange?: any;
+  value?: any;
 }
-export const SelectInput: React.FunctionComponent<Props> = props => (
+export const SelectInput: React.FunctionComponent<
+  Props & FieldProps
+> = props => (
   <React.Fragment>
-    <Select
+    <ReactSelect
       instanceId="1"
-      styles={selectStyles}
+      styles={selectStyles()}
       {...props}
       defaultValue={props.options[0]}
     />
   </React.Fragment>
 );
 
-const selectStyles = {
+export const Select: React.FunctionComponent<Props> = props => (
+  <ReactSelect
+    instanceId="1"
+    styles={selectStyles(props.width)}
+    {...props}
+    defaultValue={props.options[0]}
+  />
+);
+
+const selectStyles = (width?: string) => ({
   control: (styles: any) => ({
     ...styles,
     backgroundColor: '#eef6ea',
     padding: '.65em',
     borderRadius: '10px',
-    width: '90%',
+    width: width || '90%',
     border: 'none',
     'box-shadow': '3px 3px 6px 1px rgba(0, 0, 0, 0.14)',
   }),
@@ -36,4 +50,4 @@ const selectStyles = {
       backgroundColor: isFocused || isSelected ? '#eef6ea' : 'white',
     },
   }),
-};
+});

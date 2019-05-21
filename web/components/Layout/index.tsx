@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Head from 'next/head';
-import { HeaderContainer } from './Header/HeaderContainer';
 import { MeComponent } from '../../generated/apolloComponents';
 import { UserContextProvider } from '../../context/userContext';
 import { HeaderView } from './Header/HeaderView';

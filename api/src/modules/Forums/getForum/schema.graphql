@@ -1,5 +1,5 @@
 type Query {
-  forumGet(id: Int!, offset: Int): GetForumResponse!
+  forumGet(id: Int!, offset: Int, limit: Int): GetForumResponse!
 }
 
 type GetForumResponse {

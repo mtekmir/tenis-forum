@@ -2,8 +2,14 @@ import { QueryResolvers } from '../../../types/schema';
 import { Category } from '../../../models/Category';
 import { getConnection } from 'typeorm';
 import { Forum } from '../../../models/Forums';
+import { isAdmin } from '../../Admin/isAdmin';
 
-export const categoryGetAll: QueryResolvers.CategoryGetAllResolver = async () => {
+export const categoryGetAll: QueryResolvers.CategoryGetAllResolver = async (
+  _,
+  __,
+  { userId },
+) => {
+  await isAdmin(userId);
   const categories = await getConnection()
     .getRepository(Category)
     .createQueryBuilder('category')

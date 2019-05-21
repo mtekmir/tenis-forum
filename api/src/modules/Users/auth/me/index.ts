@@ -1,23 +1,25 @@
 import { QueryResolvers } from '../../../../types/schema';
 import { User } from '../../../../models/User';
+import { UserPermissions } from '../../../../models/User/permissions';
+import { UserProfile } from '../../../../models/UserProfile';
 
 export const me: QueryResolvers.MeResolver = async (_, __, { userId }) => {
   if (!userId) {
     return null;
   }
-  const {
-    id,
-    username,
-    email,
-    permissions,
-    profile,
-    profileImageKey,
-  } = await User.findOne({
+
+  const user = await User.findOne({
     where: {
       id: userId,
     },
-    relations: ['profile'],
   });
 
-  return { id, username, email, permissions, profile, profileImageKey };
+  const { id, username, email, permissions, profileImageKey } = user;
+
+  let profile;
+  if (!permissions.includes(UserPermissions.Admin)) {
+    profile = await UserProfile.findOne({ where: { user } });
+  }
+
+  return { id, username, email, permissions, profileImageKey, profile };
 };

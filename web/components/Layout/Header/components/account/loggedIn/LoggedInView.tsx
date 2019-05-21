@@ -3,8 +3,16 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { TiUser } from 'react-icons/ti';
 import { UserPopoverDiv, UserPopoverItem } from './components/UserPopover';
 import { LoggedInDiv } from './styles';
+import {
+  MeMe,
+  UserPermissions,
+} from '../../../../../../generated/apolloComponents';
 
-export const LoggedInView = () => {
+interface Props {
+  me: MeMe;
+}
+
+export const LoggedInView: React.FC<Props> = ({ me }) => {
   const [popoverOpen, togglePopover] = React.useState(false);
 
   const handleTogglePopover = (state: boolean) => {

@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-05-14T22:47:26+03:00
+// Generated in 2019-05-21T18:43:11+03:00
 export type Maybe<T> = T | null;
 
 
@@ -8,6 +8,13 @@ export interface GetUploadUrlInput {
   contentType?: Maybe<string>;
   
   extention?: Maybe<string>;
+}
+
+export interface LoginInput {
+  
+  email: string;
+  
+  password: string;
 }
 
 export interface CreateCategoryInput {
@@ -36,13 +43,6 @@ export interface CreateThreadInput {
   title: string;
   
   forumId: number;
-}
-
-export interface LoginInput {
-  
-  email: string;
-  
-  password: string;
 }
 
 export interface RegisterInput {
@@ -385,6 +385,8 @@ export interface UserInfo {
 
 export interface Mutation {
   
+  adminLogin: Response;
+  
   categoryCreate: Response;
   
   categoryDelete: Response;
@@ -469,6 +471,8 @@ export interface ForumGetQueryArgs {
   id: number;
   
   offset?: Maybe<number>;
+  
+  limit?: Maybe<number>;
 }
 export interface PostGetAllQueryArgs {
   
@@ -487,6 +491,10 @@ export interface ThreadGetQueryArgs {
 export interface UserProfileGetQueryArgs {
   
   id: string;
+}
+export interface AdminLoginMutationArgs {
+  
+  input: LoginInput;
 }
 export interface CategoryCreateMutationArgs {
   
@@ -640,6 +648,8 @@ export namespace QueryResolvers {
     id: number;
     
     offset?: Maybe<number>;
+    
+    limit?: Maybe<number>;
   }
 
 
@@ -1060,6 +1070,8 @@ export namespace UserInfoResolvers {
 export namespace MutationResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
     
+    adminLogin?: AdminLoginResolver<Response, TypeParent, Context>;
+    
     categoryCreate?: CategoryCreateResolver<Response, TypeParent, Context>;
     
     categoryDelete?: CategoryDeleteResolver<Response, TypeParent, Context>;
@@ -1093,6 +1105,13 @@ export namespace MutationResolvers {
     resetPassword?: ResetPasswordResolver<Response, TypeParent, Context>;
     
     editUserProfile?: EditUserProfileResolver<Response, TypeParent, Context>;
+  }
+
+
+  export type AdminLoginResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, AdminLoginArgs>;
+  export interface AdminLoginArgs {
+    
+    input: LoginInput;
   }
 
 

@@ -26,6 +26,6 @@ export const login: MutationResolvers.LoginResolver = async (
   }
 
   const token = generateToken(user.id);
-  response.cookie('token', token);
+  response.cookie('token', token, { maxAge: 2592000000, httpOnly: true });
   return respond();
 };

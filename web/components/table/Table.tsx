@@ -1,6 +1,7 @@
+import React from 'react';
 import styled from 'styled-components';
 import { TableHead } from './TableHead';
-import { TableRow } from './TableRow';
+import { TableRow, DetailsRow } from './TableRow';
 import { TableBody } from './TableBody';
 import { TableCell } from './TableCell';
 import { formatDate } from '../../utils/formatDate';
@@ -32,15 +33,20 @@ export const TableComponent: React.FunctionComponent<Props> = ({
   headers,
   rows,
 }) => {
+  const [detailOpen, setDetailOpen] = React.useState();
+
   const renderRows = () => {
     return rows.map(row => (
-      <TableRow key={row.id}>
-        {headers.map(h => (
-          <TableCell width={h.width} numeric={h.numeric} key={h.id}>
-            {h.date ? formatDate(row[h.id]) : row[h.id]}
-          </TableCell>
-        ))}
-      </TableRow>
+      <React.Fragment key={row.id}>
+        <TableRow onClick={() => setDetailOpen(row.id)}>
+          {headers.map(h => (
+            <TableCell width={h.width} numeric={h.numeric} key={h.id}>
+              {h.date ? formatDate(row[h.id]) : row[h.id]}
+            </TableCell>
+          ))}
+        </TableRow>
+        <DetailsRow open={detailOpen === row.id} />
+      </React.Fragment>
     ));
   };
 

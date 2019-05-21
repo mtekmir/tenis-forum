@@ -1,11 +1,11 @@
 import { MutationResolvers } from '../../../types/schema';
-import { isAdmin } from '../../Users/auth/authenticateUser';
 import { Forum } from '../../../models/Forums';
+import { isAdmin } from '../../Admin/isAdmin';
 
 export const forumDelete: MutationResolvers.ForumDeleteResolver = async (
   _,
   { id },
-  { userId }
+  { userId },
 ) => {
   await isAdmin(userId);
 
@@ -13,6 +13,6 @@ export const forumDelete: MutationResolvers.ForumDeleteResolver = async (
 
   return {
     error: null,
-    success: true
+    success: true,
   };
 };
