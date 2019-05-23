@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const AppBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3em;
   padding: 1.3em;
   display: flex;

@@ -24,11 +24,13 @@ const Layout: React.FunctionComponent<Props> = ({
           />
         </Head>
         <HeaderView me={data && data.me} />
-        {children}
-        <footer>
-          <hr />
-          <span>I'm here to stay (Footer)</span>
-        </footer>
+        <div style={{ marginTop: '3em' }}>
+          {children}
+          <footer>
+            <hr />
+            <span>I'm here to stay (Footer)</span>
+          </footer>
+        </div>
       </UserContextProvider>
     )}
   </MeComponent>

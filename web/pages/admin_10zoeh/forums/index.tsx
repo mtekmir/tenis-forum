@@ -1,19 +1,29 @@
 import React from 'react';
-import { GetAllForumsComponent } from '../../../generated/apolloComponents';
+import {
+  GetAllForumsComponent,
+  GetForumForum,
+} from '../../../generated/apolloComponents';
 import { ForumsView } from './ForumsView';
+import { ApolloConsumer } from 'react-apollo';
 
 const ForumsContainer = () => {
   return (
-    <GetAllForumsComponent>
-      {({ data, loading }) => {
-        if (loading) {
-          return <div>Loading...</div>;
-        }
-        if (data && data.forumGetAll && data.forumGetAll.forums) {
-          return <ForumsView forums={data.forumGetAll.forums} />;
-        }
-      }}
-    </GetAllForumsComponent>
+    <ApolloConsumer>
+      {client => (
+        <GetAllForumsComponent>
+          {({ data, loading }) => {
+            if (loading) {
+              return <div>Loading...</div>;
+            }
+            if (data && data.forumGetAll && data.forumGetAll.forums) {
+              return (
+                <ForumsView forums={data.forumGetAll.forums} client={client} />
+              );
+            }
+          }}
+        </GetAllForumsComponent>
+      )}
+    </ApolloConsumer>
   );
 };
 

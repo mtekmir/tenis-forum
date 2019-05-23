@@ -30,11 +30,13 @@ export const AdminLoginView: React.FunctionComponent<Props> = ({
         <StyledInput
           value={email}
           placeholder="Email"
+          type="email"
           onChange={({ target: { value } }: any) => setEmail(value)}
         />
         <StyledInput
           value={password}
           placeholder="Password"
+          type="password"
           onChange={({ target: { value } }: any) => setPassword(value)}
         />
         <ErrorMessage error={error}>{error}</ErrorMessage>

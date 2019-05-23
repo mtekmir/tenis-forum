@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TableHead } from './TableHead';
-import { TableRow, DetailsRow } from './TableRow';
+import { TableRow } from './TableRow';
 import { TableBody } from './TableBody';
 import { TableCell } from './TableCell';
 import { formatDate } from '../../utils/formatDate';
@@ -19,6 +19,8 @@ export const Table = styled.table`
 interface Props {
   headers: Header[];
   rows: Array<{ [key: string]: any }>;
+  openDetailDrawer?: (id: number) => void;
+  linkTo?: (id: number) => void;
 }
 
 export interface Header {
@@ -32,20 +34,23 @@ export interface Header {
 export const TableComponent: React.FunctionComponent<Props> = ({
   headers,
   rows,
+  openDetailDrawer,
+  linkTo,
 }) => {
-  const [detailOpen, setDetailOpen] = React.useState();
+  const handleClick = (id: number) => {
+    openDetailDrawer ? openDetailDrawer(id) : linkTo(id);
+  };
 
   const renderRows = () => {
     return rows.map(row => (
       <React.Fragment key={row.id}>
-        <TableRow onClick={() => setDetailOpen(row.id)}>
+        <TableRow onClick={() => handleClick(row.id)}>
           {headers.map(h => (
             <TableCell width={h.width} numeric={h.numeric} key={h.id}>
               {h.date ? formatDate(row[h.id]) : row[h.id]}
             </TableCell>
           ))}
         </TableRow>
-        <DetailsRow open={detailOpen === row.id} />
       </React.Fragment>
     ));
   };

@@ -6,6 +6,7 @@ export const getForum = gql`
       forum {
         id
         name
+        createdAt
         category {
           name
         }

@@ -8,8 +8,3 @@ export const TableRow = styled.tr<{ open?: boolean }>`
     background-color: #ededed;
   }
 `;
-
-export const DetailsRow = styled.tr<{ open?: boolean }>`
-  height: ${({ open }) => (open ? '100px' : '0px')};
-  transition: 0.3s all;
-`;

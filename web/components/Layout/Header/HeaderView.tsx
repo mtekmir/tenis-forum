@@ -50,7 +50,7 @@ export class HeaderView extends Component<Props> {
           <Container>
             <Row alignItems="center">
               <Col xs={8} sm={8} md={10} lg={10} xl={10.5}>
-                <Logo open={menuOpen}>Tenis Forum</Logo>
+                <Logo>Tenis Forum</Logo>
               </Col>
               <Col
                 xs={4}

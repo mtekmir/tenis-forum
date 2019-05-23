@@ -612,6 +612,8 @@ export type GetForumForum = {
 
   name: string;
 
+  createdAt: Date;
+
   category: GetForumCategory;
 
   threads: GetForumThreads[];
@@ -1702,6 +1704,7 @@ export const GetForumDocument = gql`
       forum {
         id
         name
+        createdAt
         category {
           name
         }

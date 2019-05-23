@@ -13,7 +13,9 @@
     "no-implicit-dependencies": false,
     "interface-name": false,
     "prettier": true,
-    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }]
+    "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }],
+    "no-shadowed-variable": false,
+    "curly": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts"]

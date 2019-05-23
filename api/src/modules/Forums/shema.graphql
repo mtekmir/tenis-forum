@@ -1,6 +1,7 @@
 type Forum {
   id: Int!
   name: String!
+  createdAt: Date!
   category: Category!
   threads: [Thread!]!
 }
