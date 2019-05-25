@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-05-21T18:43:11+03:00
+// Generated in 2019-05-25T23:56:27+03:00
 export type Maybe<T> = T | null;
 
 
@@ -133,6 +133,8 @@ export interface Query {
   
   postGetAll: PostGetAllResponse;
   
+  postGet: PostInfo;
+  
   threadGetAll: ThreadGetAllResponse;
   
   threadGet: GetThreadResponse;
@@ -203,6 +205,8 @@ export interface Forum {
   
   name: string;
   
+  createdAt: Date;
+  
   category: Category;
   
   threads: Thread[];
@@ -251,7 +255,7 @@ export interface User {
   
   profileImageUrl?: Maybe<string>;
   
-  profile: UserProfile;
+  profile?: Maybe<UserProfile>;
 }
 
 
@@ -320,6 +324,8 @@ export interface PostGetAllResponse {
 export interface PostInfo {
   
   id: number;
+  
+  text: string;
   
   createdAt: Date;
   
@@ -478,6 +484,10 @@ export interface PostGetAllQueryArgs {
   
   offset?: Maybe<number>;
 }
+export interface PostGetQueryArgs {
+  
+  id?: Maybe<number>;
+}
 export interface ThreadGetAllQueryArgs {
   
   offset?: Maybe<number>;
@@ -487,6 +497,8 @@ export interface ThreadGetQueryArgs {
   id: number;
   
   offset?: Maybe<number>;
+  
+  limit?: Maybe<number>;
 }
 export interface UserProfileGetQueryArgs {
   
@@ -620,6 +632,8 @@ export namespace QueryResolvers {
     
     postGetAll?: PostGetAllResolver<PostGetAllResponse, TypeParent, Context>;
     
+    postGet?: PostGetResolver<PostInfo, TypeParent, Context>;
+    
     threadGetAll?: ThreadGetAllResolver<ThreadGetAllResponse, TypeParent, Context>;
     
     threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, Context>;
@@ -661,6 +675,13 @@ export namespace QueryResolvers {
   }
 
 
+  export type PostGetResolver<R = PostInfo, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, PostGetArgs>;
+  export interface PostGetArgs {
+    
+    id?: Maybe<number>;
+  }
+
+
   export type ThreadGetAllResolver<R = ThreadGetAllResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadGetAllArgs>;
   export interface ThreadGetAllArgs {
     
@@ -674,6 +695,8 @@ export namespace QueryResolvers {
     id: number;
     
     offset?: Maybe<number>;
+    
+    limit?: Maybe<number>;
   }
 
 
@@ -778,6 +801,8 @@ export namespace ForumResolvers {
     
     name?: NameResolver<string, TypeParent, Context>;
     
+    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    
     category?: CategoryResolver<Category, TypeParent, Context>;
     
     threads?: ThreadsResolver<Thread[], TypeParent, Context>;
@@ -786,6 +811,7 @@ export namespace ForumResolvers {
 
   export type IdResolver<R = number, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
   export type NameResolver<R = string, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<R = Date, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
   export type CategoryResolver<R = Category, Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;
   export type ThreadsResolver<R = Thread[], Parent = Forum, Context = IContext> = Resolver<R, Parent, Context>;  
 }
@@ -850,7 +876,7 @@ export namespace UserResolvers {
     
     profileImageUrl?: ProfileImageUrlResolver<Maybe<string>, TypeParent, Context>;
     
-    profile?: ProfileResolver<UserProfile, TypeParent, Context>;
+    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, Context>;
   }
 
 
@@ -859,7 +885,7 @@ export namespace UserResolvers {
   export type EmailResolver<R = string, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type PermissionsResolver<R = UserPermissions[], Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
   export type ProfileImageUrlResolver<R = Maybe<string>, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;
-  export type ProfileResolver<R = UserProfile, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type ProfileResolver<R = Maybe<UserProfile>, Parent = User, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace UserProfileResolvers {
@@ -967,6 +993,8 @@ export namespace PostInfoResolvers {
     
     id?: IdResolver<number, TypeParent, Context>;
     
+    text?: TextResolver<string, TypeParent, Context>;
+    
     createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
     
     authorId?: AuthorIdResolver<string, TypeParent, Context>;
@@ -980,6 +1008,7 @@ export namespace PostInfoResolvers {
 
 
   export type IdResolver<R = number, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TextResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type CreatedAtResolver<R = Date, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type AuthorIdResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;
   export type AuthorUsernameResolver<R = string, Parent = PostInfo, Context = IContext> = Resolver<R, Parent, Context>;

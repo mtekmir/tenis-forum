@@ -5,7 +5,7 @@ import { Post } from '../../../models/Posts';
 
 export const threadGet: QueryResolvers.ThreadGetResolver = async (
   _,
-  { id, offset },
+  { id, offset, limit = 25 },
 ) => {
   const postCountQuery = await getConnection()
     .getRepository(Post)
@@ -18,6 +18,7 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
     .getRepository(Thread)
     .createQueryBuilder('thread')
     .leftJoinAndSelect('thread.posts', 'post')
+    .leftJoinAndSelect('thread.forum', 'forum')
     .leftJoinAndSelect('thread.originalPost', 'originalPost')
     .leftJoinAndSelect('thread.owner', 'owner')
     .leftJoinAndSelect('post.author', 'author')
@@ -36,7 +37,7 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
     ])
     .where('thread.id = :id', { id })
     .orderBy('post.createdAt', 'ASC')
-    .limit(25)
+    .limit(limit)
     .offset(offset)
     .getOne();
 

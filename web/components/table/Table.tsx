@@ -5,22 +5,13 @@ import { TableRow } from './TableRow';
 import { TableBody } from './TableBody';
 import { TableCell } from './TableCell';
 import { formatDate } from '../../utils/formatDate';
-
-export const Table = styled.table`
-  padding: 0.5em;
-  margin: 0.5em;
-  font-size: 0.7em;
-  width: 100%;
-  overflow: auto;
-  table-layout: fixed;
-  ${({ theme }) => theme.boxShadow};
-`;
+import { Type, Args } from './drawer/DrawerContainer';
 
 interface Props {
   headers: Header[];
   rows: Array<{ [key: string]: any }>;
-  openDetailDrawer?: (id: number) => void;
-  linkTo?: (id: number) => void;
+  type: Type;
+  getDetail: (args: Args) => void;
 }
 
 export interface Header {
@@ -34,17 +25,13 @@ export interface Header {
 export const TableComponent: React.FunctionComponent<Props> = ({
   headers,
   rows,
-  openDetailDrawer,
-  linkTo,
+  getDetail,
+  type,
 }) => {
-  const handleClick = (id: number) => {
-    openDetailDrawer ? openDetailDrawer(id) : linkTo(id);
-  };
-
   const renderRows = () => {
     return rows.map(row => (
       <React.Fragment key={row.id}>
-        <TableRow onClick={() => handleClick(row.id)}>
+        <TableRow onClick={() => getDetail({ id: row.id, type })}>
           {headers.map(h => (
             <TableCell width={h.width} numeric={h.numeric} key={h.id}>
               {h.date ? formatDate(row[h.id]) : row[h.id]}
@@ -70,3 +57,13 @@ export const TableComponent: React.FunctionComponent<Props> = ({
     </Table>
   );
 };
+
+export const Table = styled.table`
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 0.7em;
+  width: 100%;
+  overflow: auto;
+  table-layout: fixed;
+  ${({ theme }) => theme.boxShadow};
+`;

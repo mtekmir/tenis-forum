@@ -1,4 +1,4 @@
-import { Header } from '../../../../../components/table/Table';
+import { Header } from '../../../Table';
 
 export const FORUM_DETAIL_TABLE_HEADERS: Header[] = [
   {

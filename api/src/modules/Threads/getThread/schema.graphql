@@ -1,5 +1,5 @@
 type Query {
-  threadGet(id: Int!, offset: Int): GetThreadResponse!
+  threadGet(id: Int!, offset: Int, limit: Int): GetThreadResponse!
 }
 
 type GetThreadResponse {

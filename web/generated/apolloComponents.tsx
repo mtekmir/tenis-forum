@@ -441,6 +441,34 @@ export type GetAllForumsForums = {
   threadCount: number;
 };
 
+export type GetPostVariables = {
+  id: number;
+};
+
+export type GetPostQuery = {
+  __typename?: "Query";
+
+  postGet: GetPostPostGet;
+};
+
+export type GetPostPostGet = {
+  __typename?: "PostInfo";
+
+  id: number;
+
+  createdAt: Date;
+
+  text: string;
+
+  authorId: string;
+
+  authorUsername: string;
+
+  threadId: string;
+
+  threadTitle: string;
+};
+
 export type GetAllPostsVariables = {};
 
 export type GetAllPostsQuery = {
@@ -1465,6 +1493,52 @@ export function GetAllForumsHOC<TProps, TChildProps = any>(
     GetAllForumsVariables,
     GetAllForumsProps<TChildProps>
   >(GetAllForumsDocument, operationOptions);
+}
+export const GetPostDocument = gql`
+  query GetPost($id: Int!) {
+    postGet(id: $id) {
+      id
+      createdAt
+      text
+      authorId
+      authorUsername
+      threadId
+      threadTitle
+    }
+  }
+`;
+export class GetPostComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetPostQuery, GetPostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetPostQuery, GetPostVariables>
+        query={GetPostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetPostProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetPostQuery, GetPostVariables>
+> &
+  TChildProps;
+export function GetPostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetPostQuery,
+        GetPostVariables,
+        GetPostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetPostQuery,
+    GetPostVariables,
+    GetPostProps<TChildProps>
+  >(GetPostDocument, operationOptions);
 }
 export const GetAllPostsDocument = gql`
   query GetAllPosts {

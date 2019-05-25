@@ -4,3 +4,13 @@ type Post {
   createdAt: Date!
   author: User!
 }
+
+type PostInfo {
+  id: Int!
+  text: String!
+  createdAt: Date!
+  authorId: String!
+  authorUsername: String!
+  threadId: String!
+  threadTitle: String!
+}

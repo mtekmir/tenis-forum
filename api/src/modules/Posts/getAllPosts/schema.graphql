@@ -5,12 +5,3 @@ type Query {
 type PostGetAllResponse {
   posts: [PostInfo!]!
 }
-
-type PostInfo {
-  id: Int!
-  createdAt: Date!
-  authorId: String!
-  authorUsername: String!
-  threadId: String!
-  threadTitle: String!
-}

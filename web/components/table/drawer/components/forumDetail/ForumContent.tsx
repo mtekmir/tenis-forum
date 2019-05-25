@@ -1,31 +1,39 @@
 import * as React from 'react';
 
 import { GetForumForum } from '../../../../../generated/apolloComponents';
-import { ForumTitle, ForumDetails } from './forumDetailStyles';
 import { formatDate } from '../../../../../utils/formatDate';
-import { TableComponent } from '../../../../../components/table/Table';
+import { TableComponent } from '../../../Table';
 import { FORUM_DETAIL_TABLE_HEADERS } from './tableHeaders';
+import { Type, Args } from '../../DrawerContainer';
+import { Title, Details } from '../../styles';
 
-export const ForumContent: React.FC<{ forum: GetForumForum }> = ({
+interface Props {
+  forum: GetForumForum;
+  getDetail: (args: Args) => void;
+}
+
+export const ForumContent: React.FC<Props> = ({
   forum: { id, name, category, threads, createdAt },
+  getDetail,
 }) => (
   <React.Fragment>
-    <ForumTitle>
+    <Title>
       Forum #{id}
       <span>{name}</span>
-    </ForumTitle>
-    <ForumDetails>
+    </Title>
+    <Details>
       <span>CreatedAt: </span>
       {formatDate(createdAt)}
-    </ForumDetails>
-    <ForumDetails>
+    </Details>
+    <Details>
       <span>Category Name: </span>
       {category.name}
-    </ForumDetails>
+    </Details>
     Latest Threads:
     <TableComponent
+      type={Type.T}
       headers={FORUM_DETAIL_TABLE_HEADERS}
-      linkTo={id => null}
+      getDetail={args => getDetail(args)}
       rows={threads.map(({ owner, ...rest }) => ({
         username: owner.username,
         ...rest,
