@@ -9,6 +9,7 @@ import { PostContent } from './components/postDetail/PostContent';
 interface Props {
   open: boolean;
   getDetail: (args: Args) => void;
+  askForDelete: (args: Args) => void;
   onClose: () => void;
   goBack: () => void;
   history: HistoryNode[];
@@ -19,6 +20,7 @@ export const DrawerView: React.FunctionComponent<Props> = ({
   onClose,
   goBack,
   getDetail,
+  askForDelete,
   history,
 }) => {
   const renderContent = () => {
@@ -29,7 +31,13 @@ export const DrawerView: React.FunctionComponent<Props> = ({
       case Type.F:
         return <ForumContent getDetail={getDetail} forum={lastNode.data} />;
       case Type.T:
-        return <ThreadContent getDetail={getDetail} thread={lastNode.data} />;
+        return (
+          <ThreadContent
+            getDetail={getDetail}
+            askForDelete={askForDelete}
+            thread={lastNode.data}
+          />
+        );
       case Type.P:
         return <PostContent getDetail={getDetail} post={lastNode.data} />;
     }

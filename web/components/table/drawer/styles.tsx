@@ -51,3 +51,8 @@ export const Details = styled.div`
     margin-bottom: 1em;
   }
 `;
+
+export const EditDelete = styled.div`
+  margin-top: -0.4em;
+  margin-bottom: 1em;
+`;

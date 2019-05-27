@@ -9,6 +9,8 @@ import {
 import { getForum } from '../../../graphql/query/getForum';
 import { getThread } from '../../../graphql/query/getThread';
 import { getPost } from '../../../graphql/query/admin/getPost';
+import { deleteThread } from '../../../graphql/query/admin/deleteThread';
+import { Modal } from '../../modal/Modal';
 
 export enum Type {
   U = 'User',
@@ -39,6 +41,7 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
   client,
 }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
   const [history, setHistory] = React.useState<HistoryNode[]>([]);
 
   const handleClose = () => {
@@ -48,6 +51,22 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
 
   const goBack = () => {
     setHistory(history => history.slice(0, -1));
+  };
+
+  const askForDelete = ({ id, type }: Args) => {
+    setModalOpen(true);
+  };
+
+  const deleteEntity = async ({ id, type }: Args) => {
+    if (!id) return;
+    switch (type) {
+      case Type.T: {
+        const { data } = await client.mutate({
+          mutation: deleteThread,
+          variables: { id },
+        });
+      }
+    }
   };
 
   const request = async (reqArgs: Args, root: boolean) => {
@@ -102,12 +121,18 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
   }, [args]);
 
   return (
-    <DrawerView
-      open={drawerOpen}
-      onClose={handleClose}
-      goBack={goBack}
-      getDetail={(args: Args) => request(args, false)}
-      history={history}
-    />
+    <>
+      <DrawerView
+        open={drawerOpen}
+        onClose={handleClose}
+        goBack={goBack}
+        getDetail={(args: Args) => request(args, false)}
+        askForDelete={askForDelete}
+        history={history}
+      />
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        asdasdasdasd
+      </Modal>
+    </>
   );
 };

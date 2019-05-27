@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import { GetPostPostGet } from '../../../../../generated/apolloComponents';
 import { Title, Details } from '../../styles';
 import { formatDate } from '../../../../../utils/formatDate';
@@ -16,17 +17,24 @@ export const PostContent: React.FunctionComponent<Props> = ({
     <>
       <Title>Post #{id}</Title>
       <Details>
-        Created At:
+        <span>Created At: </span>
         {formatDate(createdAt)}
       </Details>
       <Details>
-        Author:
+        <span>Author: </span>
         {authorUsername}
       </Details>
       <Details>
-        Thread:
+        <span>Thread: </span>
         {threadTitle}
       </Details>
+      <Text>{text}</Text>
     </>
   );
 };
+
+const Text = styled.div`
+  border: 1px solid #efefef;
+  padding: 1em;
+  margin-top: 1em;
+`;
