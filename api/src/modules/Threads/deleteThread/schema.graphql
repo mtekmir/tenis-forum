@@ -1,3 +1,3 @@
 type Mutation {
-  threadDelete(id: Int!): Response!
+  threadDelete(id: Int!): Thread
 }

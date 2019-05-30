@@ -39,7 +39,13 @@ export const DrawerView: React.FunctionComponent<Props> = ({
           />
         );
       case Type.P:
-        return <PostContent getDetail={getDetail} post={lastNode.data} />;
+        return (
+          <PostContent
+            getDetail={getDetail}
+            askForDelete={askForDelete}
+            post={lastNode.data}
+          />
+        );
     }
   };
 

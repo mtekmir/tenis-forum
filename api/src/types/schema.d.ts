@@ -1,5 +1,5 @@
 ./types#IContext
-// Generated in 2019-05-25T23:56:27+03:00
+// Generated in 2019-05-30T16:59:39+03:00
 export type Maybe<T> = T | null;
 
 
@@ -405,11 +405,11 @@ export interface Mutation {
   
   postCreate: Post;
   
-  postDelete: Response;
+  postDelete?: Maybe<Post>;
   
   threadCreate: CreateThreadResponse;
   
-  threadDelete: Response;
+  threadDelete?: Maybe<Thread>;
   
   createAdmin: DemoAdmin;
   
@@ -1113,11 +1113,11 @@ export namespace MutationResolvers {
     
     postCreate?: PostCreateResolver<Post, TypeParent, Context>;
     
-    postDelete?: PostDeleteResolver<Response, TypeParent, Context>;
+    postDelete?: PostDeleteResolver<Maybe<Post>, TypeParent, Context>;
     
     threadCreate?: ThreadCreateResolver<CreateThreadResponse, TypeParent, Context>;
     
-    threadDelete?: ThreadDeleteResolver<Response, TypeParent, Context>;
+    threadDelete?: ThreadDeleteResolver<Maybe<Thread>, TypeParent, Context>;
     
     createAdmin?: CreateAdminResolver<DemoAdmin, TypeParent, Context>;
     
@@ -1180,7 +1180,7 @@ export namespace MutationResolvers {
   }
 
 
-  export type PostDeleteResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, PostDeleteArgs>;
+  export type PostDeleteResolver<R = Maybe<Post>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, PostDeleteArgs>;
   export interface PostDeleteArgs {
     
     id: number;
@@ -1194,7 +1194,7 @@ export namespace MutationResolvers {
   }
 
 
-  export type ThreadDeleteResolver<R = Response, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadDeleteArgs>;
+  export type ThreadDeleteResolver<R = Maybe<Thread>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ThreadDeleteArgs>;
   export interface ThreadDeleteArgs {
     
     id: number;

@@ -385,6 +385,54 @@ export type ResetPasswordError = {
   message: string;
 };
 
+export type DeletePostVariables = {
+  id: number;
+};
+
+export type DeletePostMutation = {
+  __typename?: "Mutation";
+
+  postDelete: Maybe<DeletePostPostDelete>;
+};
+
+export type DeletePostPostDelete = {
+  __typename?: "Post";
+
+  id: number;
+
+  thread: DeletePostThread;
+};
+
+export type DeletePostThread = {
+  __typename?: "Thread";
+
+  id: number;
+};
+
+export type DeleteThreadVariables = {
+  id: number;
+};
+
+export type DeleteThreadMutation = {
+  __typename?: "Mutation";
+
+  threadDelete: Maybe<DeleteThreadThreadDelete>;
+};
+
+export type DeleteThreadThreadDelete = {
+  __typename?: "Thread";
+
+  id: number;
+
+  forum: DeleteThreadForum;
+};
+
+export type DeleteThreadForum = {
+  __typename?: "Forum";
+
+  id: number;
+};
+
 export type GetAllCategoriesVariables = {};
 
 export type GetAllCategoriesQuery = {
@@ -1399,6 +1447,102 @@ export function ResetPasswordHOC<TProps, TChildProps = any>(
     ResetPasswordVariables,
     ResetPasswordProps<TChildProps>
   >(ResetPasswordDocument, operationOptions);
+}
+export const DeletePostDocument = gql`
+  mutation DeletePost($id: Int!) {
+    postDelete(id: $id) {
+      id
+      thread {
+        id
+      }
+    }
+  }
+`;
+export class DeletePostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<DeletePostMutation, DeletePostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<DeletePostMutation, DeletePostVariables>
+        mutation={DeletePostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type DeletePostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<DeletePostMutation, DeletePostVariables>
+> &
+  TChildProps;
+export type DeletePostMutationFn = ReactApollo.MutationFn<
+  DeletePostMutation,
+  DeletePostVariables
+>;
+export function DeletePostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        DeletePostMutation,
+        DeletePostVariables,
+        DeletePostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    DeletePostMutation,
+    DeletePostVariables,
+    DeletePostProps<TChildProps>
+  >(DeletePostDocument, operationOptions);
+}
+export const DeleteThreadDocument = gql`
+  mutation DeleteThread($id: Int!) {
+    threadDelete(id: $id) {
+      id
+      forum {
+        id
+      }
+    }
+  }
+`;
+export class DeleteThreadComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<DeleteThreadMutation, DeleteThreadVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<DeleteThreadMutation, DeleteThreadVariables>
+        mutation={DeleteThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type DeleteThreadProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<DeleteThreadMutation, DeleteThreadVariables>
+> &
+  TChildProps;
+export type DeleteThreadMutationFn = ReactApollo.MutationFn<
+  DeleteThreadMutation,
+  DeleteThreadVariables
+>;
+export function DeleteThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        DeleteThreadMutation,
+        DeleteThreadVariables,
+        DeleteThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    DeleteThreadMutation,
+    DeleteThreadVariables,
+    DeleteThreadProps<TChildProps>
+  >(DeleteThreadDocument, operationOptions);
 }
 export const GetAllCategoriesDocument = gql`
   query GetAllCategories {
