@@ -5,6 +5,7 @@ import { Type, Args, HistoryNode } from './DrawerContainer';
 import { ThreadContent } from './components/threadDetail/ThreadContent';
 import { TopDiv } from './components/topDiv/TopDiv';
 import { PostContent } from './components/postDetail/PostContent';
+import { CategoryContent } from './components/categoryDetail/CategoryContent';
 
 interface Props {
   open: boolean;
@@ -28,6 +29,10 @@ export const DrawerView: React.FunctionComponent<Props> = ({
     if (!lastNode) return null;
 
     switch (lastNode.type) {
+      case Type.C:
+        return (
+          <CategoryContent getDetail={getDetail} category={lastNode.data} />
+        );
       case Type.F:
         return <ForumContent getDetail={getDetail} forum={lastNode.data} />;
       case Type.T:

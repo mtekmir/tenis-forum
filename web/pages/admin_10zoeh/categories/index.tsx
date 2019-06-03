@@ -1,23 +1,29 @@
 import * as React from 'react';
 import { CategoriesView } from './CategoriesView';
-import { GetAllCategoriesComponent } from '../../../generated/apolloComponents';
+import { GetAllCategorySummaryComponent } from '../../../generated/apolloComponents';
 
 interface Props {}
 const CategoriesContainer: React.FunctionComponent<Props> = () => {
   return (
     <div>
-      <GetAllCategoriesComponent>
+      <GetAllCategorySummaryComponent>
         {({ data, loading }) => {
           if (loading) {
             return <div>Loading...</div>;
           }
-          if (data && data.categoryGetAll && data.categoryGetAll.categories) {
+          if (
+            data &&
+            data.categoryGetSummaryAll &&
+            data.categoryGetSummaryAll.categories
+          ) {
             return (
-              <CategoriesView categories={data.categoryGetAll.categories} />
+              <CategoriesView
+                categories={data.categoryGetSummaryAll.categories}
+              />
             );
           }
         }}
-      </GetAllCategoriesComponent>
+      </GetAllCategorySummaryComponent>
     </div>
   );
 };

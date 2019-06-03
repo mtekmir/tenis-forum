@@ -433,21 +433,21 @@ export type DeleteThreadForum = {
   id: number;
 };
 
-export type GetAllCategoriesVariables = {};
+export type GetAllCategorySummaryVariables = {};
 
-export type GetAllCategoriesQuery = {
+export type GetAllCategorySummaryQuery = {
   __typename?: "Query";
 
-  categoryGetAll: GetAllCategoriesCategoryGetAll;
+  categoryGetSummaryAll: GetAllCategorySummaryCategoryGetSummaryAll;
 };
 
-export type GetAllCategoriesCategoryGetAll = {
-  __typename?: "CategoryGetAllResponse";
+export type GetAllCategorySummaryCategoryGetSummaryAll = {
+  __typename?: "CategoryGetSummaryAllResponse";
 
-  categories: GetAllCategoriesCategories[];
+  categories: GetAllCategorySummaryCategories[];
 };
 
-export type GetAllCategoriesCategories = {
+export type GetAllCategorySummaryCategories = {
   __typename?: "CategoryInfo";
 
   id: number;
@@ -459,6 +459,35 @@ export type GetAllCategoriesCategories = {
   updatedAt: Date;
 
   forumCount: number;
+};
+
+export type GetCategoryVariables = {
+  id: number;
+  limit?: Maybe<number>;
+};
+
+export type GetCategoryQuery = {
+  __typename?: "Query";
+
+  categoryGet: GetCategoryCategoryGet;
+};
+
+export type GetCategoryCategoryGet = {
+  __typename?: "Category";
+
+  id: number;
+
+  name: string;
+
+  forums: GetCategoryForums[];
+};
+
+export type GetCategoryForums = {
+  __typename?: "Forum";
+
+  id: number;
+
+  name: string;
 };
 
 export type GetAllForumsVariables = {};
@@ -610,11 +639,11 @@ export type GetCategoriesVariables = {};
 export type GetCategoriesQuery = {
   __typename?: "Query";
 
-  categoryGet: GetCategoriesCategoryGet;
+  categoryGetAll: GetCategoriesCategoryGetAll;
 };
 
-export type GetCategoriesCategoryGet = {
-  __typename?: "CategoryGetResponse";
+export type GetCategoriesCategoryGetAll = {
+  __typename?: "CategoryGetAllResponse";
 
   success: boolean;
 
@@ -1544,9 +1573,9 @@ export function DeleteThreadHOC<TProps, TChildProps = any>(
     DeleteThreadProps<TChildProps>
   >(DeleteThreadDocument, operationOptions);
 }
-export const GetAllCategoriesDocument = gql`
-  query GetAllCategories {
-    categoryGetAll {
+export const GetAllCategorySummaryDocument = gql`
+  query GetAllCategorySummary {
+    categoryGetSummaryAll {
       categories {
         id
         name
@@ -1557,40 +1586,94 @@ export const GetAllCategoriesDocument = gql`
     }
   }
 `;
-export class GetAllCategoriesComponent extends React.Component<
+export class GetAllCategorySummaryComponent extends React.Component<
   Partial<
-    ReactApollo.QueryProps<GetAllCategoriesQuery, GetAllCategoriesVariables>
+    ReactApollo.QueryProps<
+      GetAllCategorySummaryQuery,
+      GetAllCategorySummaryVariables
+    >
   >
 > {
   render() {
     return (
-      <ReactApollo.Query<GetAllCategoriesQuery, GetAllCategoriesVariables>
-        query={GetAllCategoriesDocument}
+      <ReactApollo.Query<
+        GetAllCategorySummaryQuery,
+        GetAllCategorySummaryVariables
+      >
+        query={GetAllCategorySummaryDocument}
         {...(this as any)["props"] as any}
       />
     );
   }
 }
-export type GetAllCategoriesProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<GetAllCategoriesQuery, GetAllCategoriesVariables>
+export type GetAllCategorySummaryProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<
+    GetAllCategorySummaryQuery,
+    GetAllCategorySummaryVariables
+  >
 > &
   TChildProps;
-export function GetAllCategoriesHOC<TProps, TChildProps = any>(
+export function GetAllCategorySummaryHOC<TProps, TChildProps = any>(
   operationOptions:
     | ReactApollo.OperationOption<
         TProps,
-        GetAllCategoriesQuery,
-        GetAllCategoriesVariables,
-        GetAllCategoriesProps<TChildProps>
+        GetAllCategorySummaryQuery,
+        GetAllCategorySummaryVariables,
+        GetAllCategorySummaryProps<TChildProps>
       >
     | undefined
 ) {
   return ReactApollo.graphql<
     TProps,
-    GetAllCategoriesQuery,
-    GetAllCategoriesVariables,
-    GetAllCategoriesProps<TChildProps>
-  >(GetAllCategoriesDocument, operationOptions);
+    GetAllCategorySummaryQuery,
+    GetAllCategorySummaryVariables,
+    GetAllCategorySummaryProps<TChildProps>
+  >(GetAllCategorySummaryDocument, operationOptions);
+}
+export const GetCategoryDocument = gql`
+  query GetCategory($id: Int!, $limit: Int) {
+    categoryGet(id: $id, limit: $limit) {
+      id
+      name
+      forums {
+        id
+        name
+      }
+    }
+  }
+`;
+export class GetCategoryComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetCategoryQuery, GetCategoryVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetCategoryQuery, GetCategoryVariables>
+        query={GetCategoryDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetCategoryProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetCategoryQuery, GetCategoryVariables>
+> &
+  TChildProps;
+export function GetCategoryHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetCategoryQuery,
+        GetCategoryVariables,
+        GetCategoryProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetCategoryQuery,
+    GetCategoryVariables,
+    GetCategoryProps<TChildProps>
+  >(GetCategoryDocument, operationOptions);
 }
 export const GetAllForumsDocument = gql`
   query GetAllForums {
@@ -1826,7 +1909,7 @@ export function GetAllUsersHOC<TProps, TChildProps = any>(
 }
 export const GetCategoriesDocument = gql`
   query GetCategories {
-    categoryGet {
+    categoryGetAll {
       success
       categories {
         id

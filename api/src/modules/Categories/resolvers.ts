@@ -1,7 +1,8 @@
 import { categoryCreate } from './createCategory';
 import { categoryDelete } from './deleteCategory';
+import { categoryGetAll } from './getAllCategories';
+import { categoryGetSummaryAll } from './getCategorySummaries';
 import { categoryGet } from './getCategory';
-import { categoryGetAll } from './getCategories';
 
 export const resolvers = {
   Mutation: {
@@ -9,7 +10,8 @@ export const resolvers = {
     categoryDelete,
   },
   Query: {
-    categoryGet,
+    categoryGetSummaryAll,
     categoryGetAll,
+    categoryGet,
   },
 };

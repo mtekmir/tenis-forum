@@ -7,6 +7,7 @@ import {
   GetPostQuery,
   DeleteThreadMutation,
   DeletePostMutation,
+  GetCategoryQuery,
 } from '../../../generated/apolloComponents';
 import { getForum } from '../../../graphql/query/getForum';
 import { getThread } from '../../../graphql/query/getThread';
@@ -14,6 +15,7 @@ import { getPost } from '../../../graphql/query/admin/getPost';
 import { deleteThread } from '../../../graphql/query/admin/deleteThread';
 import { ConfirmationModal } from '../../modal/ConfirmationModal';
 import { deletePost } from '../../../graphql/query/admin/deletePost';
+import { getCategory } from '../../../graphql/query/admin/getCategory';
 
 export enum Type {
   U = 'User',
@@ -131,6 +133,18 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
 
     if (!reqArgs) return;
     switch (reqArgs.type) {
+      case Type.C: {
+        const { data } = await client.query<GetCategoryQuery>({
+          query: getCategory,
+          variables: { id: reqArgs.id, limit: 5 },
+          fetchPolicy: onlyRes ? 'network-only' : 'cache-first',
+        });
+        if (data && !onlyRes) {
+          return handleSetResults({ data: data.categoryGet, ...reqArgs });
+        } else {
+          return data.categoryGet;
+        }
+      }
       case Type.F: {
         const { data } = await client.query<GetForumQuery>({
           query: getForum,
@@ -144,7 +158,6 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
         }
       }
 
-      // --------------------------
       case Type.T: {
         const { data } = await client.query<GetThreadQuery>({
           query: getThread,

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { GetAllThreadsThreads } from '../../../generated/apolloComponents';
 import Layout from '../../../components/Layout';
-import { TableComponent } from '../../../components/table/Table';
 import { THREADS_TABLE_HEADERS } from './tableHeaders';
+import { Type } from '../../../components/table/drawer/DrawerContainer';
+import { TableContainer } from '../../../components/table/TableContainer';
 
 interface Props {
   threads: GetAllThreadsThreads[];
@@ -11,7 +12,11 @@ interface Props {
 export const ThreadsView: React.FunctionComponent<Props> = ({ threads }) => {
   return (
     <Layout title="Threads | Admin">
-      <TableComponent headers={THREADS_TABLE_HEADERS} rows={threads} />
+      <TableContainer
+        headers={THREADS_TABLE_HEADERS}
+        rows={threads}
+        type={Type.T}
+      />
     </Layout>
   );
 };

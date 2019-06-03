@@ -4,7 +4,7 @@ import { getConnection } from 'typeorm';
 import { Forum } from '../../../models/Forums';
 import { isAdmin } from '../../Admin/isAdmin';
 
-export const categoryGetAll: QueryResolvers.CategoryGetAllResolver = async (
+export const categoryGetSummaryAll: QueryResolvers.CategoryGetSummaryAllResolver = async (
   _,
   __,
   { userId },

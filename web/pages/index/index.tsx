@@ -13,8 +13,8 @@ const IndexPage: React.FunctionComponent = () => {
             return <LinearProgress />;
           }
 
-          if (data && data.categoryGet && data.categoryGet.success) {
-            return <IndexView categories={data.categoryGet.categories} />;
+          if (data && data.categoryGetAll && data.categoryGetAll.success) {
+            return <IndexView categories={data.categoryGetAll.categories} />;
           }
         }}
       </GetCategoriesComponent>

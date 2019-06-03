@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const getCategories = gql`
   query GetCategories {
-    categoryGet {
+    categoryGetAll {
       success
       categories {
         id

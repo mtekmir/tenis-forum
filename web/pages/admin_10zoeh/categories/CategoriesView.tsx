@@ -4,8 +4,9 @@ import categoriesStyle from './categoriesStyle';
 import { GetAllCategoriesCategories } from '../../../generated/apolloComponents';
 import { CATEGORY_TABLE_HEADERS } from './categoryTableMenuItems';
 import Layout from '../../../components/Layout';
-import { TableComponent } from '../../../components/table/Table';
 import { AddCategoryContainer } from './components/addCategory/AddCategoryContainer';
+import { TableContainer } from '../../../components/table/TableContainer';
+import { Type } from '../../../components/table/drawer/DrawerContainer';
 
 interface Props extends WithStyles<typeof categoriesStyle> {
   categories: GetAllCategoriesCategories[];
@@ -15,7 +16,7 @@ const CategoriesViewC: React.ComponentType<Props> = ({ categories }) => {
   return (
     <Layout title="Categories | Admin">
       <AddCategoryContainer />
-      <TableComponent headers={CATEGORY_TABLE_HEADERS} rows={categories} />
+      <TableContainer headers={CATEGORY_TABLE_HEADERS} rows={categories} type={Type.C} />
     </Layout>
   );
 };

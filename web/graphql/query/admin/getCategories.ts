@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const getAllCategories = gql`
-  query GetAllCategories {
-    categoryGetAll {
+export const getAllCategorySummary = gql`
+  query GetAllCategorySummary {
+    categoryGetSummaryAll {
       categories {
         id
         name

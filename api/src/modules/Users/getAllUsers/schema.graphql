@@ -5,12 +5,3 @@ type Query {
 type UserGetAllResponse {
   users: [UserInfo!]!
 }
-
-type UserInfo {
-  id: String!
-  username: String!
-  email: String!
-  registerDate: Date!
-  threadCount: Int!
-  postCount: Int!
-}

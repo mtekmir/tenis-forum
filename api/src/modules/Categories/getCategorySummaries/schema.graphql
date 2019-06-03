@@ -1,8 +1,8 @@
 type Query {
-  categoryGetAll: CategoryGetAllResponse!
+  categoryGetSummaryAll: CategoryGetSummaryAllResponse!
 }
 
-type CategoryGetAllResponse {
+type CategoryGetSummaryAllResponse {
   categories: [CategoryInfo!]!
 }
 

@@ -10,6 +10,7 @@ import { userProfileGet } from './profile/getUserProfile';
 import { profileImageUrl } from './getProfileImageUrl';
 import { editUserProfile } from './profile/editUserProfile';
 import { userGetAll } from './getAllUsers';
+import { userGet } from './getUser';
 
 export const resolvers = {
   Mutation: {
@@ -26,6 +27,7 @@ export const resolvers = {
     me,
     userProfileGet,
     userGetAll,
+    userGet,
   },
   User: {
     profileImageUrl,
