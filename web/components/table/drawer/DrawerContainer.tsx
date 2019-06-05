@@ -8,6 +8,8 @@ import {
   DeleteThreadMutation,
   DeletePostMutation,
   GetCategoryQuery,
+  GetUserQuery,
+  GetThreadVariables,
 } from '../../../generated/apolloComponents';
 import { getForum } from '../../../graphql/query/getForum';
 import { getThread } from '../../../graphql/query/getThread';
@@ -16,6 +18,7 @@ import { deleteThread } from '../../../graphql/query/admin/deleteThread';
 import { ConfirmationModal } from '../../modal/ConfirmationModal';
 import { deletePost } from '../../../graphql/query/admin/deletePost';
 import { getCategory } from '../../../graphql/query/admin/getCategory';
+import { getUser } from '../../../graphql/query/admin/getUser';
 
 export enum Type {
   U = 'User',
@@ -27,11 +30,11 @@ export enum Type {
 
 export interface Args {
   type: Type;
-  id: number;
+  id: any;
 }
 
 export interface HistoryNode {
-  id: number;
+  id: any;
   type: Type;
   data?: any;
 }
@@ -145,6 +148,7 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
           return data.categoryGet;
         }
       }
+
       case Type.F: {
         const { data } = await client.query<GetForumQuery>({
           query: getForum,
@@ -159,11 +163,16 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
       }
 
       case Type.T: {
-        const { data } = await client.query<GetThreadQuery>({
-          query: getThread,
-          variables: { id: reqArgs.id, limit: 5 },
-          fetchPolicy: onlyRes ? 'network-only' : 'cache-first',
-        });
+        const { id } = reqArgs;
+        const { data } = await client.query<GetThreadQuery, GetThreadVariables>(
+          {
+            query: getThread,
+            variables: {
+              id: id.toString(),
+            },
+            fetchPolicy: onlyRes ? 'network-only' : 'cache-first',
+          },
+        );
 
         if (data && !onlyRes) {
           return handleSetResults({ data: data.threadGet.thread, ...reqArgs });
@@ -183,6 +192,20 @@ export const DrawerContainer: React.FunctionComponent<Props> = ({
           return handleSetResults({ data: data.postGet, ...reqArgs });
         } else {
           return data.postGet;
+        }
+      }
+
+      case Type.U: {
+        const { data } = await client.query<GetUserQuery>({
+          query: getUser,
+          variables: { id: reqArgs.id },
+          fetchPolicy: onlyRes ? 'network-only' : 'cache-first',
+        });
+
+        if (data && !onlyRes) {
+          return handleSetResults({ data: data.userGet, ...reqArgs });
+        } else {
+          return data.userGet;
         }
       }
     }

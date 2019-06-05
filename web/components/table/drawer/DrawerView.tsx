@@ -6,6 +6,7 @@ import { ThreadContent } from './components/threadDetail/ThreadContent';
 import { TopDiv } from './components/topDiv/TopDiv';
 import { PostContent } from './components/postDetail/PostContent';
 import { CategoryContent } from './components/categoryDetail/CategoryContent';
+import { UserContent } from './components/userDetail/UserContent';
 
 interface Props {
   open: boolean;
@@ -51,6 +52,8 @@ export const DrawerView: React.FunctionComponent<Props> = ({
             post={lastNode.data}
           />
         );
+      case Type.U:
+        return <UserContent data={lastNode.data} getDetail={getDetail} />;
     }
   };
 

@@ -1,9 +1,21 @@
 type Query {
-  threadGetAll(offset: Int): ThreadGetAllResponse!
+  threadGetAll(input: ThreadGetAllInput!): ThreadGetAllResponse!
+}
+
+input ThreadGetAllInput {
+  id: String
+  filterBy: FilterBy
+  offset: Int
+  limit: Int
 }
 
 type ThreadGetAllResponse {
   threads: [ThreadInfo!]!
+}
+
+enum FilterBy {
+  USER
+  THREAD
 }
 
 type ThreadInfo {

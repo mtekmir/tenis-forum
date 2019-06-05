@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { GetAllUsersUsers } from '../../../generated/apolloComponents';
-import { TableComponent } from '../../../components/table/Table';
 import { USER_TABLE_HEADERS } from './tableHeaders';
 import Layout from '../../../components/Layout';
+import { TableContainer } from '../../../components/table/TableContainer';
+import { Type } from '../../../components/table/drawer/DrawerContainer';
 
 interface Props {
   users: GetAllUsersUsers[];
@@ -11,7 +12,7 @@ interface Props {
 export const UsersView: React.FunctionComponent<Props> = ({ users }) => {
   return (
     <Layout title="Users | Admin">
-      <TableComponent headers={USER_TABLE_HEADERS} rows={users} />
+      <TableContainer headers={USER_TABLE_HEADERS} rows={users} type={Type.U} />
     </Layout>
   );
 };

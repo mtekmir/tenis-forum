@@ -7,6 +7,34 @@ export interface GetUploadUrlInput {
   extention?: Maybe<string>;
 }
 
+export interface PostGetAllInput {
+  id?: Maybe<string>;
+
+  filterBy?: Maybe<FilterBy>;
+
+  offset?: Maybe<number>;
+
+  limit?: Maybe<number>;
+}
+
+export interface ThreadGetAllInput {
+  id?: Maybe<string>;
+
+  filterBy?: Maybe<FilterBy>;
+
+  offset?: Maybe<number>;
+
+  limit?: Maybe<number>;
+}
+
+export interface GetThreadInput {
+  id: string;
+
+  offset?: Maybe<number>;
+
+  limit?: Maybe<number>;
+}
+
 export interface LoginInput {
   email: string;
 
@@ -70,6 +98,11 @@ export interface EditUserProfileInput {
 export enum UserPermissions {
   Admin = "ADMIN",
   User = "USER"
+}
+
+export enum FilterBy {
+  User = "USER",
+  Thread = "THREAD"
 }
 
 export enum Gender {
@@ -546,7 +579,12 @@ export type GetPostPostGet = {
   threadTitle: string;
 };
 
-export type GetAllPostsVariables = {};
+export type GetAllPostsVariables = {
+  id?: Maybe<string>;
+  filterBy?: Maybe<FilterBy>;
+  limit?: Maybe<number>;
+  offset?: Maybe<number>;
+};
 
 export type GetAllPostsQuery = {
   __typename?: "Query";
@@ -565,6 +603,8 @@ export type GetAllPostsPosts = {
 
   id: number;
 
+  text: string;
+
   createdAt: Date;
 
   authorId: string;
@@ -576,7 +616,12 @@ export type GetAllPostsPosts = {
   threadTitle: string;
 };
 
-export type GetAllThreadsVariables = {};
+export type GetAllThreadsVariables = {
+  id?: Maybe<string>;
+  filterBy?: Maybe<FilterBy>;
+  limit?: Maybe<number>;
+  offset?: Maybe<number>;
+};
 
 export type GetAllThreadsQuery = {
   __typename?: "Query";
@@ -604,6 +649,48 @@ export type GetAllThreadsThreads = {
   postCount: number;
 };
 
+export type GetUserVariables = {
+  id: string;
+};
+
+export type GetUserQuery = {
+  __typename?: "Query";
+
+  userGet: GetUserUserGet;
+};
+
+export type GetUserUserGet = {
+  __typename?: "UserInfo";
+
+  id: string;
+
+  username: string;
+
+  email: string;
+
+  createdAt: Date;
+
+  permissions: UserPermissions[];
+
+  profileImageUrl: Maybe<string>;
+
+  password: string;
+
+  profile: Maybe<GetUserProfile>;
+};
+
+export type GetUserProfile = {
+  __typename?: "UserProfile";
+
+  id: number;
+
+  location: Maybe<string>;
+
+  gender: string;
+
+  occupation: Maybe<string>;
+};
+
 export type GetAllUsersVariables = {};
 
 export type GetAllUsersQuery = {
@@ -619,7 +706,7 @@ export type GetAllUsersUserGetAll = {
 };
 
 export type GetAllUsersUsers = {
-  __typename?: "UserInfo";
+  __typename?: "UserSummary";
 
   id: string;
 
@@ -749,8 +836,9 @@ export type GetForumOwner = {
 };
 
 export type GetThreadVariables = {
-  id: number;
+  id: string;
   offset?: Maybe<number>;
+  limit?: Maybe<number>;
 };
 
 export type GetThreadQuery = {
@@ -1768,10 +1856,18 @@ export function GetPostHOC<TProps, TChildProps = any>(
   >(GetPostDocument, operationOptions);
 }
 export const GetAllPostsDocument = gql`
-  query GetAllPosts {
-    postGetAll {
+  query GetAllPosts(
+    $id: String
+    $filterBy: FilterBy
+    $limit: Int
+    $offset: Int
+  ) {
+    postGetAll(
+      input: { id: $id, filterBy: $filterBy, limit: $limit, offset: $offset }
+    ) {
       posts {
         id
+        text
         createdAt
         authorId
         authorUsername
@@ -1815,8 +1911,15 @@ export function GetAllPostsHOC<TProps, TChildProps = any>(
   >(GetAllPostsDocument, operationOptions);
 }
 export const GetAllThreadsDocument = gql`
-  query GetAllThreads {
-    threadGetAll {
+  query GetAllThreads(
+    $id: String
+    $filterBy: FilterBy
+    $limit: Int
+    $offset: Int
+  ) {
+    threadGetAll(
+      input: { id: $id, filterBy: $filterBy, limit: $limit, offset: $offset }
+    ) {
       threads {
         id
         title
@@ -1859,6 +1962,58 @@ export function GetAllThreadsHOC<TProps, TChildProps = any>(
     GetAllThreadsVariables,
     GetAllThreadsProps<TChildProps>
   >(GetAllThreadsDocument, operationOptions);
+}
+export const GetUserDocument = gql`
+  query GetUser($id: String!) {
+    userGet(id: $id) {
+      id
+      username
+      email
+      createdAt
+      permissions
+      profileImageUrl
+      password
+      profile {
+        id
+        location
+        gender
+        occupation
+      }
+    }
+  }
+`;
+export class GetUserComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetUserQuery, GetUserVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetUserQuery, GetUserVariables>
+        query={GetUserDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetUserProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetUserQuery, GetUserVariables>
+> &
+  TChildProps;
+export function GetUserHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetUserQuery,
+        GetUserVariables,
+        GetUserProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetUserQuery,
+    GetUserVariables,
+    GetUserProps<TChildProps>
+  >(GetUserDocument, operationOptions);
 }
 export const GetAllUsersDocument = gql`
   query GetAllUsers {
@@ -2056,8 +2211,8 @@ export function GetForumHOC<TProps, TChildProps = any>(
   >(GetForumDocument, operationOptions);
 }
 export const GetThreadDocument = gql`
-  query GetThread($id: Int!, $offset: Int) {
-    threadGet(id: $id, offset: $offset) {
+  query GetThread($id: String!, $offset: Int, $limit: Int) {
+    threadGet(input: { id: $id, offset: $offset, limit: $limit }) {
       thread {
         id
         title

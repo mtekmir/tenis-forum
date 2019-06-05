@@ -11,18 +11,3 @@ type User {
   profileImageUrl: String
   profile: UserProfile
 }
-
-type UserInfo {
-  id: String!
-  username: String!
-  email: String!
-  registerDate: Date!
-  threadCount: Int!
-  postCount: Int!
-  permissions: [UserPermissions!]!
-  profileImageUrl: String
-  password: String!
-  profile: UserProfile
-  posts: [Post!]!
-  threads: [Thread!]!
-}

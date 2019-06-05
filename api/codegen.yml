@@ -3,9 +3,9 @@ overwrite: true
 config:
   contextType: ./types#IContext
 generates:
-  ./src/types/schema.d.ts:
+  ./src/types/schema.ts:
     plugins:
-      - add
+      - add: '/* tslint:disable */'
       - time
       - typescript-common
       - typescript-server

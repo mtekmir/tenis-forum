@@ -1,5 +1,11 @@
 type Query {
-  threadGet(id: Int!, offset: Int, limit: Int): GetThreadResponse!
+  threadGet(input: GetThreadInput!): GetThreadResponse!
+}
+
+input GetThreadInput {
+  id: String!
+  offset: Int
+  limit: Int
 }
 
 type GetThreadResponse {

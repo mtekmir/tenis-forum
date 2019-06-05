@@ -5,21 +5,34 @@ import { Post } from '../../../models/Posts';
 
 export const threadGetAll: QueryResolvers.ThreadGetAllResolver = async (
   _,
-  { offset = 0 },
+  { input: { id, filterBy, limit = 25, offset = 0 } },
 ) => {
-  const threads = await getConnection()
+  let query = getConnection()
     .getRepository(Thread)
     .createQueryBuilder('thread')
-    .select(['id', 'title', '"createdAt"', '"updatedAt"'])
+    .innerJoin('thread.owner', 'owner')
+    .select([
+      'thread.id as id',
+      'title',
+      'thread."createdAt" as "createdAt"',
+      'thread."updatedAt" as "updatedAt"',
+    ])
     .addSelect(subQuery => {
       return subQuery
         .select('COUNT(post.id)', 'postCount')
         .from(Post, 'post')
         .where('post."threadId" = thread.id');
-    }, 'postCount')
-    .limit(25)
+    }, 'postCount');
+
+  if (id) {
+    query = query.where('thread."ownerId" = :id', { id });
+  }
+
+  const threads = await query
+    .limit(limit)
     .offset(offset)
     .getRawMany();
 
+  console.log(threads);
   return { threads };
 };

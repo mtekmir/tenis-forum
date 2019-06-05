@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const getThread = gql`
-  query GetThread($id: Int!, $offset: Int) {
-    threadGet(id: $id, offset: $offset) {
+  query GetThread($id: String!, $offset: Int, $limit: Int) {
+    threadGet(input: { id: $id, offset: $offset, limit: $limit }) {
       thread {
         id
         title

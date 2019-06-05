@@ -1,17 +1,19 @@
-import { QueryResolvers } from '../../../types/schema';
 import { getConnection } from 'typeorm';
 import { Thread } from '../../../models/Threads';
 import { Post } from '../../../models/Posts';
+import { QueryResolvers } from '../../../types/schema';
 
 export const threadGet: QueryResolvers.ThreadGetResolver = async (
   _,
-  { id, offset, limit = 25 },
+  { input: { id,  offset, limit = 25 } },
 ) => {
   const postCountQuery = await getConnection()
     .getRepository(Post)
     .createQueryBuilder('post')
     .select('COUNT(post.id) as count')
-    .where('post."threadId" = :id', { id })
+    .where(`post.id = :id`, {
+      id,
+    })
     .getRawOne();
 
   const thread = await getConnection()
@@ -35,11 +37,14 @@ export const threadGet: QueryResolvers.ThreadGetResolver = async (
       'originalPost.id',
       'originalPost.text',
     ])
-    .where('thread.id = :id', { id })
+    .where(`thread.id = :id`, {
+      id,
+    })
     .orderBy('post.createdAt', 'ASC')
     .limit(limit)
     .offset(offset)
     .getOne();
+
 
   return {
     thread,

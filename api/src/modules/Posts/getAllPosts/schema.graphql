@@ -1,5 +1,12 @@
 type Query {
-  postGetAll(offset: Int): PostGetAllResponse!
+  postGetAll(input: PostGetAllInput!): PostGetAllResponse!
+}
+
+input PostGetAllInput {
+  id: String
+  filterBy: FilterBy
+  offset: Int
+  limit: Int
 }
 
 type PostGetAllResponse {

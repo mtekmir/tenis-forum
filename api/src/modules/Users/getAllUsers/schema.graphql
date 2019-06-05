@@ -3,5 +3,14 @@ type Query {
 }
 
 type UserGetAllResponse {
-  users: [UserInfo!]!
+  users: [UserSummary!]!
+}
+
+type UserSummary {
+  id: String!
+  username: String!
+  email: String!
+  registerDate: Date!
+  threadCount: Int!
+  postCount: Int!
 }
