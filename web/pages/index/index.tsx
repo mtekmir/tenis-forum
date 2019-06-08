@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Layout from '../../components/Layout/index';
-import { LinearProgress } from '@material-ui/core';
 import { GetCategoriesComponent } from '../../generated/apolloComponents';
 import { IndexView } from './IndexView';
 
@@ -10,7 +9,7 @@ const IndexPage: React.FunctionComponent = () => {
       <GetCategoriesComponent>
         {({ data, loading }) => {
           if (loading) {
-            return <LinearProgress />;
+            return <div>Loading...</div>;
           }
 
           if (data && data.categoryGetAll && data.categoryGetAll.success) {

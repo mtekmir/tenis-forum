@@ -11,7 +11,7 @@ interface Props {
 export const Account: React.FunctionComponent<Props> = ({ me }) => {
   const renderContent = () => {
     return me ? (
-      <LoggedInView />
+      <LoggedInView me={me} />
     ) : (
       <ButtonsDiv>
         <Button url="/uyelik/giris" text="Giriş" />

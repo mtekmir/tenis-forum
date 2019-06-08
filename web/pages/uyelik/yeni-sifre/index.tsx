@@ -3,9 +3,9 @@ import { Formik, Form, Field } from 'formik';
 import Layout from '../../../components/Layout/index';
 import { TextInput } from '../../../components/forms/TextInput';
 import { ResetPasswordComponent } from '../../../generated/apolloComponents';
-import { Button } from '@material-ui/core';
 import Router from 'next/router';
 import { AppContext } from '../../../context/AppContext';
+import { Button } from '../../../components/Button';
 
 const PasswordReset = ({ token }: { token: string }) => {
   return (
@@ -28,9 +28,11 @@ const PasswordReset = ({ token }: { token: string }) => {
                   placeholder="Şifre"
                   component={TextInput}
                 />
-                <Button variant="contained" type="submit">
-                  Şifre Değiştir
-                </Button>
+                <Button
+                  text="Şifre Değiştir"
+                  type="submit"
+                  color="green-gradient"
+                />
               </Form>
             )}
           </Formik>

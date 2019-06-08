@@ -6,7 +6,7 @@ export const UserPopoverDiv = styled.div<{ open: boolean }>`
   opacity: ${({ open }) => (open ? 1 : 0)};
   position: absolute;
   top: 3em;
-  left: 0.5em;
+  right: 0em;
   transition: all 0.3s;
   background-color: white;
   display: flex;

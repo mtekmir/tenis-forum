@@ -5,9 +5,9 @@ interface UserContext {
   user?: MeMe | null;
 }
 
-const userContext = React.createContext<UserContext>({
+export const UserContext = React.createContext<UserContext>({
   user: null,
 });
 
-export const UserContextProvider = userContext.Provider;
-export const UserContextConsumer = userContext.Consumer;
+export const UserContextProvider = UserContext.Provider;
+export const UserContextConsumer = UserContext.Consumer;

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { GetThreadComponent } from '../../generated/apolloComponents';
-import { LinearProgress } from '@material-ui/core';
 import { ThreadView } from './threadView';
 import { AppContext } from '../../context/AppContext';
 
@@ -9,7 +8,7 @@ const ThreadContainer = ({ id }: { id: string }) => {
     <GetThreadComponent variables={{ id }}>
       {({ data, loading, fetchMore }) => {
         if (loading) {
-          return <LinearProgress />;
+          return <div>Loading...</div>;
         }
 
         if (data && data.threadGet) {

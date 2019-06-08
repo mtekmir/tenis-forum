@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import Layout from '../../../components/Layout/index';
 import { TextInput } from '../../../components/forms/TextInput';
 import { RequestResetPasswordComponent } from '../../../generated/apolloComponents';
-import { Button } from '@material-ui/core';
 import Router from 'next/router';
+import { Button } from '../../../components/Button';
 
 const RequestResetPassword: React.FunctionComponent = () => {
   return (
@@ -25,9 +25,11 @@ const RequestResetPassword: React.FunctionComponent = () => {
                   placeholder="E-Posta"
                   component={TextInput}
                 />
-                <Button variant="contained" type="submit">
-                  E-Posta Gönder
-                </Button>
+                <Button
+                  type="submit"
+                  text="E-Posta Gönder"
+                  color="green-gradient"
+                />
               </Form>
             )}
           </Formik>

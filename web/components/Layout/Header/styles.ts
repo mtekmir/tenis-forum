@@ -6,7 +6,7 @@ export const AppBar = styled.div`
   left: 0;
   right: 0;
   height: 3em;
-  padding: 1.3em;
+  padding: 0.6em;
   display: flex;
   justify-content: space-between;
   align-items: center;

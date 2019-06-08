@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { GetForumComponent } from '../../generated/apolloComponents';
-import { LinearProgress } from '@material-ui/core';
 import { ForumView } from './ForumView';
 import { AppContext } from '../../context/AppContext';
 
@@ -9,7 +8,7 @@ const ForumContainer = ({ id }: { id: string }) => {
     <GetForumComponent variables={{ id: parseInt(id, 10) }}>
       {({ data, loading, fetchMore }) => {
         if (loading) {
-          return <LinearProgress />;
+          return <div>Loading...</div>;
         }
 
         if (data && data.forumGet) {

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Layout from '../../../components/Layout';
 import { GetDashboardComponent } from '../../../generated/apolloComponents';
-import { LinearProgress } from '@material-ui/core';
 import { DashboardView } from './DashboardView';
 
 class Dashboard extends React.PureComponent {
@@ -11,7 +10,7 @@ class Dashboard extends React.PureComponent {
         <GetDashboardComponent>
           {({ data, loading }) => {
             if (loading) {
-              return <LinearProgress />;
+              return <div>Loading...</div>;
             }
 
             if (data && data.dashboardGet) {

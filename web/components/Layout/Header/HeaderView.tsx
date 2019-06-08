@@ -1,77 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { AppBar } from './styles';
 import { Menu } from '../Menu';
-import { MeMe } from '../../../generated/apolloComponents';
 import { Row } from '../../grid/Row';
 import { Col } from '../../grid/Col';
 import { MenuIcon } from './components/MenuIcon';
 import { Logo } from './components/Logo';
 import { Container } from '../../grid/Container';
 import { Account } from './components/account/AccountView';
+import { UserContext } from '../../../context/userContext';
 
-interface Props {
-  me: MeMe | null;
-}
+interface Props {}
 
-export class HeaderView extends Component<Props> {
-  state = {
-    menuOpen: false,
-  };
+export const HeaderView: React.FC<Props> = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
-  headerRef: any = null;
-
-  openMenu = () => {
-    this.setState(() => ({ menuOpen: true }));
+  const openMenu = () => {
+    setMenuOpen(true);
     const documentWidth = document.documentElement.clientWidth;
     const windowWidth = window.innerWidth;
     const scrollBarWidth = windowWidth - documentWidth;
     document.body.style.marginRight = `${scrollBarWidth}px`;
     document.body.style.overflowY = 'hidden';
-  }
+  };
 
-  closeMenu = () => {
-    this.setState(() => ({ menuOpen: false }));
+  const closeMenu = () => {
+    setMenuOpen(false);
     document.body.style.marginRight = '0px';
     document.body.style.overflow = 'auto';
-  }
+  };
 
-  render() {
-    const { me } = this.props;
-    const { menuOpen } = this.state;
-    return (
-      <div ref={el => (this.headerRef = el)}>
-        <Menu
-          open={menuOpen}
-          closeMenu={this.closeMenu}
-          outerRef={this.headerRef}
-          me={me}
-        />
-        <AppBar onClick={() => menuOpen && this.closeMenu()}>
-          <Container>
-            <Row alignItems="center">
-              <Col xs={8} sm={8} md={10} lg={10} xl={10.5}>
-                <Logo>Tenis Forum</Logo>
-              </Col>
-              <Col
-                xs={4}
-                sm={4}
-                md={2}
-                lg={2}
-                xl={1.5}
-                alignItems="center"
-                justifyContent="flex-end"
-              >
-                <Account me={me} />
-                <MenuIcon
-                  openMenu={this.openMenu}
-                  closeMenu={this.closeMenu}
-                  open={menuOpen}
-                />
-              </Col>
-            </Row>
-          </Container>
-        </AppBar>
-      </div>
-    );
-  }
-}
+  return (
+    <OutsideClickHandler onOutsideClick={closeMenu}>
+      <Menu open={menuOpen} closeMenu={closeMenu} me={user} />
+      <AppBar onClick={() => menuOpen && closeMenu()}>
+        <Container>
+          <Row alignItems="center">
+            <Col xs={8} sm={8} md={10} lg={10} xl={10.5}>
+              <Logo>Tenis Forum</Logo>
+            </Col>
+            <Col
+              xs={4}
+              sm={4}
+              md={2}
+              lg={2}
+              xl={1.5}
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Account me={user} />
+              <MenuIcon
+                openMenu={openMenu}
+                closeMenu={closeMenu}
+                open={menuOpen}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </AppBar>
+    </OutsideClickHandler>
+  );
+};

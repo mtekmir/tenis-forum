@@ -6,44 +6,26 @@ import { Divider } from '../../Divider';
 import { MeMe } from '../../../generated/apolloComponents';
 import { withRouter, WithRouterProps } from 'next/router';
 
-interface State {
-  [key: string]: boolean;
-}
-
 interface Props extends WithRouterProps {
   open: boolean;
   me: MeMe | null;
-  outerRef: any;
   closeMenu: () => void;
 }
 
-class MenuC extends React.Component<Props, State> {
-  state: State = {};
+const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
+  const [openDropdowns, setOpenDropdowns] = React.useState<{
+    [key: string]: boolean;
+  }>({});
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
-  }
+  const openDropdown = (index: number) => {
+    setOpenDropdowns({ [index]: !openDropdowns[index] });
+  };
 
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
-
-  openDropdown = (index: number) => {
-    this.setState(state => ({ [index]: !state[index] }));
-  }
-
-  handleClickOutside = (event: any) => {
-    const { outerRef, closeMenu } = this.props;
-    if (outerRef && !outerRef.contains(event.target)) {
-      closeMenu();
-    }
-  }
-
-  renderContent = () => {
-    const { closeMenu, router } = this.props;
+  const renderContent = () => {
     const menu = router.pathname.split('/')[1].includes('admin')
       ? ADMIN_MENU
       : MENU;
+
     return menu.map(({ type, ...props }, idx) => {
       if (type === 'divider') {
         return <Divider key={type} />;
@@ -52,43 +34,38 @@ class MenuC extends React.Component<Props, State> {
       return (
         <MenuItem
           closeMenu={closeMenu}
-          dropdownOpen={this.state[idx]}
+          dropdownOpen={openDropdowns[idx]}
           idx={idx}
-          openDropdown={this.openDropdown}
+          openDropdown={openDropdown}
           key={props.label}
           {...props}
         />
       );
     });
-  }
+  };
 
-  render() {
-    const { open, me, closeMenu } = this.props;
-    return (
-      <div>
-        <MenuContainer open={open}>
-          {this.renderContent()}
-          {me && (
-            <React.Fragment>
-              <Divider />
-              <MenuItem
-                dropdownOpen={false}
-                url="/account"
-                closeMenu={closeMenu}
-                label="Hesabım"
-              />
-              <MenuItem
-                dropdownOpen={false}
-                url="/uyelik/cikis"
-                closeMenu={closeMenu}
-                label="Çıkış"
-              />
-            </React.Fragment>
-          )}
-        </MenuContainer>
-      </div>
-    );
-  }
-}
+  return (
+    <MenuContainer open={open}>
+      {renderContent()}
+      {me && (
+        <React.Fragment>
+          <Divider />
+          <MenuItem
+            dropdownOpen={false}
+            url="/account"
+            closeMenu={closeMenu}
+            label="Hesabım"
+          />
+          <MenuItem
+            dropdownOpen={false}
+            url="/uyelik/cikis"
+            closeMenu={closeMenu}
+            label="Çıkış"
+          />
+        </React.Fragment>
+      )}
+    </MenuContainer>
+  );
+};
 
 export const Menu = withRouter(MenuC);
