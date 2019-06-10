@@ -3,8 +3,8 @@ import { GetAllForumsForums } from '../../../generated/apolloComponents';
 import Layout from '../../../components/Layout';
 import { FORUM_TABLE_HEADERS } from './tableHeaders';
 import { AddForumContainer } from './components/addForum/AddForumContainer';
-import { TableContainer } from '../../../components/table/TableContainer';
-import { Type } from '../../../components/table/drawer/DrawerContainer';
+import { TableContainer } from '../components/table/TableContainer';
+import { Type } from '../components/table/drawer/DrawerContainer';
 
 interface Props {
   forums: GetAllForumsForums[];

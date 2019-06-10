@@ -2,8 +2,8 @@ import * as React from 'react';
 import { GetAllPostsPosts } from '../../../generated/apolloComponents';
 import Layout from '../../../components/Layout';
 import { POSTS_TABLE_HEADERS } from './tableHeaders';
-import { TableContainer } from '../../../components/table/TableContainer';
-import { Type } from '../../../components/table/drawer/DrawerContainer';
+import { TableContainer } from '../components/table/TableContainer';
+import { Type } from '../components/table/drawer/DrawerContainer';
 
 interface Props {
   posts: GetAllPostsPosts[];

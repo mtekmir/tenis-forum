@@ -2,24 +2,21 @@ import * as React from 'react';
 import axios from 'axios';
 import { MutationFn, ApolloConsumer } from 'react-apollo';
 import ApolloClient from 'apollo-client';
-import { ProfileView } from './profileView';
 import { getUploadUrlQuery } from '../../graphql/query/getUploadUrl';
 import {
   EditUserProfileMutation,
   EditUserProfileVariables,
   EditUserProfileComponent,
 } from '../../generated/apolloComponents';
-import { withSnackbar, withSnackbarProps } from 'notistack';
+import { HesabimView } from './HesabimView';
 
-interface Props extends withSnackbarProps {}
-const ProfileContainer: React.FunctionComponent<Props> = ({
-  enqueueSnackbar,
-}) => {
+interface Props {}
+const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
   const onCompleted = async ({ editUserProfile }: EditUserProfileMutation) => {
     if (!editUserProfile.error) {
-      enqueueSnackbar('Profil Güncellendi.', { variant: 'success' });
+      // success
     } else {
-      enqueueSnackbar('Beklenmedik bir hata oluştu.', { variant: 'error' });
+      // errır
     }
   };
 
@@ -53,11 +50,11 @@ const ProfileContainer: React.FunctionComponent<Props> = ({
     <ApolloConsumer>
       {client => (
         <EditUserProfileComponent onCompleted={onCompleted}>
-          {mutation => <ProfileView onSubmit={onSubmit(mutation, client)} />}
+          {mutation => <HesabimView onSubmit={onSubmit(mutation, client)} />}
         </EditUserProfileComponent>
       )}
     </ApolloConsumer>
   );
 };
 
-export default withSnackbar(ProfileContainer);
+export default ProfileContainer;

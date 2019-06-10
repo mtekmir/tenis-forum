@@ -8,6 +8,7 @@ import { ErrorMessage } from '../giris/components/ErrorMessage';
 
 interface Props {
   onSubmit: (vals: FormValues) => void;
+  error: string;
 }
 
 export interface FormValues {
@@ -56,7 +57,6 @@ export class RegisterView extends React.PureComponent<Props> {
     } = this.state;
 
     e.preventDefault();
-    console.log(emailValidated);
     if (!emailValidated || !passwordValidated || !usernameValidated) {
       this.validate(email, 'email');
       this.validate(password, 'password');
@@ -79,6 +79,7 @@ export class RegisterView extends React.PureComponent<Props> {
       passwordValid,
       passwordValidated,
     } = this.state;
+    const { error } = this.props;
     return (
       <FormContainer>
         <FormDiv>
@@ -119,7 +120,7 @@ export class RegisterView extends React.PureComponent<Props> {
               onChange={this.onInputChange}
               type="text"
             />
-            <ErrorMessage />
+            <ErrorMessage error={error} />
             <Button type="submit">Kayıt Ol</Button>
           </form>
         </FormDiv>

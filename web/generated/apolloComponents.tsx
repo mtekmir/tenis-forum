@@ -929,6 +929,8 @@ export type MeQuery = {
 export type MeMe = {
   __typename?: "User";
 
+  id: string;
+
   username: string;
 
   email: string;
@@ -2315,6 +2317,7 @@ export function GetUploadUrlQueryHOC<TProps, TChildProps = any>(
 export const MeDocument = gql`
   query Me {
     me {
+      id
       username
       email
       permissions

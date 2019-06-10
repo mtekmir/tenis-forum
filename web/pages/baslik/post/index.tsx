@@ -12,6 +12,7 @@ interface Props {
   text: string;
   createdAt: Date;
   profileImageUrl: string;
+  id: number;
 }
 
 export const Post: React.FunctionComponent<Props> = ({
@@ -20,9 +21,10 @@ export const Post: React.FunctionComponent<Props> = ({
   createdAt,
   profileImageUrl,
   index,
+  id,
 }) => {
   return (
-    <PostDiv>
+    <PostDiv id={id.toString()}>
       <UserDiv>
         <ProfileImage src={profileImageUrl} />
         <div>{username}</div>

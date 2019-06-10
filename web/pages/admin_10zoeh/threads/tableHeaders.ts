@@ -1,4 +1,4 @@
-import { Header } from '../../../components/table/Table';
+import { Header } from '../components/table/TableComponent';
 
 export const THREADS_TABLE_HEADERS: Header[] = [
   {

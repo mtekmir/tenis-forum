@@ -36,6 +36,7 @@ export const ThreadView: React.FunctionComponent<Props> = ({
         text={text}
         key={id}
         index={idx + 2}
+        id={id}
       />
     ));
   };

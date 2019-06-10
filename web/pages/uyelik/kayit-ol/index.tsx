@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Layout from '../../../components/Layout/index';
 import {
   RegisterComponent,
@@ -10,13 +10,27 @@ import { MutationFn } from 'react-apollo';
 import { FormValues, RegisterView } from './RegisterView';
 
 const Register: React.FunctionComponent = () => {
+  const [error, setError] = useState('');
+
+  const setErrorMsg = (msg: string) => {
+    setError(msg);
+    setTimeout(() => {
+      setError('');
+    }, 3000);
+  };
+
   const onSubmit = (
     register: MutationFn<RegisterMutation, RegisterVariables>,
   ) => async (variables: FormValues) => {
     try {
-      await register({ variables });
-      Router.push('/uyelik/eposta-dogrulama');
+      const res = await register({ variables });
+      if (res && res.data && res.data.register.error) {
+        setErrorMsg(res.data.register.error[0].message);
+      } else {
+        Router.push('/uyelik/eposta-dogrulama');
+      }
     } catch (err) {
+      setErrorMsg('Üzgünüz, bir hata oluştu.');
       console.log(err.graphQLErrors);
     }
   };
@@ -24,7 +38,9 @@ const Register: React.FunctionComponent = () => {
   return (
     <Layout title="Üye Ol | Tenis Forum">
       <RegisterComponent>
-        {register => <RegisterView onSubmit={onSubmit(register)} />}
+        {register => (
+          <RegisterView onSubmit={onSubmit(register)} error={error} />
+        )}
       </RegisterComponent>
     </Layout>
   );
