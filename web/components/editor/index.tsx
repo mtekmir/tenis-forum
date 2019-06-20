@@ -31,7 +31,7 @@ export class EditorComponent extends React.PureComponent<Props> {
             editorState={editorState}
             onEditorStateChange={onEditorStateChange}
             wrapperStyle={{
-              border: '1px solid #c4c5c6',
+              // border: '1px solid #c4c5c6',
               padding: 10,
               marginTop: 20,
             }}

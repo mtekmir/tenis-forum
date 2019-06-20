@@ -11,7 +11,8 @@ export const PostDiv = styled.div`
 
   @media (${({ theme }) => theme.breakpoints.phone}) {
     minheight: 4em;
-    width: 100%;
+    width: 93%;
+    margin: 0 auto;
     flexdirection: column;
   }
 `;

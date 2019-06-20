@@ -6,6 +6,10 @@ export const PostContentTopDiv = styled.div`
   align-items: center;
   padding: 0.4em;
   font-size: 0.7em;
+
+  @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
+    width: 100%;
+  }
 `;
 
 export const PostContent = styled.div`
@@ -14,12 +18,12 @@ export const PostContent = styled.div`
   padding: 1em;
   background: white;
   font-size: 0.9em;
+  flex-direction: column;
   ${({ theme }) => theme.boxShadow};
 
   @media (${({ theme }) => theme.breakpoints.phone}) {
     min-height: 4em;
     width: 100%;
-    flex-direction: column;
   }
 
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
@@ -28,4 +32,9 @@ export const PostContent = styled.div`
     width: 100%;
     justify-content: space-between;
   }
+`;
+
+export const Divider = styled.hr`
+  color: #d1d3d5;
+  width: 100%;
 `;

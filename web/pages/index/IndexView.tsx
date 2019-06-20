@@ -2,6 +2,7 @@ import * as React from 'react';
 import { GetCategoriesCategories } from '../../generated/apolloComponents';
 import { CategoryTitle, ForumDiv, ForumTitle, CategoryDiv } from './indexStyle';
 import Link from 'next/link';
+import { LatestPostsContainer } from './components/latestPosts/LatestPostsContainer';
 
 interface Props {
   categories: GetCategoriesCategories[];
@@ -25,5 +26,10 @@ export const IndexView: React.FunctionComponent<Props> = ({ categories }) => {
     ));
   };
 
-  return <React.Fragment>{renderCategories()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {renderCategories()}
+      <LatestPostsContainer />
+    </React.Fragment>
+  );
 };

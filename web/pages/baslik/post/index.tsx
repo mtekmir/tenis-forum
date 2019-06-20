@@ -3,8 +3,11 @@ import { format } from 'date-fns';
 import { PostDiv } from './components/PostDiv';
 import { ProfileImage } from './components/ProfileImage';
 import { UserDiv } from './components/UserDiv';
-import { PostContent, PostContentTopDiv } from './components/PostContent';
-import { Divider } from '../../../components/Divider';
+import {
+  PostContent,
+  PostContentTopDiv,
+  Divider,
+} from './components/PostContent';
 
 interface Props {
   index: number;

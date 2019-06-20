@@ -15,4 +15,10 @@ export const UserDiv = styled.div`
     width: 100%;
     flex-direction: row;
   }
+
+  @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+  }
 `;

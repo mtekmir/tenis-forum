@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
-export const ProfileImage = styled.img`
-  margin-right: 0.4em;
+export const Styles = styled.div`
+  min-height: 90vh;
   @media (${({ theme }) => theme.breakpoints.phone}) {
-    width: 3em;
-    height: 3em;
+    width: 100%;
   }
 
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 3em;
-    height: 3em;
+    display: flex;
+
+    .content {
+      width: 75%;
+    }
   }
 `;

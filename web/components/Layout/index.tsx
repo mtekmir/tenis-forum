@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import { HeaderView } from './Header/HeaderView';
+import { MainContent } from './layoutStyles';
 
 interface Props {
   title?: string;
@@ -18,7 +19,7 @@ const Layout: React.FunctionComponent<Props> = ({
     </Head>
     <HeaderView />
     <div style={{ marginTop: '4.5em' }}>
-      {children}
+      <MainContent>{children}</MainContent>
       <footer>
         <hr />
         <span>I'm here to stay (Footer)</span>

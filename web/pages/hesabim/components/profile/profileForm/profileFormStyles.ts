@@ -14,7 +14,6 @@ export const FormDiv = styled.div`
   padding: 1em;
   max-width: 100%;
   @media (${({ theme }) => theme.breakpoints.phone}) {
-    width: 100%;
     display: flex;
     flex-direction: column-reverse;
   }

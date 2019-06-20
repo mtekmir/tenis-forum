@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 export const EditorDiv = styled.div`
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
 
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 100%;
+    width: 95%;
     padding: 0.5em;
   }
 `;
