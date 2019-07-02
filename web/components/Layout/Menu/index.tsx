@@ -1,18 +1,19 @@
 import * as React from 'react';
 import { MenuContainer } from './styles';
-import { ADMIN_MENU, MENU } from './menuItems';
-import { MenuItem } from './components/menuItem';
+import { ADMIN_MENU, MENU, MenuItem } from '../Header/menuItems';
+import { MobileMenuItem } from '../Header/components/mobileMenu/components/mobileMenuItem';
 import { Divider } from '../../Divider';
-import { MeMe } from '../../../generated/apolloComponents';
-import { withRouter, WithRouterProps } from 'next/router';
+import { MeMe, UserPermissions } from '../../../generated/apolloComponents';
+import { BigMenuItem } from '../Header/components/bigMenu/bigMenuItem';
 
-interface Props extends WithRouterProps {
+interface Props {
   open: boolean;
   me: MeMe | null;
   closeMenu: () => void;
+  width: number;
 }
 
-const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
+export const Menu: React.FC<Props> = ({ me, open, closeMenu, width }) => {
   const [openDropdowns, setOpenDropdowns] = React.useState<{
     [key: string]: boolean;
   }>({});
@@ -22,9 +23,26 @@ const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
   };
 
   const renderContent = () => {
-    const menu = router.pathname.split('/')[1].includes('admin')
-      ? ADMIN_MENU
-      : MENU;
+    const menu =
+      me && me.permissions.includes(UserPermissions.Admin) ? ADMIN_MENU : MENU;
+
+    if (width > 599) {
+      const menuWithoutSubs = (
+        m: MenuItem[],
+        res: MenuItem[] = [],
+      ): MenuItem[] => {
+        if (!m || !m.length) return res.filter(({ label }) => label);
+        else if (m[0].subMenus && m[0].subMenus.length) {
+          return menuWithoutSubs([...m[0].subMenus, ...m.slice(1)], res);
+        } else {
+          return menuWithoutSubs(m.slice(1), [...res, m[0]]);
+        }
+      };
+
+      return menuWithoutSubs(menu).map(m => (
+        <BigMenuItem key={m.label} {...m} />
+      ));
+    }
 
     return menu.map(({ type, ...props }, idx) => {
       if (type === 'divider') {
@@ -32,7 +50,7 @@ const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
       }
 
       return (
-        <MenuItem
+        <MobileMenuItem
           closeMenu={closeMenu}
           dropdownOpen={openDropdowns[idx]}
           idx={idx}
@@ -50,13 +68,13 @@ const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
       {me && (
         <React.Fragment>
           <Divider />
-          <MenuItem
+          <MobileMenuItem
             dropdownOpen={false}
             url="/account"
             closeMenu={closeMenu}
             label="Hesabım"
           />
-          <MenuItem
+          <MobileMenuItem
             dropdownOpen={false}
             url="/uyelik/cikis"
             closeMenu={closeMenu}
@@ -67,5 +85,3 @@ const MenuC: React.FC<Props> = ({ me, open, closeMenu, router }) => {
     </MenuContainer>
   );
 };
-
-export const Menu = withRouter(MenuC);

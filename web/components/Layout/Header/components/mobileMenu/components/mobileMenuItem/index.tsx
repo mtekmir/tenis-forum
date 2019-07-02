@@ -2,8 +2,8 @@ import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
 import * as React from 'react';
 import Link from 'next/link';
-import { SubMenuItem } from '../../menuItems';
 import { MenuItemContainer, StyledDropdown, SubMenuDiv } from './styles';
+import { MenuItem } from '../../../../menuItems';
 
 interface Props {
   label?: string;
@@ -11,11 +11,11 @@ interface Props {
   dropdownOpen: boolean;
   openDropdown?: (idx: number) => void;
   closeMenu: () => void;
-  subMenus?: SubMenuItem[];
+  subMenus?: MenuItem[];
   idx?: number;
 }
 
-export const MenuItem: React.FunctionComponent<Props> = ({
+export const MobileMenuItem: React.FunctionComponent<Props> = ({
   label,
   url,
   subMenus,
@@ -47,7 +47,7 @@ export const MenuItem: React.FunctionComponent<Props> = ({
       <div>
         {subMenus && dropdownOpen && (
           <SubMenuDiv>
-            {subMenus.map((subMenu: SubMenuItem) => (
+            {subMenus.map((subMenu: MenuItem) => (
               <StyledDropdown key={subMenu.label}>
                 <Link href={subMenu.url}>
                   <a>{subMenu.label}</a>

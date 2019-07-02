@@ -1,18 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { AppBar } from './styles';
 import { Menu } from '../Menu';
-import { Row } from '../../grid/Row';
-import { Col } from '../../grid/Col';
 import { MenuIcon } from './components/MenuIcon';
 import { Logo } from './components/Logo';
-import { Container } from '../../grid/Container';
 import { Account } from './components/account/AccountView';
 import { UserContext } from '../../../context/userContext';
+import { MobileMenu } from './components/mobileMenu/MobileMenu';
+import { BigMenu } from './components/bigMenu/BigMenu';
 
 interface Props {}
 
-export const HeaderView: React.FC<Props> = () => {
+export const HeaderView: React.FC<Props> = ({}) => {
+  const [width, setWidth] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useContext(UserContext);
 
@@ -31,33 +31,31 @@ export const HeaderView: React.FC<Props> = () => {
     document.body.style.overflow = 'auto';
   };
 
+  const renderMenu = () => {
+    if (width > 599) {
+      return <BigMenu />;
+    } else {
+      return <MobileMenu />;
+    }
+  };
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
   return (
     <OutsideClickHandler onOutsideClick={closeMenu}>
-      <Menu open={menuOpen} closeMenu={closeMenu} me={user} />
       <AppBar onClick={() => menuOpen && closeMenu()}>
-        <Container>
-          <Row alignItems="center">
-            <Col xs={8} sm={8} md={10} lg={10} xl={10.5}>
-              <Logo>Tenis Forum</Logo>
-            </Col>
-            <Col
-              xs={4}
-              sm={4}
-              md={2}
-              lg={2}
-              xl={1.5}
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <Account me={user} />
-              <MenuIcon
-                openMenu={openMenu}
-                closeMenu={closeMenu}
-                open={menuOpen}
-              />
-            </Col>
-          </Row>
-        </Container>
+        <Logo>Tenis Forum</Logo>
+        {renderMenu()}
       </AppBar>
     </OutsideClickHandler>
   );

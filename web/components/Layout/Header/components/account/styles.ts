@@ -8,4 +8,8 @@ export const ButtonsDiv = styled.div`
 export const AccountDiv = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
+    width: 30%;
+  }
 `;

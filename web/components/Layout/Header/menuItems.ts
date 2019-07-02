@@ -1,15 +1,10 @@
 import { ADMIN_PATH } from '../../../constants';
 
 export interface MenuItem {
-  type: string;
+  type?: string;
   label?: string;
   url?: string;
-  subMenus?: SubMenuItem[];
-}
-
-export interface SubMenuItem {
-  label: string;
-  url: string;
+  subMenus?: MenuItem[];
 }
 
 export const MENU: MenuItem[] = [
@@ -20,6 +15,11 @@ export const MENU: MenuItem[] = [
   },
   {
     type: 'divider',
+  },
+  {
+    type: 'menu_item',
+    label: 'Yeniler',
+    url: '/yeniler',
   },
   {
     type: 'menu_item',

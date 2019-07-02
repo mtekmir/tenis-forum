@@ -1,14 +1,7 @@
 import styled from 'styled-components';
 
 export const Post = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
-
-  @media (${({ theme }) => theme.breakpoints.phone}) {
-    width: 100%;
-  }
-
+  padding: 1em 0;
   .title {
     color: ${({ theme }) => theme.palette.primary};
     font-size: 1em;
@@ -17,5 +10,15 @@ export const Post = styled.div`
   .details {
     color: #8c8c8c;
     font-size: 0.8em;
+  }
+`;
+
+export const Posts = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+
+  @media (${({ theme }) => theme.breakpoints.phone}) {
+    width: 100%;
   }
 `;

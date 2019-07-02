@@ -1,4 +1,4 @@
-import { MenuItem } from '../../../../Menu/menuItems';
+import { MenuItem } from '../../../menuItems';
 import { ADMIN_PATH } from '../../../../../../constants';
 
 export const USER_MENU_ITEMS: MenuItem[] = [

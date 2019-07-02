@@ -1,6 +1,6 @@
 import React from 'react';
 import { GetAllPostsPosts } from '../../../../generated/apolloComponents';
-import { Post } from './latestPostsStyle';
+import { Post, Posts } from './latestPostsStyle';
 import { timeLeft } from '../../../../utils/timeLeft';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 export const LatestPostsView: React.FC<Props> = ({ posts }) => {
   const renderPosts = () => {
     return posts.map(({ threadTitle, createdAt, authorUsername }) => (
-      <Post>
+      <Post key={createdAt}>
         <div className="title">{threadTitle}</div>
         <div className="details">
           {authorUsername} - {timeLeft(createdAt)}
@@ -20,9 +20,9 @@ export const LatestPostsView: React.FC<Props> = ({ posts }) => {
   };
 
   return (
-    <>
+    <Posts>
       Son Gönderiler
       {renderPosts()}
-    </>
+    </Posts>
   );
 };
