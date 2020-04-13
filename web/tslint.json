@@ -7,7 +7,7 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [true, "single", "jsx-double"],
-    "semicolon": true,
+    "semicolon": false,
     "no-submodule-imports": false,
     "member-access": false,
     "no-implicit-dependencies": false,
@@ -15,7 +15,8 @@
     "prettier": true,
     "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }],
     "no-shadowed-variable": false,
-    "curly": false
+    "curly": false,
+    "max-line-length": 100
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts"]

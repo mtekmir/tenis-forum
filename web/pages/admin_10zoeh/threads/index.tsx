@@ -1,21 +1,32 @@
-import * as React from 'react';
-import { GetAllThreadsComponent } from '../../../generated/apolloComponents';
-import { ThreadsView } from './ThreadsView';
+import * as React from 'react'
+import Layout from '../../../components/Layout'
+import { THREADS_TABLE_HEADERS } from './tableHeaders'
+import { Type } from '../components/table/drawer/DrawerContainer'
+import { TableContainer } from '../components/table/TableContainer'
+import { useQuery } from 'react-apollo'
+import { GetAllThreads, GetAllThreadsVariables } from '../../../generated/GetAllThreads'
+import { GET_ALL_THREADS } from '../../../graphql/query/admin/getAllThreads'
 
-const ThreadsContainer: React.FunctionComponent = () => {
+interface Props {}
+
+const Threads: React.FunctionComponent<Props> = () => {
+  const { data, loading, error } = useQuery<GetAllThreads, GetAllThreadsVariables>(
+    GET_ALL_THREADS
+  )
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <GetAllThreadsComponent>
-      {({ data, loading }) => {
-        if (loading) {
-          return <div>Loading...</div>;
-        }
+    <Layout title='Threads | Admin'>
+      <TableContainer
+        headers={THREADS_TABLE_HEADERS}
+        rows={data.threadGetAll.threads}
+        type={Type.T}
+      />
+    </Layout>
+  )
+}
 
-        if (data && data.threadGetAll && data.threadGetAll.threads) {
-          return <ThreadsView threads={data.threadGetAll.threads} />;
-        }
-      }}
-    </GetAllThreadsComponent>
-  );
-};
-
-export default ThreadsContainer;
+export default Threads

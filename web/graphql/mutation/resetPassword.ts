@@ -1,10 +1,8 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const resetPassword = gql`
+export const RESET_PASSWORD = gql`
   mutation ResetPassword($newPassword: String!, $pwResetToken: String!) {
-    resetPassword(
-      input: { newPassword: $newPassword, pwResetToken: $pwResetToken }
-    ) {
+    resetPassword(input: { newPassword: $newPassword, pwResetToken: $pwResetToken }) {
       success
       error {
         path
@@ -12,4 +10,4 @@ export const resetPassword = gql`
       }
     }
   }
-`;
+`

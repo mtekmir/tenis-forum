@@ -1,41 +1,41 @@
-import * as React from 'react';
-import { AppContext } from '../../../context/AppContext';
-import redirect from '../../../lib/redirect';
-import { confirmEmail } from '../../../graphql/mutation/confirmEmail';
+import React, { useEffect } from 'react'
+import { CONFIRM_EMAIL } from '../../../graphql/mutation/confirmEmail'
+import Router, { useRouter } from 'next/router'
+import { useMutation } from 'react-apollo'
 
 interface Props {
-  token: string;
-  ctx: any;
+  token: string
+  ctx: any
 }
 
-class ConfirmEmail extends React.PureComponent<Props> {
-  static async getInitialProps({
+const ConfirmEmail: React.FC<Props> = () => {
+  const {
     query: { token },
-    apolloClient,
-    // tslint:disable-next-line
-    ...ctx
-  }: AppContext) {
-    if (!token) {
-      redirect(ctx, '/uyelik/giris');
-    }
+    replace
+  } = useRouter()
+  const [confirmEmail] = useMutation(CONFIRM_EMAIL)
+
+  const confirm = async () => {
     try {
-      const res = await apolloClient.mutate({
-        mutation: confirmEmail,
-        variables: { token },
-      });
+      const res = await confirmEmail({
+        variables: { token }
+      })
 
       if (res && res.data && res.data.confirmUserEmail.success) {
-        redirect(ctx, '/uyelik/giris');
+        Router.push('/uyelik/giris')
       }
     } catch (err) {
-      console.log(err.message);
+      console.log(err.message)
     }
-    return { token };
   }
 
-  render() {
-    return null;
-  }
+  useEffect(() => {
+    if (!token) {
+      Router.push('/uyelik/giris')
+    }
+  }, [])
+
+  return null
 }
 
-export default ConfirmEmail;
+export default ConfirmEmail

@@ -10,35 +10,39 @@ services:
   #   depends_on:
   #     - web
   #     - api
-  web:
-    user: root
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./web
-    ports:
-      - '4000:4000'
-    volumes:
-      # - /app/web/node_modules
-      - ./web:/app/web
-      # - ./web/.next:/app/web/.next
-    depends_on:
-      - api
-  api:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./api
-    env_file: ./api/config/dev.env
-    ports:
-      - '5000:5000'
-    volumes:
-      # - /app/api/node_modules
-      - ./api:/app/api
-    depends_on:
-      - db
-      - redis
+  # web:
+  #   user: root
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./web
+  #   ports:
+  #     - '4000:4000'
+  #   volumes:
+  #     # - /app/web/node_modules
+  #     - ./web:/app/web
+  #     # - ./web/.next:/app/web/.next
+  #   depends_on:
+  #     - api
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./api
+  #   env_file: ./api/config/dev.env
+  #   ports:
+  #     - '5000:5000'
+  #   volumes:
+  #     # - /app/api/node_modules
+  #     - ./api:/app/api
+  #   depends_on:
+  #     - db
+  #     - redis
   db:
     image: 'postgres:latest'
     restart: always
+    ports:
+      - '5432:5432'
   redis:
     image: 'redis:latest'
     restart: always
+    ports:
+      - '6379:6379'

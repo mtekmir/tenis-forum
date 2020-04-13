@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getForum = gql`
+export const GET_FORUM = gql`
   query GetForum($id: Int!, $offset: Int, $limit: Int) {
     forumGet(id: $id, offset: $offset, limit: $limit) {
       forum {
@@ -22,4 +22,4 @@ export const getForum = gql`
       threadCount
     }
   }
-`;
+`

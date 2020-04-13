@@ -1,25 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { useRef, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
-export class Portal extends React.Component {
-  element: any;
-  el = document.createElement('div');
+export const Portal: React.FC = ({ children }) => {
+  const ref = useRef()
+  const [mounted, setMounted] = useState(false)
 
-  componentDidMount() {
-    this.element = document.querySelector('#modal');
-    this.element.appendChild(this.el);
-    this.forceUpdate();
-  }
+  useEffect(() => {
+    ref.current = document.querySelector('#modal')
+    setMounted(true)
+  }, [])
 
-  componentWillUnmount() {
-    this.element.removeChild(this.el);
-  }
-
-  render() {
-    if (this.element === undefined) {
-      return null;
-    }
-
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
+  return mounted ? createPortal(children, ref.current) : null
 }

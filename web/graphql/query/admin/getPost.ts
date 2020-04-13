@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getPost = gql`
+export const GET_POST = gql`
   query GetPost($id: Int!) {
     postGet(id: $id) {
       id
@@ -12,4 +12,4 @@ export const getPost = gql`
       threadTitle
     }
   }
-`;
+`

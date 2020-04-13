@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getThread = gql`
+export const GET_THREAD = gql`
   query GetThread($id: String!, $offset: Int, $limit: Int) {
     threadGet(input: { id: $id, offset: $offset, limit: $limit }) {
       thread {
@@ -24,4 +24,4 @@ export const getThread = gql`
       postCount
     }
   }
-`;
+`

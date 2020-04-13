@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const createPost = gql`
+export const CREATE_POST = gql`
   mutation createPost($text: String!, $threadId: Int!) {
     postCreate(input: { text: $text, threadId: $threadId }) {
       id
@@ -12,4 +12,4 @@ export const createPost = gql`
       }
     }
   }
-`;
+`

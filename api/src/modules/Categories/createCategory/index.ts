@@ -1,24 +1,19 @@
-import { MutationResolvers } from '../../../types/schema';
-import { getConnection } from 'typeorm';
-import { Category } from '../../../models/Category';
-import { isAdmin } from '../../Admin/isAdmin';
+import { MutationResolvers } from '../../../types/schema'
+import { getConnection } from 'typeorm'
+import { Category } from '../../../models/Category'
+import { isAdmin } from '../../Admin/isAdmin'
 
 export const categoryCreate: MutationResolvers.CategoryCreateResolver = async (
   _,
   { input: { name } },
-  { userId },
+  { userId }
 ) => {
-  await isAdmin(userId);
+  await isAdmin(userId)
 
-  await getConnection().transaction(async manager => {
-    await manager
+  return getConnection().transaction(async manager => {
+    return manager
       .getRepository(Category)
       .create({ name })
-      .save();
-  });
-
-  return {
-    error: null,
-    success: true,
-  };
-};
+      .save()
+  })
+}

@@ -1,5 +1,5 @@
 /* tslint:disable */
-// Generated in 2019-06-05T15:43:35+03:00
+// Generated in 2020-04-13T12:45:34+02:00
 export type Maybe<T> = T | null;
 
 export interface GetUploadUrlInput {
@@ -379,7 +379,7 @@ export interface UserInfo {
 export interface Mutation {
   adminLogin: Response;
 
-  categoryCreate: Response;
+  categoryCreate: Category;
 
   categoryDelete: Response;
 
@@ -531,24 +531,24 @@ import {
 
 import { IContext } from "./types";
 
-export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
+export type Resolver<Result, Parent = {}, TContext = {}, Args = {}> = (
   parent: Parent,
   args: Args,
-  context: Context,
+  context: TContext,
   info: GraphQLResolveInfo
 ) => Promise<Result> | Result;
 
-export interface ISubscriptionResolverObject<Result, Parent, Context, Args> {
+export interface ISubscriptionResolverObject<Result, Parent, TContext, Args> {
   subscribe<R = Result, P = Parent>(
     parent: P,
     args: Args,
-    context: Context,
+    context: TContext,
     info: GraphQLResolveInfo
   ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>;
   resolve?<R = Result, P = Parent>(
     parent: P,
     args: Args,
-    context: Context,
+    context: TContext,
     info: GraphQLResolveInfo
   ): R | Result | Promise<R | Result>;
 }
@@ -556,17 +556,17 @@ export interface ISubscriptionResolverObject<Result, Parent, Context, Args> {
 export type SubscriptionResolver<
   Result,
   Parent = {},
-  Context = {},
+  TContext = {},
   Args = {}
 > =
   | ((
       ...args: any[]
-    ) => ISubscriptionResolverObject<Result, Parent, Context, Args>)
-  | ISubscriptionResolverObject<Result, Parent, Context, Args>;
+    ) => ISubscriptionResolverObject<Result, Parent, TContext, Args>)
+  | ISubscriptionResolverObject<Result, Parent, TContext, Args>;
 
-export type TypeResolveFn<Types, Parent = {}, Context = {}> = (
+export type TypeResolveFn<Types, Parent = {}, TContext = {}> = (
   parent: Parent,
-  context: Context,
+  context: TContext,
   info: GraphQLResolveInfo
 ) => Maybe<Types>;
 
@@ -581,73 +581,77 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 ) => TResult | Promise<TResult>;
 
 export namespace QueryResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = {}> {
+  export interface Resolvers<TContext = IContext, TypeParent = {}> {
     dashboardGet?: DashboardGetResolver<
       GetDashboardResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
     categoryGetAll?: CategoryGetAllResolver<
       CategoryGetAllResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
-    categoryGet?: CategoryGetResolver<Category, TypeParent, Context>;
+    categoryGet?: CategoryGetResolver<Category, TypeParent, TContext>;
 
     categoryGetSummaryAll?: CategoryGetSummaryAllResolver<
       CategoryGetSummaryAllResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
     getUploadUrl?: GetUploadUrlResolver<
       GetUploadUrlResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
-    forumGet?: ForumGetResolver<GetForumResponse, TypeParent, Context>;
+    forumGet?: ForumGetResolver<GetForumResponse, TypeParent, TContext>;
 
-    forumGetAll?: ForumGetAllResolver<ForumGetAllResponse, TypeParent, Context>;
+    forumGetAll?: ForumGetAllResolver<
+      ForumGetAllResponse,
+      TypeParent,
+      TContext
+    >;
 
-    postGetAll?: PostGetAllResolver<PostGetAllResponse, TypeParent, Context>;
+    postGetAll?: PostGetAllResolver<PostGetAllResponse, TypeParent, TContext>;
 
-    postGet?: PostGetResolver<PostInfo, TypeParent, Context>;
+    postGet?: PostGetResolver<PostInfo, TypeParent, TContext>;
 
     threadGetAll?: ThreadGetAllResolver<
       ThreadGetAllResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
-    threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, Context>;
+    threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, TContext>;
 
-    me?: MeResolver<Maybe<User>, TypeParent, Context>;
+    me?: MeResolver<Maybe<User>, TypeParent, TContext>;
 
-    userGetAll?: UserGetAllResolver<UserGetAllResponse, TypeParent, Context>;
+    userGetAll?: UserGetAllResolver<UserGetAllResponse, TypeParent, TContext>;
 
-    userGet?: UserGetResolver<UserInfo, TypeParent, Context>;
+    userGet?: UserGetResolver<UserInfo, TypeParent, TContext>;
 
-    userProfileGet?: UserProfileGetResolver<UserProfile, TypeParent, Context>;
+    userProfileGet?: UserProfileGetResolver<UserProfile, TypeParent, TContext>;
   }
 
   export type DashboardGetResolver<
     R = GetDashboardResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CategoryGetAllResolver<
     R = CategoryGetAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CategoryGetResolver<
     R = Category,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, CategoryGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, CategoryGetArgs>;
   export interface CategoryGetArgs {
     id: number;
 
@@ -657,13 +661,13 @@ export namespace QueryResolvers {
   export type CategoryGetSummaryAllResolver<
     R = CategoryGetSummaryAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type GetUploadUrlResolver<
     R = GetUploadUrlResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, GetUploadUrlArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, GetUploadUrlArgs>;
   export interface GetUploadUrlArgs {
     input: GetUploadUrlInput;
   }
@@ -671,8 +675,8 @@ export namespace QueryResolvers {
   export type ForumGetResolver<
     R = GetForumResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ForumGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ForumGetArgs>;
   export interface ForumGetArgs {
     id: number;
 
@@ -684,13 +688,13 @@ export namespace QueryResolvers {
   export type ForumGetAllResolver<
     R = ForumGetAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostGetAllResolver<
     R = PostGetAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, PostGetAllArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, PostGetAllArgs>;
   export interface PostGetAllArgs {
     input: PostGetAllInput;
   }
@@ -698,8 +702,8 @@ export namespace QueryResolvers {
   export type PostGetResolver<
     R = PostInfo,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, PostGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, PostGetArgs>;
   export interface PostGetArgs {
     id?: Maybe<number>;
   }
@@ -707,8 +711,8 @@ export namespace QueryResolvers {
   export type ThreadGetAllResolver<
     R = ThreadGetAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ThreadGetAllArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ThreadGetAllArgs>;
   export interface ThreadGetAllArgs {
     input: ThreadGetAllInput;
   }
@@ -716,8 +720,8 @@ export namespace QueryResolvers {
   export type ThreadGetResolver<
     R = GetThreadResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ThreadGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ThreadGetArgs>;
   export interface ThreadGetArgs {
     input: GetThreadInput;
   }
@@ -725,18 +729,18 @@ export namespace QueryResolvers {
   export type MeResolver<
     R = Maybe<User>,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UserGetAllResolver<
     R = UserGetAllResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UserGetResolver<
     R = UserInfo,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, UserGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, UserGetArgs>;
   export interface UserGetArgs {
     id: string;
   }
@@ -744,8 +748,8 @@ export namespace QueryResolvers {
   export type UserProfileGetResolver<
     R = UserProfile,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, UserProfileGetArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, UserProfileGetArgs>;
   export interface UserProfileGetArgs {
     id: string;
   }
@@ -753,820 +757,820 @@ export namespace QueryResolvers {
 
 export namespace GetDashboardResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = GetDashboardResponse
   > {
-    userCount?: UserCountResolver<number, TypeParent, Context>;
+    userCount?: UserCountResolver<number, TypeParent, TContext>;
 
-    postCount?: PostCountResolver<number, TypeParent, Context>;
+    postCount?: PostCountResolver<number, TypeParent, TContext>;
 
-    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
 
-    forumCount?: ForumCountResolver<number, TypeParent, Context>;
+    forumCount?: ForumCountResolver<number, TypeParent, TContext>;
 
-    categoryCount?: CategoryCountResolver<number, TypeParent, Context>;
+    categoryCount?: CategoryCountResolver<number, TypeParent, TContext>;
   }
 
   export type UserCountResolver<
     R = number,
     Parent = GetDashboardResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostCountResolver<
     R = number,
     Parent = GetDashboardResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadCountResolver<
     R = number,
     Parent = GetDashboardResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ForumCountResolver<
     R = number,
     Parent = GetDashboardResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CategoryCountResolver<
     R = number,
     Parent = GetDashboardResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace CategoryGetAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = CategoryGetAllResponse
   > {
-    success?: SuccessResolver<boolean, TypeParent, Context>;
+    success?: SuccessResolver<boolean, TypeParent, TContext>;
 
-    categories?: CategoriesResolver<Category[], TypeParent, Context>;
+    categories?: CategoriesResolver<Category[], TypeParent, TContext>;
   }
 
   export type SuccessResolver<
     R = boolean,
     Parent = CategoryGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CategoriesResolver<
     R = Category[],
     Parent = CategoryGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace CategoryResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Category> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Category> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
 
-    forums?: ForumsResolver<Forum[], TypeParent, Context>;
+    forums?: ForumsResolver<Forum[], TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = Category,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type NameResolver<
     R = string,
     Parent = Category,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ForumsResolver<
     R = Forum[],
     Parent = Category,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ForumResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Forum> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Forum> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    category?: CategoryResolver<Category, TypeParent, Context>;
+    category?: CategoryResolver<Category, TypeParent, TContext>;
 
-    threads?: ThreadsResolver<Thread[], TypeParent, Context>;
+    threads?: ThreadsResolver<Thread[], TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = Forum,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type NameResolver<
     R = string,
     Parent = Forum,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = Forum,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CategoryResolver<
     R = Category,
     Parent = Forum,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadsResolver<
     R = Thread[],
     Parent = Forum,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ThreadResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Thread> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Thread> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    forum?: ForumResolver<Forum, TypeParent, Context>;
+    forum?: ForumResolver<Forum, TypeParent, TContext>;
 
-    originalPost?: OriginalPostResolver<Post, TypeParent, Context>;
+    originalPost?: OriginalPostResolver<Post, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    posts?: PostsResolver<Post[], TypeParent, Context>;
+    posts?: PostsResolver<Post[], TypeParent, TContext>;
 
-    title?: TitleResolver<string, TypeParent, Context>;
+    title?: TitleResolver<string, TypeParent, TContext>;
 
-    owner?: OwnerResolver<ThreadOwner, TypeParent, Context>;
+    owner?: OwnerResolver<ThreadOwner, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ForumResolver<
     R = Forum,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type OriginalPostResolver<
     R = Post,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostsResolver<
     R = Post[],
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type TitleResolver<
     R = string,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type OwnerResolver<
     R = ThreadOwner,
     Parent = Thread,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace PostResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Post> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Post> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    text?: TextResolver<string, TypeParent, Context>;
+    text?: TextResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    author?: AuthorResolver<User, TypeParent, Context>;
+    author?: AuthorResolver<User, TypeParent, TContext>;
 
-    thread?: ThreadResolver<Thread, TypeParent, Context>;
+    thread?: ThreadResolver<Thread, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = Post,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type TextResolver<
     R = string,
     Parent = Post,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = Post,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type AuthorResolver<
     R = User,
     Parent = Post,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadResolver<
     R = Thread,
     Parent = Post,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = User> {
-    id?: IdResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = User> {
+    id?: IdResolver<string, TypeParent, TContext>;
 
-    username?: UsernameResolver<string, TypeParent, Context>;
+    username?: UsernameResolver<string, TypeParent, TContext>;
 
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
 
-    permissions?: PermissionsResolver<UserPermissions[], TypeParent, Context>;
+    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
 
     profileImageUrl?: ProfileImageUrlResolver<
       Maybe<string>,
       TypeParent,
-      Context
+      TContext
     >;
 
-    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, Context>;
+    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = string,
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UsernameResolver<
     R = string,
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type EmailResolver<
     R = string,
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PermissionsResolver<
     R = UserPermissions[],
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ProfileImageUrlResolver<
     R = Maybe<string>,
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ProfileResolver<
     R = Maybe<UserProfile>,
     Parent = User,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserProfileResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = UserProfile> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = UserProfile> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    location?: LocationResolver<Maybe<string>, TypeParent, Context>;
+    location?: LocationResolver<Maybe<string>, TypeParent, TContext>;
 
-    gender?: GenderResolver<string, TypeParent, Context>;
+    gender?: GenderResolver<string, TypeParent, TContext>;
 
-    occupation?: OccupationResolver<Maybe<string>, TypeParent, Context>;
+    occupation?: OccupationResolver<Maybe<string>, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = UserProfile,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type LocationResolver<
     R = Maybe<string>,
     Parent = UserProfile,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type GenderResolver<
     R = string,
     Parent = UserProfile,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type OccupationResolver<
     R = Maybe<string>,
     Parent = UserProfile,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ThreadOwnerResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = ThreadOwner> {
-    username?: UsernameResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = ThreadOwner> {
+    username?: UsernameResolver<string, TypeParent, TContext>;
   }
 
   export type UsernameResolver<
     R = string,
     Parent = ThreadOwner,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace CategoryGetSummaryAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = CategoryGetSummaryAllResponse
   > {
-    categories?: CategoriesResolver<CategoryInfo[], TypeParent, Context>;
+    categories?: CategoriesResolver<CategoryInfo[], TypeParent, TContext>;
   }
 
   export type CategoriesResolver<
     R = CategoryInfo[],
     Parent = CategoryGetSummaryAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace CategoryInfoResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = CategoryInfo> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = CategoryInfo> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
 
-    forumCount?: ForumCountResolver<number, TypeParent, Context>;
+    forumCount?: ForumCountResolver<number, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = CategoryInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type NameResolver<
     R = string,
     Parent = CategoryInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = CategoryInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UpdatedAtResolver<
     R = Date,
     Parent = CategoryInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ForumCountResolver<
     R = number,
     Parent = CategoryInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace GetUploadUrlResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = GetUploadUrlResponse
   > {
-    success?: SuccessResolver<boolean, TypeParent, Context>;
+    success?: SuccessResolver<boolean, TypeParent, TContext>;
 
-    uploadKey?: UploadKeyResolver<Maybe<string>, TypeParent, Context>;
+    uploadKey?: UploadKeyResolver<Maybe<string>, TypeParent, TContext>;
 
-    uploadUrl?: UploadUrlResolver<Maybe<string>, TypeParent, Context>;
+    uploadUrl?: UploadUrlResolver<Maybe<string>, TypeParent, TContext>;
   }
 
   export type SuccessResolver<
     R = boolean,
     Parent = GetUploadUrlResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UploadKeyResolver<
     R = Maybe<string>,
     Parent = GetUploadUrlResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UploadUrlResolver<
     R = Maybe<string>,
     Parent = GetUploadUrlResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace GetForumResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = GetForumResponse
   > {
-    forum?: ForumResolver<Forum, TypeParent, Context>;
+    forum?: ForumResolver<Forum, TypeParent, TContext>;
 
-    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
   }
 
   export type ForumResolver<
     R = Forum,
     Parent = GetForumResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadCountResolver<
     R = number,
     Parent = GetForumResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ForumGetAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = ForumGetAllResponse
   > {
-    forums?: ForumsResolver<ForumInfo[], TypeParent, Context>;
+    forums?: ForumsResolver<ForumInfo[], TypeParent, TContext>;
   }
 
   export type ForumsResolver<
     R = ForumInfo[],
     Parent = ForumGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ForumInfoResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = ForumInfo> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = ForumInfo> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
 
-    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = ForumInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type NameResolver<
     R = string,
     Parent = ForumInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = ForumInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UpdatedAtResolver<
     R = Date,
     Parent = ForumInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadCountResolver<
     R = number,
     Parent = ForumInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace PostGetAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = PostGetAllResponse
   > {
-    posts?: PostsResolver<PostInfo[], TypeParent, Context>;
+    posts?: PostsResolver<PostInfo[], TypeParent, TContext>;
   }
 
   export type PostsResolver<
     R = PostInfo[],
     Parent = PostGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace PostInfoResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = PostInfo> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = PostInfo> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    text?: TextResolver<string, TypeParent, Context>;
+    text?: TextResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    authorId?: AuthorIdResolver<string, TypeParent, Context>;
+    authorId?: AuthorIdResolver<string, TypeParent, TContext>;
 
-    authorUsername?: AuthorUsernameResolver<string, TypeParent, Context>;
+    authorUsername?: AuthorUsernameResolver<string, TypeParent, TContext>;
 
-    threadId?: ThreadIdResolver<string, TypeParent, Context>;
+    threadId?: ThreadIdResolver<string, TypeParent, TContext>;
 
-    threadTitle?: ThreadTitleResolver<string, TypeParent, Context>;
+    threadTitle?: ThreadTitleResolver<string, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type TextResolver<
     R = string,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type AuthorIdResolver<
     R = string,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type AuthorUsernameResolver<
     R = string,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadIdResolver<
     R = string,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadTitleResolver<
     R = string,
     Parent = PostInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ThreadGetAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = ThreadGetAllResponse
   > {
-    threads?: ThreadsResolver<ThreadInfo[], TypeParent, Context>;
+    threads?: ThreadsResolver<ThreadInfo[], TypeParent, TContext>;
   }
 
   export type ThreadsResolver<
     R = ThreadInfo[],
     Parent = ThreadGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ThreadInfoResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = ThreadInfo> {
-    id?: IdResolver<number, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = ThreadInfo> {
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    title?: TitleResolver<string, TypeParent, Context>;
+    title?: TitleResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
 
-    postCount?: PostCountResolver<number, TypeParent, Context>;
+    postCount?: PostCountResolver<number, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = ThreadInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type TitleResolver<
     R = string,
     Parent = ThreadInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = ThreadInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UpdatedAtResolver<
     R = Date,
     Parent = ThreadInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostCountResolver<
     R = number,
     Parent = ThreadInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace GetThreadResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = GetThreadResponse
   > {
-    thread?: ThreadResolver<Thread, TypeParent, Context>;
+    thread?: ThreadResolver<Thread, TypeParent, TContext>;
 
-    postCount?: PostCountResolver<number, TypeParent, Context>;
+    postCount?: PostCountResolver<number, TypeParent, TContext>;
   }
 
   export type ThreadResolver<
     R = Thread,
     Parent = GetThreadResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostCountResolver<
     R = number,
     Parent = GetThreadResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserGetAllResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = UserGetAllResponse
   > {
-    users?: UsersResolver<UserSummary[], TypeParent, Context>;
+    users?: UsersResolver<UserSummary[], TypeParent, TContext>;
   }
 
   export type UsersResolver<
     R = UserSummary[],
     Parent = UserGetAllResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserSummaryResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = UserSummary> {
-    id?: IdResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = UserSummary> {
+    id?: IdResolver<string, TypeParent, TContext>;
 
-    username?: UsernameResolver<string, TypeParent, Context>;
+    username?: UsernameResolver<string, TypeParent, TContext>;
 
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
 
-    registerDate?: RegisterDateResolver<Date, TypeParent, Context>;
+    registerDate?: RegisterDateResolver<Date, TypeParent, TContext>;
 
-    threadCount?: ThreadCountResolver<number, TypeParent, Context>;
+    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
 
-    postCount?: PostCountResolver<number, TypeParent, Context>;
+    postCount?: PostCountResolver<number, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = string,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UsernameResolver<
     R = string,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type EmailResolver<
     R = string,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type RegisterDateResolver<
     R = Date,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ThreadCountResolver<
     R = number,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PostCountResolver<
     R = number,
     Parent = UserSummary,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserInfoResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = UserInfo> {
-    id?: IdResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = UserInfo> {
+    id?: IdResolver<string, TypeParent, TContext>;
 
-    username?: UsernameResolver<string, TypeParent, Context>;
+    username?: UsernameResolver<string, TypeParent, TContext>;
 
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    permissions?: PermissionsResolver<UserPermissions[], TypeParent, Context>;
+    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
 
     profileImageUrl?: ProfileImageUrlResolver<
       Maybe<string>,
       TypeParent,
-      Context
+      TContext
     >;
 
-    password?: PasswordResolver<string, TypeParent, Context>;
+    password?: PasswordResolver<string, TypeParent, TContext>;
 
-    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, Context>;
+    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = string,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type UsernameResolver<
     R = string,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type EmailResolver<
     R = string,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type CreatedAtResolver<
     R = Date,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PermissionsResolver<
     R = UserPermissions[],
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ProfileImageUrlResolver<
     R = Maybe<string>,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PasswordResolver<
     R = string,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ProfileResolver<
     R = Maybe<UserProfile>,
     Parent = UserInfo,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace MutationResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = {}> {
-    adminLogin?: AdminLoginResolver<Response, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = {}> {
+    adminLogin?: AdminLoginResolver<Response, TypeParent, TContext>;
 
-    categoryCreate?: CategoryCreateResolver<Response, TypeParent, Context>;
+    categoryCreate?: CategoryCreateResolver<Category, TypeParent, TContext>;
 
-    categoryDelete?: CategoryDeleteResolver<Response, TypeParent, Context>;
+    categoryDelete?: CategoryDeleteResolver<Response, TypeParent, TContext>;
 
-    fakeData?: FakeDataResolver<boolean, TypeParent, Context>;
+    fakeData?: FakeDataResolver<boolean, TypeParent, TContext>;
 
-    forumCreate?: ForumCreateResolver<Forum, TypeParent, Context>;
+    forumCreate?: ForumCreateResolver<Forum, TypeParent, TContext>;
 
-    forumDelete?: ForumDeleteResolver<Response, TypeParent, Context>;
+    forumDelete?: ForumDeleteResolver<Response, TypeParent, TContext>;
 
-    postCreate?: PostCreateResolver<Post, TypeParent, Context>;
+    postCreate?: PostCreateResolver<Post, TypeParent, TContext>;
 
-    postDelete?: PostDeleteResolver<Maybe<Post>, TypeParent, Context>;
+    postDelete?: PostDeleteResolver<Maybe<Post>, TypeParent, TContext>;
 
     threadCreate?: ThreadCreateResolver<
       CreateThreadResponse,
       TypeParent,
-      Context
+      TContext
     >;
 
-    threadDelete?: ThreadDeleteResolver<Maybe<Thread>, TypeParent, Context>;
+    threadDelete?: ThreadDeleteResolver<Maybe<Thread>, TypeParent, TContext>;
 
-    createAdmin?: CreateAdminResolver<DemoAdmin, TypeParent, Context>;
+    createAdmin?: CreateAdminResolver<DemoAdmin, TypeParent, TContext>;
 
-    confirmUserEmail?: ConfirmUserEmailResolver<Response, TypeParent, Context>;
+    confirmUserEmail?: ConfirmUserEmailResolver<Response, TypeParent, TContext>;
 
-    login?: LoginResolver<Response, TypeParent, Context>;
+    login?: LoginResolver<Response, TypeParent, TContext>;
 
-    logout?: LogoutResolver<Response, TypeParent, Context>;
+    logout?: LogoutResolver<Response, TypeParent, TContext>;
 
-    register?: RegisterResolver<Response, TypeParent, Context>;
+    register?: RegisterResolver<Response, TypeParent, TContext>;
 
     requestResetPassword?: RequestResetPasswordResolver<
       Response,
       TypeParent,
-      Context
+      TContext
     >;
 
-    resetPassword?: ResetPasswordResolver<Response, TypeParent, Context>;
+    resetPassword?: ResetPasswordResolver<Response, TypeParent, TContext>;
 
-    editUserProfile?: EditUserProfileResolver<Response, TypeParent, Context>;
+    editUserProfile?: EditUserProfileResolver<Response, TypeParent, TContext>;
   }
 
   export type AdminLoginResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, AdminLoginArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, AdminLoginArgs>;
   export interface AdminLoginArgs {
     input: LoginInput;
   }
 
   export type CategoryCreateResolver<
-    R = Response,
+    R = Category,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, CategoryCreateArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, CategoryCreateArgs>;
   export interface CategoryCreateArgs {
     input: CreateCategoryInput;
   }
@@ -1574,8 +1578,8 @@ export namespace MutationResolvers {
   export type CategoryDeleteResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, CategoryDeleteArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, CategoryDeleteArgs>;
   export interface CategoryDeleteArgs {
     id: number;
   }
@@ -1583,13 +1587,13 @@ export namespace MutationResolvers {
   export type FakeDataResolver<
     R = boolean,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ForumCreateResolver<
     R = Forum,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ForumCreateArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ForumCreateArgs>;
   export interface ForumCreateArgs {
     input: CreateForumInput;
   }
@@ -1597,8 +1601,8 @@ export namespace MutationResolvers {
   export type ForumDeleteResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ForumDeleteArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ForumDeleteArgs>;
   export interface ForumDeleteArgs {
     id: number;
   }
@@ -1606,8 +1610,8 @@ export namespace MutationResolvers {
   export type PostCreateResolver<
     R = Post,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, PostCreateArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, PostCreateArgs>;
   export interface PostCreateArgs {
     input: CreatePostInput;
   }
@@ -1615,8 +1619,8 @@ export namespace MutationResolvers {
   export type PostDeleteResolver<
     R = Maybe<Post>,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, PostDeleteArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, PostDeleteArgs>;
   export interface PostDeleteArgs {
     id: number;
   }
@@ -1624,8 +1628,8 @@ export namespace MutationResolvers {
   export type ThreadCreateResolver<
     R = CreateThreadResponse,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ThreadCreateArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ThreadCreateArgs>;
   export interface ThreadCreateArgs {
     input: CreateThreadInput;
   }
@@ -1633,8 +1637,8 @@ export namespace MutationResolvers {
   export type ThreadDeleteResolver<
     R = Maybe<Thread>,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ThreadDeleteArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ThreadDeleteArgs>;
   export interface ThreadDeleteArgs {
     id: number;
   }
@@ -1642,13 +1646,13 @@ export namespace MutationResolvers {
   export type CreateAdminResolver<
     R = DemoAdmin,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type ConfirmUserEmailResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ConfirmUserEmailArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ConfirmUserEmailArgs>;
   export interface ConfirmUserEmailArgs {
     token: string;
   }
@@ -1656,8 +1660,8 @@ export namespace MutationResolvers {
   export type LoginResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, LoginArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, LoginArgs>;
   export interface LoginArgs {
     input: LoginInput;
   }
@@ -1665,13 +1669,13 @@ export namespace MutationResolvers {
   export type LogoutResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type RegisterResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, RegisterArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, RegisterArgs>;
   export interface RegisterArgs {
     input: RegisterInput;
   }
@@ -1679,8 +1683,8 @@ export namespace MutationResolvers {
   export type RequestResetPasswordResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, RequestResetPasswordArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, RequestResetPasswordArgs>;
   export interface RequestResetPasswordArgs {
     input?: Maybe<RequestResetPasswordInput>;
   }
@@ -1688,8 +1692,8 @@ export namespace MutationResolvers {
   export type ResetPasswordResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, ResetPasswordArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ResetPasswordArgs>;
   export interface ResetPasswordArgs {
     input: ResetPasswordInput;
   }
@@ -1697,97 +1701,97 @@ export namespace MutationResolvers {
   export type EditUserProfileResolver<
     R = Response,
     Parent = {},
-    Context = IContext
-  > = Resolver<R, Parent, Context, EditUserProfileArgs>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, EditUserProfileArgs>;
   export interface EditUserProfileArgs {
     input: EditUserProfileInput;
   }
 }
 
 export namespace ResponseResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Response> {
-    error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Response> {
+    error?: ErrorResolver<Maybe<Error[]>, TypeParent, TContext>;
 
-    success?: SuccessResolver<boolean, TypeParent, Context>;
+    success?: SuccessResolver<boolean, TypeParent, TContext>;
   }
 
   export type ErrorResolver<
     R = Maybe<Error[]>,
     Parent = Response,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type SuccessResolver<
     R = boolean,
     Parent = Response,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace ErrorResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = Error> {
-    path?: PathResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = Error> {
+    path?: PathResolver<string, TypeParent, TContext>;
 
-    message?: MessageResolver<string, TypeParent, Context>;
+    message?: MessageResolver<string, TypeParent, TContext>;
   }
 
   export type PathResolver<
     R = string,
     Parent = Error,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type MessageResolver<
     R = string,
     Parent = Error,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace CreateThreadResponseResolvers {
   export interface Resolvers<
-    Context = IContext,
+    TContext = IContext,
     TypeParent = CreateThreadResponse
   > {
-    id?: IdResolver<number, TypeParent, Context>;
+    id?: IdResolver<number, TypeParent, TContext>;
 
-    title?: TitleResolver<string, TypeParent, Context>;
+    title?: TitleResolver<string, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = number,
     Parent = CreateThreadResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type TitleResolver<
     R = string,
     Parent = CreateThreadResponse,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 export namespace DemoAdminResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = DemoAdmin> {
-    username?: UsernameResolver<string, TypeParent, Context>;
+  export interface Resolvers<TContext = IContext, TypeParent = DemoAdmin> {
+    username?: UsernameResolver<string, TypeParent, TContext>;
 
-    password?: PasswordResolver<string, TypeParent, Context>;
+    password?: PasswordResolver<string, TypeParent, TContext>;
 
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
   }
 
   export type UsernameResolver<
     R = string,
     Parent = DemoAdmin,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type PasswordResolver<
     R = string,
     Parent = DemoAdmin,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
   export type EmailResolver<
     R = string,
     Parent = DemoAdmin,
-    Context = IContext
-  > = Resolver<R, Parent, Context>;
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
@@ -1835,43 +1839,45 @@ export interface UploadScalarConfig
   name: "Upload";
 }
 
-export interface IResolvers {
-  Query?: QueryResolvers.Resolvers;
-  GetDashboardResponse?: GetDashboardResponseResolvers.Resolvers;
-  CategoryGetAllResponse?: CategoryGetAllResponseResolvers.Resolvers;
-  Category?: CategoryResolvers.Resolvers;
-  Forum?: ForumResolvers.Resolvers;
-  Thread?: ThreadResolvers.Resolvers;
-  Post?: PostResolvers.Resolvers;
-  User?: UserResolvers.Resolvers;
-  UserProfile?: UserProfileResolvers.Resolvers;
-  ThreadOwner?: ThreadOwnerResolvers.Resolvers;
-  CategoryGetSummaryAllResponse?: CategoryGetSummaryAllResponseResolvers.Resolvers;
-  CategoryInfo?: CategoryInfoResolvers.Resolvers;
-  GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers;
-  GetForumResponse?: GetForumResponseResolvers.Resolvers;
-  ForumGetAllResponse?: ForumGetAllResponseResolvers.Resolvers;
-  ForumInfo?: ForumInfoResolvers.Resolvers;
-  PostGetAllResponse?: PostGetAllResponseResolvers.Resolvers;
-  PostInfo?: PostInfoResolvers.Resolvers;
-  ThreadGetAllResponse?: ThreadGetAllResponseResolvers.Resolvers;
-  ThreadInfo?: ThreadInfoResolvers.Resolvers;
-  GetThreadResponse?: GetThreadResponseResolvers.Resolvers;
-  UserGetAllResponse?: UserGetAllResponseResolvers.Resolvers;
-  UserSummary?: UserSummaryResolvers.Resolvers;
-  UserInfo?: UserInfoResolvers.Resolvers;
-  Mutation?: MutationResolvers.Resolvers;
-  Response?: ResponseResolvers.Resolvers;
-  Error?: ErrorResolvers.Resolvers;
-  CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers;
-  DemoAdmin?: DemoAdminResolvers.Resolvers;
+export type IResolvers<TContext = IContext> = {
+  Query?: QueryResolvers.Resolvers<TContext>;
+  GetDashboardResponse?: GetDashboardResponseResolvers.Resolvers<TContext>;
+  CategoryGetAllResponse?: CategoryGetAllResponseResolvers.Resolvers<TContext>;
+  Category?: CategoryResolvers.Resolvers<TContext>;
+  Forum?: ForumResolvers.Resolvers<TContext>;
+  Thread?: ThreadResolvers.Resolvers<TContext>;
+  Post?: PostResolvers.Resolvers<TContext>;
+  User?: UserResolvers.Resolvers<TContext>;
+  UserProfile?: UserProfileResolvers.Resolvers<TContext>;
+  ThreadOwner?: ThreadOwnerResolvers.Resolvers<TContext>;
+  CategoryGetSummaryAllResponse?: CategoryGetSummaryAllResponseResolvers.Resolvers<
+    TContext
+  >;
+  CategoryInfo?: CategoryInfoResolvers.Resolvers<TContext>;
+  GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers<TContext>;
+  GetForumResponse?: GetForumResponseResolvers.Resolvers<TContext>;
+  ForumGetAllResponse?: ForumGetAllResponseResolvers.Resolvers<TContext>;
+  ForumInfo?: ForumInfoResolvers.Resolvers<TContext>;
+  PostGetAllResponse?: PostGetAllResponseResolvers.Resolvers<TContext>;
+  PostInfo?: PostInfoResolvers.Resolvers<TContext>;
+  ThreadGetAllResponse?: ThreadGetAllResponseResolvers.Resolvers<TContext>;
+  ThreadInfo?: ThreadInfoResolvers.Resolvers<TContext>;
+  GetThreadResponse?: GetThreadResponseResolvers.Resolvers<TContext>;
+  UserGetAllResponse?: UserGetAllResponseResolvers.Resolvers<TContext>;
+  UserSummary?: UserSummaryResolvers.Resolvers<TContext>;
+  UserInfo?: UserInfoResolvers.Resolvers<TContext>;
+  Mutation?: MutationResolvers.Resolvers<TContext>;
+  Response?: ResponseResolvers.Resolvers<TContext>;
+  Error?: ErrorResolvers.Resolvers<TContext>;
+  CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers<TContext>;
+  DemoAdmin?: DemoAdminResolvers.Resolvers<TContext>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
   Upload?: GraphQLScalarType;
-}
+} & { [typeName: string]: never };
 
-export interface IDirectiveResolvers<Result> {
+export type IDirectiveResolvers<Result> = {
   skip?: SkipDirectiveResolver<Result>;
   include?: IncludeDirectiveResolver<Result>;
   deprecated?: DeprecatedDirectiveResolver<Result>;
-}
+} & { [directiveName: string]: never };

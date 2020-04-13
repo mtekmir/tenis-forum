@@ -1,28 +1,20 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { GetPostPostGet } from '../../../../../../../generated/apolloComponents';
-import { Title, Details, EditDelete } from '../../styles';
-import { formatDate } from '../../../../../../../utils/formatDate';
-import { Args, Type } from '../../DrawerContainer';
-import { Button } from '../../../../../../../components/Button';
+import * as React from 'react'
+import styled from 'styled-components'
+import { Title, Details, EditDelete } from '../../styles'
+import { formatDate } from '../../../../../../../utils/formatDate'
+import { Args, Type } from '../../DrawerContainer'
+import { Button } from '../../../../../../../components/Button'
+import { GetPost_postGet } from '../../../../../../../generated/GetPost'
 
 interface Props {
-  post: GetPostPostGet;
-  getDetail: (args: Args) => void;
-  askForDelete: (args: Args) => void;
+  post: GetPost_postGet
+  getDetail: (args: Args) => void
+  askForDelete: (args: Args) => void
 }
 
 export const PostContent: React.FunctionComponent<Props> = ({
-  post: {
-    id,
-    text,
-    createdAt,
-    authorId,
-    authorUsername,
-    threadId,
-    threadTitle,
-  },
-  askForDelete,
+  post: { id, text, createdAt, authorUsername, threadTitle },
+  askForDelete
 }) => {
   return (
     <>
@@ -32,11 +24,11 @@ export const PostContent: React.FunctionComponent<Props> = ({
         {formatDate(createdAt)}
       </Details>
       <EditDelete>
-        <Button text="Edit" onClick={() => null} marginRight color="primary" />
+        <Button text='Edit' onClick={() => null} marginRight color='primary' />
         <Button
-          text="Delete"
+          text='Delete'
           onClick={() => askForDelete({ id, type: Type.P })}
-          color="red_gradient"
+          color='red_gradient'
         />
       </EditDelete>
       <Details>
@@ -49,11 +41,11 @@ export const PostContent: React.FunctionComponent<Props> = ({
       </Details>
       <Text>{text}</Text>
     </>
-  );
-};
+  )
+}
 
 const Text = styled.div`
   border: 1px solid #efefef;
   padding: 1em;
   margin-top: 1em;
-`;
+`

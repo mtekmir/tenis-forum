@@ -1,24 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
-import { withRouter, WithRouterProps } from 'next/router';
+import React from 'react'
+import styled from 'styled-components'
+import Link from 'next/link'
+import { withRouter, useRouter } from 'next/router'
 
-interface Props extends WithRouterProps {
-  label?: string;
-  url?: string;
+interface Props {
+  label?: string
+  url?: string
 }
 
-const BigMenuItemC: React.FC<Props> = ({ label, url, router }) => {
+const BigMenuItemC: React.FC<Props> = ({ label, url }) => {
+  const { pathname } = useRouter()
   return (
-    <Styles selected={router.pathname === url}>
+    <Styles selected={pathname === url}>
       <Link href={url}>
         <a>{label}</a>
       </Link>
     </Styles>
-  );
-};
+  )
+}
 
-export const BigMenuItem = withRouter(BigMenuItemC);
+export const BigMenuItem = withRouter(BigMenuItemC)
 
 const Styles = styled.div<{ selected: boolean }>`
   color: white;
@@ -29,4 +30,4 @@ const Styles = styled.div<{ selected: boolean }>`
   :first-of-type {
     margin-left: 1.5em;
   }
-`;
+`

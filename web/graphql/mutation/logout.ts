@@ -1,9 +1,9 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const logoutMutation = gql`
+export const LOGOUT = gql`
   mutation Logout {
     logout {
       success
     }
   }
-`;
+`

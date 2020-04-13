@@ -1,26 +1,38 @@
-import * as React from 'react';
-import Layout from '../../../components/Layout';
-import { GetDashboardComponent } from '../../../generated/apolloComponents';
-import { DashboardView } from './DashboardView';
+import React from 'react'
+import { StatsContainer, StatsDiv, IconDiv, Title, Stat } from './dashboardStyle'
+import { STAT_PROPS } from './stats'
+import { useQuery } from 'react-apollo'
+import { GET_DASHBOARD } from '../../../graphql/query/getDashboard'
+import { GetDashboard } from '../../../generated/GetDashboard'
+import Layout from '../../../components/Layout'
 
-class Dashboard extends React.PureComponent {
-  render() {
-    return (
-      <Layout title="Admin Dashboard | Tenis Forum">
-        <GetDashboardComponent>
-          {({ data, loading }) => {
-            if (loading) {
-              return <div>Loading...</div>;
-            }
+interface Props {}
 
-            if (data && data.dashboardGet) {
-              return <DashboardView dashboard={data.dashboardGet} />;
-            }
-          }}
-        </GetDashboardComponent>
-      </Layout>
-    );
+const Dashboard: React.FC<Props> = () => {
+  const { data, error, loading } = useQuery<GetDashboard>(GET_DASHBOARD)
+  if (loading || !data) {
+    return <div>Loading...</div>
   }
+
+  const renderStats = () => {
+    return STAT_PROPS.map(({ label, id, Icon, color }) => (
+      <StatsDiv key={label}>
+        <IconDiv style={{ background: color }}>
+          <Icon />
+        </IconDiv>
+        <div>
+          <Title>{label}</Title>
+          <Stat>{(data.dashboardGet as any)[id]}</Stat>
+        </div>
+      </StatsDiv>
+    ))
+  }
+
+  return (
+    <Layout title='Dashboard | Tenis Forum'>
+      <StatsContainer>{renderStats()}</StatsContainer>
+    </Layout>
+  )
 }
 
-export default Dashboard;
+export default Dashboard

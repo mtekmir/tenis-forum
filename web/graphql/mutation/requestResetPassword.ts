@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const requestResetPassword = gql`
+export const REQUEST_RESET_PASSWORD = gql`
   mutation RequestResetPassword($email: String!) {
     requestResetPassword(input: { email: $email }) {
       success
@@ -10,4 +10,4 @@ export const requestResetPassword = gql`
       }
     }
   }
-`;
+`

@@ -1,15 +1,15 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
+import React from 'react'
+import styled from 'styled-components'
+import Link from 'next/link'
 
 interface Props {
-  color: string;
-  text: string;
-  url?: string;
-  marginRight?: boolean;
-  type?: string;
-  wide?: boolean;
-  onClick?: () => void;
+  color: string
+  text: string
+  url?: string
+  marginRight?: boolean
+  type?: string
+  wide?: boolean
+  onClick?: () => void
 }
 
 export const Button: React.FunctionComponent<Props> = ({
@@ -27,18 +27,16 @@ export const Button: React.FunctionComponent<Props> = ({
           </Link>
         </Styles>
       ) : (
-        <Styles {...props} as="button">
-          {text}
-        </Styles>
+        <Styles {...props}>{text}</Styles>
       )}
     </React.Fragment>
-  );
-};
+  )
+}
 
 const Styles = styled.div<{
-  color: string;
-  marginRight?: boolean;
-  wide?: boolean;
+  color: string
+  marginRight?: boolean
+  wide?: boolean
 }>`
   background: ${({ theme: { palette }, color }) => palette[color]};
   color: white;
@@ -55,4 +53,4 @@ const Styles = styled.div<{
     box-shadow: 0px 0px 0px 1px #458a8c, 0 1px 1px #d5d5d5,
       inset 0 1px 0 rgba(255, 255, 255, 0.8), 0px 1px 1px 2px #fff;
   }
-`;
+`

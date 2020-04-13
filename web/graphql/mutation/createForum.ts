@@ -1,9 +1,9 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const createForum = gql`
+export const CREATE_FORUM = gql`
   mutation CreateForum($name: String!, $categoryId: Int!) {
     forumCreate(input: { name: $name, categoryId: $categoryId }) {
       id
     }
   }
-`;
+`

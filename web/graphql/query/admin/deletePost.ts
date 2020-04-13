@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const deletePost = gql`
+export const DELETE_POST = gql`
   mutation DeletePost($id: Int!) {
     postDelete(id: $id) {
       id
@@ -9,4 +9,4 @@ export const deletePost = gql`
       }
     }
   }
-`;
+`

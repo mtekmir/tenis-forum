@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const deleteThread = gql`
+export const DELETE_THREAD = gql`
   mutation DeleteThread($id: Int!) {
     threadDelete(id: $id) {
       id
@@ -9,4 +9,4 @@ export const deleteThread = gql`
       }
     }
   }
-`;
+`

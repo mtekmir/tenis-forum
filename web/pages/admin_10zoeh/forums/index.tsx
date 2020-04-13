@@ -1,20 +1,31 @@
-import React from 'react';
-import { GetAllForumsComponent } from '../../../generated/apolloComponents';
-import { ForumsView } from './ForumsView';
+import React, { FunctionComponent } from 'react'
+import Layout from '../../../components/Layout'
+import { FORUM_TABLE_HEADERS } from './tableHeaders'
+import { TableContainer } from '../components/table/TableContainer'
+import { Type } from '../components/table/drawer/DrawerContainer'
+import { useQuery } from 'react-apollo'
+import { GET_ALL_FORUMS } from '../../../graphql/query/admin/getAllForums'
+import { GetAllForums } from '../../../generated/GetAllForums'
+import { AddForum } from './components/addForum'
 
-const ForumsContainer = () => {
+interface Props {}
+
+const Forums: FunctionComponent<Props> = () => {
+  const { data, error, loading } = useQuery<GetAllForums>(GET_ALL_FORUMS)
+  if (loading) {
+    return <div>Loading</div>
+  }
+
   return (
-    <GetAllForumsComponent>
-      {({ data, loading }) => {
-        if (loading) {
-          return <div>Loading...</div>;
-        }
-        if (data && data.forumGetAll && data.forumGetAll.forums) {
-          return <ForumsView forums={data.forumGetAll.forums} />;
-        }
-      }}
-    </GetAllForumsComponent>
-  );
-};
+    <Layout title='Categories | Admin'>
+      <AddForum />
+      <TableContainer
+        type={Type.F}
+        headers={FORUM_TABLE_HEADERS}
+        rows={data.forumGetAll.forums}
+      />
+    </Layout>
+  )
+}
 
-export default ForumsContainer;
+export default Forums

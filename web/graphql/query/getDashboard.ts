@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getDashboard = gql`
+export const GET_DASHBOARD = gql`
   query GetDashboard {
     dashboardGet {
       userCount
@@ -10,4 +10,4 @@ export const getDashboard = gql`
       postCount
     }
   }
-`;
+`

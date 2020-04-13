@@ -1,22 +1,22 @@
-import * as React from 'react';
-import { GetThreadThread } from '../../../../../../../generated/apolloComponents';
-import { Args, Type } from '../../DrawerContainer';
-import { Title, Details, EditDelete } from '../../styles';
-import { formatDate } from '../../../../../../../utils/formatDate';
-import { TableComponent } from '../../../TableComponent';
-import { THREAD_DETAIL_TABLE_HEADERS } from './tableHeaders';
-import { Button } from '../../../../../../../components/Button';
+import * as React from 'react'
+import { Args, Type } from '../../DrawerContainer'
+import { Title, Details, EditDelete } from '../../styles'
+import { formatDate } from '../../../../../../../utils/formatDate'
+import { TableComponent } from '../../../TableComponent'
+import { THREAD_DETAIL_TABLE_HEADERS } from './tableHeaders'
+import { Button } from '../../../../../../../components/Button'
+import { GetThread_threadGet_thread } from '../../../../../../../generated/GetThread'
 
 interface Props {
-  thread: GetThreadThread;
-  getDetail: (args: Args) => void;
-  askForDelete: (args: Args) => void;
+  thread: GetThread_threadGet_thread
+  getDetail: (args: Args) => void
+  askForDelete: (args: Args) => void
 }
 
 export const ThreadContent: React.FC<Props> = ({
   thread: { id, posts, title, owner, createdAt },
   getDetail,
-  askForDelete,
+  askForDelete
 }) => {
   return (
     <React.Fragment>
@@ -25,11 +25,11 @@ export const ThreadContent: React.FC<Props> = ({
         <span>{title}</span>
       </Title>
       <EditDelete>
-        <Button text="Edit" onClick={() => null} marginRight color="primary" />
+        <Button text='Edit' onClick={() => null} marginRight color='primary' />
         <Button
-          text="Delete"
+          text='Delete'
           onClick={() => askForDelete({ id, type: Type.T })}
-          color="red_gradient"
+          color='red_gradient'
         />
       </EditDelete>
       <Details>
@@ -47,9 +47,9 @@ export const ThreadContent: React.FC<Props> = ({
         getDetail={args => getDetail(args)}
         rows={posts.map(({ author, ...rest }) => ({
           username: author.username,
-          ...rest,
+          ...rest
         }))}
       />
     </React.Fragment>
-  );
-};
+  )
+}

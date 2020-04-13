@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getCategories = gql`
+export const GET_CATEGORIES = gql`
   query GetCategories {
     categoryGetAll {
       success
@@ -14,4 +14,4 @@ export const getCategories = gql`
       }
     }
   }
-`;
+`

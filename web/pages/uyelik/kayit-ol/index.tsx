@@ -1,49 +1,41 @@
-import React, { useState } from 'react';
-import Layout from '../../../components/Layout/index';
-import {
-  RegisterComponent,
-  RegisterMutation,
-  RegisterVariables,
-} from '../../../generated/apolloComponents';
-import Router from 'next/router';
-import { MutationFn } from 'react-apollo';
-import { FormValues, RegisterView } from './RegisterView';
+import React, { useState } from 'react'
+import Layout from '../../../components/Layout/index'
+import { useRouter } from 'next/router'
+import { FormValues, RegisterView } from './RegisterView'
+import { useMutation } from 'react-apollo'
+import { REGISTER } from '../../../graphql/mutation/register'
 
-const Register: React.FunctionComponent = () => {
-  const [error, setError] = useState('');
+const Register: React.FC = () => {
+  const [error, setError] = useState('')
+  const router = useRouter()
+  const [register, { data, error: registerError }] = useMutation(REGISTER)
 
   const setErrorMsg = (msg: string) => {
-    setError(msg);
+    setError(msg)
     setTimeout(() => {
-      setError('');
-    }, 3000);
-  };
+      setError('')
+    }, 3000)
+  }
 
-  const onSubmit = (
-    register: MutationFn<RegisterMutation, RegisterVariables>,
-  ) => async (variables: FormValues) => {
+  const onSubmit = async (variables: FormValues) => {
     try {
-      const res = await register({ variables });
-      if (res && res.data && res.data.register.error) {
-        setErrorMsg(res.data.register.error[0].message);
+      const res = await register({ variables })
+      if (res && data && !registerError) {
+        setErrorMsg(res.data.register.error[0].message)
       } else {
-        Router.push('/uyelik/eposta-dogrulama');
+        router.push('/uyelik/eposta-dogrulama')
       }
     } catch (err) {
-      setErrorMsg('Üzgünüz, bir hata oluştu.');
-      console.log(err.graphQLErrors);
+      setErrorMsg('Üzgünüz, bir hata oluştu.')
+      console.log(err.graphQLErrors)
     }
-  };
+  }
 
   return (
-    <Layout title="Üye Ol | Tenis Forum">
-      <RegisterComponent>
-        {register => (
-          <RegisterView onSubmit={onSubmit(register)} error={error} />
-        )}
-      </RegisterComponent>
+    <Layout title='Üye Ol | Tenis Forum'>
+      <RegisterView onSubmit={onSubmit} error={error} />
     </Layout>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

@@ -6,14 +6,13 @@ import { redis } from '../services/redis';
 
 export const middlewares = (express: any) => {
   express.use(
-    new RateLimit({
+    RateLimit({
       store: new RateLimitRedis({
         client: redis,
       }),
       windowMs: 15 * 60 * 1000,
       max: 100,
-    }),
-  );
+    }));
   express.use(cookieParser());
   express.use(helmet());
 };

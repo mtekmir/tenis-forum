@@ -1,24 +1,44 @@
-import * as React from 'react';
-import Layout from '../../components/Layout/index';
-import { GetCategoriesComponent } from '../../generated/apolloComponents';
-import { IndexView } from './IndexView';
+import * as React from 'react'
+import { CategoryTitle, ForumDiv, ForumTitle, CategoryDiv } from './indexStyle'
+import Link from 'next/link'
+import { LatestPosts } from './components/latestPosts/LatestPosts'
+import { useQuery } from 'react-apollo'
+import { GET_CATEGORIES } from '../../graphql/query/getCategories'
+import Layout from '../../components/Layout'
+import { GetCategories } from '../../generated/GetCategories'
 
-const IndexPage: React.FunctionComponent = () => {
+interface Props {}
+
+const Index: React.FunctionComponent<Props> = () => {
+  const { data, loading, error } = useQuery<GetCategories>(GET_CATEGORIES)
+
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
+
+  const renderCategories = () => {
+    return data.categoryGetAll.categories.map(({ id, name, forums }) => (
+      <CategoryDiv key={id}>
+        <CategoryTitle>{name}</CategoryTitle>
+        {forums.map(({ id, name }) => (
+          <ForumDiv key={id}>
+            <ForumTitle>
+              <Link href={`/forum/${id}`}>
+                <a>{name}</a>
+              </Link>
+            </ForumTitle>
+          </ForumDiv>
+        ))}
+      </CategoryDiv>
+    ))
+  }
+
   return (
-    <Layout title="Ana Sayfa | Tenis Forum">
-      <GetCategoriesComponent>
-        {({ data, loading }) => {
-          if (loading) {
-            return <div>Loading...</div>;
-          }
-
-          if (data && data.categoryGetAll && data.categoryGetAll.success) {
-            return <IndexView categories={data.categoryGetAll.categories} />;
-          }
-        }}
-      </GetCategoriesComponent>
+    <Layout title='Anasayfa | Tenis Forum'>
+      {renderCategories()}
+      <LatestPosts />
     </Layout>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default Index

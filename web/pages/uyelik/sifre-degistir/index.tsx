@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
 import Layout from '../../../components/Layout/index';
 import { TextInput } from '../../../components/forms/TextInput';
-import { RequestResetPasswordComponent } from '../../../generated/apolloComponents';
 import Router from 'next/router';
 import { Button } from '../../../components/Button';
+import { useMutation } from 'react-apollo';
+import { REQUEST_RESET_PASSWORD } from '../../../graphql/mutation/requestResetPassword';
 
 const RequestResetPassword: React.FunctionComponent = () => {
+  const [request] = useMutation(REQUEST_RESET_PASSWORD)
   return (
     <Layout title="Şifre Değiştir | Tenis Forum">
-      <RequestResetPasswordComponent>
-        {request => (
           <Formik
             onSubmit={async vals => {
               await request({ variables: vals });
@@ -33,8 +33,6 @@ const RequestResetPassword: React.FunctionComponent = () => {
               </Form>
             )}
           </Formik>
-        )}
-      </RequestResetPasswordComponent>
     </Layout>
   );
 };

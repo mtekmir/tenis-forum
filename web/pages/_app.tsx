@@ -1,33 +1,29 @@
-import App, { Container } from 'next/app';
-import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import withApollo from '../lib/withApollo';
-import { ThemeProvider } from 'styled-components';
-import { theme, GlobalStyles } from '../styles/theme';
-import { MeComponent } from '../generated/apolloComponents';
-import { UserContextProvider } from '../context/userContext';
+import App from 'next/app'
+import React from 'react'
+import { ApolloProvider } from 'react-apollo'
+import withApollo from '../lib/withApollo'
+import { ThemeProvider } from 'styled-components'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
+import { theme, GlobalStyles } from '../styles/theme'
+import { UserContextProvider } from '../context/userContext'
 class MyApp extends App {
-  pageContext: any;
+  pageContext: any
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props as any;
+    const { Component, pageProps, apolloClient } = this.props as any
     return (
-      <Container>
-        <ApolloProvider client={apolloClient}>
-          <MeComponent>
-            {({ data }) => (
-              <UserContextProvider value={{ user: data && data.me }}>
-                <GlobalStyles />
-                <ThemeProvider theme={theme}>
-                  <Component {...pageProps} />
-                </ThemeProvider>
-              </UserContextProvider>
-            )}
-          </MeComponent>
-        </ApolloProvider>
-      </Container>
-    );
+      <ApolloProvider client={apolloClient}>
+        <ApolloHooksProvider client={apolloClient}>
+          <UserContextProvider>
+            <GlobalStyles />
+            <ThemeProvider theme={theme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </UserContextProvider>
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    )
   }
 }
 
-export default withApollo(MyApp);
+export default withApollo(MyApp)

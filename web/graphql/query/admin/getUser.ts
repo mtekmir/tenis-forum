@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getUser = gql`
+export const GET_USER = gql`
   query GetUser($id: String!) {
     userGet(id: $id) {
       id
@@ -18,4 +18,4 @@ export const getUser = gql`
       }
     }
   }
-`;
+`

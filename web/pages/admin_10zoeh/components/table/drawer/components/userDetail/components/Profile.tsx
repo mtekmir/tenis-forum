@@ -1,34 +1,22 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { GetUserUserGet } from '../../../../../../../../generated/apolloComponents';
-import { Title, Details } from '../../../styles';
-import { formatDate } from '../../../../../../../../utils/formatDate';
-import { TiCancel, TiEye } from 'react-icons/ti';
+import * as React from 'react'
+import styled from 'styled-components'
+import { Title, Details } from '../../../styles'
+import { formatDate } from '../../../../../../../../utils/formatDate'
+import { TiCancel, TiEye } from 'react-icons/ti'
+import { GetUser_userGet } from '../../../../../../../../generated/GetUser'
 
 interface Props {
-  data: GetUserUserGet;
+  data: GetUser_userGet
 }
 
 export const Profile: React.FunctionComponent<Props> = ({
-  data: {
-    username,
-    email,
-    createdAt,
-    permissions,
-    password,
-    profile,
-    profileImageUrl,
-  },
+  data: { username, email, createdAt, password, profileImageUrl }
 }) => {
-  const [passVisible, setPassVisible] = React.useState(false);
+  const [passVisible, setPassVisible] = React.useState(false)
 
   const renderPassword = () => {
-    return passVisible ? (
-      <div>{password}</div>
-    ) : (
-      <div>{'#'.repeat(password.length)}</div>
-    );
-  };
+    return passVisible ? <div>{password}</div> : <div>{'#'.repeat(password.length)}</div>
+  }
 
   return (
     <>
@@ -46,7 +34,7 @@ export const Profile: React.FunctionComponent<Props> = ({
       </Details>
       <Password>
         <span>Password</span>
-        <div className="bottom">
+        <div className='bottom'>
           {renderPassword()}
           {passVisible ? (
             <TiCancel onClick={() => setPassVisible(false)} />
@@ -56,8 +44,8 @@ export const Profile: React.FunctionComponent<Props> = ({
         </div>
       </Password>
     </>
-  );
-};
+  )
+}
 
 const Password = styled.div`
   display: flex;
@@ -73,4 +61,4 @@ const Password = styled.div`
     cursor: pointer;
     margin-left: 1em;
   }
-`;
+`

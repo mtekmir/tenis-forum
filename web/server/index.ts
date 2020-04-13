@@ -1,55 +1,45 @@
-import * as next from 'next';
-import * as express from 'express';
+import next from 'next'
+import express from 'express'
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
-const PORT = 4000;
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev }) as any
+const handle = app.getRequestHandler()
+const PORT = 4000
 
 app
   .prepare()
   .then(() => {
-    const server = express();
+    const server = express()
 
     server.get('/uyelik/dogrulama/:token', (req, res) => {
-      const actualPage = '/uyelik/dogrula';
-      const queryParams = { token: req.params.token };
-      app.render(req, res, actualPage, queryParams);
-    });
+      const actualPage = '/uyelik/dogrula'
+      const queryParams = { token: req.params.token }
+      app.render(req, res, actualPage, queryParams)
+    })
 
     server.get('/uyelik/yeni-sifre/:token', (req, res) => {
-      const actualPage = '/uyelik/yeni-sifre';
-      const queryParams = { token: req.params.token };
-      app.render(req, res, actualPage, queryParams);
-    });
-
-    server.get('/forum/:id', (req, res) => {
-      const queryParams = { id: req.params.id };
-      app.render(req, res, '/forum', queryParams);
-    });
+      const actualPage = '/uyelik/yeni-sifre'
+      const queryParams = { token: req.params.token }
+      app.render(req, res, actualPage, queryParams)
+    })
 
     server.get('/forum/:id/baslik/yeni', (req, res) => {
-      const queryParams = { forumId: req.params.id };
-      app.render(req, res, '/baslik/yeni', queryParams);
-    });
-
-    server.get('/baslik/:id', (req, res) => {
-      const queryParams = { id: req.params.id };
-      app.render(req, res, '/baslik', queryParams);
-    });
+      const queryParams = { forumId: req.params.id }
+      app.render(req, res, '/baslik/yeni', queryParams)
+    })
 
     server.get('*', (req, res) => {
-      return handle(req, res);
-    });
+      return handle(req, res)
+    })
 
     server.listen(PORT, (err: any) => {
       if (err) {
-        throw err;
+        throw err
       }
-      console.log(`> Ready on http://localhost://${PORT}`);
-    });
+      console.log(`> Ready on http://localhost://${PORT}`)
+    })
   })
-  .catch(ex => {
-    console.error(ex.stack);
-    process.exit(1);
-  });
+  .catch((ex: any) => {
+    console.error(ex.stack)
+    process.exit(1)
+  })

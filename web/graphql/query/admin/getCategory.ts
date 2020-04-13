@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const getCategory = gql`
+export const GET_CATEGORY = gql`
   query GetCategory($id: Int!, $limit: Int) {
     categoryGet(id: $id, limit: $limit) {
       id
@@ -11,4 +11,4 @@ export const getCategory = gql`
       }
     }
   }
-`;
+`

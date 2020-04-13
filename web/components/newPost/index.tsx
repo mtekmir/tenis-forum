@@ -1,55 +1,20 @@
-import * as React from 'react';
-import {
-  CreatePostComponent,
-  CreatePostMutation,
-  CreatePostVariables,
-} from '../../generated/apolloComponents';
-import { NewPostView } from './NewPostView';
-import { MutationFn } from 'react-apollo';
-import { getThread } from '../../graphql/query/getThread';
+import React from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import { NewPostView } from './NewPostView'
+import { CREATE_POST } from '../../graphql/mutation/createPost'
 
 interface Props {
-  threadId: number;
+  threadId: number
 }
 
-export const NewPostContainer: React.FunctionComponent<Props> = ({
-  threadId,
-}) => {
-  const submit = (
-    mutation: MutationFn<CreatePostMutation, CreatePostVariables>,
-  ) => (text: string) => {
+export const NewPostContainer: React.FunctionComponent<Props> = ({ threadId }) => {
+  const [createPost, { data }] = useMutation(CREATE_POST)
+  const submit = (text: string) => {
     if (!text.trim()) {
-      return;
+      return
     }
-    mutation({ variables: { text, threadId } });
-  };
+    createPost({ variables: { text, threadId } })
+  }
 
-  // const update: MutationUpdaterFn<CreatePostMutation> = (
-  //   cache,
-  //   { data: { postCreate } },
-  // ) => {
-  //   console.log(
-  //     cache.readQuery({ query: getThread, variables: { id: threadId } }),
-  //   );
-  //   const { threadGet } = cache.readQuery({
-  //     query: getThread,
-  //     variables: { id: threadId },
-  //   });
-
-  //   cache.writeQuery({
-  //     query: getThread,
-  //     data: {
-  //       ...threadGet,
-  //       posts: [...threadGet.posts, postCreate],
-  //     },
-  //   });
-  // };
-
-  return (
-    <CreatePostComponent
-      refetchQueries={[{ query: getThread, variables: { id: threadId } }]}
-    >
-      {mutation => <NewPostView onSubmit={submit(mutation)} />}
-    </CreatePostComponent>
-  );
-};
+  return <NewPostView onSubmit={submit} />
+}

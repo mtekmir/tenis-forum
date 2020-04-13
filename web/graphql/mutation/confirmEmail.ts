@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const confirmEmail = gql`
+export const CONFIRM_EMAIL = gql`
   mutation ConfirmEmail($token: String!) {
     confirmUserEmail(token: $token) {
       success
@@ -10,4 +10,4 @@ export const confirmEmail = gql`
       }
     }
   }
-`;
+`

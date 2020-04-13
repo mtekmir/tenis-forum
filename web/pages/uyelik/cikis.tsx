@@ -1,14 +1,22 @@
-import { AppContext } from '../../context/AppContext';
-import { logoutMutation } from '../../graphql/mutation/logout';
-import redirect from '../../lib/redirect';
+import { LOGOUT } from '../../graphql/mutation/logout'
+import { useRouter } from 'next/router'
+import { useMutation, withApollo } from 'react-apollo'
+import { useEffect } from 'react'
+import { ApolloClient } from 'apollo-boost'
 
-const Logout = () => null;
+interface Props {
+  client: ApolloClient<any>
+}
 
-Logout.getInitialProps = async ({ apolloClient, ...ctx }: AppContext) => {
-  await apolloClient.mutate({ mutation: logoutMutation });
-  await apolloClient.resetStore();
-  redirect(ctx, '/');
-  return {};
-};
+const Logout: React.FC<Props> = ({ client }) => {
+  const { replace } = useRouter()
+  const [logout] = useMutation(LOGOUT)
+  useEffect(() => {
+    logout()
+    client.resetStore()
+    replace('/')
+  }, [])
+  return null
+}
 
-export default Logout;
+export default withApollo(Logout)

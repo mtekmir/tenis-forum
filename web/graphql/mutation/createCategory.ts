@@ -1,13 +1,10 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const createCategory = gql`
+export const CREATE_CATEGORY = gql`
   mutation CreateCategory($name: String!) {
     categoryCreate(input: { name: $name }) {
-      error {
-        path
-        message
-      }
-      success
+      id
+      name
     }
   }
-`;
+`

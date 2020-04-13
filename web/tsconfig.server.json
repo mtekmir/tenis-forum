@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": ".next/production-server/",
-    "allowSyntheticDefaultImports": false
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "include": ["server/**/*.ts"]
 }

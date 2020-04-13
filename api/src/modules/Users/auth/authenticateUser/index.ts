@@ -1,37 +1,35 @@
-import Jwt from 'jsonwebtoken';
-import { Request } from 'express';
-import { redis } from '../../../../services/redis';
-import { blacklistedPrefix } from '../../../../constants';
-import { AuthenticationError } from 'apollo-server-core';
-
-const { JWT_KEY } = process.env;
+import Jwt from 'jsonwebtoken'
+import { Request } from 'express'
+import { redis } from '../../../../services/redis'
+import { blacklistedPrefix } from '../../../../constants'
+import { AuthenticationError } from 'apollo-server-core'
 
 export const authenticateUser = async (request: Request) => {
   if (!request) {
-    return null;
+    return null
   }
-  const { token } = request.cookies;
+  const { token } = request.cookies
   if (!token) {
-    return null;
+    return null
   }
-  let userId: string;
+  let userId: string
   try {
-    const decoded: any = Jwt.verify(token, JWT_KEY);
-    userId = decoded.id;
+    const decoded: any = Jwt.verify(token, process.env.JWT_KEY)
+    userId = decoded.id
   } catch (err) {
-    console.log(err);
-    return null;
+    console.log(err)
+    return null
   }
-  const blacklisted = await redis.get(`${blacklistedPrefix}${userId}`);
+  const blacklisted = await redis.get(`${blacklistedPrefix}${userId}`)
   if (blacklisted) {
-    return null;
+    return null
   }
 
-  return userId;
-};
+  return userId
+}
 
 export const isAuthenticated = (userId: string | null) => {
   if (!userId) {
-    throw new AuthenticationError('Unauthorized');
+    throw new AuthenticationError('Unauthorized')
   }
-};
+}

@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { GetCategoryCategoryGet } from '../../../../../../../generated/apolloComponents';
-import { Title } from '../../styles';
-import { Args, Type } from '../../DrawerContainer';
-import { TableComponent } from '../../../TableComponent';
-import { CATEGORY_DETAIL_TABLE_HEADERS } from './tableHeaders';
+import * as React from 'react'
+import { Title } from '../../styles'
+import { Args, Type } from '../../DrawerContainer'
+import { TableComponent } from '../../../TableComponent'
+import { CATEGORY_DETAIL_TABLE_HEADERS } from './tableHeaders'
+import { GetCategory_categoryGet } from '../../../../../../../generated/GetCategory'
 
 interface Props {
-  category: GetCategoryCategoryGet;
-  getDetail: (args: Args) => void;
+  category: GetCategory_categoryGet
+  getDetail: (args: Args) => void
 }
 
 export const CategoryContent: React.FunctionComponent<Props> = ({
   category: { id, forums, name },
-  getDetail,
+  getDetail
 }) => {
   return (
     <div>
@@ -27,5 +27,5 @@ export const CategoryContent: React.FunctionComponent<Props> = ({
         getDetail={getDetail}
       />
     </div>
-  );
-};
+  )
+}

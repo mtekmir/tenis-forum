@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
-export const editUserProfile = gql`
+export const EDIT_USER_PROFILE = gql`
   mutation EditUserProfile(
     $profileImageKey: String
     $username: String
@@ -24,4 +24,4 @@ export const editUserProfile = gql`
       success
     }
   }
-`;
+`
