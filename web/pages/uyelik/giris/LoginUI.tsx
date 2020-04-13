@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { LoginVariables } from '../../../generated/apolloComponents';
-import { validateLogin } from './loginSchema';
-import { Input } from '../components/Input';
-import { ErrorMessage } from './components/ErrorMessage';
-import { FormDiv } from '../components/FormDiv';
-import { FormContainer } from '../components/FormContainer';
-import { Button } from '../components/Button';
+import * as React from 'react'
+import { validateLogin } from './loginSchema'
+import { Input } from '../components/Input'
+import { ErrorMessage } from './components/ErrorMessage'
+import { FormDiv } from '../components/FormDiv'
+import { FormContainer } from '../components/FormContainer'
+import { Button } from '../components/Button'
+import { LoginVariables } from '../../../generated/Login'
 
 interface Props {
-  onSubmit: (input: LoginVariables) => void;
-  error?: string;
+  onSubmit: (input: LoginVariables) => void
+  error?: string
 }
 export class LoginUI extends React.PureComponent<Props> {
   state = {
@@ -18,20 +18,20 @@ export class LoginUI extends React.PureComponent<Props> {
     emailValidated: false,
     emailValid: false,
     passwordValidated: false,
-    passwordValid: false,
-  };
+    passwordValid: false
+  }
 
   onInputChange = ({ target: { name, value } }: React.ChangeEvent<any>) => {
-    this.setState(() => ({ [name]: value }));
-    this.validate(value, name);
+    this.setState(() => ({ [name]: value }))
+    this.validate(value, name)
   }
 
   validate = async (value: string, name: string) => {
-    const valid = await validateLogin[name].isValid(value);
+    const valid = await validateLogin[name].isValid(value)
     this.setState(() => ({
       [`${name}Validated`]: true,
-      [`${name}Valid`]: valid,
-    }));
+      [`${name}Valid`]: valid
+    }))
   }
 
   onSubmit = (e: any) => {
@@ -41,17 +41,16 @@ export class LoginUI extends React.PureComponent<Props> {
       emailValid,
       passwordValid,
       emailValidated,
-      passwordValidated,
-    } = this.state;
+      passwordValidated
+    } = this.state
 
-    e.preventDefault();
-    console.log(emailValidated);
+    e.preventDefault()
     if (!emailValidated || !passwordValidated) {
-      this.validate(email, 'email');
-      this.validate(password, 'password');
+      this.validate(email, 'email')
+      this.validate(password, 'password')
     }
     if (emailValid && passwordValid) {
-      this.props.onSubmit({ email, password });
+      this.props.onSubmit({ email, password })
     }
   }
 
@@ -62,44 +61,40 @@ export class LoginUI extends React.PureComponent<Props> {
       emailValid,
       emailValidated,
       passwordValid,
-      passwordValidated,
-    } = this.state;
-    const { error } = this.props;
+      passwordValidated
+    } = this.state
+    const { error } = this.props
     return (
       <FormContainer>
         <FormDiv>
           <form onSubmit={this.onSubmit}>
             <Input
-              onBlur={({ target: { value, name } }: any) =>
-                this.validate(value, name)
-              }
+              onBlur={({ target: { value, name } }: any) => this.validate(value, name)}
               valid={emailValid}
               validated={emailValidated}
               value={email}
-              placeholder="Email"
-              name="email"
+              placeholder='Email'
+              name='email'
               onChange={this.onInputChange}
-              type="text"
+              type='text'
             />
             <Input
-              onBlur={({ target: { value, name } }: any) =>
-                this.validate(value, name)
-              }
+              onBlur={({ target: { value, name } }: any) => this.validate(value, name)}
               valid={passwordValid}
               validated={passwordValidated}
               value={password}
-              name="password"
-              placeholder="Şifre"
+              name='password'
+              placeholder='Şifre'
               onChange={this.onInputChange}
-              type="password"
+              type='password'
             />
             <ErrorMessage error={error} />
-            <Button type="submit" error={error}>
+            <Button type='submit' error={error}>
               Giriş Yap
             </Button>
           </form>
         </FormDiv>
       </FormContainer>
-    );
+    )
   }
 }

@@ -10,13 +10,11 @@ import { context } from './context'
 import { middlewares } from './middlewares'
 import { reportErrors } from './utils/errors'
 import { corsOptions } from './options'
-// import { createFakeData } from './services/fakeData'
 
 dotenv.config({ path: __dirname + '/../config/dev.env' })
 const { PORT, CONN_TYPE } = process.env
 ;(async () => {
   await createDbConnection(CONN_TYPE)
-  // await createFakeData()
 })()
 
 const server = new ApolloServer({

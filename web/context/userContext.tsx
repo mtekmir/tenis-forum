@@ -13,8 +13,10 @@ export const UserContext = React.createContext<UserContext>({
 })
 
 export const UserContextProvider: React.FC = ({ children }) => {
-  const { data } = useQuery<Me>(ME_QUERY)
-
+  const { data, loading } = useQuery<Me>(ME_QUERY)
+  if (loading) {
+    return null
+  }
   return (
     <UserContext.Provider value={{ user: data && data.me }}>{children}</UserContext.Provider>
   )

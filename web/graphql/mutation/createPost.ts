@@ -7,6 +7,7 @@ export const CREATE_POST = gql`
       text
       createdAt
       author {
+        id
         username
         profileImageUrl
       }

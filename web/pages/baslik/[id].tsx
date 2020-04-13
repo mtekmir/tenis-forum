@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { PostsDiv, UserDiv, UserDivDate, ThreadTitle } from './threadStyle'
 import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import Layout from '../../components/Layout'
-import { Post } from './post'
+import { Post } from './components/post'
 import { format } from 'date-fns'
-import { NewPostContainer } from '../../components/newPost'
+import { NewPost } from './components/newPost'
 import { Pagination } from '../../components/pagination'
 import { Paper } from '../../components/Paper'
 import { useQuery } from 'react-apollo'
@@ -77,7 +77,7 @@ const Thread: React.FunctionComponent<Props> = () => {
       <PostsDiv>
         <Pagination count={posts.length} getRows={offset => handleFetchMore(offset)} />
         {renderPosts()}
-        <NewPostContainer threadId={rest.id} />
+        <NewPost threadId={rest.id} />
       </PostsDiv>
     </Layout>
   )

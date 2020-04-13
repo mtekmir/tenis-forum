@@ -9,6 +9,7 @@
 
 export interface createPost_postCreate_author {
   __typename: "User";
+  id: string;
   username: string;
   profileImageUrl: string | null;
 }

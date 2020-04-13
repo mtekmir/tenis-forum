@@ -25,16 +25,17 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
     variables: EditUserProfileVariables,
     profileImage: File | null
   ) => {
+    console.log(variables)
     if (Object.keys(variables).length || profileImage) {
       if (profileImage) {
         const {
-          data: { getUploadUrl }
+          data: { getUploadUrl },
         } = await client.query({
           query: getUploadUrlQuery,
           variables: {
             contentType: profileImage.type,
-            extention: profileImage.name.split('.')[1]
-          }
+            extention: profileImage.name.split('.')[1],
+          },
         })
 
         await axios.put(getUploadUrl.uploadUrl, profileImage)
@@ -45,7 +46,7 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
   }
 
   return (
-    <ApolloConsumer>{client => <HesabimView onSubmit={onSubmit(client)} />}</ApolloConsumer>
+    <ApolloConsumer>{(client) => <HesabimView onSubmit={onSubmit(client)} />}</ApolloConsumer>
   )
 }
 

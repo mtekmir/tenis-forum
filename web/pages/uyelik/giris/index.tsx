@@ -1,32 +1,28 @@
 import * as React from 'react'
 import Layout from '../../../components/Layout'
 import { LOGIN } from '../../../graphql/mutation/login'
-import { useMutation } from 'react-apollo'
+import { useMutation, useQuery, useApolloClient } from 'react-apollo'
 import Router from 'next/router'
 import { LoginUI } from './LoginUI'
 import { ME_QUERY } from '../../../graphql/query/meQuery'
-
-export interface LoginVariables {
-  email: string
-  password: string
-}
+import { LoginVariables, Login } from '../../../generated/Login'
 
 const LoginContainer: React.FunctionComponent = () => {
   const [error, setError] = React.useState('')
-  const [login, { data, error: loginError, loading }] = useMutation(LOGIN, {
-    refetchQueries: [{ query: ME_QUERY }]
-  })
+  const client = useApolloClient()
+  const [login, { loading }] = useMutation<Login, LoginVariables>(LOGIN)
   const onSubmit = async (variables: LoginVariables) => {
     try {
       const response = await login({
         variables
       })
-      if (!loading && data && !loginError) {
+      if (!loading && response.data && response.data.login.error) {
         setError(response.data.login.error[0].message)
         setTimeout(() => {
           setError('')
         }, 3000)
       } else {
+        await client.query({ query: ME_QUERY })
         Router.push('/')
       }
     } catch (err) {

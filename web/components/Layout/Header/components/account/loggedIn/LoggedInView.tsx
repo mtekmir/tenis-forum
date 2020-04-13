@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
-import { TiUser } from 'react-icons/ti';
-import { UserPopoverDiv, UserPopoverItem } from './components/UserPopover';
-import { LoggedInDiv } from './styles';
-import {
-  MeMe,
-  UserPermissions,
-} from '../../../../../../generated/apolloComponents';
-import { ADMIN_MENU_ITEMS, USER_MENU_ITEMS } from './loggedInMenuItems';
+import React, { useState } from 'react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { TiUser } from 'react-icons/ti'
+import { UserPopoverDiv, UserPopoverItem } from './components/UserPopover'
+import { LoggedInDiv } from './styles'
+import { ADMIN_MENU_ITEMS, USER_MENU_ITEMS } from './loggedInMenuItems'
+import { Me_me } from '../../../../../../generated/Me'
+import { UserPermissions } from '../../../../../../generated/globalTypes'
 
 interface Props {
-  me: MeMe;
+  me: Me_me
 }
 
 export const LoggedInView: React.FC<Props> = ({ me }) => {
-  const [popoverOpen, togglePopover] = useState(false);
+  const [popoverOpen, togglePopover] = useState(false)
 
   const handleTogglePopover = (state: boolean) => {
-    togglePopover(state);
-  };
+    togglePopover(state)
+  }
 
   const renderMenu = () => {
-    const menuItems = me.permissions.includes(UserPermissions.Admin)
+    const menuItems = me.permissions.includes(UserPermissions.ADMIN)
       ? ADMIN_MENU_ITEMS
-      : USER_MENU_ITEMS;
+      : USER_MENU_ITEMS
 
     return menuItems.map(({ label, url }) => (
       <UserPopoverItem
@@ -32,8 +30,8 @@ export const LoggedInView: React.FC<Props> = ({ me }) => {
         url={url}
         onClose={() => togglePopover(false)}
       />
-    ));
-  };
+    ))
+  }
 
   return (
     <LoggedInDiv>
@@ -42,5 +40,5 @@ export const LoggedInView: React.FC<Props> = ({ me }) => {
         <UserPopoverDiv open={popoverOpen}>{renderMenu()}</UserPopoverDiv>
       </OutsideClickHandler>
     </LoggedInDiv>
-  );
-};
+  )
+}

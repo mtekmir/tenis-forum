@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const FormDiv = styled.div<{ error?: boolean }>`
   position: relative;
@@ -53,7 +53,7 @@ export const FormDiv = styled.div<{ error?: boolean }>`
 
   @media (${({ theme }) => theme.breakpoints.laptop}) {
     width: 40%;
-    height: 30em;
+    height: 25em;
     ${({ error }) =>
       error &&
       `
@@ -64,4 +64,4 @@ export const FormDiv = styled.div<{ error?: boolean }>`
   @media (${({ theme }) => theme.breakpoints.desktop}) {
     width: 30%;
   }
-`;
+`

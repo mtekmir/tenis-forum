@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import Layout from '../../../components/Layout/index'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import { FormValues, RegisterView } from './RegisterView'
 import { useMutation } from 'react-apollo'
 import { REGISTER } from '../../../graphql/mutation/register'
+import { Register as IRegister, RegisterVariables } from '../../../generated/Register'
 
 const Register: React.FC = () => {
   const [error, setError] = useState('')
-  const router = useRouter()
-  const [register, { data, error: registerError }] = useMutation(REGISTER)
+  const [register, { data, error: registerError }] = useMutation<IRegister, RegisterVariables>(
+    REGISTER
+  )
 
   const setErrorMsg = (msg: string) => {
     setError(msg)
@@ -20,12 +22,13 @@ const Register: React.FC = () => {
   const onSubmit = async (variables: FormValues) => {
     try {
       const res = await register({ variables })
-      if (res && data && !registerError) {
+      if (res && res.data && res.data.register.error) {
         setErrorMsg(res.data.register.error[0].message)
       } else {
-        router.push('/uyelik/eposta-dogrulama')
+        Router.push('/uyelik/eposta-dogrulama')
       }
     } catch (err) {
+      console.log(err)
       setErrorMsg('Üzgünüz, bir hata oluştu.')
       console.log(err.graphQLErrors)
     }
