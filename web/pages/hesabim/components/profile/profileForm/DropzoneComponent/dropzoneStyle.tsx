@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const DropzoneDiv = styled.div`
   :focus {
@@ -9,23 +9,21 @@ export const DropzoneDiv = styled.div`
     height: 7em;
   }
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 1.7em;
-    height: 1.7em;
+    width: 7em;
+    height: 7em;
   }
-`;
+`
 
 export const DropzoneHoverContentDiv = styled.div<{
-  dropzoneHover: boolean;
-  imageUrl: string;
+  dropzoneHover: boolean
+  imageUrl: string
 }>`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   background-image: ${({ dropzoneHover }) =>
-      dropzoneHover
-        ? 'linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),'
-        : ''}
+      dropzoneHover ? 'linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),' : ''}
     url(${({ imageUrl }) => imageUrl});
   background-size: 7em 7em;
 
@@ -34,13 +32,13 @@ export const DropzoneHoverContentDiv = styled.div<{
     height: 7em;
   }
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 1.7em;
-    height: 1.7em;
+    width: 7em;
+    height: 7em;
   }
   :hover {
     box-shadow: 0px 0px 0px 5px #1d9bd1 inset;
   }
-`;
+`
 
 export const DropzoneHoverInnerDiv = styled.div<{ dropzoneHover: boolean }>`
   display: flex;
@@ -75,4 +73,4 @@ export const DropzoneHoverInnerDiv = styled.div<{ dropzoneHover: boolean }>`
     color: white;
     font-size: 0.8em;
   }
-`;
+`

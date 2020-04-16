@@ -6,6 +6,10 @@ import { getUploadUrlQuery } from '../../graphql/query/getUploadUrl'
 import { HesabimView } from './HesabimView'
 import { EDIT_USER_PROFILE } from '../../graphql/mutation/editUserProfile'
 import { EditUserProfile } from '../../generated/EditUserProfile'
+import {
+  GetUploadUrlQuery,
+  GetUploadUrlQueryVariables,
+} from '../../generated/GetUploadUrlQuery'
 
 interface Props {}
 
@@ -30,7 +34,7 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
       if (profileImage) {
         const {
           data: { getUploadUrl },
-        } = await client.query({
+        } = await client.query<GetUploadUrlQuery, GetUploadUrlQueryVariables>({
           query: getUploadUrlQuery,
           variables: {
             contentType: profileImage.type,
@@ -46,7 +50,7 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
   }
 
   return (
-    <ApolloConsumer>{(client) => <HesabimView onSubmit={onSubmit(client)} />}</ApolloConsumer>
+    <ApolloConsumer>{client => <HesabimView onSubmit={onSubmit(client)} />}</ApolloConsumer>
   )
 }
 

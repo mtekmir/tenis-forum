@@ -24,7 +24,7 @@ const server = new ApolloServer({
   formatError: (err: ApolloError) => {
     reportErrors(err)
     return err
-  }
+  },
 })
 const app = Express()
 middlewares(app)

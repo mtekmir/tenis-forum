@@ -34,7 +34,7 @@
     "graphql-codegen-typescript-server": "^0.18.2",
     "graphql-request": "^1.8.2",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.3",
     "ts-jest": "^23.10.5",
     "ts-node": "7.0.1",
     "tslint": "^5.13.1",
@@ -80,6 +80,6 @@
     "test": "yarn run test-db:setup && jest --watchAll --runInBand",
     "start": "ts-node src/index.ts",
     "generate": "gql-gen",
-    "dev": "nodemon --exec ts-node --files src/index.ts"
+    "dev": "nodemon --exec ts-node --files src/index.ts TS_NODE_FILES=true"
   }
 }
