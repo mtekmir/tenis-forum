@@ -20,5 +20,5 @@ export interface GetUploadUrlQuery {
 
 export interface GetUploadUrlQueryVariables {
   contentType: string;
-  extention: string;
+  extension: string;
 }

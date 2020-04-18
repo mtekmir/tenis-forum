@@ -1,11 +1,11 @@
 /* tslint:disable */
-// Generated in 2020-04-13T12:45:34+02:00
+// Generated in 2020-04-18T11:14:17+02:00
 export type Maybe<T> = T | null;
 
 export interface GetUploadUrlInput {
   contentType?: Maybe<string>;
 
-  extention?: Maybe<string>;
+  extension?: Maybe<string>;
 }
 
 export interface PostGetAllInput {

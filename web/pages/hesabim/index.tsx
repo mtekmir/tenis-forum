@@ -29,7 +29,6 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
     variables: EditUserProfileVariables,
     profileImage: File | null
   ) => {
-    console.log(variables)
     if (Object.keys(variables).length || profileImage) {
       if (profileImage) {
         const {
@@ -38,7 +37,7 @@ const ProfileContainer: React.FunctionComponent<Props> = ({}) => {
           query: getUploadUrlQuery,
           variables: {
             contentType: profileImage.type,
-            extention: profileImage.name.split('.')[1],
+            extension: profileImage.name.split('.')[1],
           },
         })
 

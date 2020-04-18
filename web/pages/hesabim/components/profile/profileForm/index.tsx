@@ -12,13 +12,10 @@ interface Props {
   user: Me_me | null | undefined
   onSubmit: (v: FormValues) => void
   dropzoneHover: boolean
-  file: IFile | null
+  file: File | null
+  preview: string | null
   onDropzoneHover: () => void
   onDrop: (files: File[]) => void
-}
-
-export interface IFile extends File {
-  preview: string
 }
 
 export interface FormValues {
@@ -35,16 +32,17 @@ export const ProfileForm: React.ComponentType<Props> = ({
   }
 
   const {
-    profile: { gender, location, occupation }
+    profile: { gender, location, occupation },
   } = user
   const initialValues = {
     username: user.username ? user.username : '',
     gender: gender ? gender : '',
     location: location ? location : '',
-    occupation: occupation ? occupation : ''
+    occupation: occupation ? occupation : '',
   }
 
   const handleSubmit = (v: FormValues) => {
+    console.log(v)
     const variables = {}
     Object.keys(v).forEach(k => {
       // @ts-ignore
@@ -78,7 +76,7 @@ export const ProfileForm: React.ComponentType<Props> = ({
   return (
     <div>
       <Formik<FormValues> initialValues={initialValues} onSubmit={v => handleSubmit(v)}>
-        {() => (
+        {({ handleSubmit }) => (
           <Form>
             <div>
               <FormDiv>
@@ -91,7 +89,12 @@ export const ProfileForm: React.ComponentType<Props> = ({
             </div>
             <BottomDiv>
               <Button text='İptal' url='/' color='red_gradient' marginRight />
-              <Button type='submit' text='Kaydet' color='green_gradient' />
+              <Button
+                type='submit'
+                text='Kaydet'
+                color='green_gradient'
+                onClick={handleSubmit}
+              />
             </BottomDiv>
           </Form>
         )}

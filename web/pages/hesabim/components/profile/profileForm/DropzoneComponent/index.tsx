@@ -2,13 +2,12 @@ import * as React from 'react'
 import Dropzone from 'react-dropzone'
 import { DropzoneHoverContentDiv, DropzoneDiv, DropzoneHoverInnerDiv } from './dropzoneStyle'
 import { TiCamera } from 'react-icons/ti'
-import { IFile } from '../../profileView'
 import { Me_me } from '../../../../../../generated/Me'
 
 interface Props {
   user: Me_me | null | undefined
   dropzoneHover: boolean
-  file: IFile | null
+  preview: string | null
   onDropzoneHover: () => void
   onDrop: (files: File[]) => void
 }
@@ -17,8 +16,8 @@ export const DropzoneComponent: React.FunctionComponent<Props> = ({
   dropzoneHover,
   onDrop,
   onDropzoneHover,
-  file,
-  user
+  preview,
+  user,
 }) => {
   return (
     <Dropzone accept='image/jpeg, image/png' multiple={false} onDrop={onDrop}>
@@ -30,7 +29,7 @@ export const DropzoneComponent: React.FunctionComponent<Props> = ({
             {...getRootProps()}>
             <input {...getInputProps()} />
             <DropzoneHoverContentDiv
-              imageUrl={file ? file.preview : user.profileImageUrl}
+              imageUrl={preview || user.profileImageUrl}
               dropzoneHover={dropzoneHover}>
               <DropzoneHoverInnerDiv dropzoneHover={dropzoneHover}>
                 <TiCamera />

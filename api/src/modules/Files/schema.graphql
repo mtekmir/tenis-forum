@@ -2,7 +2,7 @@ scalar Upload
 
 input GetUploadUrlInput {
   contentType: String
-  extention: String
+  extension: String
 }
 
 type Query {

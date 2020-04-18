@@ -1,21 +1,18 @@
-import * as React from 'react';
-import { format } from 'date-fns';
-import { PostDiv } from './components/PostDiv';
-import { ProfileImage } from './components/ProfileImage';
-import { UserDiv } from './components/UserDiv';
-import {
-  PostContent,
-  PostContentTopDiv,
-  Divider,
-} from './components/PostContent';
+import * as React from 'react'
+import dompurify from 'dompurify'
+import { format } from 'date-fns'
+import { PostDiv } from './components/PostDiv'
+import { ProfileImage } from './components/ProfileImage'
+import { UserDiv } from './components/UserDiv'
+import { PostContent, PostContentTopDiv, Divider } from './components/PostContent'
 
 interface Props {
-  index: number;
-  username: string;
-  text: string;
-  createdAt: Date;
-  profileImageUrl: string;
-  id: number;
+  index: number
+  username: string
+  text: string
+  createdAt: Date
+  profileImageUrl: string
+  id: number
 }
 
 export const Post: React.FunctionComponent<Props> = ({
@@ -26,6 +23,7 @@ export const Post: React.FunctionComponent<Props> = ({
   index,
   id,
 }) => {
+  const sanitizer = dompurify.sanitize
   return (
     <PostDiv id={id.toString()}>
       <UserDiv>
@@ -38,8 +36,10 @@ export const Post: React.FunctionComponent<Props> = ({
           <span># {index}</span>
         </PostContentTopDiv>
         <Divider />
-        <span>{text}</span>
+        <span
+          dangerouslySetInnerHTML={{ __html: sanitizer(text).replace(/(")(.*)(")/, '$2') }}
+        />
       </PostContent>
     </PostDiv>
-  );
-};
+  )
+}

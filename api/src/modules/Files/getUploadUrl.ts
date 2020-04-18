@@ -11,16 +11,16 @@ const s3 = new S3({
 
 export const getUploadUrl: QueryResolvers.GetUploadUrlResolver = async (
   _,
-  { input: { contentType, extention } },
+  { input: { contentType, extension } },
   { userId }
 ) => {
   const imageId = v1()
-  const uploadKey = `${userId}/${imageId}.${extention}`
+  const uploadKey = `${userId}/${imageId}.${extension}`
   const uploadUrl: string = await new Promise((resolve, reject) => {
     s3.getSignedUrl(
       'putObject',
       {
-        Bucket: 'tenis-forum',
+        Bucket: 'tenis-forum-dev',
         ContentType: contentType,
         Key: uploadKey,
       },

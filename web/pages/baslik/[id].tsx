@@ -16,11 +16,11 @@ interface Props {}
 
 const Thread: React.FunctionComponent<Props> = () => {
   const {
-    query: { id }
+    query: { id },
   } = useRouter()
 
   const { data, loading, fetchMore } = useQuery<GetThread, GetThreadVariables>(GET_THREAD, {
-    variables: { id: id as string }
+    variables: { id: id as string },
   })
 
   if (loading) {
@@ -29,8 +29,9 @@ const Thread: React.FunctionComponent<Props> = () => {
 
   const {
     threadGet: {
-      thread: { title, owner, posts, ...rest }
-    }
+      thread: { title, owner, posts, ...rest },
+      postCount,
+    },
   } = data
 
   const renderPosts = () => {
@@ -56,7 +57,7 @@ const Thread: React.FunctionComponent<Props> = () => {
         }
 
         return fetchMoreResult
-      }
+      },
     })
   }
 
@@ -75,7 +76,7 @@ const Thread: React.FunctionComponent<Props> = () => {
         </UserDiv>
       </Paper>
       <PostsDiv>
-        <Pagination count={posts.length} getRows={offset => handleFetchMore(offset)} />
+        <Pagination count={postCount} getRows={offset => handleFetchMore(offset)} />
         {renderPosts()}
         <NewPost threadId={rest.id} />
       </PostsDiv>
