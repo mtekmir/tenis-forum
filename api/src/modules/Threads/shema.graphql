@@ -7,7 +7,6 @@ type Thread {
   forum: Forum!
   originalPost: Post!
   createdAt: Date!
-  posts: [Post!]!
   title: String!
   owner: ThreadOwner!
 }

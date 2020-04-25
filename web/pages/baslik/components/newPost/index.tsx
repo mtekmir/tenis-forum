@@ -7,8 +7,8 @@ import { Button } from '../../../../components/Button'
 import { useMutation } from 'react-apollo'
 import { createPost, createPostVariables } from '../../../../generated/createPost'
 import { CREATE_POST } from '../../../../graphql/mutation/createPost'
-import { GET_THREAD } from '../../../../graphql/query/getThread'
-import { GetThread, GetThreadVariables } from '../../../../generated/GetThread'
+import { GET_THREAD_POSTS } from '../../../../graphql/query/getThreadPosts'
+import { GetThreadPosts, GetThreadPostsVariables } from '../../../../generated/GetThreadPosts'
 
 // Used in thread detail page
 
@@ -29,25 +29,22 @@ export const NewPost: React.FC<Props> = ({ threadId }) => {
     createPost({
       variables: { text, threadId },
       update(cache, { data: { postCreate } }) {
-        const { threadGet } = cache.readQuery<GetThread, GetThreadVariables>({
-          query: GET_THREAD,
-          variables: { id: threadId.toString() }
+        const { threadGetPosts } = cache.readQuery<GetThreadPosts, GetThreadPostsVariables>({
+          query: GET_THREAD_POSTS,
+          variables: { threadId: threadId.toString() },
         })
-        cache.writeQuery<GetThread>({
-          query: GET_THREAD,
+        cache.writeQuery<GetThreadPosts>({
+          query: GET_THREAD_POSTS,
           variables: { id: threadId.toString() },
           data: {
-            threadGet: {
-              ...threadGet,
-              postCount: threadGet.postCount + 1,
-              thread: {
-                ...threadGet.thread,
-                posts: [...threadGet.thread.posts, { ...postCreate }]
-              }
-            }
-          }
+            threadGetPosts: {
+              ...threadGetPosts,
+              count: threadGetPosts.count + 1,
+              posts: [...threadGetPosts.posts, { ...postCreate }],
+            },
+          },
         })
-      }
+      },
     })
     setEditorState(EditorState.createEmpty())
   }

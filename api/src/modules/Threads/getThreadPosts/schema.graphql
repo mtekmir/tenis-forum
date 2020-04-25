@@ -1,0 +1,13 @@
+type Query {
+  threadGetPosts(input: GetThreadPostsInput!): GetThreadPostsResponse!
+}
+
+input GetThreadPostsInput {
+  threadId: String!
+  page: Int
+}
+
+type GetThreadPostsResponse {
+  posts: [Post]!
+  count: Int!
+}

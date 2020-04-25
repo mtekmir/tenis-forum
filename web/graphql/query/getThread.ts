@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const GET_THREAD = gql`
-  query GetThread($id: String!, $offset: Int, $limit: Int) {
-    threadGet(input: { id: $id, offset: $offset, limit: $limit }) {
+  query GetThread($id: String!) {
+    threadGet(input: { id: $id }) {
       thread {
         id
         title
@@ -10,18 +10,7 @@ export const GET_THREAD = gql`
         owner {
           username
         }
-        posts {
-          id
-          text
-          createdAt
-          author {
-            id
-            username
-            profileImageUrl
-          }
-        }
       }
-      postCount
     }
   }
 `

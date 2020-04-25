@@ -11,28 +11,40 @@ import { useQuery } from 'react-apollo'
 import { GET_THREAD } from '../../graphql/query/getThread'
 import { useRouter } from 'next/router'
 import { GetThread, GetThreadVariables } from '../../generated/GetThread'
+import { GetThreadPosts, GetThreadPostsVariables } from '../../generated/GetThreadPosts'
+import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
 
 interface Props {}
 
 const Thread: React.FunctionComponent<Props> = () => {
-  const {
-    query: { id },
-  } = useRouter()
+  const router = useRouter()
 
-  const { data, loading, fetchMore } = useQuery<GetThread, GetThreadVariables>(GET_THREAD, {
-    variables: { id: id as string },
+  const { data: threadRes, loading: tLoading } = useQuery<GetThread, GetThreadVariables>(
+    GET_THREAD,
+    {
+      variables: { id: router.query.id as string },
+    }
+  )
+
+  const { data: postsRes, loading: pLoading, fetchMore } = useQuery<
+    GetThreadPosts,
+    GetThreadPostsVariables
+  >(GET_THREAD_POSTS, {
+    variables: { threadId: router.query.id as string, page: 1 },
   })
 
-  if (loading) {
+  if (tLoading || pLoading) {
     return <div>Loading</div>
   }
-
+  console.log(threadRes)
   const {
     threadGet: {
-      thread: { title, owner, posts, ...rest },
-      postCount,
+      thread: { title, owner, ...rest },
     },
-  } = data
+  } = threadRes
+  const {
+    threadGetPosts: { posts, count },
+  } = postsRes
 
   const renderPosts = () => {
     return posts.map(({ author, text, id, createdAt }, idx) => (
@@ -42,15 +54,17 @@ const Thread: React.FunctionComponent<Props> = () => {
         createdAt={createdAt}
         text={text}
         key={id}
-        index={idx + 2}
+        index={idx + 1}
         id={id}
       />
     ))
   }
 
   const handleFetchMore = (offset: number) => {
+    console.log(offset)
     fetchMore({
-      variables: { id: rest.id, offset },
+      variables: { threadId: rest.id.toString(), page: 2 },
+      // TODO: Fix pagination
       updateQuery: (prevRes, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return prevRes
@@ -76,7 +90,7 @@ const Thread: React.FunctionComponent<Props> = () => {
         </UserDiv>
       </Paper>
       <PostsDiv>
-        <Pagination count={postCount} getRows={offset => handleFetchMore(offset)} />
+        <Pagination count={count} getRows={offset => handleFetchMore(offset)} />
         {renderPosts()}
         <NewPost threadId={rest.id} />
       </PostsDiv>

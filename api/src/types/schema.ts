@@ -1,5 +1,5 @@
 /* tslint:disable */
-// Generated in 2020-04-18T11:14:17+02:00
+// Generated in 2020-04-25T10:55:31+02:00
 export type Maybe<T> = T | null;
 
 export interface GetUploadUrlInput {
@@ -30,10 +30,12 @@ export interface ThreadGetAllInput {
 
 export interface GetThreadInput {
   id: string;
+}
 
-  offset?: Maybe<number>;
+export interface GetThreadPostsInput {
+  threadId: string;
 
-  limit?: Maybe<number>;
+  page?: Maybe<number>;
 }
 
 export interface LoginInput {
@@ -96,14 +98,14 @@ export interface EditUserProfileInput {
   gender?: Maybe<Gender>;
 }
 
-export enum UserPermissions {
-  Admin = "ADMIN",
-  User = "USER"
-}
-
 export enum FilterBy {
   User = "USER",
   Thread = "THREAD"
+}
+
+export enum UserPermissions {
+  Admin = "ADMIN",
+  User = "USER"
 }
 
 export enum Gender {
@@ -148,6 +150,8 @@ export interface Query {
   threadGetAll: ThreadGetAllResponse;
 
   threadGet: GetThreadResponse;
+
+  threadGetPosts: GetThreadPostsResponse;
 
   me?: Maybe<User>;
 
@@ -205,8 +209,6 @@ export interface Thread {
 
   createdAt: Date;
 
-  posts: Post[];
-
   title: string;
 
   owner: ThreadOwner;
@@ -219,33 +221,17 @@ export interface Post {
 
   createdAt: Date;
 
-  author: User;
+  author: PostAuthor;
 
   thread: Thread;
 }
 
-export interface User {
+export interface PostAuthor {
   id: string;
 
   username: string;
 
-  email: string;
-
-  permissions: UserPermissions[];
-
   profileImageUrl?: Maybe<string>;
-
-  profile?: Maybe<UserProfile>;
-}
-
-export interface UserProfile {
-  id: number;
-
-  location?: Maybe<string>;
-
-  gender: string;
-
-  occupation?: Maybe<string>;
 }
 
 export interface ThreadOwner {
@@ -336,8 +322,36 @@ export interface ThreadInfo {
 
 export interface GetThreadResponse {
   thread: Thread;
+}
 
-  postCount: number;
+export interface GetThreadPostsResponse {
+  posts: (Maybe<Post>)[];
+
+  count: number;
+}
+
+export interface User {
+  id: string;
+
+  username: string;
+
+  email: string;
+
+  permissions: UserPermissions[];
+
+  profileImageUrl?: Maybe<string>;
+
+  profile?: Maybe<UserProfile>;
+}
+
+export interface UserProfile {
+  id: number;
+
+  location?: Maybe<string>;
+
+  gender: string;
+
+  occupation?: Maybe<string>;
 }
 
 export interface UserGetAllResponse {
@@ -470,6 +484,9 @@ export interface ThreadGetAllQueryArgs {
 }
 export interface ThreadGetQueryArgs {
   input: GetThreadInput;
+}
+export interface ThreadGetPostsQueryArgs {
+  input: GetThreadPostsInput;
 }
 export interface UserGetQueryArgs {
   id: string;
@@ -628,6 +645,12 @@ export namespace QueryResolvers {
 
     threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, TContext>;
 
+    threadGetPosts?: ThreadGetPostsResolver<
+      GetThreadPostsResponse,
+      TypeParent,
+      TContext
+    >;
+
     me?: MeResolver<Maybe<User>, TypeParent, TContext>;
 
     userGetAll?: UserGetAllResolver<UserGetAllResponse, TypeParent, TContext>;
@@ -724,6 +747,15 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, TContext, ThreadGetArgs>;
   export interface ThreadGetArgs {
     input: GetThreadInput;
+  }
+
+  export type ThreadGetPostsResolver<
+    R = GetThreadPostsResponse,
+    Parent = {},
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, ThreadGetPostsArgs>;
+  export interface ThreadGetPostsArgs {
+    input: GetThreadPostsInput;
   }
 
   export type MeResolver<
@@ -896,8 +928,6 @@ export namespace ThreadResolvers {
 
     createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    posts?: PostsResolver<Post[], TypeParent, TContext>;
-
     title?: TitleResolver<string, TypeParent, TContext>;
 
     owner?: OwnerResolver<ThreadOwner, TypeParent, TContext>;
@@ -923,11 +953,6 @@ export namespace ThreadResolvers {
     Parent = Thread,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type PostsResolver<
-    R = Post[],
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
   export type TitleResolver<
     R = string,
     Parent = Thread,
@@ -948,7 +973,7 @@ export namespace PostResolvers {
 
     createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
 
-    author?: AuthorResolver<User, TypeParent, TContext>;
+    author?: AuthorResolver<PostAuthor, TypeParent, TContext>;
 
     thread?: ThreadResolver<Thread, TypeParent, TContext>;
   }
@@ -969,7 +994,7 @@ export namespace PostResolvers {
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type AuthorResolver<
-    R = User,
+    R = PostAuthor,
     Parent = Post,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -980,86 +1005,32 @@ export namespace PostResolvers {
   > = Resolver<R, Parent, TContext>;
 }
 
-export namespace UserResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = User> {
+export namespace PostAuthorResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = PostAuthor> {
     id?: IdResolver<string, TypeParent, TContext>;
 
     username?: UsernameResolver<string, TypeParent, TContext>;
-
-    email?: EmailResolver<string, TypeParent, TContext>;
-
-    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
 
     profileImageUrl?: ProfileImageUrlResolver<
       Maybe<string>,
       TypeParent,
       TContext
     >;
-
-    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
   }
 
   export type IdResolver<
     R = string,
-    Parent = User,
+    Parent = PostAuthor,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type UsernameResolver<
     R = string,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type EmailResolver<
-    R = string,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PermissionsResolver<
-    R = UserPermissions[],
-    Parent = User,
+    Parent = PostAuthor,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type ProfileImageUrlResolver<
     R = Maybe<string>,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileResolver<
-    R = Maybe<UserProfile>,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserProfileResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = UserProfile> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    location?: LocationResolver<Maybe<string>, TypeParent, TContext>;
-
-    gender?: GenderResolver<string, TypeParent, TContext>;
-
-    occupation?: OccupationResolver<Maybe<string>, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type LocationResolver<
-    R = Maybe<string>,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type GenderResolver<
-    R = string,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type OccupationResolver<
-    R = Maybe<string>,
-    Parent = UserProfile,
+    Parent = PostAuthor,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
 }
@@ -1367,8 +1338,6 @@ export namespace GetThreadResponseResolvers {
     TypeParent = GetThreadResponse
   > {
     thread?: ThreadResolver<Thread, TypeParent, TContext>;
-
-    postCount?: PostCountResolver<number, TypeParent, TContext>;
   }
 
   export type ThreadResolver<
@@ -1376,9 +1345,110 @@ export namespace GetThreadResponseResolvers {
     Parent = GetThreadResponse,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type PostCountResolver<
+}
+
+export namespace GetThreadPostsResponseResolvers {
+  export interface Resolvers<
+    TContext = IContext,
+    TypeParent = GetThreadPostsResponse
+  > {
+    posts?: PostsResolver<(Maybe<Post>)[], TypeParent, TContext>;
+
+    count?: CountResolver<number, TypeParent, TContext>;
+  }
+
+  export type PostsResolver<
+    R = (Maybe<Post>)[],
+    Parent = GetThreadPostsResponse,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type CountResolver<
     R = number,
-    Parent = GetThreadResponse,
+    Parent = GetThreadPostsResponse,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace UserResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = User> {
+    id?: IdResolver<string, TypeParent, TContext>;
+
+    username?: UsernameResolver<string, TypeParent, TContext>;
+
+    email?: EmailResolver<string, TypeParent, TContext>;
+
+    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
+
+    profileImageUrl?: ProfileImageUrlResolver<
+      Maybe<string>,
+      TypeParent,
+      TContext
+    >;
+
+    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
+  }
+
+  export type IdResolver<
+    R = string,
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type UsernameResolver<
+    R = string,
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type EmailResolver<
+    R = string,
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PermissionsResolver<
+    R = UserPermissions[],
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ProfileImageUrlResolver<
+    R = Maybe<string>,
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ProfileResolver<
+    R = Maybe<UserProfile>,
+    Parent = User,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace UserProfileResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = UserProfile> {
+    id?: IdResolver<number, TypeParent, TContext>;
+
+    location?: LocationResolver<Maybe<string>, TypeParent, TContext>;
+
+    gender?: GenderResolver<string, TypeParent, TContext>;
+
+    occupation?: OccupationResolver<Maybe<string>, TypeParent, TContext>;
+  }
+
+  export type IdResolver<
+    R = number,
+    Parent = UserProfile,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LocationResolver<
+    R = Maybe<string>,
+    Parent = UserProfile,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type GenderResolver<
+    R = string,
+    Parent = UserProfile,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type OccupationResolver<
+    R = Maybe<string>,
+    Parent = UserProfile,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
 }
@@ -1847,8 +1917,7 @@ export type IResolvers<TContext = IContext> = {
   Forum?: ForumResolvers.Resolvers<TContext>;
   Thread?: ThreadResolvers.Resolvers<TContext>;
   Post?: PostResolvers.Resolvers<TContext>;
-  User?: UserResolvers.Resolvers<TContext>;
-  UserProfile?: UserProfileResolvers.Resolvers<TContext>;
+  PostAuthor?: PostAuthorResolvers.Resolvers<TContext>;
   ThreadOwner?: ThreadOwnerResolvers.Resolvers<TContext>;
   CategoryGetSummaryAllResponse?: CategoryGetSummaryAllResponseResolvers.Resolvers<
     TContext
@@ -1863,6 +1932,9 @@ export type IResolvers<TContext = IContext> = {
   ThreadGetAllResponse?: ThreadGetAllResponseResolvers.Resolvers<TContext>;
   ThreadInfo?: ThreadInfoResolvers.Resolvers<TContext>;
   GetThreadResponse?: GetThreadResponseResolvers.Resolvers<TContext>;
+  GetThreadPostsResponse?: GetThreadPostsResponseResolvers.Resolvers<TContext>;
+  User?: UserResolvers.Resolvers<TContext>;
+  UserProfile?: UserProfileResolvers.Resolvers<TContext>;
   UserGetAllResponse?: UserGetAllResponseResolvers.Resolvers<TContext>;
   UserSummary?: UserSummaryResolvers.Resolvers<TContext>;
   UserInfo?: UserInfoResolvers.Resolvers<TContext>;

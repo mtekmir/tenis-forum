@@ -4,11 +4,8 @@ type Query {
 
 input GetThreadInput {
   id: String!
-  offset: Int
-  limit: Int
 }
 
 type GetThreadResponse {
   thread: Thread!
-  postCount: Int!
 }
