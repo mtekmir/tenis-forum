@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   html {
@@ -32,7 +32,7 @@ export const GlobalStyles = createGlobalStyle`
     outline: none;
   }
 
-`;
+`
 
 export const theme = {
   boxShadow: {
@@ -52,4 +52,13 @@ export const theme = {
     laptopBig: 'min-width 1500px',
     desktop: 'min-width: 1800px',
   },
-};
+}
+
+export const breakPoints = {
+  phone: 'max-width: 599px',
+  tabletPortrait: 'min-width: 600px',
+  tabletLandscape: 'min-width: 900px',
+  laptop: 'min-width: 1200px',
+  laptopBig: 'min-width 1500px',
+  desktop: 'min-width: 1800px',
+}

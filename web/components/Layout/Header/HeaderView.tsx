@@ -29,7 +29,7 @@ export const HeaderView: React.FC<Props> = ({}) => {
 
   const renderMenu = () => {
     if (width > 599) {
-      return <BigMenu />
+      return <BigMenu width={width} />
     } else {
       return <MobileMenu />
     }

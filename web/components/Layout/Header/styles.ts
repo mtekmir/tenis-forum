@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { breakPoints } from '../../../styles/theme'
 
 export const AppBar = styled.div`
   display: flex;
@@ -21,4 +22,4 @@ export const AppBar = styled.div`
     height: 6em;
     flex-direction: column;
   }
-`;
+`
