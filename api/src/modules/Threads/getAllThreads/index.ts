@@ -1,11 +1,11 @@
-import { QueryResolvers } from '../../../types/schema';
-import { getConnection } from 'typeorm';
-import { Thread } from '../../../models/Threads';
-import { Post } from '../../../models/Posts';
+import { QueryResolvers } from '../../../types/schema'
+import { getConnection } from 'typeorm'
+import { Thread } from '../../../models/Threads'
+import { Post } from '../../../models/Posts'
 
-export const threadGetAll: QueryResolvers.ThreadGetAllResolver = async (
+export const threadGetAll: QueryResolvers['threadGetAll'] = async (
   _,
-  { input: { id, filterBy, limit = 25, offset = 0 } },
+  { input: { id, filterBy, limit = 25, offset = 0 } }
 ) => {
   let query = getConnection()
     .getRepository(Thread)
@@ -21,18 +21,15 @@ export const threadGetAll: QueryResolvers.ThreadGetAllResolver = async (
       return subQuery
         .select('COUNT(post.id)', 'postCount')
         .from(Post, 'post')
-        .where('post."threadId" = thread.id');
-    }, 'postCount');
+        .where('post."threadId" = thread.id')
+    }, 'postCount')
 
   if (id) {
-    query = query.where('thread."ownerId" = :id', { id });
+    query = query.where('thread."ownerId" = :id', { id })
   }
 
-  const threads = await query
-    .limit(limit)
-    .offset(offset)
-    .getRawMany();
+  const threads = await query.limit(limit).offset(offset).getRawMany()
 
-  console.log(threads);
-  return { threads };
-};
+  console.log(threads)
+  return { threads }
+}

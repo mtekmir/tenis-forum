@@ -1,11 +1,8 @@
-import { QueryResolvers } from '../../../types/schema';
-import { getConnection } from 'typeorm';
-import { Category } from '../../../models/Category';
+import { QueryResolvers } from '../../../types/schema'
+import { getConnection } from 'typeorm'
+import { Category } from '../../../models/Category'
 
-export const categoryGet: QueryResolvers.CategoryGetResolver = async (
-  _,
-  { id, limit = 10 },
-) => {
+export const categoryGet: QueryResolvers['categoryGet'] = async (_, { id, limit = 10 }) => {
   return getConnection()
     .getRepository(Category)
     .createQueryBuilder('category')
@@ -13,5 +10,5 @@ export const categoryGet: QueryResolvers.CategoryGetResolver = async (
     .innerJoin('category.forums', 'forum')
     .where('category.id = :id', { id })
     .limit(limit)
-    .getOne();
-};
+    .getOne()
+}

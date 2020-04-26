@@ -7,7 +7,7 @@ interface Props {
   text: string
   url?: string
   marginRight?: boolean
-  type?: string
+  type?: any
   wide?: boolean
   onClick?: () => void
 }
@@ -33,14 +33,15 @@ export const Button: React.FunctionComponent<Props> = ({
   )
 }
 
-const Styles = styled.div<{
+const Styles = styled.button<{
   color: string
   marginRight?: boolean
   wide?: boolean
 }>`
   background: ${({ theme: { palette }, color }) => palette[color]};
   color: white;
-  padding: 0.5em;
+  padding: 0.7em 1.5em;
+  font-size: 0.9em;
   ${({ wide }) => wide && 'padding: 0.5em 1.5em'};
   border-radius: 5px;
   cursor: pointer;

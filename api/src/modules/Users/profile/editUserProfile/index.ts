@@ -1,24 +1,24 @@
-import { isAuthenticated } from '../../auth/authenticateUser';
-import { UserProfile } from '../../../../models/UserProfile';
-import { User } from '../../../../models/User';
-import { getConnection } from 'typeorm';
-import { respond } from '../../../common/genericResponse';
-import { MutationResolvers } from '../../../../types/schema';
+import { isAuthenticated } from '../../auth/authenticateUser'
+import { UserProfile } from '../../../../models/UserProfile'
+import { User } from '../../../../models/User'
+import { getConnection } from 'typeorm'
+import { respond } from '../../../common/genericResponse'
+import { MutationResolvers } from '../../../../types/schema'
 
-export const editUserProfile: MutationResolvers.EditUserProfileResolver = async (
+export const editUserProfile: MutationResolvers['editUserProfile'] = async (
   _,
   { input: { username, profileImageKey, ...rest } },
-  { userId },
+  { userId }
 ) => {
-  isAuthenticated(userId);
+  isAuthenticated(userId)
   try {
-    const userUpdates: { [key: string]: any } = {};
+    const userUpdates: { [key: string]: any } = {}
 
     if (username) {
-      userUpdates.username = username;
+      userUpdates.username = username
     }
     if (profileImageKey) {
-      userUpdates.profileImageKey = profileImageKey;
+      userUpdates.profileImageKey = profileImageKey
     }
 
     if (Object.keys(userUpdates).length) {
@@ -27,11 +27,11 @@ export const editUserProfile: MutationResolvers.EditUserProfileResolver = async 
         .update(User)
         .set({ ...userUpdates })
         .where('id = :userId', { userId })
-        .execute();
+        .execute()
     }
 
     if (!Object.keys(rest).length) {
-      return respond();
+      return respond()
     }
 
     await getConnection()
@@ -39,11 +39,11 @@ export const editUserProfile: MutationResolvers.EditUserProfileResolver = async 
       .update(UserProfile)
       .set({ ...rest })
       .where('"userId" = :userId', { userId })
-      .execute();
+      .execute()
 
-    return respond();
+    return respond()
   } catch (err) {
-    console.log(err);
-    throw new Error('Unable to edit profile');
+    console.log(err)
+    throw new Error('Unable to edit profile')
   }
-};
+}

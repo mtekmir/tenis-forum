@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { IContext } from './types/types'
 import { redis } from './services/redis'
 import { authenticateUser } from './modules/Users/auth/authenticateUser/index'
+import { EmailService } from './services/Email/EmailService'
 
 type Context = (arg1: { req: Request; res: Response }) => Promise<IContext>
 
@@ -15,5 +16,6 @@ export const context: Context = async ({ req, res }) => ({
   response: res,
   url: FRONTEND_URL,
   s3BucketUrl,
+  emailService: await EmailService(),
   userId: await authenticateUser(req),
 })

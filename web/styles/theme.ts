@@ -43,6 +43,14 @@ export const theme = {
     secondary: '#F0544F',
     green_gradient: 'linear-gradient(to right, #44AF69, #00E599)',
     red_gradient: 'linear-gradient(to right, #F8333C, #F9585F)',
+    green: '#56C596',
+    red: '#CD7672',
+    grey: '#AAAAAA',
+    alertColors: {
+      success: '#329500',
+      danger: '#DA3435',
+      warning: '#FFCC00',
+    },
   },
   breakpoints: {
     phone: 'max-width: 599px',

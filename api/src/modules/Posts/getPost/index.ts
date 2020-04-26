@@ -1,8 +1,8 @@
-import { QueryResolvers } from '../../../types/schema';
-import { getConnection } from 'typeorm';
-import { Post } from '../../../models/Posts';
+import { QueryResolvers } from '../../../types/schema'
+import { getConnection } from 'typeorm'
+import { Post } from '../../../models/Posts'
 
-export const postGet: QueryResolvers.PostGetResolver = async (_, { id }) => {
+export const postGet: QueryResolvers['postGet'] = async (_, { id }) => {
   return getConnection()
     .getRepository(Post)
     .createQueryBuilder('post')
@@ -18,5 +18,5 @@ export const postGet: QueryResolvers.PostGetResolver = async (_, { id }) => {
     .innerJoin('post.author', 'author')
     .innerJoin('post.thread', 'thread')
     .where('post.id = :id', { id })
-    .getRawOne();
-};
+    .getRawOne()
+}

@@ -2,7 +2,7 @@ import { getConnection } from 'typeorm'
 import { Thread } from '../../../models/Threads'
 import { QueryResolvers } from '../../../types/schema'
 
-export const threadGet: QueryResolvers.ThreadGetResolver = async (_, { input: { id } }) => {
+export const threadGet: QueryResolvers['threadGet'] = async (_, { input: { id } }) => {
   const thread = await getConnection()
     .getRepository(Thread)
     .createQueryBuilder('thread')

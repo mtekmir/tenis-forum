@@ -1,10 +1,10 @@
-import { QueryResolvers } from '../../../types/schema';
-import { Category } from '../../../models/Category';
+import { QueryResolvers } from '../../../types/schema'
+import { Category } from '../../../models/Category'
 // import { getConnection } from 'typeorm';
 // import { Thread } from '../../../models/Threads';
 
-export const categoryGetAll: QueryResolvers.CategoryGetAllResolver = async () => {
-  const categories = await Category.find({ relations: ['forums'] });
+export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
+  const categories = await Category.find({ relations: ['forums'] })
 
   // console.log(
   //   await getConnection()
@@ -23,5 +23,5 @@ export const categoryGetAll: QueryResolvers.CategoryGetAllResolver = async () =>
   return {
     success: true,
     categories,
-  };
-};
+  }
+}

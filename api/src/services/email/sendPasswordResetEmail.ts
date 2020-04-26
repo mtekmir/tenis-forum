@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer'
 
 export const sendPasswordResetEmail = async (email: string, link: string) => {
-  const account = await nodemailer.createTestAccount();
+  const account = await nodemailer.createTestAccount()
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
@@ -11,7 +11,7 @@ export const sendPasswordResetEmail = async (email: string, link: string) => {
       user: account.user,
       pass: account.pass,
     },
-  });
+  })
 
   const mailOptions = {
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
@@ -19,10 +19,10 @@ export const sendPasswordResetEmail = async (email: string, link: string) => {
     subject: 'Hello ✔',
     text: 'Click the link ',
     html: '<b>Hello world?</b>' + `<a href="${link}">link</a>`,
-  };
+  }
 
-  const info = await transporter.sendMail(mailOptions);
+  const info = await transporter.sendMail(mailOptions)
 
-  console.log('Message sent: %s', info.messageId);
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-};
+  console.log('Message sent: %s', info.messageId)
+  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+}

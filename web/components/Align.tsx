@@ -2,6 +2,10 @@ import Styled from 'styled-components'
 
 interface Props {
   vertical?: boolean
+  width?: number
+  align?: string
+  justify?: string
+  padding?: number
 }
 
 export const Align = Styled.div<Props>`
@@ -11,4 +15,8 @@ export const Align = Styled.div<Props>`
     `
     flex-direction: column;
   `}
+  ${({ width }) => width && `width: ${width}%`};
+  ${({ padding }) => padding && `padding: ${padding}em`};
+  ${({ align }) => align && `align-items: ${align}`};
+  ${({ justify }) => justify && `justify-content: ${justify}`};
 `

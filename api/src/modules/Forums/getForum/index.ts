@@ -1,18 +1,18 @@
-import { QueryResolvers } from '../../../types/schema';
-import { Forum } from '../../../models/Forums';
-import { getConnection } from 'typeorm';
-import { Thread } from '../../../models/Threads';
+import { QueryResolvers } from '../../../types/schema'
+import { Forum } from '../../../models/Forums'
+import { getConnection } from 'typeorm'
+import { Thread } from '../../../models/Threads'
 
-export const forumGet: QueryResolvers.ForumGetResolver = async (
+export const forumGet: QueryResolvers['forumGet'] = async (
   _,
-  { id, offset = 0, limit = 25 },
+  { id, offset = 0, limit = 25 }
 ) => {
   const threadCountQuery = await getConnection()
     .getRepository(Thread)
     .createQueryBuilder('thread')
     .select('COUNT(thread.id) as count')
     .where('thread."forumId" = :id', { id })
-    .getRawOne();
+    .getRawOne()
 
   const forum = await getConnection()
     .getRepository(Forum)
@@ -33,10 +33,10 @@ export const forumGet: QueryResolvers.ForumGetResolver = async (
     .orderBy('thread.createdAt', 'DESC')
     .limit(limit)
     .offset(offset)
-    .getOne();
+    .getOne()
 
   return {
     forum,
     threadCount: threadCountQuery.count,
-  };
-};
+  }
+}

@@ -11,6 +11,7 @@ import { profileImageUrl } from './getProfileImageUrl'
 import { editUserProfile } from './profile/editUserProfile'
 import { userGetAll } from './getAllUsers'
 import { userGet } from './getUser'
+import { userSendFeedback } from './sendUserFeedback'
 
 export const resolvers = {
   Mutation: {
@@ -22,6 +23,7 @@ export const resolvers = {
     confirmUserEmail,
     createAdmin,
     editUserProfile,
+    userSendFeedback,
   },
   Query: {
     me,

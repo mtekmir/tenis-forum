@@ -1,1955 +1,1011 @@
 /* tslint:disable */
-// Generated in 2020-04-25T10:55:31+02:00
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { IContext } from './types';
 export type Maybe<T> = T | null;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 
-export interface GetUploadUrlInput {
-  contentType?: Maybe<string>;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  Date: any;
+  DateTime: any;
+  Upload: any;
+};
 
-  extension?: Maybe<string>;
-}
+export type Category = {
+   __typename?: 'Category';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  forums: Array<Forum>;
+};
 
-export interface PostGetAllInput {
-  id?: Maybe<string>;
+export type CategoryGetAllResponse = {
+   __typename?: 'CategoryGetAllResponse';
+  success: Scalars['Boolean'];
+  categories: Array<Category>;
+};
 
-  filterBy?: Maybe<FilterBy>;
+export type CategoryGetSummaryAllResponse = {
+   __typename?: 'CategoryGetSummaryAllResponse';
+  categories: Array<CategoryInfo>;
+};
 
-  offset?: Maybe<number>;
+export type CategoryInfo = {
+   __typename?: 'CategoryInfo';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  forumCount: Scalars['Int'];
+};
 
-  limit?: Maybe<number>;
-}
+export type CreateCategoryInput = {
+  name: Scalars['String'];
+};
 
-export interface ThreadGetAllInput {
-  id?: Maybe<string>;
+export type CreateForumInput = {
+  name: Scalars['String'];
+  categoryId: Scalars['Int'];
+};
 
-  filterBy?: Maybe<FilterBy>;
+export type CreatePostInput = {
+  text: Scalars['String'];
+  threadId: Scalars['Int'];
+};
 
-  offset?: Maybe<number>;
+export type CreateThreadInput = {
+  text: Scalars['String'];
+  title: Scalars['String'];
+  forumId: Scalars['Int'];
+};
 
-  limit?: Maybe<number>;
-}
+export type CreateThreadResponse = {
+   __typename?: 'CreateThreadResponse';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+};
 
-export interface GetThreadInput {
-  id: string;
-}
 
-export interface GetThreadPostsInput {
-  threadId: string;
 
-  page?: Maybe<number>;
-}
+export type DemoAdmin = {
+   __typename?: 'DemoAdmin';
+  username: Scalars['String'];
+  password: Scalars['String'];
+  email: Scalars['String'];
+};
 
-export interface LoginInput {
-  email: string;
-
-  password: string;
-}
-
-export interface CreateCategoryInput {
-  name: string;
-}
-
-export interface CreateForumInput {
-  name: string;
-
-  categoryId: number;
-}
-
-export interface CreatePostInput {
-  text: string;
-
-  threadId: number;
-}
-
-export interface CreateThreadInput {
-  text: string;
-
-  title: string;
-
-  forumId: number;
-}
-
-export interface RegisterInput {
-  username: string;
-
-  email: string;
-
-  password: string;
-}
-
-export interface RequestResetPasswordInput {
-  email: string;
-}
-
-export interface ResetPasswordInput {
-  newPassword: string;
-
-  pwResetToken: string;
-}
-
-export interface EditUserProfileInput {
-  profileImageKey?: Maybe<string>;
-
-  username?: Maybe<string>;
-
-  location?: Maybe<string>;
-
-  occupation?: Maybe<string>;
-
+export type EditUserProfileInput = {
+  profileImageKey?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
   gender?: Maybe<Gender>;
-}
+};
+
+export type Error = {
+   __typename?: 'Error';
+  path: Scalars['String'];
+  message: Scalars['String'];
+};
 
 export enum FilterBy {
-  User = "USER",
-  Thread = "THREAD"
+  User = 'USER',
+  Thread = 'THREAD'
 }
 
-export enum UserPermissions {
-  Admin = "ADMIN",
-  User = "USER"
-}
+export type Forum = {
+   __typename?: 'Forum';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  createdAt: Scalars['Date'];
+  category: Category;
+  threads: Array<Thread>;
+};
+
+export type ForumGetAllResponse = {
+   __typename?: 'ForumGetAllResponse';
+  forums: Array<ForumInfo>;
+};
+
+export type ForumInfo = {
+   __typename?: 'ForumInfo';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  threadCount: Scalars['Int'];
+};
 
 export enum Gender {
-  NotSelected = "NOT_SELECTED",
-  Female = "FEMALE",
-  Male = "MALE"
+  NotSelected = 'NOT_SELECTED',
+  Female = 'FEMALE',
+  Male = 'MALE'
 }
 
-export type Date = any;
+export type GetDashboardResponse = {
+   __typename?: 'GetDashboardResponse';
+  userCount: Scalars['Int'];
+  postCount: Scalars['Int'];
+  threadCount: Scalars['Int'];
+  forumCount: Scalars['Int'];
+  categoryCount: Scalars['Int'];
+};
 
-export type DateTime = any;
-
-export type Upload = any;
-
-// ====================================================
-// Scalars
-// ====================================================
-
-// ====================================================
-// Types
-// ====================================================
-
-export interface Query {
-  dashboardGet: GetDashboardResponse;
-
-  categoryGetAll: CategoryGetAllResponse;
-
-  categoryGet: Category;
-
-  categoryGetSummaryAll: CategoryGetSummaryAllResponse;
-
-  getUploadUrl: GetUploadUrlResponse;
-
-  forumGet: GetForumResponse;
-
-  forumGetAll: ForumGetAllResponse;
-
-  postGetAll: PostGetAllResponse;
-
-  postGet: PostInfo;
-
-  threadGetAll: ThreadGetAllResponse;
-
-  threadGet: GetThreadResponse;
-
-  threadGetPosts: GetThreadPostsResponse;
-
-  me?: Maybe<User>;
-
-  userGetAll: UserGetAllResponse;
-
-  userGet: UserInfo;
-
-  userProfileGet: UserProfile;
-}
-
-export interface GetDashboardResponse {
-  userCount: number;
-
-  postCount: number;
-
-  threadCount: number;
-
-  forumCount: number;
-
-  categoryCount: number;
-}
-
-export interface CategoryGetAllResponse {
-  success: boolean;
-
-  categories: Category[];
-}
-
-export interface Category {
-  id: number;
-
-  name: string;
-
-  forums: Forum[];
-}
-
-export interface Forum {
-  id: number;
-
-  name: string;
-
-  createdAt: Date;
-
-  category: Category;
-
-  threads: Thread[];
-}
-
-export interface Thread {
-  id: number;
-
+export type GetForumResponse = {
+   __typename?: 'GetForumResponse';
   forum: Forum;
+  threadCount: Scalars['Int'];
+};
 
-  originalPost: Post;
+export type GetThreadInput = {
+  id: Scalars['String'];
+};
 
-  createdAt: Date;
+export type GetThreadPostsInput = {
+  threadId: Scalars['String'];
+  page?: Maybe<Scalars['Int']>;
+};
 
-  title: string;
+export type GetThreadPostsResponse = {
+   __typename?: 'GetThreadPostsResponse';
+  posts: Array<Maybe<Post>>;
+  count: Scalars['Int'];
+};
 
-  owner: ThreadOwner;
-}
-
-export interface Post {
-  id: number;
-
-  text: string;
-
-  createdAt: Date;
-
-  author: PostAuthor;
-
+export type GetThreadResponse = {
+   __typename?: 'GetThreadResponse';
   thread: Thread;
-}
-
-export interface PostAuthor {
-  id: string;
-
-  username: string;
-
-  profileImageUrl?: Maybe<string>;
-}
-
-export interface ThreadOwner {
-  username: string;
-}
-
-export interface CategoryGetSummaryAllResponse {
-  categories: CategoryInfo[];
-}
-
-export interface CategoryInfo {
-  id: number;
-
-  name: string;
-
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  forumCount: number;
-}
-
-export interface GetUploadUrlResponse {
-  success: boolean;
-
-  uploadKey?: Maybe<string>;
-
-  uploadUrl?: Maybe<string>;
-}
-
-export interface GetForumResponse {
-  forum: Forum;
-
-  threadCount: number;
-}
-
-export interface ForumGetAllResponse {
-  forums: ForumInfo[];
-}
-
-export interface ForumInfo {
-  id: number;
-
-  name: string;
-
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  threadCount: number;
-}
-
-export interface PostGetAllResponse {
-  posts: PostInfo[];
-}
-
-export interface PostInfo {
-  id: number;
-
-  text: string;
-
-  createdAt: Date;
-
-  authorId: string;
-
-  authorUsername: string;
-
-  threadId: string;
-
-  threadTitle: string;
-}
-
-export interface ThreadGetAllResponse {
-  threads: ThreadInfo[];
-}
-
-export interface ThreadInfo {
-  id: number;
-
-  title: string;
-
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  postCount: number;
-}
-
-export interface GetThreadResponse {
-  thread: Thread;
-}
-
-export interface GetThreadPostsResponse {
-  posts: (Maybe<Post>)[];
-
-  count: number;
-}
-
-export interface User {
-  id: string;
-
-  username: string;
-
-  email: string;
-
-  permissions: UserPermissions[];
-
-  profileImageUrl?: Maybe<string>;
-
-  profile?: Maybe<UserProfile>;
-}
-
-export interface UserProfile {
-  id: number;
-
-  location?: Maybe<string>;
-
-  gender: string;
-
-  occupation?: Maybe<string>;
-}
-
-export interface UserGetAllResponse {
-  users: UserSummary[];
-}
-
-export interface UserSummary {
-  id: string;
-
-  username: string;
-
-  email: string;
-
-  registerDate: Date;
-
-  threadCount: number;
-
-  postCount: number;
-}
-
-export interface UserInfo {
-  id: string;
-
-  username: string;
-
-  email: string;
-
-  createdAt: Date;
-
-  permissions: UserPermissions[];
-
-  profileImageUrl?: Maybe<string>;
-
-  password: string;
-
-  profile?: Maybe<UserProfile>;
-}
-
-export interface Mutation {
+};
+
+export type GetUploadUrlInput = {
+  contentType?: Maybe<Scalars['String']>;
+  extension?: Maybe<Scalars['String']>;
+};
+
+export type GetUploadUrlResponse = {
+   __typename?: 'GetUploadUrlResponse';
+  success: Scalars['Boolean'];
+  uploadKey?: Maybe<Scalars['String']>;
+  uploadUrl?: Maybe<Scalars['String']>;
+};
+
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
   adminLogin: Response;
-
   categoryCreate: Category;
-
   categoryDelete: Response;
-
-  fakeData: boolean;
-
+  fakeData: Scalars['Boolean'];
   forumCreate: Forum;
-
   forumDelete: Response;
-
   postCreate: Post;
-
   postDelete?: Maybe<Post>;
-
   threadCreate: CreateThreadResponse;
-
   threadDelete?: Maybe<Thread>;
-
   createAdmin: DemoAdmin;
-
   confirmUserEmail: Response;
-
   login: Response;
-
   logout: Response;
-
   register: Response;
-
   requestResetPassword: Response;
-
   resetPassword: Response;
-
   editUserProfile: Response;
-}
+  userSendFeedback: Response;
+};
 
-export interface Response {
-  error?: Maybe<Error[]>;
 
-  success: boolean;
-}
-
-export interface Error {
-  path: string;
-
-  message: string;
-}
-
-export interface CreateThreadResponse {
-  id: number;
-
-  title: string;
-}
-
-export interface DemoAdmin {
-  username: string;
-
-  password: string;
-
-  email: string;
-}
-
-// ====================================================
-// Arguments
-// ====================================================
-
-export interface CategoryGetQueryArgs {
-  id: number;
-
-  limit?: Maybe<number>;
-}
-export interface GetUploadUrlQueryArgs {
-  input: GetUploadUrlInput;
-}
-export interface ForumGetQueryArgs {
-  id: number;
-
-  offset?: Maybe<number>;
-
-  limit?: Maybe<number>;
-}
-export interface PostGetAllQueryArgs {
-  input: PostGetAllInput;
-}
-export interface PostGetQueryArgs {
-  id?: Maybe<number>;
-}
-export interface ThreadGetAllQueryArgs {
-  input: ThreadGetAllInput;
-}
-export interface ThreadGetQueryArgs {
-  input: GetThreadInput;
-}
-export interface ThreadGetPostsQueryArgs {
-  input: GetThreadPostsInput;
-}
-export interface UserGetQueryArgs {
-  id: string;
-}
-export interface UserProfileGetQueryArgs {
-  id: string;
-}
-export interface AdminLoginMutationArgs {
+export type MutationAdminLoginArgs = {
   input: LoginInput;
-}
-export interface CategoryCreateMutationArgs {
+};
+
+
+export type MutationCategoryCreateArgs = {
   input: CreateCategoryInput;
-}
-export interface CategoryDeleteMutationArgs {
-  id: number;
-}
-export interface ForumCreateMutationArgs {
+};
+
+
+export type MutationCategoryDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationForumCreateArgs = {
   input: CreateForumInput;
-}
-export interface ForumDeleteMutationArgs {
-  id: number;
-}
-export interface PostCreateMutationArgs {
+};
+
+
+export type MutationForumDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationPostCreateArgs = {
   input: CreatePostInput;
-}
-export interface PostDeleteMutationArgs {
-  id: number;
-}
-export interface ThreadCreateMutationArgs {
+};
+
+
+export type MutationPostDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationThreadCreateArgs = {
   input: CreateThreadInput;
-}
-export interface ThreadDeleteMutationArgs {
-  id: number;
-}
-export interface ConfirmUserEmailMutationArgs {
-  token: string;
-}
-export interface LoginMutationArgs {
+};
+
+
+export type MutationThreadDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationConfirmUserEmailArgs = {
+  token: Scalars['String'];
+};
+
+
+export type MutationLoginArgs = {
   input: LoginInput;
-}
-export interface RegisterMutationArgs {
+};
+
+
+export type MutationRegisterArgs = {
   input: RegisterInput;
-}
-export interface RequestResetPasswordMutationArgs {
+};
+
+
+export type MutationRequestResetPasswordArgs = {
   input?: Maybe<RequestResetPasswordInput>;
-}
-export interface ResetPasswordMutationArgs {
+};
+
+
+export type MutationResetPasswordArgs = {
   input: ResetPasswordInput;
-}
-export interface EditUserProfileMutationArgs {
+};
+
+
+export type MutationEditUserProfileArgs = {
   input: EditUserProfileInput;
+};
+
+
+export type MutationUserSendFeedbackArgs = {
+  input: SendUserFeedbackInput;
+};
+
+export type Post = {
+   __typename?: 'Post';
+  id: Scalars['Int'];
+  text: Scalars['String'];
+  createdAt: Scalars['Date'];
+  author: PostAuthor;
+  thread: Thread;
+};
+
+export type PostAuthor = {
+   __typename?: 'PostAuthor';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  profileImageUrl?: Maybe<Scalars['String']>;
+};
+
+export type PostGetAllInput = {
+  id?: Maybe<Scalars['String']>;
+  filterBy?: Maybe<FilterBy>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+export type PostGetAllResponse = {
+   __typename?: 'PostGetAllResponse';
+  posts: Array<PostInfo>;
+};
+
+export type PostInfo = {
+   __typename?: 'PostInfo';
+  id: Scalars['Int'];
+  text: Scalars['String'];
+  createdAt: Scalars['Date'];
+  authorId: Scalars['String'];
+  authorUsername: Scalars['String'];
+  threadId: Scalars['String'];
+  threadTitle: Scalars['String'];
+};
+
+export type Query = {
+   __typename?: 'Query';
+  dashboardGet: GetDashboardResponse;
+  categoryGetAll: CategoryGetAllResponse;
+  categoryGet: Category;
+  categoryGetSummaryAll: CategoryGetSummaryAllResponse;
+  getUploadUrl: GetUploadUrlResponse;
+  forumGet: GetForumResponse;
+  forumGetAll: ForumGetAllResponse;
+  postGetAll: PostGetAllResponse;
+  postGet: PostInfo;
+  threadGetAll: ThreadGetAllResponse;
+  threadGet: GetThreadResponse;
+  threadGetPosts: GetThreadPostsResponse;
+  me?: Maybe<User>;
+  userGetAll: UserGetAllResponse;
+  userGet: UserInfo;
+  userProfileGet: UserProfile;
+};
+
+
+export type QueryCategoryGetArgs = {
+  id: Scalars['Int'];
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetUploadUrlArgs = {
+  input: GetUploadUrlInput;
+};
+
+
+export type QueryForumGetArgs = {
+  id: Scalars['Int'];
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPostGetAllArgs = {
+  input: PostGetAllInput;
+};
+
+
+export type QueryPostGetArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryThreadGetAllArgs = {
+  input: ThreadGetAllInput;
+};
+
+
+export type QueryThreadGetArgs = {
+  input: GetThreadInput;
+};
+
+
+export type QueryThreadGetPostsArgs = {
+  input: GetThreadPostsInput;
+};
+
+
+export type QueryUserGetArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryUserProfileGetArgs = {
+  id: Scalars['String'];
+};
+
+export type RegisterInput = {
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type RequestResetPasswordInput = {
+  email: Scalars['String'];
+};
+
+export type ResetPasswordInput = {
+  newPassword: Scalars['String'];
+  pwResetToken: Scalars['String'];
+};
+
+export type Response = {
+   __typename?: 'Response';
+  error?: Maybe<Array<Error>>;
+  success: Scalars['Boolean'];
+};
+
+export type SendUserFeedbackInput = {
+  name: Scalars['String'];
+  email: Scalars['String'];
+  subject: Scalars['String'];
+  message: Scalars['String'];
+};
+
+export type Thread = {
+   __typename?: 'Thread';
+  id: Scalars['Int'];
+  forum: Forum;
+  originalPost: Post;
+  createdAt: Scalars['Date'];
+  title: Scalars['String'];
+  owner: ThreadOwner;
+};
+
+export type ThreadGetAllInput = {
+  id?: Maybe<Scalars['String']>;
+  filterBy?: Maybe<FilterBy>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+export type ThreadGetAllResponse = {
+   __typename?: 'ThreadGetAllResponse';
+  threads: Array<ThreadInfo>;
+};
+
+export type ThreadInfo = {
+   __typename?: 'ThreadInfo';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  postCount: Scalars['Int'];
+};
+
+export type ThreadOwner = {
+   __typename?: 'ThreadOwner';
+  username: Scalars['String'];
+};
+
+
+export type User = {
+   __typename?: 'User';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  permissions: Array<UserPermissions>;
+  profileImageUrl?: Maybe<Scalars['String']>;
+  profile?: Maybe<UserProfile>;
+};
+
+export type UserGetAllResponse = {
+   __typename?: 'UserGetAllResponse';
+  users: Array<UserSummary>;
+};
+
+export type UserInfo = {
+   __typename?: 'UserInfo';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  createdAt: Scalars['Date'];
+  permissions: Array<UserPermissions>;
+  profileImageUrl?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  profile?: Maybe<UserProfile>;
+};
+
+export enum UserPermissions {
+  Admin = 'ADMIN',
+  User = 'USER'
 }
 
-import {
-  GraphQLResolveInfo,
-  GraphQLScalarType,
-  GraphQLScalarTypeConfig
-} from "graphql";
+export type UserProfile = {
+   __typename?: 'UserProfile';
+  id: Scalars['Int'];
+  location?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+  occupation?: Maybe<Scalars['String']>;
+};
 
-import { IContext } from "./types";
+export type UserSummary = {
+   __typename?: 'UserSummary';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  registerDate: Scalars['Date'];
+  threadCount: Scalars['Int'];
+  postCount: Scalars['Int'];
+};
 
-export type Resolver<Result, Parent = {}, TContext = {}, Args = {}> = (
-  parent: Parent,
-  args: Args,
+
+export type WithIndex<TObject> = TObject & Record<string, any>;
+export type ResolversObject<TObject> = WithIndex<TObject>;
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => Promise<Result> | Result;
+) => Promise<TResult> | TResult;
 
-export interface ISubscriptionResolverObject<Result, Parent, TContext, Args> {
-  subscribe<R = Result, P = Parent>(
-    parent: P,
-    args: Args,
-    context: TContext,
-    info: GraphQLResolveInfo
-  ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>;
-  resolve?<R = Result, P = Parent>(
-    parent: P,
-    args: Args,
-    context: TContext,
-    info: GraphQLResolveInfo
-  ): R | Result | Promise<R | Result>;
-}
-
-export type SubscriptionResolver<
-  Result,
-  Parent = {},
-  TContext = {},
-  Args = {}
-> =
-  | ((
-      ...args: any[]
-    ) => ISubscriptionResolverObject<Result, Parent, TContext, Args>)
-  | ISubscriptionResolverObject<Result, Parent, TContext, Args>;
-
-export type TypeResolveFn<Types, Parent = {}, TContext = {}> = (
-  parent: Parent,
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => Maybe<Types>;
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
 
-export type NextResolverFn<T> = () => Promise<T>;
-
-export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
-  next: NextResolverFn<TResult>,
-  source: any,
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export namespace QueryResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = {}> {
-    dashboardGet?: DashboardGetResolver<
-      GetDashboardResponse,
-      TypeParent,
-      TContext
-    >;
-
-    categoryGetAll?: CategoryGetAllResolver<
-      CategoryGetAllResponse,
-      TypeParent,
-      TContext
-    >;
-
-    categoryGet?: CategoryGetResolver<Category, TypeParent, TContext>;
-
-    categoryGetSummaryAll?: CategoryGetSummaryAllResolver<
-      CategoryGetSummaryAllResponse,
-      TypeParent,
-      TContext
-    >;
-
-    getUploadUrl?: GetUploadUrlResolver<
-      GetUploadUrlResponse,
-      TypeParent,
-      TContext
-    >;
-
-    forumGet?: ForumGetResolver<GetForumResponse, TypeParent, TContext>;
-
-    forumGetAll?: ForumGetAllResolver<
-      ForumGetAllResponse,
-      TypeParent,
-      TContext
-    >;
-
-    postGetAll?: PostGetAllResolver<PostGetAllResponse, TypeParent, TContext>;
-
-    postGet?: PostGetResolver<PostInfo, TypeParent, TContext>;
-
-    threadGetAll?: ThreadGetAllResolver<
-      ThreadGetAllResponse,
-      TypeParent,
-      TContext
-    >;
-
-    threadGet?: ThreadGetResolver<GetThreadResponse, TypeParent, TContext>;
-
-    threadGetPosts?: ThreadGetPostsResolver<
-      GetThreadPostsResponse,
-      TypeParent,
-      TContext
-    >;
-
-    me?: MeResolver<Maybe<User>, TypeParent, TContext>;
-
-    userGetAll?: UserGetAllResolver<UserGetAllResponse, TypeParent, TContext>;
-
-    userGet?: UserGetResolver<UserInfo, TypeParent, TContext>;
-
-    userProfileGet?: UserProfileGetResolver<UserProfile, TypeParent, TContext>;
-  }
-
-  export type DashboardGetResolver<
-    R = GetDashboardResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CategoryGetAllResolver<
-    R = CategoryGetAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CategoryGetResolver<
-    R = Category,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, CategoryGetArgs>;
-  export interface CategoryGetArgs {
-    id: number;
-
-    limit?: Maybe<number>;
-  }
-
-  export type CategoryGetSummaryAllResolver<
-    R = CategoryGetSummaryAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type GetUploadUrlResolver<
-    R = GetUploadUrlResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, GetUploadUrlArgs>;
-  export interface GetUploadUrlArgs {
-    input: GetUploadUrlInput;
-  }
-
-  export type ForumGetResolver<
-    R = GetForumResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ForumGetArgs>;
-  export interface ForumGetArgs {
-    id: number;
-
-    offset?: Maybe<number>;
-
-    limit?: Maybe<number>;
-  }
-
-  export type ForumGetAllResolver<
-    R = ForumGetAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PostGetAllResolver<
-    R = PostGetAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, PostGetAllArgs>;
-  export interface PostGetAllArgs {
-    input: PostGetAllInput;
-  }
-
-  export type PostGetResolver<
-    R = PostInfo,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, PostGetArgs>;
-  export interface PostGetArgs {
-    id?: Maybe<number>;
-  }
-
-  export type ThreadGetAllResolver<
-    R = ThreadGetAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ThreadGetAllArgs>;
-  export interface ThreadGetAllArgs {
-    input: ThreadGetAllInput;
-  }
-
-  export type ThreadGetResolver<
-    R = GetThreadResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ThreadGetArgs>;
-  export interface ThreadGetArgs {
-    input: GetThreadInput;
-  }
-
-  export type ThreadGetPostsResolver<
-    R = GetThreadPostsResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ThreadGetPostsArgs>;
-  export interface ThreadGetPostsArgs {
-    input: GetThreadPostsInput;
-  }
-
-  export type MeResolver<
-    R = Maybe<User>,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UserGetAllResolver<
-    R = UserGetAllResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UserGetResolver<
-    R = UserInfo,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, UserGetArgs>;
-  export interface UserGetArgs {
-    id: string;
-  }
-
-  export type UserProfileGetResolver<
-    R = UserProfile,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, UserProfileGetArgs>;
-  export interface UserProfileGetArgs {
-    id: string;
-  }
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
 
-export namespace GetDashboardResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = GetDashboardResponse
-  > {
-    userCount?: UserCountResolver<number, TypeParent, TContext>;
-
-    postCount?: PostCountResolver<number, TypeParent, TContext>;
-
-    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
-
-    forumCount?: ForumCountResolver<number, TypeParent, TContext>;
-
-    categoryCount?: CategoryCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type UserCountResolver<
-    R = number,
-    Parent = GetDashboardResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PostCountResolver<
-    R = number,
-    Parent = GetDashboardResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadCountResolver<
-    R = number,
-    Parent = GetDashboardResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ForumCountResolver<
-    R = number,
-    Parent = GetDashboardResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CategoryCountResolver<
-    R = number,
-    Parent = GetDashboardResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export namespace CategoryGetAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = CategoryGetAllResponse
-  > {
-    success?: SuccessResolver<boolean, TypeParent, TContext>;
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-    categories?: CategoriesResolver<Category[], TypeParent, TContext>;
-  }
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
-  export type SuccessResolver<
-    R = boolean,
-    Parent = CategoryGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CategoriesResolver<
-    R = Category[],
-    Parent = CategoryGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = ResolversObject<{
+  Query: ResolverTypeWrapper<{}>,
+  GetDashboardResponse: ResolverTypeWrapper<GetDashboardResponse>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  CategoryGetAllResponse: ResolverTypeWrapper<CategoryGetAllResponse>,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  Category: ResolverTypeWrapper<Category>,
+  String: ResolverTypeWrapper<Scalars['String']>,
+  Forum: ResolverTypeWrapper<Forum>,
+  Date: ResolverTypeWrapper<Scalars['Date']>,
+  Thread: ResolverTypeWrapper<Thread>,
+  Post: ResolverTypeWrapper<Post>,
+  PostAuthor: ResolverTypeWrapper<PostAuthor>,
+  ThreadOwner: ResolverTypeWrapper<ThreadOwner>,
+  CategoryGetSummaryAllResponse: ResolverTypeWrapper<CategoryGetSummaryAllResponse>,
+  CategoryInfo: ResolverTypeWrapper<CategoryInfo>,
+  GetUploadUrlInput: GetUploadUrlInput,
+  GetUploadUrlResponse: ResolverTypeWrapper<GetUploadUrlResponse>,
+  GetForumResponse: ResolverTypeWrapper<GetForumResponse>,
+  ForumGetAllResponse: ResolverTypeWrapper<ForumGetAllResponse>,
+  ForumInfo: ResolverTypeWrapper<ForumInfo>,
+  PostGetAllInput: PostGetAllInput,
+  FilterBy: FilterBy,
+  PostGetAllResponse: ResolverTypeWrapper<PostGetAllResponse>,
+  PostInfo: ResolverTypeWrapper<PostInfo>,
+  ThreadGetAllInput: ThreadGetAllInput,
+  ThreadGetAllResponse: ResolverTypeWrapper<ThreadGetAllResponse>,
+  ThreadInfo: ResolverTypeWrapper<ThreadInfo>,
+  GetThreadInput: GetThreadInput,
+  GetThreadResponse: ResolverTypeWrapper<GetThreadResponse>,
+  GetThreadPostsInput: GetThreadPostsInput,
+  GetThreadPostsResponse: ResolverTypeWrapper<GetThreadPostsResponse>,
+  User: ResolverTypeWrapper<User>,
+  UserPermissions: UserPermissions,
+  UserProfile: ResolverTypeWrapper<UserProfile>,
+  UserGetAllResponse: ResolverTypeWrapper<UserGetAllResponse>,
+  UserSummary: ResolverTypeWrapper<UserSummary>,
+  UserInfo: ResolverTypeWrapper<UserInfo>,
+  Mutation: ResolverTypeWrapper<{}>,
+  LoginInput: LoginInput,
+  Response: ResolverTypeWrapper<Response>,
+  Error: ResolverTypeWrapper<Error>,
+  CreateCategoryInput: CreateCategoryInput,
+  CreateForumInput: CreateForumInput,
+  CreatePostInput: CreatePostInput,
+  CreateThreadInput: CreateThreadInput,
+  CreateThreadResponse: ResolverTypeWrapper<CreateThreadResponse>,
+  DemoAdmin: ResolverTypeWrapper<DemoAdmin>,
+  RegisterInput: RegisterInput,
+  RequestResetPasswordInput: RequestResetPasswordInput,
+  ResetPasswordInput: ResetPasswordInput,
+  EditUserProfileInput: EditUserProfileInput,
+  Gender: Gender,
+  sendUserFeedbackInput: SendUserFeedbackInput,
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
+  Upload: ResolverTypeWrapper<Scalars['Upload']>,
+}>;
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = ResolversObject<{
+  Query: {},
+  GetDashboardResponse: GetDashboardResponse,
+  Int: Scalars['Int'],
+  CategoryGetAllResponse: CategoryGetAllResponse,
+  Boolean: Scalars['Boolean'],
+  Category: Category,
+  String: Scalars['String'],
+  Forum: Forum,
+  Date: Scalars['Date'],
+  Thread: Thread,
+  Post: Post,
+  PostAuthor: PostAuthor,
+  ThreadOwner: ThreadOwner,
+  CategoryGetSummaryAllResponse: CategoryGetSummaryAllResponse,
+  CategoryInfo: CategoryInfo,
+  GetUploadUrlInput: GetUploadUrlInput,
+  GetUploadUrlResponse: GetUploadUrlResponse,
+  GetForumResponse: GetForumResponse,
+  ForumGetAllResponse: ForumGetAllResponse,
+  ForumInfo: ForumInfo,
+  PostGetAllInput: PostGetAllInput,
+  FilterBy: FilterBy,
+  PostGetAllResponse: PostGetAllResponse,
+  PostInfo: PostInfo,
+  ThreadGetAllInput: ThreadGetAllInput,
+  ThreadGetAllResponse: ThreadGetAllResponse,
+  ThreadInfo: ThreadInfo,
+  GetThreadInput: GetThreadInput,
+  GetThreadResponse: GetThreadResponse,
+  GetThreadPostsInput: GetThreadPostsInput,
+  GetThreadPostsResponse: GetThreadPostsResponse,
+  User: User,
+  UserPermissions: UserPermissions,
+  UserProfile: UserProfile,
+  UserGetAllResponse: UserGetAllResponse,
+  UserSummary: UserSummary,
+  UserInfo: UserInfo,
+  Mutation: {},
+  LoginInput: LoginInput,
+  Response: Response,
+  Error: Error,
+  CreateCategoryInput: CreateCategoryInput,
+  CreateForumInput: CreateForumInput,
+  CreatePostInput: CreatePostInput,
+  CreateThreadInput: CreateThreadInput,
+  CreateThreadResponse: CreateThreadResponse,
+  DemoAdmin: DemoAdmin,
+  RegisterInput: RegisterInput,
+  RequestResetPasswordInput: RequestResetPasswordInput,
+  ResetPasswordInput: ResetPasswordInput,
+  EditUserProfileInput: EditUserProfileInput,
+  Gender: Gender,
+  sendUserFeedbackInput: SendUserFeedbackInput,
+  DateTime: Scalars['DateTime'],
+  Upload: Scalars['Upload'],
+}>;
+
+export type CategoryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  forums?: Resolver<Array<ResolversTypes['Forum']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type CategoryGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['CategoryGetAllResponse'] = ResolversParentTypes['CategoryGetAllResponse']> = ResolversObject<{
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type CategoryGetSummaryAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['CategoryGetSummaryAllResponse'] = ResolversParentTypes['CategoryGetSummaryAllResponse']> = ResolversObject<{
+  categories?: Resolver<Array<ResolversTypes['CategoryInfo']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type CategoryInfoResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['CategoryInfo'] = ResolversParentTypes['CategoryInfo']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  forumCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type CreateThreadResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['CreateThreadResponse'] = ResolversParentTypes['CreateThreadResponse']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date'
 }
 
-export namespace CategoryResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Category> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    name?: NameResolver<string, TypeParent, TContext>;
-
-    forums?: ForumsResolver<Forum[], TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = Category,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type NameResolver<
-    R = string,
-    Parent = Category,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ForumsResolver<
-    R = Forum[],
-    Parent = Category,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime'
 }
 
-export namespace ForumResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Forum> {
-    id?: IdResolver<number, TypeParent, TContext>;
+export type DemoAdminResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['DemoAdmin'] = ResolversParentTypes['DemoAdmin']> = ResolversObject<{
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
 
-    name?: NameResolver<string, TypeParent, TContext>;
+export type ErrorResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = ResolversObject<{
+  path?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
 
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
+export type ForumResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Forum'] = ResolversParentTypes['Forum']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>,
+  threads?: Resolver<Array<ResolversTypes['Thread']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
 
-    category?: CategoryResolver<Category, TypeParent, TContext>;
+export type ForumGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ForumGetAllResponse'] = ResolversParentTypes['ForumGetAllResponse']> = ResolversObject<{
+  forums?: Resolver<Array<ResolversTypes['ForumInfo']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
 
-    threads?: ThreadsResolver<Thread[], TypeParent, TContext>;
-  }
+export type ForumInfoResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ForumInfo'] = ResolversParentTypes['ForumInfo']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
 
-  export type IdResolver<
-    R = number,
-    Parent = Forum,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type NameResolver<
-    R = string,
-    Parent = Forum,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = Forum,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CategoryResolver<
-    R = Category,
-    Parent = Forum,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadsResolver<
-    R = Thread[],
-    Parent = Forum,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
+export type GetDashboardResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['GetDashboardResponse'] = ResolversParentTypes['GetDashboardResponse']> = ResolversObject<{
+  userCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  postCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  forumCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  categoryCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type GetForumResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['GetForumResponse'] = ResolversParentTypes['GetForumResponse']> = ResolversObject<{
+  forum?: Resolver<ResolversTypes['Forum'], ParentType, ContextType>,
+  threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type GetThreadPostsResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['GetThreadPostsResponse'] = ResolversParentTypes['GetThreadPostsResponse']> = ResolversObject<{
+  posts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>,
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type GetThreadResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['GetThreadResponse'] = ResolversParentTypes['GetThreadResponse']> = ResolversObject<{
+  thread?: Resolver<ResolversTypes['Thread'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type GetUploadUrlResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['GetUploadUrlResponse'] = ResolversParentTypes['GetUploadUrlResponse']> = ResolversObject<{
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  uploadKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  uploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type MutationResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  adminLogin?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationAdminLoginArgs, 'input'>>,
+  categoryCreate?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationCategoryCreateArgs, 'input'>>,
+  categoryDelete?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationCategoryDeleteArgs, 'id'>>,
+  fakeData?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  forumCreate?: Resolver<ResolversTypes['Forum'], ParentType, ContextType, RequireFields<MutationForumCreateArgs, 'input'>>,
+  forumDelete?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationForumDeleteArgs, 'id'>>,
+  postCreate?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationPostCreateArgs, 'input'>>,
+  postDelete?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostDeleteArgs, 'id'>>,
+  threadCreate?: Resolver<ResolversTypes['CreateThreadResponse'], ParentType, ContextType, RequireFields<MutationThreadCreateArgs, 'input'>>,
+  threadDelete?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadDeleteArgs, 'id'>>,
+  createAdmin?: Resolver<ResolversTypes['DemoAdmin'], ParentType, ContextType>,
+  confirmUserEmail?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationConfirmUserEmailArgs, 'token'>>,
+  login?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
+  logout?: Resolver<ResolversTypes['Response'], ParentType, ContextType>,
+  register?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
+  requestResetPassword?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationRequestResetPasswordArgs, never>>,
+  resetPassword?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'input'>>,
+  editUserProfile?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationEditUserProfileArgs, 'input'>>,
+  userSendFeedback?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationUserSendFeedbackArgs, 'input'>>,
+}>;
+
+export type PostResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  author?: Resolver<ResolversTypes['PostAuthor'], ParentType, ContextType>,
+  thread?: Resolver<ResolversTypes['Thread'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type PostAuthorResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['PostAuthor'] = ResolversParentTypes['PostAuthor']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  profileImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type PostGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['PostGetAllResponse'] = ResolversParentTypes['PostGetAllResponse']> = ResolversObject<{
+  posts?: Resolver<Array<ResolversTypes['PostInfo']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type PostInfoResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['PostInfo'] = ResolversParentTypes['PostInfo']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  authorId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  authorUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  threadId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  threadTitle?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type QueryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  dashboardGet?: Resolver<ResolversTypes['GetDashboardResponse'], ParentType, ContextType>,
+  categoryGetAll?: Resolver<ResolversTypes['CategoryGetAllResponse'], ParentType, ContextType>,
+  categoryGet?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryCategoryGetArgs, 'id'>>,
+  categoryGetSummaryAll?: Resolver<ResolversTypes['CategoryGetSummaryAllResponse'], ParentType, ContextType>,
+  getUploadUrl?: Resolver<ResolversTypes['GetUploadUrlResponse'], ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>,
+  forumGet?: Resolver<ResolversTypes['GetForumResponse'], ParentType, ContextType, RequireFields<QueryForumGetArgs, 'id'>>,
+  forumGetAll?: Resolver<ResolversTypes['ForumGetAllResponse'], ParentType, ContextType>,
+  postGetAll?: Resolver<ResolversTypes['PostGetAllResponse'], ParentType, ContextType, RequireFields<QueryPostGetAllArgs, 'input'>>,
+  postGet?: Resolver<ResolversTypes['PostInfo'], ParentType, ContextType, RequireFields<QueryPostGetArgs, never>>,
+  threadGetAll?: Resolver<ResolversTypes['ThreadGetAllResponse'], ParentType, ContextType, RequireFields<QueryThreadGetAllArgs, 'input'>>,
+  threadGet?: Resolver<ResolversTypes['GetThreadResponse'], ParentType, ContextType, RequireFields<QueryThreadGetArgs, 'input'>>,
+  threadGetPosts?: Resolver<ResolversTypes['GetThreadPostsResponse'], ParentType, ContextType, RequireFields<QueryThreadGetPostsArgs, 'input'>>,
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  userGetAll?: Resolver<ResolversTypes['UserGetAllResponse'], ParentType, ContextType>,
+  userGet?: Resolver<ResolversTypes['UserInfo'], ParentType, ContextType, RequireFields<QueryUserGetArgs, 'id'>>,
+  userProfileGet?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<QueryUserProfileGetArgs, 'id'>>,
+}>;
+
+export type ResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = ResolversObject<{
+  error?: Resolver<Maybe<Array<ResolversTypes['Error']>>, ParentType, ContextType>,
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type ThreadResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Thread'] = ResolversParentTypes['Thread']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  forum?: Resolver<ResolversTypes['Forum'], ParentType, ContextType>,
+  originalPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  owner?: Resolver<ResolversTypes['ThreadOwner'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type ThreadGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ThreadGetAllResponse'] = ResolversParentTypes['ThreadGetAllResponse']> = ResolversObject<{
+  threads?: Resolver<Array<ResolversTypes['ThreadInfo']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type ThreadInfoResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ThreadInfo'] = ResolversParentTypes['ThreadInfo']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  postCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type ThreadOwnerResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ThreadOwner'] = ResolversParentTypes['ThreadOwner']> = ResolversObject<{
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload'
 }
 
-export namespace ThreadResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Thread> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    forum?: ForumResolver<Forum, TypeParent, TContext>;
-
-    originalPost?: OriginalPostResolver<Post, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    title?: TitleResolver<string, TypeParent, TContext>;
-
-    owner?: OwnerResolver<ThreadOwner, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ForumResolver<
-    R = Forum,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type OriginalPostResolver<
-    R = Post,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type TitleResolver<
-    R = string,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type OwnerResolver<
-    R = ThreadOwner,
-    Parent = Thread,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace PostResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Post> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    text?: TextResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    author?: AuthorResolver<PostAuthor, TypeParent, TContext>;
-
-    thread?: ThreadResolver<Thread, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = Post,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type TextResolver<
-    R = string,
-    Parent = Post,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = Post,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type AuthorResolver<
-    R = PostAuthor,
-    Parent = Post,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadResolver<
-    R = Thread,
-    Parent = Post,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace PostAuthorResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = PostAuthor> {
-    id?: IdResolver<string, TypeParent, TContext>;
-
-    username?: UsernameResolver<string, TypeParent, TContext>;
-
-    profileImageUrl?: ProfileImageUrlResolver<
-      Maybe<string>,
-      TypeParent,
-      TContext
-    >;
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = PostAuthor,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UsernameResolver<
-    R = string,
-    Parent = PostAuthor,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileImageUrlResolver<
-    R = Maybe<string>,
-    Parent = PostAuthor,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ThreadOwnerResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = ThreadOwner> {
-    username?: UsernameResolver<string, TypeParent, TContext>;
-  }
-
-  export type UsernameResolver<
-    R = string,
-    Parent = ThreadOwner,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace CategoryGetSummaryAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = CategoryGetSummaryAllResponse
-  > {
-    categories?: CategoriesResolver<CategoryInfo[], TypeParent, TContext>;
-  }
-
-  export type CategoriesResolver<
-    R = CategoryInfo[],
-    Parent = CategoryGetSummaryAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace CategoryInfoResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = CategoryInfo> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    name?: NameResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
-
-    forumCount?: ForumCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = CategoryInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type NameResolver<
-    R = string,
-    Parent = CategoryInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = CategoryInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UpdatedAtResolver<
-    R = Date,
-    Parent = CategoryInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ForumCountResolver<
-    R = number,
-    Parent = CategoryInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace GetUploadUrlResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = GetUploadUrlResponse
-  > {
-    success?: SuccessResolver<boolean, TypeParent, TContext>;
-
-    uploadKey?: UploadKeyResolver<Maybe<string>, TypeParent, TContext>;
-
-    uploadUrl?: UploadUrlResolver<Maybe<string>, TypeParent, TContext>;
-  }
-
-  export type SuccessResolver<
-    R = boolean,
-    Parent = GetUploadUrlResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UploadKeyResolver<
-    R = Maybe<string>,
-    Parent = GetUploadUrlResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UploadUrlResolver<
-    R = Maybe<string>,
-    Parent = GetUploadUrlResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace GetForumResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = GetForumResponse
-  > {
-    forum?: ForumResolver<Forum, TypeParent, TContext>;
-
-    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type ForumResolver<
-    R = Forum,
-    Parent = GetForumResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadCountResolver<
-    R = number,
-    Parent = GetForumResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ForumGetAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = ForumGetAllResponse
-  > {
-    forums?: ForumsResolver<ForumInfo[], TypeParent, TContext>;
-  }
-
-  export type ForumsResolver<
-    R = ForumInfo[],
-    Parent = ForumGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ForumInfoResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = ForumInfo> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    name?: NameResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
-
-    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = ForumInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type NameResolver<
-    R = string,
-    Parent = ForumInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = ForumInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UpdatedAtResolver<
-    R = Date,
-    Parent = ForumInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadCountResolver<
-    R = number,
-    Parent = ForumInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace PostGetAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = PostGetAllResponse
-  > {
-    posts?: PostsResolver<PostInfo[], TypeParent, TContext>;
-  }
-
-  export type PostsResolver<
-    R = PostInfo[],
-    Parent = PostGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace PostInfoResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = PostInfo> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    text?: TextResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    authorId?: AuthorIdResolver<string, TypeParent, TContext>;
-
-    authorUsername?: AuthorUsernameResolver<string, TypeParent, TContext>;
-
-    threadId?: ThreadIdResolver<string, TypeParent, TContext>;
-
-    threadTitle?: ThreadTitleResolver<string, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type TextResolver<
-    R = string,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type AuthorIdResolver<
-    R = string,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type AuthorUsernameResolver<
-    R = string,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadIdResolver<
-    R = string,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadTitleResolver<
-    R = string,
-    Parent = PostInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ThreadGetAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = ThreadGetAllResponse
-  > {
-    threads?: ThreadsResolver<ThreadInfo[], TypeParent, TContext>;
-  }
-
-  export type ThreadsResolver<
-    R = ThreadInfo[],
-    Parent = ThreadGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ThreadInfoResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = ThreadInfo> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    title?: TitleResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    updatedAt?: UpdatedAtResolver<Date, TypeParent, TContext>;
-
-    postCount?: PostCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = ThreadInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type TitleResolver<
-    R = string,
-    Parent = ThreadInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = ThreadInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UpdatedAtResolver<
-    R = Date,
-    Parent = ThreadInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PostCountResolver<
-    R = number,
-    Parent = ThreadInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace GetThreadResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = GetThreadResponse
-  > {
-    thread?: ThreadResolver<Thread, TypeParent, TContext>;
-  }
-
-  export type ThreadResolver<
-    R = Thread,
-    Parent = GetThreadResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace GetThreadPostsResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = GetThreadPostsResponse
-  > {
-    posts?: PostsResolver<(Maybe<Post>)[], TypeParent, TContext>;
-
-    count?: CountResolver<number, TypeParent, TContext>;
-  }
-
-  export type PostsResolver<
-    R = (Maybe<Post>)[],
-    Parent = GetThreadPostsResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CountResolver<
-    R = number,
-    Parent = GetThreadPostsResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = User> {
-    id?: IdResolver<string, TypeParent, TContext>;
-
-    username?: UsernameResolver<string, TypeParent, TContext>;
-
-    email?: EmailResolver<string, TypeParent, TContext>;
-
-    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
-
-    profileImageUrl?: ProfileImageUrlResolver<
-      Maybe<string>,
-      TypeParent,
-      TContext
-    >;
-
-    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UsernameResolver<
-    R = string,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type EmailResolver<
-    R = string,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PermissionsResolver<
-    R = UserPermissions[],
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileImageUrlResolver<
-    R = Maybe<string>,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileResolver<
-    R = Maybe<UserProfile>,
-    Parent = User,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserProfileResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = UserProfile> {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    location?: LocationResolver<Maybe<string>, TypeParent, TContext>;
-
-    gender?: GenderResolver<string, TypeParent, TContext>;
-
-    occupation?: OccupationResolver<Maybe<string>, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type LocationResolver<
-    R = Maybe<string>,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type GenderResolver<
-    R = string,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type OccupationResolver<
-    R = Maybe<string>,
-    Parent = UserProfile,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserGetAllResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = UserGetAllResponse
-  > {
-    users?: UsersResolver<UserSummary[], TypeParent, TContext>;
-  }
-
-  export type UsersResolver<
-    R = UserSummary[],
-    Parent = UserGetAllResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserSummaryResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = UserSummary> {
-    id?: IdResolver<string, TypeParent, TContext>;
-
-    username?: UsernameResolver<string, TypeParent, TContext>;
-
-    email?: EmailResolver<string, TypeParent, TContext>;
-
-    registerDate?: RegisterDateResolver<Date, TypeParent, TContext>;
-
-    threadCount?: ThreadCountResolver<number, TypeParent, TContext>;
-
-    postCount?: PostCountResolver<number, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UsernameResolver<
-    R = string,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type EmailResolver<
-    R = string,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type RegisterDateResolver<
-    R = Date,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ThreadCountResolver<
-    R = number,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PostCountResolver<
-    R = number,
-    Parent = UserSummary,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace UserInfoResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = UserInfo> {
-    id?: IdResolver<string, TypeParent, TContext>;
-
-    username?: UsernameResolver<string, TypeParent, TContext>;
-
-    email?: EmailResolver<string, TypeParent, TContext>;
-
-    createdAt?: CreatedAtResolver<Date, TypeParent, TContext>;
-
-    permissions?: PermissionsResolver<UserPermissions[], TypeParent, TContext>;
-
-    profileImageUrl?: ProfileImageUrlResolver<
-      Maybe<string>,
-      TypeParent,
-      TContext
-    >;
-
-    password?: PasswordResolver<string, TypeParent, TContext>;
-
-    profile?: ProfileResolver<Maybe<UserProfile>, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = string,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type UsernameResolver<
-    R = string,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type EmailResolver<
-    R = string,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type CreatedAtResolver<
-    R = Date,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PermissionsResolver<
-    R = UserPermissions[],
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileImageUrlResolver<
-    R = Maybe<string>,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PasswordResolver<
-    R = string,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ProfileResolver<
-    R = Maybe<UserProfile>,
-    Parent = UserInfo,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace MutationResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = {}> {
-    adminLogin?: AdminLoginResolver<Response, TypeParent, TContext>;
-
-    categoryCreate?: CategoryCreateResolver<Category, TypeParent, TContext>;
-
-    categoryDelete?: CategoryDeleteResolver<Response, TypeParent, TContext>;
-
-    fakeData?: FakeDataResolver<boolean, TypeParent, TContext>;
-
-    forumCreate?: ForumCreateResolver<Forum, TypeParent, TContext>;
-
-    forumDelete?: ForumDeleteResolver<Response, TypeParent, TContext>;
-
-    postCreate?: PostCreateResolver<Post, TypeParent, TContext>;
-
-    postDelete?: PostDeleteResolver<Maybe<Post>, TypeParent, TContext>;
-
-    threadCreate?: ThreadCreateResolver<
-      CreateThreadResponse,
-      TypeParent,
-      TContext
-    >;
-
-    threadDelete?: ThreadDeleteResolver<Maybe<Thread>, TypeParent, TContext>;
-
-    createAdmin?: CreateAdminResolver<DemoAdmin, TypeParent, TContext>;
-
-    confirmUserEmail?: ConfirmUserEmailResolver<Response, TypeParent, TContext>;
-
-    login?: LoginResolver<Response, TypeParent, TContext>;
-
-    logout?: LogoutResolver<Response, TypeParent, TContext>;
-
-    register?: RegisterResolver<Response, TypeParent, TContext>;
-
-    requestResetPassword?: RequestResetPasswordResolver<
-      Response,
-      TypeParent,
-      TContext
-    >;
-
-    resetPassword?: ResetPasswordResolver<Response, TypeParent, TContext>;
-
-    editUserProfile?: EditUserProfileResolver<Response, TypeParent, TContext>;
-  }
-
-  export type AdminLoginResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, AdminLoginArgs>;
-  export interface AdminLoginArgs {
-    input: LoginInput;
-  }
-
-  export type CategoryCreateResolver<
-    R = Category,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, CategoryCreateArgs>;
-  export interface CategoryCreateArgs {
-    input: CreateCategoryInput;
-  }
-
-  export type CategoryDeleteResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, CategoryDeleteArgs>;
-  export interface CategoryDeleteArgs {
-    id: number;
-  }
-
-  export type FakeDataResolver<
-    R = boolean,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ForumCreateResolver<
-    R = Forum,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ForumCreateArgs>;
-  export interface ForumCreateArgs {
-    input: CreateForumInput;
-  }
-
-  export type ForumDeleteResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ForumDeleteArgs>;
-  export interface ForumDeleteArgs {
-    id: number;
-  }
-
-  export type PostCreateResolver<
-    R = Post,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, PostCreateArgs>;
-  export interface PostCreateArgs {
-    input: CreatePostInput;
-  }
-
-  export type PostDeleteResolver<
-    R = Maybe<Post>,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, PostDeleteArgs>;
-  export interface PostDeleteArgs {
-    id: number;
-  }
-
-  export type ThreadCreateResolver<
-    R = CreateThreadResponse,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ThreadCreateArgs>;
-  export interface ThreadCreateArgs {
-    input: CreateThreadInput;
-  }
-
-  export type ThreadDeleteResolver<
-    R = Maybe<Thread>,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ThreadDeleteArgs>;
-  export interface ThreadDeleteArgs {
-    id: number;
-  }
-
-  export type CreateAdminResolver<
-    R = DemoAdmin,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type ConfirmUserEmailResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ConfirmUserEmailArgs>;
-  export interface ConfirmUserEmailArgs {
-    token: string;
-  }
-
-  export type LoginResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, LoginArgs>;
-  export interface LoginArgs {
-    input: LoginInput;
-  }
-
-  export type LogoutResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type RegisterResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, RegisterArgs>;
-  export interface RegisterArgs {
-    input: RegisterInput;
-  }
-
-  export type RequestResetPasswordResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, RequestResetPasswordArgs>;
-  export interface RequestResetPasswordArgs {
-    input?: Maybe<RequestResetPasswordInput>;
-  }
-
-  export type ResetPasswordResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, ResetPasswordArgs>;
-  export interface ResetPasswordArgs {
-    input: ResetPasswordInput;
-  }
-
-  export type EditUserProfileResolver<
-    R = Response,
-    Parent = {},
-    TContext = IContext
-  > = Resolver<R, Parent, TContext, EditUserProfileArgs>;
-  export interface EditUserProfileArgs {
-    input: EditUserProfileInput;
-  }
-}
-
-export namespace ResponseResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Response> {
-    error?: ErrorResolver<Maybe<Error[]>, TypeParent, TContext>;
-
-    success?: SuccessResolver<boolean, TypeParent, TContext>;
-  }
-
-  export type ErrorResolver<
-    R = Maybe<Error[]>,
-    Parent = Response,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type SuccessResolver<
-    R = boolean,
-    Parent = Response,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace ErrorResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Error> {
-    path?: PathResolver<string, TypeParent, TContext>;
-
-    message?: MessageResolver<string, TypeParent, TContext>;
-  }
-
-  export type PathResolver<
-    R = string,
-    Parent = Error,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type MessageResolver<
-    R = string,
-    Parent = Error,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace CreateThreadResponseResolvers {
-  export interface Resolvers<
-    TContext = IContext,
-    TypeParent = CreateThreadResponse
-  > {
-    id?: IdResolver<number, TypeParent, TContext>;
-
-    title?: TitleResolver<string, TypeParent, TContext>;
-  }
-
-  export type IdResolver<
-    R = number,
-    Parent = CreateThreadResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type TitleResolver<
-    R = string,
-    Parent = CreateThreadResponse,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-export namespace DemoAdminResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = DemoAdmin> {
-    username?: UsernameResolver<string, TypeParent, TContext>;
-
-    password?: PasswordResolver<string, TypeParent, TContext>;
-
-    email?: EmailResolver<string, TypeParent, TContext>;
-  }
-
-  export type UsernameResolver<
-    R = string,
-    Parent = DemoAdmin,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PasswordResolver<
-    R = string,
-    Parent = DemoAdmin,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type EmailResolver<
-    R = string,
-    Parent = DemoAdmin,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-}
-
-/** Directs the executor to skip this field or fragment when the `if` argument is true. */
-export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  SkipDirectiveArgs,
-  IContext
->;
-export interface SkipDirectiveArgs {
-  /** Skipped when true. */
-  if: boolean;
-}
-
-/** Directs the executor to include this field or fragment only when the `if` argument is true. */
-export type IncludeDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  IncludeDirectiveArgs,
-  IContext
->;
-export interface IncludeDirectiveArgs {
-  /** Included when true. */
-  if: boolean;
-}
-
-/** Marks an element of a GraphQL schema as no longer supported. */
-export type DeprecatedDirectiveResolver<Result> = DirectiveResolverFn<
-  Result,
-  DeprecatedDirectiveArgs,
-  IContext
->;
-export interface DeprecatedDirectiveArgs {
-  /** Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/). */
-  reason?: string;
-}
-
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
-  name: "Date";
-}
-export interface DateTimeScalarConfig
-  extends GraphQLScalarTypeConfig<DateTime, any> {
-  name: "DateTime";
-}
-export interface UploadScalarConfig
-  extends GraphQLScalarTypeConfig<Upload, any> {
-  name: "Upload";
-}
-
-export type IResolvers<TContext = IContext> = {
-  Query?: QueryResolvers.Resolvers<TContext>;
-  GetDashboardResponse?: GetDashboardResponseResolvers.Resolvers<TContext>;
-  CategoryGetAllResponse?: CategoryGetAllResponseResolvers.Resolvers<TContext>;
-  Category?: CategoryResolvers.Resolvers<TContext>;
-  Forum?: ForumResolvers.Resolvers<TContext>;
-  Thread?: ThreadResolvers.Resolvers<TContext>;
-  Post?: PostResolvers.Resolvers<TContext>;
-  PostAuthor?: PostAuthorResolvers.Resolvers<TContext>;
-  ThreadOwner?: ThreadOwnerResolvers.Resolvers<TContext>;
-  CategoryGetSummaryAllResponse?: CategoryGetSummaryAllResponseResolvers.Resolvers<
-    TContext
-  >;
-  CategoryInfo?: CategoryInfoResolvers.Resolvers<TContext>;
-  GetUploadUrlResponse?: GetUploadUrlResponseResolvers.Resolvers<TContext>;
-  GetForumResponse?: GetForumResponseResolvers.Resolvers<TContext>;
-  ForumGetAllResponse?: ForumGetAllResponseResolvers.Resolvers<TContext>;
-  ForumInfo?: ForumInfoResolvers.Resolvers<TContext>;
-  PostGetAllResponse?: PostGetAllResponseResolvers.Resolvers<TContext>;
-  PostInfo?: PostInfoResolvers.Resolvers<TContext>;
-  ThreadGetAllResponse?: ThreadGetAllResponseResolvers.Resolvers<TContext>;
-  ThreadInfo?: ThreadInfoResolvers.Resolvers<TContext>;
-  GetThreadResponse?: GetThreadResponseResolvers.Resolvers<TContext>;
-  GetThreadPostsResponse?: GetThreadPostsResponseResolvers.Resolvers<TContext>;
-  User?: UserResolvers.Resolvers<TContext>;
-  UserProfile?: UserProfileResolvers.Resolvers<TContext>;
-  UserGetAllResponse?: UserGetAllResponseResolvers.Resolvers<TContext>;
-  UserSummary?: UserSummaryResolvers.Resolvers<TContext>;
-  UserInfo?: UserInfoResolvers.Resolvers<TContext>;
-  Mutation?: MutationResolvers.Resolvers<TContext>;
-  Response?: ResponseResolvers.Resolvers<TContext>;
-  Error?: ErrorResolvers.Resolvers<TContext>;
-  CreateThreadResponse?: CreateThreadResponseResolvers.Resolvers<TContext>;
-  DemoAdmin?: DemoAdminResolvers.Resolvers<TContext>;
-  Date?: GraphQLScalarType;
-  DateTime?: GraphQLScalarType;
-  Upload?: GraphQLScalarType;
-} & { [typeName: string]: never };
-
-export type IDirectiveResolvers<Result> = {
-  skip?: SkipDirectiveResolver<Result>;
-  include?: IncludeDirectiveResolver<Result>;
-  deprecated?: DeprecatedDirectiveResolver<Result>;
-} & { [directiveName: string]: never };
+export type UserResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  permissions?: Resolver<Array<ResolversTypes['UserPermissions']>, ParentType, ContextType>,
+  profileImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  profile?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type UserGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['UserGetAllResponse'] = ResolversParentTypes['UserGetAllResponse']> = ResolversObject<{
+  users?: Resolver<Array<ResolversTypes['UserSummary']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type UserInfoResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['UserInfo'] = ResolversParentTypes['UserInfo']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  permissions?: Resolver<Array<ResolversTypes['UserPermissions']>, ParentType, ContextType>,
+  profileImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  profile?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type UserProfileResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  gender?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  occupation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type UserSummaryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['UserSummary'] = ResolversParentTypes['UserSummary']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  registerDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  postCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type Resolvers<ContextType = IContext> = ResolversObject<{
+  Category?: CategoryResolvers<ContextType>,
+  CategoryGetAllResponse?: CategoryGetAllResponseResolvers<ContextType>,
+  CategoryGetSummaryAllResponse?: CategoryGetSummaryAllResponseResolvers<ContextType>,
+  CategoryInfo?: CategoryInfoResolvers<ContextType>,
+  CreateThreadResponse?: CreateThreadResponseResolvers<ContextType>,
+  Date?: GraphQLScalarType,
+  DateTime?: GraphQLScalarType,
+  DemoAdmin?: DemoAdminResolvers<ContextType>,
+  Error?: ErrorResolvers<ContextType>,
+  Forum?: ForumResolvers<ContextType>,
+  ForumGetAllResponse?: ForumGetAllResponseResolvers<ContextType>,
+  ForumInfo?: ForumInfoResolvers<ContextType>,
+  GetDashboardResponse?: GetDashboardResponseResolvers<ContextType>,
+  GetForumResponse?: GetForumResponseResolvers<ContextType>,
+  GetThreadPostsResponse?: GetThreadPostsResponseResolvers<ContextType>,
+  GetThreadResponse?: GetThreadResponseResolvers<ContextType>,
+  GetUploadUrlResponse?: GetUploadUrlResponseResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
+  Post?: PostResolvers<ContextType>,
+  PostAuthor?: PostAuthorResolvers<ContextType>,
+  PostGetAllResponse?: PostGetAllResponseResolvers<ContextType>,
+  PostInfo?: PostInfoResolvers<ContextType>,
+  Query?: QueryResolvers<ContextType>,
+  Response?: ResponseResolvers<ContextType>,
+  Thread?: ThreadResolvers<ContextType>,
+  ThreadGetAllResponse?: ThreadGetAllResponseResolvers<ContextType>,
+  ThreadInfo?: ThreadInfoResolvers<ContextType>,
+  ThreadOwner?: ThreadOwnerResolvers<ContextType>,
+  Upload?: GraphQLScalarType,
+  User?: UserResolvers<ContextType>,
+  UserGetAllResponse?: UserGetAllResponseResolvers<ContextType>,
+  UserInfo?: UserInfoResolvers<ContextType>,
+  UserProfile?: UserProfileResolvers<ContextType>,
+  UserSummary?: UserSummaryResolvers<ContextType>,
+}>;
+
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+*/
+export type IResolvers<ContextType = IContext> = Resolvers<ContextType>;

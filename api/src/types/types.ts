@@ -1,5 +1,6 @@
 import { Redis } from 'ioredis'
 import { Request, Response } from 'express'
+import { EmailService } from '../services/Email/EmailService'
 
 export interface Error {
   path: string
@@ -17,6 +18,7 @@ export interface IContext {
   response: Response
   url: string
   s3BucketUrl: string
+  emailService: EmailService
   userId: string | null
 }
 

@@ -5,7 +5,7 @@ import { Post } from '../../../models/Posts'
 import { Thread } from '../../../models/Threads'
 import { User } from '../../../models/User'
 
-export const postCreate: MutationResolvers.PostCreateResolver = async (
+export const postCreate: MutationResolvers['postCreate'] = async (
   _,
   { input: { text, threadId } },
   { userId }
@@ -18,17 +18,9 @@ export const postCreate: MutationResolvers.PostCreateResolver = async (
       .create({ text: JSON.stringify(text) })
       .save()
 
-    await manager
-      .createQueryBuilder()
-      .relation(Thread, 'posts')
-      .of(threadId)
-      .add(created.id)
+    await manager.createQueryBuilder().relation(Thread, 'posts').of(threadId).add(created.id)
 
-    await manager
-      .createQueryBuilder()
-      .relation(User, 'posts')
-      .of(userId)
-      .add(created.id)
+    await manager.createQueryBuilder().relation(User, 'posts').of(userId).add(created.id)
 
     return created
   })

@@ -2,11 +2,11 @@ overwrite: true
 schema: http://localhost:5000/graphql
 config:
   contextType: ./types#IContext
+  useIndexSignature: true
 generates:
   src/types/schema.ts:
     plugins:
       - add: '/* tslint:disable */'
-      - time
-      - typescript-common
-      - typescript-server
+      - typescript
+      - typescript-operations
       - typescript-resolvers

@@ -1,15 +1,15 @@
-import { QueryResolvers } from '../../../types/schema';
-import { Category } from '../../../models/Category';
-import { getConnection } from 'typeorm';
-import { Forum } from '../../../models/Forums';
-import { isAdmin } from '../../Admin/isAdmin';
+import { QueryResolvers } from '../../../types/schema'
+import { Category } from '../../../models/Category'
+import { getConnection } from 'typeorm'
+import { Forum } from '../../../models/Forums'
+import { isAdmin } from '../../Admin/isAdmin'
 
-export const categoryGetSummaryAll: QueryResolvers.CategoryGetSummaryAllResolver = async (
+export const categoryGetSummaryAll: QueryResolvers['categoryGetSummaryAll'] = async (
   _,
   __,
-  { userId },
+  { userId }
 ) => {
-  await isAdmin(userId);
+  await isAdmin(userId)
   const categories = await getConnection()
     .getRepository(Category)
     .createQueryBuilder('category')
@@ -18,9 +18,9 @@ export const categoryGetSummaryAll: QueryResolvers.CategoryGetSummaryAllResolver
       return subQuery
         .select('COUNT(forum.id)', 'forumCount')
         .from(Forum, 'forum')
-        .where('forum."categoryId" = category.id');
+        .where('forum."categoryId" = category.id')
     }, 'forumCount')
-    .getRawMany();
+    .getRawMany()
 
-  return { categories };
-};
+  return { categories }
+}

@@ -1,16 +1,19 @@
 import styled from 'styled-components'
 
+const dropzoneSize = `
+  width: 14em;
+  height: 14em;
+`
 export const DropzoneDiv = styled.div`
   :focus {
     outline: none;
   }
   @media (${({ theme }) => theme.breakpoints.phone}) {
-    width: 7em;
-    height: 7em;
+    width: 9em;
+    height: 9em;
   }
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 7em;
-    height: 7em;
+    ${dropzoneSize}
   }
 `
 
@@ -25,15 +28,15 @@ export const DropzoneHoverContentDiv = styled.div<{
   background-image: ${({ dropzoneHover }) =>
       dropzoneHover ? 'linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),' : ''}
     url(${({ imageUrl }) => imageUrl});
-  background-size: 7em 7em;
+  background-size: 14em 14em;
 
   @media (${({ theme }) => theme.breakpoints.phone}) {
-    width: 7em;
-    height: 7em;
+    width: 9em;
+    height: 9em;
+    background-size: 9em 9em;
   }
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 7em;
-    height: 7em;
+    ${dropzoneSize}
   }
   :hover {
     box-shadow: 0px 0px 0px 5px #1d9bd1 inset;

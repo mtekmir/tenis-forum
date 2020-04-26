@@ -1,34 +1,30 @@
-import { MutationResolvers } from '../../../../types/schema';
-import { User } from '../../../../models/User';
-import { createResetPasswordLink } from './createResetPasswordLink';
-import { getConnection } from 'typeorm';
-import { respond } from '../../../common/genericResponse';
-import { sendPasswordResetEmail } from '../../../../services/email/sendPasswordResetEmail';
+import { MutationResolvers } from '../../../../types/schema'
+import { User } from '../../../../models/User'
+import { createResetPasswordLink } from './createResetPasswordLink'
+import { getConnection } from 'typeorm'
+import { respond } from '../../../common/genericResponse'
+import { sendPasswordResetEmail } from '../../../../services/Email/sendPasswordResetEmail'
 
-export const requestResetPassword: MutationResolvers.RequestResetPasswordResolver = async (
+export const requestResetPassword: MutationResolvers['requestResetPassword'] = async (
   _,
   { input: { email } },
-  { url },
+  { url }
 ) => {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email } })
   if (!user) {
-    return respond();
+    return respond()
   }
 
-  const {
-    pwResetToken,
-    pwResetTokenExpiry,
-    link,
-  } = await createResetPasswordLink(url);
+  const { pwResetToken, pwResetTokenExpiry, link } = await createResetPasswordLink(url)
 
   await getConnection()
     .createQueryBuilder()
     .update(User)
     .set({ pwResetToken, pwResetTokenExpiry })
     .where('email = :email', { email })
-    .execute();
+    .execute()
   // send email
 
-  await sendPasswordResetEmail(email, link);
-  return respond();
-};
+  await sendPasswordResetEmail(email, link)
+  return respond()
+}

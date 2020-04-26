@@ -1,13 +1,13 @@
-import { QueryResolvers } from '../../../../types/schema';
-import { isAuthenticated } from '../../auth/authenticateUser';
-import { UserProfile } from '../../../../models/UserProfile';
+import { QueryResolvers } from '../../../../types/schema'
+import { isAuthenticated } from '../../auth/authenticateUser'
+import { UserProfile } from '../../../../models/UserProfile'
 
-export const userProfileGet: QueryResolvers.UserProfileGetResolver = async (
+export const userProfileGet: QueryResolvers['userProfileGet'] = async (
   _,
   { id },
-  { userId },
+  { userId }
 ) => {
-  isAuthenticated(userId);
+  isAuthenticated(userId)
 
-  return UserProfile.findOne({ where: { id } });
-};
+  return UserProfile.findOne({ where: { id } })
+}

@@ -9,7 +9,7 @@ const s3 = new S3({
   region: 'eu-central-1',
 })
 
-export const getUploadUrl: QueryResolvers.GetUploadUrlResolver = async (
+export const getUploadUrl: QueryResolvers['getUploadUrl'] = async (
   _,
   { input: { contentType, extension } },
   { userId }

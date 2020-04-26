@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "",
   "devDependencies": {
-    "@babel/polyfill": "^7.2.3",
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-redis": "^0.0.8",
     "@types/cookie-parser": "^1.4.1",
@@ -26,15 +25,13 @@
     "babel-register": "^6.26.0",
     "env-cmd": "^8.0.2",
     "faker": "^4.1.0",
-    "graphql-code-generator": "^0.18.2",
-    "graphql-codegen-add": "^0.18.2",
-    "graphql-codegen-time": "^0.18.2",
-    "graphql-codegen-typescript-common": "^0.18.2",
-    "graphql-codegen-typescript-resolvers": "^0.18.2",
-    "graphql-codegen-typescript-server": "^0.18.2",
+    "@graphql-codegen/cli": "^1.0.0",
+    "@graphql-codegen/typescript": "^1.0.0",
+    "@graphql-codegen/typescript-operations": "^1.0.0",
+    "@graphql-codegen/typescript-resolvers": "^1.0.0",
+    "@graphql-codegen/add": "^1.0.0",
     "graphql-request": "^1.8.2",
-    "jest": "^23.6.0",
-    "nodemon": "^2.0.3",
+    "jest": "^25.4.0",
     "ts-jest": "^23.10.5",
     "ts-node": "7.0.1",
     "tslint": "^5.13.1",
@@ -71,6 +68,7 @@
     "pg": "^7.7.1",
     "rate-limit-redis": "^1.6.0",
     "reflect-metadata": "^0.1.12",
+    "ts-node-dev": "^1.0.0-pre.44",
     "tslint-config-prettier": "^1.18.0",
     "typeorm": "^0.2.14",
     "uuid": "^3.3.2"
@@ -78,8 +76,7 @@
   "scripts": {
     "test-db:setup": "ts-node ./src/test/setup.ts",
     "test": "yarn run test-db:setup && jest --watchAll --runInBand",
-    "start": "ts-node src/index.ts",
-    "generate": "gql-gen",
-    "dev": "nodemon --exec ts-node --files src/index.ts TS_NODE_FILES=true"
+    "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "generate": "gql-gen"
   }
 }

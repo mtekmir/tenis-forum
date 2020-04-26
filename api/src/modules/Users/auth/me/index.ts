@@ -1,25 +1,25 @@
-import { QueryResolvers } from '../../../../types/schema';
-import { User } from '../../../../models/User';
-import { UserPermissions } from '../../../../models/User/permissions';
-import { UserProfile } from '../../../../models/UserProfile';
+import { QueryResolvers } from '../../../../types/schema'
+import { User } from '../../../../models/User'
+import { UserPermissions } from '../../../../models/User/permissions'
+import { UserProfile } from '../../../../models/UserProfile'
 
-export const me: QueryResolvers.MeResolver = async (_, __, { userId }) => {
+export const me: QueryResolvers['me'] = async (_, __, { userId }) => {
   if (!userId) {
-    return null;
+    return null
   }
 
   const user = await User.findOne({
     where: {
       id: userId,
     },
-  });
+  })
 
-  const { id, username, email, permissions, profileImageKey } = user;
+  const { id, username, email, permissions, profileImageKey } = user
 
-  let profile;
+  let profile
   if (!permissions.includes(UserPermissions.Admin)) {
-    profile = await UserProfile.findOne({ where: { user } });
+    profile = await UserProfile.findOne({ where: { user } })
   }
 
-  return { id, username, email, permissions, profileImageKey, profile };
-};
+  return { id, username, email, permissions, profileImageKey, profile }
+}

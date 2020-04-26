@@ -1,30 +1,27 @@
-import { MutationResolvers } from '../../../types/schema';
-import { Forum } from '../../../models/Forums';
-import { getConnection } from 'typeorm';
-import { Category } from '../../../models/Category';
-import { isAdmin } from '../../Admin/isAdmin';
+import { MutationResolvers } from '../../../types/schema'
+import { Forum } from '../../../models/Forums'
+import { getConnection } from 'typeorm'
+import { Category } from '../../../models/Category'
+import { isAdmin } from '../../Admin/isAdmin'
 
-export const forumCreate: MutationResolvers.ForumCreateResolver = async (
+export const forumCreate: MutationResolvers['forumCreate'] = async (
   _,
   { input: { name, categoryId } },
-  { userId },
+  { userId }
 ) => {
-  await isAdmin(userId);
-  let forum: Forum;
+  await isAdmin(userId)
+  let forum: Forum
   await getConnection().transaction(async manager => {
-    forum = await manager
-      .getRepository(Forum)
-      .create({ name })
-      .save();
+    forum = await manager.getRepository(Forum).create({ name }).save()
     await manager
       .createQueryBuilder()
       .relation(Category, 'forums')
       .of(categoryId)
-      .add(forum.id);
+      .add(forum.id)
     forum = await manager
       .getRepository(Forum)
-      .findOne({ where: { id: forum.id }, relations: ['category'] });
-  });
+      .findOne({ where: { id: forum.id }, relations: ['category'] })
+  })
 
-  return forum;
-};
+  return forum
+}

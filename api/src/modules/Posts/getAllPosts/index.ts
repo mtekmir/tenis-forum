@@ -1,10 +1,10 @@
-import { QueryResolvers } from '../../../types/schema';
-import { getConnection } from 'typeorm';
-import { Post } from '../../../models/Posts';
+import { QueryResolvers } from '../../../types/schema'
+import { getConnection } from 'typeorm'
+import { Post } from '../../../models/Posts'
 
-export const postGetAll: QueryResolvers.PostGetAllResolver = async (
+export const postGetAll: QueryResolvers['postGetAll'] = async (
   _,
-  { input: { id, filterBy, limit = 25, offset = 0 } },
+  { input: { id, filterBy, limit = 25, offset = 0 } }
 ) => {
   let query = getConnection()
     .getRepository(Post)
@@ -19,16 +19,13 @@ export const postGetAll: QueryResolvers.PostGetAllResolver = async (
       'thread.title as "threadTitle"',
     ])
     .innerJoin('post.author', 'author')
-    .innerJoin('post.thread', 'thread');
+    .innerJoin('post.thread', 'thread')
 
   if (id) {
-    query = query.where('post."authorId" = :id', { id });
+    query = query.where('post."authorId" = :id', { id })
   }
 
-  const posts = await query
-    .limit(limit)
-    .offset(offset)
-    .getRawMany();
+  const posts = await query.limit(limit).offset(offset).getRawMany()
 
-  return { posts };
-};
+  return { posts }
+}

@@ -1,29 +1,26 @@
-import { MutationResolvers } from '../../../../types/schema';
-import { User } from '../../../../models/User';
-import validateRegister from './validateRegister';
-import { createConfirmEmailLink } from './createConfirmEmailLink';
-import { respond } from '../../../common/genericResponse';
-import { UserPermissions } from '../../../../models/User/permissions';
-import { sendConfirmationEmail } from '../../../../services/email/sendConfirmationEmail';
-import { getConnection } from 'typeorm';
-import { UserProfile } from '../../../../models/UserProfile';
-import { generateProfileImage } from './generateProfileImage';
+import { MutationResolvers } from '../../../../types/schema'
+import { User } from '../../../../models/User'
+import validateRegister from './validateRegister'
+import { createConfirmEmailLink } from './createConfirmEmailLink'
+import { respond } from '../../../common/genericResponse'
+import { UserPermissions } from '../../../../models/User/permissions'
+import { sendConfirmationEmail } from '../../../../services/Email/sendConfirmationEmail'
+import { getConnection } from 'typeorm'
+import { UserProfile } from '../../../../models/UserProfile'
+import { generateProfileImage } from './generateProfileImage'
 
-export const register: MutationResolvers.RegisterResolver = async (
+export const register: MutationResolvers['register'] = async (
   _,
   { input: { username, email, password } },
-  { url },
+  { url }
 ) => {
-  const error = await validateRegister({ email, password });
+  const error = await validateRegister({ email, password })
   if (error) {
-    return { error, success: false };
+    return { error, success: false }
   }
-  let user: User;
+  let user: User
   await getConnection().transaction(async manager => {
-    const profile = await manager
-      .getRepository(UserProfile)
-      .create({})
-      .save();
+    const profile = await manager.getRepository(UserProfile).create({}).save()
 
     user = await manager
       .getRepository(User)
@@ -35,11 +32,11 @@ export const register: MutationResolvers.RegisterResolver = async (
         profile,
         profileImageKey: generateProfileImage(),
       })
-      .save();
-  });
+      .save()
+  })
 
-  const link = await createConfirmEmailLink(url, user.id);
+  const link = await createConfirmEmailLink(url, user.id)
 
-  await sendConfirmationEmail(email, link);
-  return respond();
-};
+  await sendConfirmationEmail(email, link)
+  return respond()
+}

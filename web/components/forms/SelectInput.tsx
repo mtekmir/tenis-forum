@@ -38,20 +38,25 @@ export const Select: React.FunctionComponent<Props> = props => (
 const selectStyles = (width?: string) => ({
   control: (styles: any) => ({
     ...styles,
-    backgroundColor: '#eef6ea',
-    padding: '.65em',
-    borderRadius: '10px',
-    width: width || '90%',
+    backgroundColor: '#eee',
+    padding: '.3em',
+    borderRadius: 0,
+    width: width || '19.8em',
     border: 'none',
     boxShadow: '3px 3px 6px 1px rgba(0, 0, 0, 0.14)',
   }),
   option: (styles: any, { isFocused, isSelected }: any) => ({
     ...styles,
-    backgroundColor: isFocused || isSelected ? '#eef6ea' : 'white',
+    backgroundColor: isFocused || isSelected ? '#eee' : 'white',
     color: 'black',
+    width: '19.9em',
     ':active': {
       ...styles[':active'],
-      backgroundColor: isFocused || isSelected ? '#eef6ea' : 'white',
+      backgroundColor: isFocused || isSelected ? '#eee' : 'white',
     },
+  }),
+  container: (styles: any) => ({
+    ...styles,
+    width: '19.9em',
   }),
 })

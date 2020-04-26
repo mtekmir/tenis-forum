@@ -1,21 +1,18 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { breakPoints } from '../../styles/theme'
 
 export const Tabs = styled.div`
   /* position: absolute;
   bottom: 0;
   left: 0; */
-  color: white;
-  background: ${({ theme }) => theme.palette.primary};
+  color: ${({ theme }) => theme.palette.primary};
+  margin-top: -0.3em;
+  margin-bottom: 1em;
+  height: 2.5em;
+  display: flex;
+  padding-left: 1em;
 
-  @media (${({ theme }) => theme.breakpoints.phone}) {
-    margin-top: -0.3em;
-    margin-bottom: 1em;
-    height: 2.5em;
-    display: flex;
-    padding-left: 1em;
-  }
-
-  @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
+  @media (${breakPoints.tabletLandscape}) {
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -23,4 +20,4 @@ export const Tabs = styled.div`
     margin: 1em;
     border-radius: 2px;
   }
-`;
+`

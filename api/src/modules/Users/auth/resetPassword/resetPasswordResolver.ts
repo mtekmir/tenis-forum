@@ -1,21 +1,21 @@
-import * as bcrypt from 'bcryptjs';
-import { MutationResolvers } from '../../../../types/schema';
-import { validatePassword } from './validatePassword';
-import { User } from '../../../../models/User';
-import { respond } from '../../../common/genericResponse';
-import { getConnection } from 'typeorm';
+import * as bcrypt from 'bcryptjs'
+import { MutationResolvers } from '../../../../types/schema'
+import { validatePassword } from './validatePassword'
+import { User } from '../../../../models/User'
+import { respond } from '../../../common/genericResponse'
+import { getConnection } from 'typeorm'
 
-export const resetPassword: MutationResolvers.ResetPasswordResolver = async (
+export const resetPassword: MutationResolvers['resetPassword'] = async (
   _,
   { input: { newPassword, pwResetToken } }
 ) => {
   const user = await User.findOne({
     where: {
-      pwResetToken
-    }
-  });
+      pwResetToken,
+    },
+  })
   if (!user) {
-    return respond();
+    return respond()
   }
   if (user.pwResetTokenExpiry - Date.now() > 60 * 60 * 30) {
     await getConnection()
@@ -23,22 +23,22 @@ export const resetPassword: MutationResolvers.ResetPasswordResolver = async (
       .update(User)
       .set({ pwResetToken: null, pwResetTokenExpiry: null })
       .where('id = :id', { id: user.id })
-      .execute();
-    return respond();
+      .execute()
+    return respond()
   }
 
-  const error = validatePassword(newPassword);
+  const error = validatePassword(newPassword)
   if (error) {
-    return { error, success: false };
+    return { error, success: false }
   }
 
-  const hashed = await bcrypt.hash(newPassword, 10);
+  const hashed = await bcrypt.hash(newPassword, 10)
   await getConnection()
     .createQueryBuilder()
     .update(User)
     .set({ pwResetToken: null, pwResetTokenExpiry: null, password: hashed })
     .where('id = :id', { id: user.id })
-    .execute();
+    .execute()
 
-  return respond();
-};
+  return respond()
+}

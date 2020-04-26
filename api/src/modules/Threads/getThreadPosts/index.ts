@@ -1,6 +1,10 @@
 import { Post } from '../../../models/Posts'
+import { QueryResolvers } from '../../../types/schema'
 
-export const threadGetPosts = async (_: any, { input: { threadId, page = 1 } }: any) => {
+export const threadGetPosts: QueryResolvers['threadGetPosts'] = async (
+  _,
+  { input: { threadId, page = 1 } }
+) => {
   const [posts, count] = await Post.findAndCount({
     where: { threadId },
     skip: (page - 1) * 50,

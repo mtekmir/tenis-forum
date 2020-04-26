@@ -1,0 +1,10 @@
+input sendUserFeedbackInput {
+  name: String!
+  email: String!
+  subject: String!
+  message: String!
+}
+
+type Mutation {
+  userSendFeedback(input: sendUserFeedbackInput!): Response!
+}

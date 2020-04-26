@@ -88,13 +88,8 @@ export const ProfileForm: React.ComponentType<Props> = ({
               </FormDiv>
             </div>
             <BottomDiv>
-              <Button text='İptal' url='/' color='red_gradient' marginRight />
-              <Button
-                type='submit'
-                text='Kaydet'
-                color='green_gradient'
-                onClick={handleSubmit}
-              />
+              <Button text='İptal' url='/' color='red' marginRight />
+              <Button type='submit' text='Kaydet' color='green' onClick={handleSubmit} />
             </BottomDiv>
           </Form>
         )}

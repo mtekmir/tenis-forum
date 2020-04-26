@@ -13,7 +13,8 @@
     "no-implicit-dependencies": false,
     "interface-name": [true, "never-prefix"],
     "trailing-comma": [true, { "singleLine": "always", "multiline": "always" }],
-    "forin": false
+    "forin": false,
+    "no-unused-expression": false
   },
   "rulesDirectory": [],
   "linterOptions": {
