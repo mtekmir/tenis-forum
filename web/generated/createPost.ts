@@ -11,6 +11,7 @@ export interface createPost_postCreate_author {
   __typename: "PostAuthor";
   id: string;
   username: string;
+  signature: string | null;
   profileImageUrl: string | null;
 }
 

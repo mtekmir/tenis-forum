@@ -31,4 +31,5 @@ export interface EditUserProfileVariables {
   location?: string | null;
   gender?: Gender | null;
   occupation?: string | null;
+  signature?: string | null;
 }

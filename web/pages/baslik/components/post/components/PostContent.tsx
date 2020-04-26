@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const PostContentTopDiv = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const PostContentTopDiv = styled.div`
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
     width: 100%;
   }
-`;
+`
 
 export const PostContent = styled.div`
   display: flex;
@@ -32,9 +32,10 @@ export const PostContent = styled.div`
     width: 100%;
     justify-content: space-between;
   }
-`;
+`
 
-export const Divider = styled.hr`
-  color: #d1d3d5;
+export const Divider = styled.div`
+  border-bottom: 1px solid #d1d3d5;
+  margin: 1em 0;
   width: 100%;
-`;
+`

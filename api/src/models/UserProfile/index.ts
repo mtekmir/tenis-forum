@@ -5,8 +5,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   JoinColumn,
-} from 'typeorm';
-import { User } from '../User';
+} from 'typeorm'
+import { User } from '../User'
 
 enum Gender {
   NotSelected = 'NOT_SELECTED',
@@ -17,20 +17,20 @@ enum Gender {
 @Entity('user_profile')
 export class UserProfile extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id: number
 
   @Column('varchar', { nullable: true })
-  location: string;
+  location: string
 
   @Column('enum', { default: Gender.NotSelected, enum: Gender })
-  gender: Gender;
+  gender: Gender
 
   @Column('varchar', { nullable: true })
-  occupation: string;
+  occupation: string
 
   @OneToOne(() => User, user => user.profile, {
     onDelete: 'CASCADE',
   })
   @JoinColumn()
-  user: User;
+  user: User
 }

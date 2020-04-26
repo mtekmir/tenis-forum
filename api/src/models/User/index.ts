@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'
 import {
   Entity,
   Column,
@@ -8,63 +8,66 @@ import {
   OneToMany,
   OneToOne,
   CreateDateColumn,
-} from 'typeorm';
-import { UserPermissions } from './permissions';
-import { Post } from '../Posts';
-import { Thread } from '../Threads';
-import { UserProfile } from '../UserProfile';
+} from 'typeorm'
+import { UserPermissions } from './permissions'
+import { Post } from '../Posts'
+import { Thread } from '../Threads'
+import { UserProfile } from '../UserProfile'
 
 @Entity('users')
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @Column('text', { nullable: true })
-  googleId: string;
+  googleId: string
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @Column('varchar', { length: 100, nullable: false })
-  username: string;
+  username: string
 
   @Column('varchar', { length: 255, nullable: true })
-  email: string;
+  email: string
 
   @Column('text', { nullable: true })
-  password: string;
+  password: string
 
   @Column('enum', {
     array: true,
     enum: UserPermissions,
   })
-  permissions: UserPermissions[];
+  permissions: UserPermissions[]
+
+  @Column('text', { nullable: true })
+  signature: string
 
   @Column('boolean', { default: false })
-  confirmed: boolean;
+  confirmed: boolean
 
   @Column('varchar', { nullable: true })
-  pwResetToken: string;
+  pwResetToken: string
 
   @Column('bigint', { nullable: true })
-  pwResetTokenExpiry: number;
+  pwResetTokenExpiry: number
 
   @OneToMany(() => Post, post => post.author)
-  posts: Post[];
+  posts: Post[]
 
   @OneToMany(() => Thread, thread => thread.owner)
-  threads: Thread[];
+  threads: Thread[]
 
   @Column('varchar', { nullable: true })
-  profileImageKey: string;
+  profileImageKey: string
 
   @OneToOne(() => UserProfile, profile => profile.user)
-  profile: UserProfile;
+  profile: UserProfile
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {
     if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10);
+      this.password = await bcrypt.hash(this.password, 10)
     }
   }
 }

@@ -32,13 +32,16 @@ export const ProfileForm: React.ComponentType<Props> = ({
   }
 
   const {
+    username,
+    signature,
     profile: { gender, location, occupation },
   } = user
   const initialValues = {
-    username: user.username ? user.username : '',
-    gender: gender ? gender : '',
-    location: location ? location : '',
-    occupation: occupation ? occupation : '',
+    username: username || '',
+    gender: gender || '',
+    location: location || '',
+    occupation: occupation || '',
+    signature: signature || '',
   }
 
   const handleSubmit = (v: FormValues) => {
@@ -63,7 +66,7 @@ export const ProfileForm: React.ComponentType<Props> = ({
           placeholder={label}
           type={type}
           options={options}
-          component={type === 'text' ? TextInput : SelectInput}
+          component={type === 'select' ? SelectInput : TextInput}
         />
       </InputDiv>
     ))
@@ -76,23 +79,21 @@ export const ProfileForm: React.ComponentType<Props> = ({
   return (
     <div>
       <Formik<FormValues> initialValues={initialValues} onSubmit={v => handleSubmit(v)}>
-        {({ handleSubmit }) => (
-          <Form>
-            <div>
-              <FormDiv>
-                <LeftDiv>{renderFields()}</LeftDiv>
-                <RightDiv>
-                  <Label>Profil Resmi</Label>
-                  <DropzoneComponent {...rest} user={user} />
-                </RightDiv>
-              </FormDiv>
-            </div>
-            <BottomDiv>
-              <Button text='İptal' url='/' color='red' marginRight />
-              <Button type='submit' text='Kaydet' color='green' onClick={handleSubmit} />
-            </BottomDiv>
-          </Form>
-        )}
+        <Form>
+          <div>
+            <FormDiv>
+              <LeftDiv>{renderFields()}</LeftDiv>
+              <RightDiv>
+                <Label>Profil Resmi</Label>
+                <DropzoneComponent {...rest} user={user} />
+              </RightDiv>
+            </FormDiv>
+          </div>
+          <BottomDiv>
+            <Button text='İptal' url='/' color='red' marginRight />
+            <Button type='submit' text='Kaydet' color='green' />
+          </BottomDiv>
+        </Form>
       </Formik>
     </div>
   )

@@ -7,7 +7,7 @@ import { MutationResolvers } from '../../../../types/schema'
 
 export const editUserProfile: MutationResolvers['editUserProfile'] = async (
   _,
-  { input: { username, profileImageKey, ...rest } },
+  { input: { username, profileImageKey, signature, ...rest } },
   { userId }
 ) => {
   isAuthenticated(userId)
@@ -17,8 +17,13 @@ export const editUserProfile: MutationResolvers['editUserProfile'] = async (
     if (username) {
       userUpdates.username = username
     }
+
     if (profileImageKey) {
       userUpdates.profileImageKey = profileImageKey
+    }
+
+    if (signature) {
+      userUpdates.signature = signature
     }
 
     if (Object.keys(userUpdates).length) {

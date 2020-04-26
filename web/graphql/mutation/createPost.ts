@@ -9,6 +9,7 @@ export const CREATE_POST = gql`
       author {
         id
         username
+        signature
         profileImageUrl
       }
     }

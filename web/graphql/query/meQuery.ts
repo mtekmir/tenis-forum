@@ -7,6 +7,7 @@ export const ME_QUERY = gql`
       username
       email
       permissions
+      signature
       profileImageUrl
       profile {
         id

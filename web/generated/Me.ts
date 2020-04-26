@@ -23,6 +23,7 @@ export interface Me_me {
   username: string;
   email: string;
   permissions: UserPermissions[];
+  signature: string | null;
   profileImageUrl: string | null;
   profile: Me_me_profile | null;
 }

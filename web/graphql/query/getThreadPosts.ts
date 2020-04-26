@@ -10,6 +10,7 @@ export const GET_THREAD_POSTS = gql`
         author {
           id
           username
+          signature
           profileImageUrl
         }
       }

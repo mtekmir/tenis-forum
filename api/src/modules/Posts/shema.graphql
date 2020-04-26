@@ -9,6 +9,7 @@ type Post {
 type PostAuthor {
   id: String!
   username: String!
+  signature: String
   profileImageUrl: String
 }
 

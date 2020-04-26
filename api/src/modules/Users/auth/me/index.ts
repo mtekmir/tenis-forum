@@ -14,12 +14,12 @@ export const me: QueryResolvers['me'] = async (_, __, { userId }) => {
     },
   })
 
-  const { id, username, email, permissions, profileImageKey } = user
+  const { id, username, email, permissions, profileImageKey, signature } = user
 
   let profile
   if (!permissions.includes(UserPermissions.Admin)) {
     profile = await UserProfile.findOne({ where: { user } })
   }
 
-  return { id, username, email, permissions, profileImageKey, profile }
+  return { id, username, email, permissions, profileImageKey, profile, signature }
 }

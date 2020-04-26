@@ -36,7 +36,7 @@ const Thread: React.FunctionComponent<Props> = () => {
   if (tLoading || pLoading) {
     return <div>Loading</div>
   }
-  console.log(threadRes)
+
   const {
     threadGet: {
       thread: { title, owner, ...rest },
@@ -49,8 +49,7 @@ const Thread: React.FunctionComponent<Props> = () => {
   const renderPosts = () => {
     return posts.map(({ author, text, id, createdAt }, idx) => (
       <Post
-        username={author.username}
-        profileImageUrl={author.profileImageUrl}
+        {...author}
         createdAt={createdAt}
         text={text}
         key={id}

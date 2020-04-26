@@ -7,6 +7,7 @@ export const EDIT_USER_PROFILE = gql`
     $location: String
     $gender: Gender
     $occupation: String
+    $signature: String
   ) {
     editUserProfile(
       input: {
@@ -15,6 +16,7 @@ export const EDIT_USER_PROFILE = gql`
         location: $location
         gender: $gender
         occupation: $occupation
+        signature: $signature
       }
     ) {
       error {

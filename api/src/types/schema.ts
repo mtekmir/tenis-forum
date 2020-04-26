@@ -84,6 +84,7 @@ export type EditUserProfileInput = {
   location?: Maybe<Scalars['String']>;
   occupation?: Maybe<Scalars['String']>;
   gender?: Maybe<Gender>;
+  signature?: Maybe<Scalars['String']>;
 };
 
 export type Error = {
@@ -464,6 +465,7 @@ export type User = {
   username: Scalars['String'];
   email: Scalars['String'];
   permissions: Array<UserPermissions>;
+  signature?: Maybe<Scalars['String']>;
   profileImageUrl?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
 };
@@ -926,6 +928,7 @@ export type UserResolvers<ContextType = IContext, ParentType extends ResolversPa
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   permissions?: Resolver<Array<ResolversTypes['UserPermissions']>, ParentType, ContextType>,
+  signature?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   profileImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   profile?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,

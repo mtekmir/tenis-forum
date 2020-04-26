@@ -4,6 +4,7 @@ input EditUserProfileInput {
   location: String
   occupation: String
   gender: Gender
+  signature: String
 }
 
 type Mutation {

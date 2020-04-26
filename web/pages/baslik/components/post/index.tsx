@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { Fragment } from 'react'
 import dompurify from 'dompurify'
 import { format } from 'date-fns'
 import { PostDiv } from './components/PostDiv'
@@ -12,6 +12,7 @@ interface Props {
   text: string
   createdAt: Date
   profileImageUrl: string
+  signature: string
   id: number
 }
 
@@ -20,6 +21,7 @@ export const Post: React.FunctionComponent<Props> = ({
   text,
   createdAt,
   profileImageUrl,
+  signature,
   index,
   id,
 }) => {
@@ -39,6 +41,12 @@ export const Post: React.FunctionComponent<Props> = ({
         <span
           dangerouslySetInnerHTML={{ __html: sanitizer(text).replace(/(")(.*)(")/, '$2') }}
         />
+        {signature && (
+          <Fragment>
+            <Divider />
+            {signature}
+          </Fragment>
+        )}
       </PostContent>
     </PostDiv>
   )

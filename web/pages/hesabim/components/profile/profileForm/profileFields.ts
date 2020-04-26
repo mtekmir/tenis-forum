@@ -33,4 +33,9 @@ export const PROFILE_FIELDS = [
     name: 'occupation',
     type: 'text',
   },
-];
+  {
+    label: 'Imza',
+    name: 'signature',
+    type: 'textarea',
+  },
+]
