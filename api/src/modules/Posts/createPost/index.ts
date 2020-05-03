@@ -13,10 +13,7 @@ export const postCreate: MutationResolvers['postCreate'] = async (
   isAuthenticated(userId)
 
   const post = await getConnection().transaction(async manager => {
-    const created = await manager
-      .getRepository(Post)
-      .create({ text: JSON.stringify(text) })
-      .save()
+    const created = await manager.getRepository(Post).create({ text }).save()
 
     await manager.createQueryBuilder().relation(Thread, 'posts').of(threadId).add(created.id)
 

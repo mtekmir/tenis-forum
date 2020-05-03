@@ -7,6 +7,7 @@ export const GET_THREAD_POSTS = gql`
         id
         text
         createdAt
+        updatedAt
         author {
           id
           username

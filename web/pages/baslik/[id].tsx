@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { PostsDiv, UserDiv, UserDivDate, ThreadTitle } from './threadStyle'
 import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import Layout from '../../components/Layout'
@@ -13,12 +13,14 @@ import { useRouter } from 'next/router'
 import { GetThread, GetThreadVariables } from '../../generated/GetThread'
 import { GetThreadPosts, GetThreadPostsVariables } from '../../generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
+import { UserContext } from '../../context/userContext'
 
 interface Props {}
 
 const Thread: React.FunctionComponent<Props> = () => {
   const router = useRouter()
   const [page, setPage] = useState(1)
+  const { user } = useContext(UserContext)
 
   const { data: threadRes, loading: tLoading } = useQuery<GetThread, GetThreadVariables>(
     GET_THREAD,
@@ -49,7 +51,17 @@ const Thread: React.FunctionComponent<Props> = () => {
 
   const renderPosts = () => {
     return posts.map(({ author, text, id, createdAt }, idx) => (
-      <Post {...author} createdAt={createdAt} text={text} key={id} index={idx + 1} id={id} />
+      <Post
+        {...author}
+        createdAt={createdAt}
+        text={text}
+        key={id}
+        index={idx + 1}
+        postId={id}
+        loggedInUser={user}
+        page={page}
+        threadId={rest.id}
+      />
     ))
   }
 

@@ -20,6 +20,7 @@ export interface GetThreadPosts_threadGetPosts_posts {
   id: number;
   text: string;
   createdAt: Date;
+  updatedAt: Date;
   author: GetThreadPosts_threadGetPosts_posts_author;
 }
 

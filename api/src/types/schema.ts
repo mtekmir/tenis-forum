@@ -78,6 +78,11 @@ export type DemoAdmin = {
   email: Scalars['String'];
 };
 
+export type EditPostInput = {
+  postId: Scalars['Int'];
+  text: Scalars['String'];
+};
+
 export type EditUserProfileInput = {
   profileImageKey?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
@@ -172,6 +177,7 @@ export type GetUploadUrlResponse = {
   success: Scalars['Boolean'];
   uploadKey?: Maybe<Scalars['String']>;
   uploadUrl?: Maybe<Scalars['String']>;
+  previewUrl?: Maybe<Scalars['String']>;
 };
 
 export type LoginInput = {
@@ -189,6 +195,7 @@ export type Mutation = {
   forumDelete: Response;
   postCreate: Post;
   postDelete?: Maybe<Post>;
+  postEdit?: Maybe<Post>;
   threadCreate: CreateThreadResponse;
   threadDelete?: Maybe<Thread>;
   createAdmin: DemoAdmin;
@@ -235,6 +242,11 @@ export type MutationPostCreateArgs = {
 
 export type MutationPostDeleteArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationPostEditArgs = {
+  input: EditPostInput;
 };
 
 
@@ -630,6 +642,7 @@ export type ResolversTypes = ResolversObject<{
   CreateCategoryInput: CreateCategoryInput,
   CreateForumInput: CreateForumInput,
   CreatePostInput: CreatePostInput,
+  EditPostInput: EditPostInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: ResolverTypeWrapper<CreateThreadResponse>,
   DemoAdmin: ResolverTypeWrapper<DemoAdmin>,
@@ -689,6 +702,7 @@ export type ResolversParentTypes = ResolversObject<{
   CreateCategoryInput: CreateCategoryInput,
   CreateForumInput: CreateForumInput,
   CreatePostInput: CreatePostInput,
+  EditPostInput: EditPostInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: CreateThreadResponse,
   DemoAdmin: DemoAdmin,
@@ -809,6 +823,7 @@ export type GetUploadUrlResponseResolvers<ContextType = IContext, ParentType ext
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   uploadKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   uploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  previewUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -821,6 +836,7 @@ export type MutationResolvers<ContextType = IContext, ParentType extends Resolve
   forumDelete?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationForumDeleteArgs, 'id'>>,
   postCreate?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationPostCreateArgs, 'input'>>,
   postDelete?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostDeleteArgs, 'id'>>,
+  postEdit?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostEditArgs, 'input'>>,
   threadCreate?: Resolver<ResolversTypes['CreateThreadResponse'], ParentType, ContextType, RequireFields<MutationThreadCreateArgs, 'input'>>,
   threadDelete?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadDeleteArgs, 'id'>>,
   createAdmin?: Resolver<ResolversTypes['DemoAdmin'], ParentType, ContextType>,

@@ -1,0 +1,8 @@
+input EditPostInput {
+  postId: Int!
+  text: String!
+}
+
+type Mutation {
+  postEdit(input: EditPostInput!): Post
+}

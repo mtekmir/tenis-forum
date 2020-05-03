@@ -2,6 +2,7 @@ type Post {
   id: Int!
   text: String!
   createdAt: Date!
+  updatedAt: Date!
   author: PostAuthor!
   thread: Thread!
 }

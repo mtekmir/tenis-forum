@@ -1,54 +1,57 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import dompurify from 'dompurify'
 import { format } from 'date-fns'
-import { PostDiv } from './components/PostDiv'
-import { ProfileImage } from './components/ProfileImage'
-import { UserDiv } from './components/UserDiv'
-import { PostContent, PostContentTopDiv, Divider } from './components/PostContent'
+import { PostDiv } from './styles/PostDiv'
+import { ProfileImage } from './styles/ProfileImage'
+import { UserDiv } from './styles/UserDiv'
+import { PostContentDiv, PostContentTopDiv, Divider } from './styles/PostContent'
+import { Me_me } from '../../../../generated/Me'
+import { PostBottomDiv } from './styles/BottomDiv'
+import { PostContent } from './components/PostContent'
+import { PostEditing } from './components/PostEditing'
 
 interface Props {
+  loggedInUser: Me_me | null
+  postId: number
   index: number
   username: string
   text: string
   createdAt: Date
   profileImageUrl: string
   signature: string
-  id: number
+  id: string
+  page: number
+  threadId: number
 }
 
+const sanitizer = dompurify.sanitize
 export const Post: React.FunctionComponent<Props> = ({
+  postId,
   username,
-  text,
-  createdAt,
   profileImageUrl,
-  signature,
-  index,
-  id,
+  page,
+  threadId,
+  ...rest
 }) => {
-  const sanitizer = dompurify.sanitize
+  const [editing, setEditing] = useState(false)
   return (
-    <PostDiv id={id.toString()}>
+    <PostDiv id={postId.toString()}>
       <UserDiv>
         <ProfileImage src={profileImageUrl} />
         <div>{username}</div>
       </UserDiv>
-      <PostContent>
-        <PostContentTopDiv>
-          <span>{format(createdAt, 'MMM DD, YYYY')}</span>
-          <span># {index}</span>
-        </PostContentTopDiv>
-        <Divider />
-        <div
-          className='post-content'
-          dangerouslySetInnerHTML={{ __html: sanitizer(JSON.parse(text)) }}
+      {editing ? (
+        <PostEditing
+          text={rest.text}
+          sanitizer={sanitizer}
+          setEditing={setEditing}
+          postId={postId}
+          page={page}
+          threadId={threadId}
         />
-        {signature && (
-          <Fragment>
-            <Divider />
-            {signature}
-          </Fragment>
-        )}
-      </PostContent>
+      ) : (
+        <PostContent {...rest} sanitizer={sanitizer} postId={postId} setEditing={setEditing} />
+      )}
     </PostDiv>
   )
 }
