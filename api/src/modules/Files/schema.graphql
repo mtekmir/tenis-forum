@@ -13,4 +13,5 @@ type GetUploadUrlResponse {
   success: Boolean!
   uploadKey: String
   uploadUrl: String
+  previewUrl: String
 }

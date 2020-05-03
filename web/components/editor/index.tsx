@@ -1,56 +1,48 @@
-import * as React from 'react'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { EditorState } from 'draft-js'
-import editorTranslations from './editorTranslations'
-import dynamic from 'next/dynamic'
+import React from 'react'
+import styled from 'styled-components'
+
+import useCKEditor from './useEditor'
+import { breakPoints } from '../../styles/theme'
 
 interface Props {
-  editorState: EditorState
-  onEditorStateChange: (editorState: EditorState) => void
+  editorState: string
+  setEditorState: (s: string) => void
 }
 
-const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor) as any, {
-  ssr: false
-})
-
-export class EditorComponent extends React.PureComponent<Props> {
-  state = {
-    editor: false
-  }
-
-  componentDidMount() {
-    if (!this.state.editor) {
-      this.setState({ editor: true })
+const Styles = styled.div`
+  ${({ theme }) => theme.boxShadow};
+  .ck-editor__editable_inline {
+    min-height: 15em;
+    @media (${breakPoints.phone}) {
+      min-height: 10em;
     }
   }
+`
 
-  render() {
-    const { editorState, onEditorStateChange } = this.props
-    const { editor } = this.state
-    return (
-      <React.Fragment>
-        {editor && (
-          <Editor
-            //@ts-ignore
-            localization={{ translations: editorTranslations }}
-            editorState={editorState}
-            onEditorStateChange={onEditorStateChange}
-            wrapperStyle={{
-              // border: '1px solid #c4c5c6',
-              padding: 10,
-              marginTop: 20
-            }}
-            editorStyle={{
-              minHeight: 200,
-              background: 'white',
-              border: '1px solid #c4c5c6',
-              padding: 5,
-              paddingLeft: 15
-            }}
-            toolbarStyle={{ border: '1px solid #c4c5c6' }}
-          />
-        )}
-      </React.Fragment>
-    )
+export const Editor: React.FC<Props> = ({ editorState, setEditorState }) => {
+  const { CKEditor, ClassicEditor, UploadAdapter } = useCKEditor()
+  if (!CKEditor) {
+    return null
   }
+
+  return (
+    <Styles>
+      <CKEditor
+        //@ts-ignore
+        config={{
+          language: 'tr',
+        }}
+        editor={ClassicEditor}
+        data={editorState}
+        onInit={(editor: any) => {
+          editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+            return UploadAdapter(loader)
+          }
+        }}
+        onChange={(event: any, editor: any) => {
+          setEditorState(editor.getData())
+        }}
+      />
+    </Styles>
+  )
 }

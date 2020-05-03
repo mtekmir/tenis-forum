@@ -38,8 +38,9 @@ export const Post: React.FunctionComponent<Props> = ({
           <span># {index}</span>
         </PostContentTopDiv>
         <Divider />
-        <span
-          dangerouslySetInnerHTML={{ __html: sanitizer(text).replace(/(")(.*)(")/, '$2') }}
+        <div
+          className='post-content'
+          dangerouslySetInnerHTML={{ __html: sanitizer(JSON.parse(text)) }}
         />
         {signature && (
           <Fragment>

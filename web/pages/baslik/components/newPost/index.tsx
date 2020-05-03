@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { EditorState } from 'draft-js'
-import { EditorComponent } from '../../../../components/editor'
+import dompurify from 'dompurify'
+import { Editor } from '../../../../components/Editor'
 import { ButtonsDiv, EditorDiv } from './newPostStyle'
-import { stateToHTML } from 'draft-js-export-html'
 import { Button } from '../../../../components/Button'
 import { useMutation } from 'react-apollo'
 import { createPost, createPostVariables } from '../../../../generated/createPost'
@@ -10,18 +9,19 @@ import { CREATE_POST } from '../../../../graphql/mutation/createPost'
 import { GET_THREAD_POSTS } from '../../../../graphql/query/getThreadPosts'
 import { GetThreadPosts, GetThreadPostsVariables } from '../../../../generated/GetThreadPosts'
 
-// Used in thread detail page
-
 interface Props {
   threadId: number
+  page: number
+  count: number
 }
 
-export const NewPost: React.FC<Props> = ({ threadId }) => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
-  const [createPost, { data }] = useMutation<createPost, createPostVariables>(CREATE_POST)
+const sanitizer = dompurify.sanitize
+export const NewPost: React.FC<Props> = ({ threadId, page, count }) => {
+  const [editorState, setEditorState] = useState('')
+  const [createPost] = useMutation<createPost, createPostVariables>(CREATE_POST)
 
   const handleSubmit = () => {
-    const text = stateToHTML(editorState.getCurrentContent())
+    const text = sanitizer(editorState)
     if (!text.trim()) {
       return
     }
@@ -29,13 +29,16 @@ export const NewPost: React.FC<Props> = ({ threadId }) => {
     createPost({
       variables: { text, threadId },
       update(cache, { data: { postCreate } }) {
+        if (Math.ceil(count / 50) > page) {
+          return
+        }
         const { threadGetPosts } = cache.readQuery<GetThreadPosts, GetThreadPostsVariables>({
           query: GET_THREAD_POSTS,
-          variables: { threadId: threadId.toString() },
+          variables: { threadId: threadId.toString(), page },
         })
-        cache.writeQuery<GetThreadPosts>({
+        cache.writeQuery<GetThreadPosts, GetThreadPostsVariables>({
           query: GET_THREAD_POSTS,
-          variables: { id: threadId.toString() },
+          variables: { threadId: threadId.toString(), page },
           data: {
             threadGetPosts: {
               ...threadGetPosts,
@@ -46,17 +49,14 @@ export const NewPost: React.FC<Props> = ({ threadId }) => {
         })
       },
     })
-    setEditorState(EditorState.createEmpty())
+    setEditorState('')
   }
 
   return (
     <EditorDiv>
-      <EditorComponent
-        onEditorStateChange={s => setEditorState(s)}
-        editorState={editorState}
-      />
+      <Editor setEditorState={setEditorState} editorState={editorState} />
       <ButtonsDiv>
-        <Button text='Cevap Gönder' color='green_gradient' onClick={handleSubmit} />
+        <Button text='Cevap Gönder' color='green' onClick={handleSubmit} />
       </ButtonsDiv>
     </EditorDiv>
   )

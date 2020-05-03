@@ -1,34 +1,26 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { PaginationDiv, PaginationContainer, PageButton } from './paginationStyle'
 import { GoToPage } from './goToPage'
 import { setPagePrefix, setKeys } from './utils'
 
 interface Props {
+  page: number
+  setPage: (p: number) => void
   count: number
   getRows: (offset: number) => void
 }
 
-interface State {
-  page: number
-}
-
-export class Pagination extends React.PureComponent<Props, State> {
-  public readonly state: State = {
-    page: 1,
+export const Pagination: React.FC<Props> = ({ count, getRows, page, setPage }) => {
+  const onPageChange = (page: number) => {
+    getRows((page - 1) * 50)
+    setPage(page)
   }
 
-  onPageChange = (page: number) => {
-    this.props.getRows((page - 1) * 15)
-    this.setState({ page })
-  }
-
-  renderPages = () => {
-    const { count } = this.props
-    const { page } = this.state
-    const pageCount = Math.ceil(count / 15)
+  const renderPages = () => {
+    const pageCount = Math.ceil(count / 50)
 
     const btn = (pageNumber: number) => (
-      <PageButton selected={pageNumber === page} onClick={() => this.onPageChange(pageNumber)}>
+      <PageButton selected={pageNumber === page} onClick={() => onPageChange(pageNumber)}>
         <span>{pageNumber}</span>
       </PageButton>
     )
@@ -43,7 +35,7 @@ export class Pagination extends React.PureComponent<Props, State> {
             <GoToPage
               pageCount={pageCount}
               pagePrefix={pagePrefix}
-              onPageChange={this.onPageChange}
+              onPageChange={onPageChange}
             />
           )
         }
@@ -57,11 +49,9 @@ export class Pagination extends React.PureComponent<Props, State> {
     }
   }
 
-  render() {
-    return (
-      <PaginationDiv>
-        <PaginationContainer>{this.renderPages()}</PaginationContainer>
-      </PaginationDiv>
-    )
-  }
+  return (
+    <PaginationDiv>
+      <PaginationContainer>{renderPages()}</PaginationContainer>
+    </PaginationDiv>
+  )
 }

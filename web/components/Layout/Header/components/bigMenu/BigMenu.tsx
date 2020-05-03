@@ -33,6 +33,5 @@ export const BigMenu: React.FC<Props> = ({ width }) => {
 const Styles = styled.div`
   background: ${({ theme }) => theme.palette.primary};
   display: flex;
-  width: 100vw;
   justify-content: space-between;
 `

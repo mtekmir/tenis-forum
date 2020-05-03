@@ -12,7 +12,7 @@ const s3 = new S3({
 export const getUploadUrl: QueryResolvers['getUploadUrl'] = async (
   _,
   { input: { contentType, extension } },
-  { userId }
+  { userId, s3BucketUrl }
 ) => {
   const imageId = v1()
   const uploadKey = `${userId}/${imageId}.${extension}`
@@ -37,5 +37,6 @@ export const getUploadUrl: QueryResolvers['getUploadUrl'] = async (
     success: !!uploadUrl,
     uploadUrl,
     uploadKey,
+    previewUrl: `${s3BucketUrl}/${uploadKey}`,
   }
 }

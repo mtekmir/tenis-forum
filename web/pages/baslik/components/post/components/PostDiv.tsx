@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const PostDiv = styled.div`
   display: flex;
@@ -10,9 +10,8 @@ export const PostDiv = styled.div`
   min-height: 5em;
 
   @media (${({ theme }) => theme.breakpoints.phone}) {
-    minheight: 4em;
+    min-height: 4em;
     width: 93%;
     margin: 0 auto;
-    flexdirection: column;
   }
-`;
+`

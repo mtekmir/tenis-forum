@@ -12,6 +12,7 @@ export interface GetUploadUrlQuery_getUploadUrl {
   success: boolean;
   uploadKey: string | null;
   uploadUrl: string | null;
+  previewUrl: string | null;
 }
 
 export interface GetUploadUrlQuery {

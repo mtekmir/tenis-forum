@@ -21,6 +21,30 @@ export const PostContent = styled.div`
   flex-direction: column;
   ${({ theme }) => theme.boxShadow};
 
+  .post-content {
+    width: 100%;
+    .image-style-side {
+      max-width: 50%;
+      float: right;
+      margin-left: var(--ck-image-style-spacing);
+    }
+
+    .image.image_resized {
+      display: block;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    .image img,
+    .image_resized img {
+      max-width: 100%;
+    }
+
+    .image.image_resized > figcaption {
+      display: block;
+    }
+  }
+
   @media (${({ theme }) => theme.breakpoints.phone}) {
     min-height: 4em;
     width: 100%;

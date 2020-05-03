@@ -295,6 +295,7 @@ export type PostAuthor = {
    __typename?: 'PostAuthor';
   id: Scalars['String'];
   username: Scalars['String'];
+  signature?: Maybe<Scalars['String']>;
   profileImageUrl?: Maybe<Scalars['String']>;
 };
 
@@ -845,6 +846,7 @@ export type PostResolvers<ContextType = IContext, ParentType extends ResolversPa
 export type PostAuthorResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['PostAuthor'] = ResolversParentTypes['PostAuthor']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  signature?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   profileImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;

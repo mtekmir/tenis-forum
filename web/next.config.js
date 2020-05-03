@@ -1,6 +1,12 @@
-const withCSS = require('@zeit/next-css')
-
 module.exports = {
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['raw-loader'],
+    })
+
+    return config
+  },
   serverRuntimeConfig: {
     BACKEND_URL: 'http://localhost:5000/',
   },
@@ -8,5 +14,4 @@ module.exports = {
     // Will be available on both server and client
     BACKEND_URL: 'http://localhost:5000/',
   },
-  ...withCSS(),
 }

@@ -6,6 +6,7 @@ export const getUploadUrlQuery = gql`
       success
       uploadKey
       uploadUrl
+      previewUrl
     }
   }
 `
