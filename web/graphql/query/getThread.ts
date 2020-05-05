@@ -8,6 +8,7 @@ export const GET_THREAD = gql`
         title
         createdAt
         owner {
+          id
           username
         }
       }

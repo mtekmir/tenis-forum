@@ -4,7 +4,7 @@ import { getConnection } from 'typeorm'
 import { Post } from '../../../db/models/Posts'
 import { Thread } from '../../../db/models/Threads'
 import { User } from '../../../db/models/User'
-import {  contentIsValid } from '../../common/Censor'
+import { contentIsValid } from '../../common/Censor'
 import { ApolloError } from 'apollo-server-express'
 
 export const postCreate: MutationResolvers['postCreate'] = async (
@@ -12,8 +12,8 @@ export const postCreate: MutationResolvers['postCreate'] = async (
   { input: { text, threadId } },
   { userId }
 ) => {
-  // isAuthenticated(userId)
-  
+  isAuthenticated(userId)
+
   if (!contentIsValid(text)) {
     console.log('asd')
     throw new ApolloError('Inappropriate Content', '400')

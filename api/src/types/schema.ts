@@ -83,6 +83,11 @@ export type EditPostInput = {
   text: Scalars['String'];
 };
 
+export type EditThreadInput = {
+  id: Scalars['Int'];
+  title: Scalars['String'];
+};
+
 export type EditUserProfileInput = {
   profileImageKey?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
@@ -198,6 +203,7 @@ export type Mutation = {
   postEdit?: Maybe<Post>;
   threadCreate: CreateThreadResponse;
   threadDelete?: Maybe<Thread>;
+  threadEdit?: Maybe<Thread>;
   createAdmin: DemoAdmin;
   confirmUserEmail: Response;
   login: Response;
@@ -260,6 +266,11 @@ export type MutationThreadDeleteArgs = {
 };
 
 
+export type MutationThreadEditArgs = {
+  input: EditThreadInput;
+};
+
+
 export type MutationConfirmUserEmailArgs = {
   token: Scalars['String'];
 };
@@ -299,6 +310,7 @@ export type Post = {
   id: Scalars['Int'];
   text: Scalars['String'];
   createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
   author: PostAuthor;
   thread: Thread;
 };
@@ -468,6 +480,7 @@ export type ThreadInfo = {
 
 export type ThreadOwner = {
    __typename?: 'ThreadOwner';
+  id: Scalars['String'];
   username: Scalars['String'];
 };
 
@@ -645,6 +658,7 @@ export type ResolversTypes = ResolversObject<{
   EditPostInput: EditPostInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: ResolverTypeWrapper<CreateThreadResponse>,
+  EditThreadInput: EditThreadInput,
   DemoAdmin: ResolverTypeWrapper<DemoAdmin>,
   RegisterInput: RegisterInput,
   RequestResetPasswordInput: RequestResetPasswordInput,
@@ -705,6 +719,7 @@ export type ResolversParentTypes = ResolversObject<{
   EditPostInput: EditPostInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: CreateThreadResponse,
+  EditThreadInput: EditThreadInput,
   DemoAdmin: DemoAdmin,
   RegisterInput: RegisterInput,
   RequestResetPasswordInput: RequestResetPasswordInput,
@@ -839,6 +854,7 @@ export type MutationResolvers<ContextType = IContext, ParentType extends Resolve
   postEdit?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostEditArgs, 'input'>>,
   threadCreate?: Resolver<ResolversTypes['CreateThreadResponse'], ParentType, ContextType, RequireFields<MutationThreadCreateArgs, 'input'>>,
   threadDelete?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadDeleteArgs, 'id'>>,
+  threadEdit?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadEditArgs, 'input'>>,
   createAdmin?: Resolver<ResolversTypes['DemoAdmin'], ParentType, ContextType>,
   confirmUserEmail?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationConfirmUserEmailArgs, 'token'>>,
   login?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
@@ -854,6 +870,7 @@ export type PostResolvers<ContextType = IContext, ParentType extends ResolversPa
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
   author?: Resolver<ResolversTypes['PostAuthor'], ParentType, ContextType>,
   thread?: Resolver<ResolversTypes['Thread'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
@@ -933,6 +950,7 @@ export type ThreadInfoResolvers<ContextType = IContext, ParentType extends Resol
 }>;
 
 export type ThreadOwnerResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['ThreadOwner'] = ResolversParentTypes['ThreadOwner']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;

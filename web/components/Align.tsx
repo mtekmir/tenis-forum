@@ -5,7 +5,7 @@ interface Props {
   width?: number
   align?: string
   justify?: string
-  padding?: number
+  padding?: number | string
 }
 
 export const Align = Styled.div<Props>`

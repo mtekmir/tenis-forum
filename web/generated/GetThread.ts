@@ -9,6 +9,7 @@
 
 export interface GetThread_threadGet_thread_owner {
   __typename: "ThreadOwner";
+  id: string;
   username: string;
 }
 

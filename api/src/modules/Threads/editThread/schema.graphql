@@ -1,0 +1,8 @@
+input EditThreadInput {
+  id: Int!
+  title: String!
+}
+
+type Mutation {
+  threadEdit(input: EditThreadInput!): Thread
+}

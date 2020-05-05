@@ -1,9 +1,10 @@
 import React, { FC, Fragment } from 'react'
 
 import { PostContentDiv, PostContentTopDiv, Divider } from '../styles/PostContent'
-import { PostBottomDiv } from '../styles/BottomDiv'
 import { Me_me } from '../../../../../generated/Me'
 import { formatDateWithTime, diffInMin } from '../../../../../utils/formatDate'
+import { UnderlinedButton } from '../../../../../components/Button'
+import { Align } from '../../../../../components/Align'
 
 interface Props {
   loggedInUser: Me_me | null
@@ -47,12 +48,12 @@ export const PostContent: FC<Props> = ({
           {signature}
         </Fragment>
       )}
-      <PostBottomDiv>
-        <span>Rapor et</span>
+      <Align align='center' padding='2em 0 0.2em 0'>
+        <UnderlinedButton>Rapor et</UnderlinedButton>
         {loggedInUser && loggedInUser.id === id && (
-          <span onClick={() => setEditing(true)}>Duzenle</span>
+          <UnderlinedButton onClick={() => setEditing(true)}>Duzenle</UnderlinedButton>
         )}
-      </PostBottomDiv>
+      </Align>
     </PostContentDiv>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { PostsDiv, UserDiv, UserDivDate, ThreadTitle } from './threadStyle'
+import { PostsDiv, UserDiv, UserDivDate } from './threadStyle'
 import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import Layout from '../../components/Layout'
 import { Post } from './components/post'
@@ -14,6 +14,7 @@ import { GetThreadPosts, GetThreadPostsVariables } from '../../generated/GetThre
 import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
 import { UserContext } from '../../context/userContext'
 import { formatDate } from '../../utils/formatDate'
+import { ThreadTitle } from './components/title'
 
 interface Props {}
 
@@ -82,18 +83,13 @@ const Thread: React.FunctionComponent<Props> = () => {
 
   return (
     <Layout title={`${title} | Tenis Forum`}>
-      <Paper>
-        <ThreadTitle>{title}</ThreadTitle>
-        <UserDiv>
-          <TiUser />
-          <div>{owner.username}</div>
-          &#183;
-          <UserDivDate>
-            <TiCalendarOutline />
-            <div>{formatDate(rest.createdAt)}</div>
-          </UserDivDate>
-        </UserDiv>
-      </Paper>
+      <ThreadTitle
+        title={title}
+        threadId={rest.id}
+        owner={owner}
+        createdAt={rest.createdAt}
+        user={user}
+      />
       <PostsDiv>
         <Pagination
           page={page}
