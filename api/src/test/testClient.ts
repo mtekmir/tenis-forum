@@ -13,8 +13,8 @@ import {
   testCreatePostMutation,
 } from './testClientQueries';
 import { genSchema } from '../schema';
-import { User } from '../models/User';
-import { UserPermissions } from '../models/User/permissions';
+import { User } from '../db/models/User';
+import { UserPermissions } from '../db/models/User/permissions';
 
 interface Options {
   source: string;

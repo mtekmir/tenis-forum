@@ -2,8 +2,8 @@ import bcrypt from 'bcryptjs'
 import { MutationResolvers } from '../../../types/schema'
 import { respond } from '../../common/genericResponse'
 import { invalidLogin } from '../../Users/errorMessages'
-import { User } from '../../../models/User'
-import { UserPermissions } from '../../../models/User/permissions'
+import { User } from '../../../db/models/User'
+import { UserPermissions } from '../../../db/models/User/permissions'
 import generateToken from '../../Users/auth/login/generateToken'
 
 export const adminLogin: MutationResolvers['adminLogin'] = async (

@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../types/schema'
-import { Forum } from '../../../models/Forums'
+import { Forum } from '../../../db/models/Forums'
 import { getConnection } from 'typeorm'
-import { Thread } from '../../../models/Threads'
+import { Thread } from '../../../db/models/Threads'
 
 export const forumGet: QueryResolvers['forumGet'] = async (
   _,

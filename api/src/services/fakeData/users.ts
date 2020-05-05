@@ -1,7 +1,7 @@
 import faker from 'faker';
-import { User } from '../../models/User';
+import { User } from '../../db/models/User';
 import { getConnection } from 'typeorm';
-import { UserPermissions } from '../../models/User/permissions';
+import { UserPermissions } from '../../db/models/User/permissions';
 import { generateProfileImage } from '../../modules/Users/auth/register/generateProfileImage';
 
 const NUM_USERS = 100;

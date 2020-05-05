@@ -1,10 +1,10 @@
 import { createConnection } from 'typeorm';
-import { User } from '../models/User';
-import { Category } from '../models/Category';
-import { Forum } from '../models/Forums';
-import { Thread } from '../models/Threads';
-import { Post } from '../models/Posts';
-import { UserProfile } from '../models/UserProfile';
+import { User } from './models/User';
+import { Category } from './models/Category';
+import { Forum } from './models/Forums';
+import { Thread } from './models/Threads';
+import { Post } from './models/Posts';
+import { UserProfile } from './models/UserProfile';
 
 export const createDbConnection = async (connType: string) => {
   const { DATABASE_URL } = process.env;

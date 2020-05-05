@@ -1,12 +1,12 @@
 import { MutationResolvers } from '../../../../types/schema'
-import { User } from '../../../../models/User'
+import { User } from '../../../../db/models/User'
 import validateRegister from './validateRegister'
 import { createConfirmEmailLink } from './createConfirmEmailLink'
 import { respond } from '../../../common/genericResponse'
-import { UserPermissions } from '../../../../models/User/permissions'
+import { UserPermissions } from '../../../../db/models/User/permissions'
 import { sendConfirmationEmail } from '../../../../services/Email/sendConfirmationEmail'
 import { getConnection } from 'typeorm'
-import { UserProfile } from '../../../../models/UserProfile'
+import { UserProfile } from '../../../../db/models/UserProfile'
 import { generateProfileImage } from './generateProfileImage'
 
 export const register: MutationResolvers['register'] = async (

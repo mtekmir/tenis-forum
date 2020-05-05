@@ -1,3 +1,3 @@
-import { createDbConnection } from '../utils/createDbConnection';
+import { createDbConnection } from '../db/createDbConnection';
 
 createDbConnection('TEST');

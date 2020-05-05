@@ -1,11 +1,11 @@
 import faker from 'faker';
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../db/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
-import { UserPermissions } from '../../../../models/User/permissions';
-import { Post } from '../../../../models/Posts';
-import { Thread } from '../../../../models/Threads';
-import { User } from '../../../../models/User';
+import { UserPermissions } from '../../../../db/models/User/permissions';
+import { Post } from '../../../../db/models/Posts';
+import { Thread } from '../../../../db/models/Threads';
+import { User } from '../../../../db/models/User';
 
 const client = new TestClient();
 

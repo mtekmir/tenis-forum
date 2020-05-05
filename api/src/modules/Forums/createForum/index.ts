@@ -1,7 +1,7 @@
 import { MutationResolvers } from '../../../types/schema'
-import { Forum } from '../../../models/Forums'
+import { Forum } from '../../../db/models/Forums'
 import { getConnection } from 'typeorm'
-import { Category } from '../../../models/Category'
+import { Category } from '../../../db/models/Category'
 import { isAdmin } from '../../Admin/isAdmin'
 
 export const forumCreate: MutationResolvers['forumCreate'] = async (

@@ -1,6 +1,6 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
-import { Category } from '../../../models/Category'
+import { Category } from '../../../db/models/Category'
 
 export const categoryGet: QueryResolvers['categoryGet'] = async (_, { id, limit = 10 }) => {
   return getConnection()

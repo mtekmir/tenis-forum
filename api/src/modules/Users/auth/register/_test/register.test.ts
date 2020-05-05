@@ -1,6 +1,6 @@
 import faker from 'faker';
-import { User } from '../../../../../models/User';
-import { createDbConnection } from '../../../../../utils/createDbConnection';
+import { User } from '../../../../../db/models/User';
+import { createDbConnection } from '../../../../../db/createDbConnection';
 import {
   emailTakenErr,
   validEmailErr,
@@ -9,7 +9,7 @@ import {
 } from '../../../errorMessages';
 import { Connection } from 'typeorm';
 import { TestClient } from '../../../../../test/testClient';
-import { UserPermissions } from '../../../../../models/User/permissions';
+import { UserPermissions } from '../../../../../db/models/User/permissions';
 
 const client = new TestClient();
 

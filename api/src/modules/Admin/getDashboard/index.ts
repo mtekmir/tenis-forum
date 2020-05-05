@@ -1,10 +1,10 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
-import { Category } from '../../../models/Category'
-import { Forum } from '../../../models/Forums'
-import { Thread } from '../../../models/Threads'
-import { Post } from '../../../models/Posts'
-import { User } from '../../../models/User'
+import { Category } from '../../../db/models/Category'
+import { Forum } from '../../../db/models/Forums'
+import { Thread } from '../../../db/models/Threads'
+import { Post } from '../../../db/models/Posts'
+import { User } from '../../../db/models/User'
 import { isAdmin } from '../isAdmin'
 
 export const dashboardGet: QueryResolvers['dashboardGet'] = async (_, __, { userId }) => {

@@ -1,4 +1,4 @@
-import { User } from '../../../../models/User'
+import { User } from '../../../../db/models/User'
 import { respond } from '../../../common/genericResponse'
 import { MutationResolvers } from '../../../../types/schema'
 

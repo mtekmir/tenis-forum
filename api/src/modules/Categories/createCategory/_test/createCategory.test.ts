@@ -1,8 +1,8 @@
 import faker from 'faker';
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../db/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
-import { UserPermissions } from '../../../../models/User/permissions';
+import { UserPermissions } from '../../../../db/models/User/permissions';
 
 const client = new TestClient();
 

@@ -1,5 +1,5 @@
 import { IContext } from '../../types/types'
-import { User } from '../../models/User'
+import { User } from '../../db/models/User'
 
 export const profileImageUrl = (
   { profileImageKey }: User,

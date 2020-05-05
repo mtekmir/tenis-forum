@@ -1,8 +1,8 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
-import { User } from '../../../models/User'
-import { Post } from '../../../models/Posts'
-import { Thread } from '../../../models/Threads'
+import { User } from '../../../db/models/User'
+import { Post } from '../../../db/models/Posts'
+import { Thread } from '../../../db/models/Threads'
 import { isAdmin } from '../../Admin/isAdmin'
 
 export const userGetAll: QueryResolvers['userGetAll'] = async (_, __, { userId }) => {

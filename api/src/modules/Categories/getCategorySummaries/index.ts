@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../types/schema'
-import { Category } from '../../../models/Category'
+import { Category } from '../../../db/models/Category'
 import { getConnection } from 'typeorm'
-import { Forum } from '../../../models/Forums'
+import { Forum } from '../../../db/models/Forums'
 import { isAdmin } from '../../Admin/isAdmin'
 
 export const categoryGetSummaryAll: QueryResolvers['categoryGetSummaryAll'] = async (

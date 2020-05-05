@@ -1,10 +1,10 @@
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../db/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
-import { UserPermissions } from '../../../../models/User/permissions';
-import { Post } from '../../../../models/Posts';
-import { User } from '../../../../models/User';
-import { Thread } from '../../../../models/Threads';
+import { UserPermissions } from '../../../../db/models/User/permissions';
+import { Post } from '../../../../db/models/Posts';
+import { User } from '../../../../db/models/User';
+import { Thread } from '../../../../db/models/Threads';
 
 const client = new TestClient();
 

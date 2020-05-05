@@ -1,8 +1,8 @@
 import faker from 'faker'
-import { Thread } from '../../models/Threads'
+import { Thread } from '../../db/models/Threads'
 import { getConnection } from 'typeorm'
-import { Post } from '../../models/Posts'
-import { User } from '../../models/User'
+import { Post } from '../../db/models/Posts'
+import { User } from '../../db/models/User'
 
 const NUM_POSTS = 5
 

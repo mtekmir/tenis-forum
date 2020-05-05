@@ -1,7 +1,7 @@
 import { TestClient } from '../../../../../test/testClient';
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../../utils/createDbConnection';
-import { UserPermissions } from '../../../../../models/User/permissions';
+import { createDbConnection } from '../../../../../db/createDbConnection';
+import { UserPermissions } from '../../../../../db/models/User/permissions';
 
 const client = new TestClient();
 let connection: Connection;

@@ -1,6 +1,6 @@
 import passport from 'passport'
 import { Strategy } from 'passport-google-oauth20'
-import { User } from '../../../models/User'
+import { User } from '../../../db/models/User'
 import { getConnection } from 'typeorm'
 
 // const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env

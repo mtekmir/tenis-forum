@@ -1,9 +1,9 @@
 import faker from 'faker';
-import { Forum } from '../../models/Forums';
-import { Post } from '../../models/Posts';
-import { User } from '../../models/User';
+import { Forum } from '../../db/models/Forums';
+import { Post } from '../../db/models/Posts';
+import { User } from '../../db/models/User';
 import { getConnection } from 'typeorm';
-import { Thread } from '../../models/Threads';
+import { Thread } from '../../db/models/Threads';
 
 const NUM_THREADS = 50;
 

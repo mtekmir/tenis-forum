@@ -1,7 +1,7 @@
 import faker from 'faker'
 
-import { User } from '../../../../models/User'
-import { UserPermissions } from '../../../../models/User/permissions'
+import { User } from '../../../../db/models/User'
+import { UserPermissions } from '../../../../db/models/User/permissions'
 import { MutationResolvers } from '../../../../types/schema'
 
 export const createAdmin: MutationResolvers['createAdmin'] = async () => {

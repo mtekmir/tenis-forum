@@ -1,6 +1,6 @@
 import { isAuthenticated } from '../../auth/authenticateUser'
-import { UserProfile } from '../../../../models/UserProfile'
-import { User } from '../../../../models/User'
+import { UserProfile } from '../../../../db/models/UserProfile'
+import { User } from '../../../../db/models/User'
 import { getConnection } from 'typeorm'
 import { respond } from '../../../common/genericResponse'
 import { MutationResolvers } from '../../../../types/schema'

@@ -1,6 +1,6 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
-import { Post } from '../../../models/Posts'
+import { Post } from '../../../db/models/Posts'
 
 export const postGet: QueryResolvers['postGet'] = async (_, { id }) => {
   return getConnection()

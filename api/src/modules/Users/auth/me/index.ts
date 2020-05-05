@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../../types/schema'
-import { User } from '../../../../models/User'
-import { UserPermissions } from '../../../../models/User/permissions'
-import { UserProfile } from '../../../../models/UserProfile'
+import { User } from '../../../../db/models/User'
+import { UserPermissions } from '../../../../db/models/User/permissions'
+import { UserProfile } from '../../../../db/models/UserProfile'
 
 export const me: QueryResolvers['me'] = async (_, __, { userId }) => {
   if (!userId) {

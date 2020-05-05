@@ -1,9 +1,9 @@
 import { MutationResolvers } from '../../../types/schema'
 import { isAuthenticated } from '../../Users/auth/authenticateUser'
 import { getConnection } from 'typeorm'
-import { Post } from '../../../models/Posts'
-import { Thread } from '../../../models/Threads'
-import { User } from '../../../models/User'
+import { Post } from '../../../db/models/Posts'
+import { Thread } from '../../../db/models/Threads'
+import { User } from '../../../db/models/User'
 import {  contentIsValid } from '../../common/Censor'
 import { ApolloError } from 'apollo-server-express'
 

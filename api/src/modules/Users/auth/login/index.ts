@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { MutationResolvers } from '../../../../types/schema'
-import { User } from '../../../../models/User'
+import { User } from '../../../../db/models/User'
 import { invalidLogin, confirmEmailErr } from '../../errorMessages'
 import generateToken from './generateToken'
 import { respond } from '../../../common/genericResponse'

@@ -1,4 +1,4 @@
-import { Post } from '../../../models/Posts'
+import { Post } from '../../../db/models/Posts'
 import { QueryResolvers } from '../../../types/schema'
 
 export const threadGetPosts: QueryResolvers['threadGetPosts'] = async (

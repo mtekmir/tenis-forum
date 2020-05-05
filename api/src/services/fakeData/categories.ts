@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { Category } from '../../models/Category';
+import { Category } from '../../db/models/Category';
 import { getConnection } from 'typeorm';
 
 const NUM_CATEGORIES = 5;

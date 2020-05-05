@@ -1,9 +1,9 @@
 import faker from 'faker';
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../db/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
-import { Category } from '../../../../models/Category';
-import { UserPermissions } from '../../../../models/User/permissions';
+import { Category } from '../../../../db/models/Category';
+import { UserPermissions } from '../../../../db/models/User/permissions';
 
 const client = new TestClient();
 

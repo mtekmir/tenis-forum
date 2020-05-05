@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
-import { Thread } from '../../../models/Threads'
-import { Post } from '../../../models/Posts'
+import { Thread } from '../../../db/models/Threads'
+import { Post } from '../../../db/models/Posts'
 
 export const threadGetAll: QueryResolvers['threadGetAll'] = async (
   _,

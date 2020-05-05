@@ -1,5 +1,5 @@
 import { QueryResolvers } from '../../../types/schema'
-import { Category } from '../../../models/Category'
+import { Category } from '../../../db/models/Category'
 // import { getConnection } from 'typeorm';
 // import { Thread } from '../../../models/Threads';
 

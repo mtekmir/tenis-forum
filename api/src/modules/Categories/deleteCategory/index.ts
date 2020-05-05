@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../types/schema'
-import { Category } from '../../../models/Category'
+import { Category } from '../../../db/models/Category'
 import { isAdmin } from '../../Admin/isAdmin'
 
 export const categoryDelete: MutationResolvers['categoryDelete'] = async (

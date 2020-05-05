@@ -1,7 +1,7 @@
 import faker from 'faker';
-import { Category } from '../../models/Category';
+import { Category } from '../../db/models/Category';
 import { getConnection } from 'typeorm';
-import { Forum } from '../../models/Forums';
+import { Forum } from '../../db/models/Forums';
 
 const NUM_FORUMS = 5;
 

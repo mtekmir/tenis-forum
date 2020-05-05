@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { invalidLogin, confirmEmailErr } from '../../../errorMessages';
-import { User } from '../../../../../models/User';
-import { createDbConnection } from '../../../../../utils/createDbConnection';
+import { User } from '../../../../../db/models/User';
+import { createDbConnection } from '../../../../../db/createDbConnection';
 import { Connection } from 'typeorm';
 import { TestClient } from '../../../../../test/testClient';
 

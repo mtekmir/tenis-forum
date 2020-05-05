@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { User } from '../../../../models/User';
+import { User } from '../../../../db/models/User';
 import { ValidateRegister } from '../../../../types/types';
 import { emailTakenErr } from '../../errorMessages';
 

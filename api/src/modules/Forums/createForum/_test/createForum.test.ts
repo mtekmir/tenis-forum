@@ -1,10 +1,10 @@
 import faker from 'faker';
 import { Connection } from 'typeorm';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../db/createDbConnection';
 import { TestClient } from '../../../../test/testClient';
-import { UserPermissions } from '../../../../models/User/permissions';
-import { Category } from '../../../../models/Category';
-import { Forum } from '../../../../models/Forums';
+import { UserPermissions } from '../../../../db/models/User/permissions';
+import { Category } from '../../../../db/models/Category';
+import { Forum } from '../../../../db/models/Forums';
 
 const client = new TestClient();
 let category: Category;

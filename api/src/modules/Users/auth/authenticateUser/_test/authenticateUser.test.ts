@@ -1,7 +1,7 @@
-import { createDbConnection } from '../../../../../utils/createDbConnection';
+import { createDbConnection } from '../../../../../db/createDbConnection';
 import { Connection } from 'typeorm';
 import { authenticateUser } from '../index';
-import { User } from '../../../../../models/User';
+import { User } from '../../../../../db/models/User';
 import { TestClient } from '../../../../../test/testClient';
 import generateToken from '../../login/generateToken';
 

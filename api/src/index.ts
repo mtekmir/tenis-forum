@@ -3,7 +3,7 @@ import { ApolloServer, ApolloError } from 'apollo-server-express'
 import Express from 'express'
 import dotenv from 'dotenv'
 
-import { createDbConnection } from './utils/createDbConnection'
+import { createDbConnection } from './db/createDbConnection'
 import { genSchema } from './schema'
 import { routes } from './routes'
 import { context } from './context'
