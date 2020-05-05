@@ -76,7 +76,7 @@
   "scripts": {
     "test-db:setup": "ts-node ./src/test/setup.ts",
     "test": "yarn run test-db:setup && jest --watchAll --runInBand",
-    "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "start": "ts-node-dev --respawn --transpileOnly --ignore-watch node_modules src/index.ts",
     "generate": "gql-gen"
   }
 }

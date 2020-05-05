@@ -5,6 +5,8 @@ import { Post } from '../../../models/Posts'
 import { Thread } from '../../../models/Threads'
 import { User } from '../../../models/User'
 import { Forum } from '../../../models/Forums'
+import { contentIsValid } from '../../common/Censor'
+import { ApolloError } from 'apollo-server-express'
 
 export const threadCreate: MutationResolvers['threadCreate'] = async (
   _,
@@ -12,6 +14,10 @@ export const threadCreate: MutationResolvers['threadCreate'] = async (
   { userId }
 ) => {
   isAuthenticated(userId)
+
+  if (!contentIsValid(text) || !contentIsValid(title)) {
+    throw new ApolloError('Inappropriate Content', '400')
+  }
 
   let thread: Thread
   await getConnection().transaction(async manager => {

@@ -1,9 +1,9 @@
 import React, { FC, Fragment } from 'react'
-import { format } from 'date-fns'
 
 import { PostContentDiv, PostContentTopDiv, Divider } from '../styles/PostContent'
 import { PostBottomDiv } from '../styles/BottomDiv'
 import { Me_me } from '../../../../../generated/Me'
+import { formatDateWithTime, diffInMin } from '../../../../../utils/formatDate'
 
 interface Props {
   loggedInUser: Me_me | null
@@ -11,6 +11,7 @@ interface Props {
   index: number
   text: string
   createdAt: Date
+  updatedAt: Date
   signature: string
   id: string
   setEditing: (e: boolean) => void
@@ -20,6 +21,7 @@ interface Props {
 export const PostContent: FC<Props> = ({
   id,
   createdAt,
+  updatedAt,
   loggedInUser,
   postId,
   signature,
@@ -31,7 +33,10 @@ export const PostContent: FC<Props> = ({
   return (
     <PostContentDiv>
       <PostContentTopDiv>
-        <span>{format(createdAt, 'MMM DD, YYYY')}</span>
+        <span>
+          {formatDateWithTime(updatedAt)}{' '}
+          {diffInMin(updatedAt, createdAt) > 1 ? '(Degistirildi)' : null}
+        </span>
         <span># {index}</span>
       </PostContentTopDiv>
       <Divider />

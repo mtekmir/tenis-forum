@@ -4,13 +4,20 @@ import { getConnection } from 'typeorm'
 import { Post } from '../../../models/Posts'
 import { Thread } from '../../../models/Threads'
 import { User } from '../../../models/User'
+import {  contentIsValid } from '../../common/Censor'
+import { ApolloError } from 'apollo-server-express'
 
 export const postCreate: MutationResolvers['postCreate'] = async (
   _,
   { input: { text, threadId } },
   { userId }
 ) => {
-  isAuthenticated(userId)
+  // isAuthenticated(userId)
+  
+  if (!contentIsValid(text)) {
+    console.log('asd')
+    throw new ApolloError('Inappropriate Content', '400')
+  }
 
   const post = await getConnection().transaction(async manager => {
     const created = await manager.getRepository(Post).create({ text }).save()

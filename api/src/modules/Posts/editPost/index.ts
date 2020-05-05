@@ -2,6 +2,8 @@ import { MutationResolvers } from '../../../types/schema'
 import { isAuthenticated } from '../../Users/auth/authenticateUser'
 import { Post } from '../../../models/Posts'
 import { getConnection } from 'typeorm'
+import { ApolloError } from 'apollo-server-express'
+import { contentIsValid } from '../../common/Censor'
 
 export const postEdit: MutationResolvers['postEdit'] = async (
   _,
@@ -9,6 +11,10 @@ export const postEdit: MutationResolvers['postEdit'] = async (
   { userId }
 ) => {
   isAuthenticated(userId)
+
+  if (!contentIsValid(text)) {
+    throw new ApolloError('Inappropriate Content', '400')
+  }
 
   const post = await Post.findOne({ where: { id: postId }, relations: ['author'] })
 

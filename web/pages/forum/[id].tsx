@@ -1,5 +1,4 @@
-import { format } from 'date-fns'
-import * as React from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
 import {
@@ -17,6 +16,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-apollo'
 import { GET_FORUM } from '../../graphql/query/getForum'
 import { GetForum, GetForumVariables } from '../../generated/GetForum'
+import { formatDate } from '../../utils/formatDate'
 
 interface Props {}
 const Forum: React.FC<Props> = ({}) => {
@@ -44,7 +44,7 @@ const Forum: React.FC<Props> = ({}) => {
         <OwnerAndDate>
           <div>{owner.username}</div>
           &#183;
-          <div>{format(createdAt, 'MMM DD, YYYY')}</div>
+          <div>{formatDate(createdAt)}</div>
         </OwnerAndDate>
       </ForumDiv>
     ))

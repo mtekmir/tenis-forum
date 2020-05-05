@@ -8,6 +8,8 @@ import { createPost, createPostVariables } from '../../../../generated/createPos
 import { CREATE_POST } from '../../../../graphql/mutation/createPost'
 import { GET_THREAD_POSTS } from '../../../../graphql/query/getThreadPosts'
 import { GetThreadPosts, GetThreadPostsVariables } from '../../../../generated/GetThreadPosts'
+import { Alert } from '../../../../components/Alert'
+import { useBadInputError } from '../../../../hooks/useBadInputError'
 
 interface Props {
   threadId: number
@@ -18,7 +20,10 @@ interface Props {
 const sanitizer = dompurify.sanitize
 export const NewPost: React.FC<Props> = ({ threadId, page, count }) => {
   const [editorState, setEditorState] = useState('')
-  const [createPost] = useMutation<createPost, createPostVariables>(CREATE_POST)
+  const [error, setError] = useBadInputError()
+  const [createPost] = useMutation<createPost, createPostVariables>(CREATE_POST, {
+    onError: setError,
+  })
 
   const handleSubmit = () => {
     const text = sanitizer(editorState)
@@ -47,13 +52,14 @@ export const NewPost: React.FC<Props> = ({ threadId, page, count }) => {
             },
           },
         })
+        setEditorState('')
       },
     })
-    setEditorState('')
   }
 
   return (
     <EditorDiv>
+      {error && <Alert type='danger'>{error}</Alert>}
       <Editor setEditorState={setEditorState} editorState={editorState} />
       <ButtonsDiv>
         <Button text='Cevap Gönder' color='green' onClick={handleSubmit} />

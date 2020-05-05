@@ -12,7 +12,7 @@ export const createDbConnection = async (connType: string) => {
     type: 'postgres',
     synchronize: connType === 'PROD' ? false : true,
     dropSchema: connType === 'TEST',
-    logging: connType === 'DEV',
+    logging: false,
     entities: [User, UserProfile, Category, Forum, Thread, Post],
     url: DATABASE_URL,
     name: 'default',

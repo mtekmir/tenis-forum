@@ -1,12 +1,9 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import dompurify from 'dompurify'
-import { format } from 'date-fns'
 import { PostDiv } from './styles/PostDiv'
 import { ProfileImage } from './styles/ProfileImage'
 import { UserDiv } from './styles/UserDiv'
-import { PostContentDiv, PostContentTopDiv, Divider } from './styles/PostContent'
 import { Me_me } from '../../../../generated/Me'
-import { PostBottomDiv } from './styles/BottomDiv'
 import { PostContent } from './components/PostContent'
 import { PostEditing } from './components/PostEditing'
 
@@ -17,6 +14,7 @@ interface Props {
   username: string
   text: string
   createdAt: Date
+  updatedAt: Date
   profileImageUrl: string
   signature: string
   id: string

@@ -11,6 +11,8 @@ import {
   GetThreadPostsVariables,
 } from '../../../../../generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../../../../graphql/query/getThreadPosts'
+import { useBadInputError } from '../../../../../hooks/useBadInputError'
+import { Alert } from '../../../../../components/Alert'
 
 interface Props {
   text: string
@@ -29,40 +31,39 @@ export const PostEditing: FC<Props> = ({
   threadId,
   page,
 }) => {
+  const [error, onError] = useBadInputError()
   const [state, setState] = useState(text)
-  const [editPost] = useMutation<EditPost, EditPostVariables>(EDIT_POST)
+  const [editPost] = useMutation<EditPost, EditPostVariables>(EDIT_POST, {
+    onError,
+    onCompleted: _ => setEditing(false),
+    update(cache, { data: { postEdit } }) {
+      const { threadGetPosts } = cache.readQuery<GetThreadPosts>({
+        query: GET_THREAD_POSTS,
+        variables: { threadId: threadId.toString(), page },
+      })
+
+      cache.writeQuery<GetThreadPosts, GetThreadPostsVariables>({
+        query: GET_THREAD_POSTS,
+        variables: { threadId: threadId.toString(), page },
+        data: {
+          threadGetPosts: {
+            ...threadGetPosts,
+            posts: threadGetPosts.posts.map(p => (p.id === postId ? postEdit : p)),
+          },
+        },
+      })
+    },
+  })
 
   const onSubmit = async () => {
     if (state !== text) {
-      const res = await editPost({
-        variables: { postId, text: sanitizer(state) },
-        update(cache, { data: { postEdit } }) {
-          const { threadGetPosts } = cache.readQuery<GetThreadPosts>({
-            query: GET_THREAD_POSTS,
-            variables: { threadId: threadId.toString(), page },
-          })
-
-          cache.writeQuery<GetThreadPosts, GetThreadPostsVariables>({
-            query: GET_THREAD_POSTS,
-            variables: { threadId: threadId.toString(), page },
-            data: {
-              threadGetPosts: {
-                ...threadGetPosts,
-                posts: threadGetPosts.posts.map(p => (p.id === postId ? postEdit : p)),
-              },
-            },
-          })
-        },
-      })
-
-      if (res.data && res.data.postEdit) {
-        setEditing(false)
-      }
+      await editPost({ variables: { postId, text: sanitizer(state) } })
     }
   }
 
   return (
     <PostContentDiv>
+      {error && <Alert type='danger'>{error}</Alert>}
       <Editor editorState={state} setEditorState={setState} />
       <Align padding={1} justify='flex-end'>
         <Button text='Iptal' color='secondary' marginRight onClick={() => setEditing(false)} />

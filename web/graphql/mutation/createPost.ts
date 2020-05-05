@@ -6,6 +6,7 @@ export const CREATE_POST = gql`
       id
       text
       createdAt
+      updatedAt
       author {
         id
         username

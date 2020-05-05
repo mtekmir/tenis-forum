@@ -25,6 +25,7 @@ const server = new ApolloServer({
     reportErrors(err)
     return err
   },
+  debug: false,
 })
 const app = Express()
 middlewares(app)

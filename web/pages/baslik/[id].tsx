@@ -3,7 +3,6 @@ import { PostsDiv, UserDiv, UserDivDate, ThreadTitle } from './threadStyle'
 import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import Layout from '../../components/Layout'
 import { Post } from './components/post'
-import { format } from 'date-fns'
 import { NewPost } from './components/newPost'
 import { Pagination } from '../../components/pagination'
 import { Paper } from '../../components/Paper'
@@ -14,6 +13,7 @@ import { GetThread, GetThreadVariables } from '../../generated/GetThread'
 import { GetThreadPosts, GetThreadPostsVariables } from '../../generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
 import { UserContext } from '../../context/userContext'
+import { formatDate } from '../../utils/formatDate'
 
 interface Props {}
 
@@ -50,10 +50,11 @@ const Thread: React.FunctionComponent<Props> = () => {
   } = postsRes
 
   const renderPosts = () => {
-    return posts.map(({ author, text, id, createdAt }, idx) => (
+    return posts.map(({ author, text, id, createdAt, updatedAt }, idx) => (
       <Post
         {...author}
         createdAt={createdAt}
+        updatedAt={updatedAt}
         text={text}
         key={id}
         index={idx + 1}
@@ -89,7 +90,7 @@ const Thread: React.FunctionComponent<Props> = () => {
           &#183;
           <UserDivDate>
             <TiCalendarOutline />
-            <div>{format(rest.createdAt, 'MMM DD, YYYY')}</div>
+            <div>{formatDate(rest.createdAt)}</div>
           </UserDivDate>
         </UserDiv>
       </Paper>

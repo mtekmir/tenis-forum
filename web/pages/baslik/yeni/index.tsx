@@ -11,6 +11,8 @@ import { CREATE_THREAD } from '../../../graphql/mutation/createThread'
 import { Editor } from '../../../components/Editor'
 import Router from 'next/router'
 import dompurify from 'dompurify'
+import { useBadInputError } from '../../../hooks/useBadInputError'
+import { Alert } from '../../../components/Alert'
 
 export interface NewThreadValues {
   title: string
@@ -22,32 +24,35 @@ const CreateThread: React.FC = () => {
   const {
     query: { forumId },
   } = useRouter()
-  const [createThread] = useMutation<createThread, createThreadVariables>(CREATE_THREAD)
+  const [error, onError] = useBadInputError()
+  const [createThread] = useMutation<createThread, createThreadVariables>(CREATE_THREAD, {
+    onError,
+    onCompleted: data => Router.push(`/baslik/${data.threadCreate.id}`),
+  })
   const [editorState, setEditorState] = useState('')
 
   const onSubmit = async (title: string) => {
-    const res = await createThread({
+    await createThread({
       variables: {
         text: sanitizer(editorState),
         title,
         forumId: parseInt(forumId as string),
       },
     })
-    if (!res.errors && res.data) {
-      Router.push(`/baslik/${res.data.threadCreate.id}`)
-    }
   }
 
   return (
     <Layout title='Yeni Başlık | Tenis Forum'>
       <CreateThreadDiv>
+        {error && <Alert type='danger'>{error}</Alert>}
         <TitleDiv>
           <h4>Yeni Başlık</h4>
         </TitleDiv>
         <Formik onSubmit={async ({ title }) => onSubmit(title)} initialValues={{ title: '' }}>
           {({ handleSubmit }) => (
             <Form>
-              <Field name='title' type='text' component={TextInput} />
+              <Field name='title' type='text' component={TextInput} width='50%' />
+              <br />
               <Editor setEditorState={setEditorState} editorState={editorState} />
               <BottomDiv>
                 <Button url={`/forum/${forumId}`} marginRight color='red' text='İptal'>

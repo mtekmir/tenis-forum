@@ -20,6 +20,7 @@ export interface createPost_postCreate {
   id: number;
   text: string;
   createdAt: Date;
+  updatedAt: Date;
   author: createPost_postCreate_author;
 }
 
