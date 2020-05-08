@@ -57,6 +57,12 @@ export type CreatePostInput = {
   threadId: Scalars['Int'];
 };
 
+export type CreateReportInput = {
+  reason: Scalars['String'];
+  threadId?: Maybe<Scalars['Int']>;
+  postId?: Maybe<Scalars['Int']>;
+};
+
 export type CreateThreadInput = {
   text: Scalars['String'];
   title: Scalars['String'];
@@ -201,6 +207,7 @@ export type Mutation = {
   postCreate: Post;
   postDelete?: Maybe<Post>;
   postEdit?: Maybe<Post>;
+  reportCreate: Response;
   threadCreate: CreateThreadResponse;
   threadDelete?: Maybe<Thread>;
   threadEdit?: Maybe<Thread>;
@@ -253,6 +260,11 @@ export type MutationPostDeleteArgs = {
 
 export type MutationPostEditArgs = {
   input: EditPostInput;
+};
+
+
+export type MutationReportCreateArgs = {
+  input: CreateReportInput;
 };
 
 
@@ -423,6 +435,17 @@ export type RegisterInput = {
   username: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type Report = {
+   __typename?: 'Report';
+  id: Scalars['Int'];
+  reason: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  reporter: UserInfo;
+  thread: Thread;
+  post: Post;
 };
 
 export type RequestResetPasswordInput = {
@@ -656,6 +679,7 @@ export type ResolversTypes = ResolversObject<{
   CreateForumInput: CreateForumInput,
   CreatePostInput: CreatePostInput,
   EditPostInput: EditPostInput,
+  CreateReportInput: CreateReportInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: ResolverTypeWrapper<CreateThreadResponse>,
   EditThreadInput: EditThreadInput,
@@ -668,6 +692,7 @@ export type ResolversTypes = ResolversObject<{
   sendUserFeedbackInput: SendUserFeedbackInput,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   Upload: ResolverTypeWrapper<Scalars['Upload']>,
+  Report: ResolverTypeWrapper<Report>,
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -717,6 +742,7 @@ export type ResolversParentTypes = ResolversObject<{
   CreateForumInput: CreateForumInput,
   CreatePostInput: CreatePostInput,
   EditPostInput: EditPostInput,
+  CreateReportInput: CreateReportInput,
   CreateThreadInput: CreateThreadInput,
   CreateThreadResponse: CreateThreadResponse,
   EditThreadInput: EditThreadInput,
@@ -729,6 +755,7 @@ export type ResolversParentTypes = ResolversObject<{
   sendUserFeedbackInput: SendUserFeedbackInput,
   DateTime: Scalars['DateTime'],
   Upload: Scalars['Upload'],
+  Report: Report,
 }>;
 
 export type CategoryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = ResolversObject<{
@@ -852,6 +879,7 @@ export type MutationResolvers<ContextType = IContext, ParentType extends Resolve
   postCreate?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationPostCreateArgs, 'input'>>,
   postDelete?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostDeleteArgs, 'id'>>,
   postEdit?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPostEditArgs, 'input'>>,
+  reportCreate?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationReportCreateArgs, 'input'>>,
   threadCreate?: Resolver<ResolversTypes['CreateThreadResponse'], ParentType, ContextType, RequireFields<MutationThreadCreateArgs, 'input'>>,
   threadDelete?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadDeleteArgs, 'id'>>,
   threadEdit?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationThreadEditArgs, 'input'>>,
@@ -917,6 +945,17 @@ export type QueryResolvers<ContextType = IContext, ParentType extends ResolversP
   userGetAll?: Resolver<ResolversTypes['UserGetAllResponse'], ParentType, ContextType>,
   userGet?: Resolver<ResolversTypes['UserInfo'], ParentType, ContextType, RequireFields<QueryUserGetArgs, 'id'>>,
   userProfileGet?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<QueryUserProfileGetArgs, 'id'>>,
+}>;
+
+export type ReportResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Report'] = ResolversParentTypes['Report']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  reason?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  reporter?: Resolver<ResolversTypes['UserInfo'], ParentType, ContextType>,
+  thread?: Resolver<ResolversTypes['Thread'], ParentType, ContextType>,
+  post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
 export type ResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = ResolversObject<{
@@ -1029,6 +1068,7 @@ export type Resolvers<ContextType = IContext> = ResolversObject<{
   PostGetAllResponse?: PostGetAllResponseResolvers<ContextType>,
   PostInfo?: PostInfoResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Report?: ReportResolvers<ContextType>,
   Response?: ResponseResolvers<ContextType>,
   Thread?: ThreadResolvers<ContextType>,
   ThreadGetAllResponse?: ThreadGetAllResponseResolvers<ContextType>,

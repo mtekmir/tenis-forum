@@ -6,15 +6,13 @@ import {
   ManyToOne,
   Entity,
   Column,
-  JoinColumn,
-  OneToMany,
 } from 'typeorm'
 import { Thread } from '../Threads'
 import { User } from '../User'
-import { Report } from '../Report'
+import { Post } from '../Posts'
 
 @Entity()
-export class Post extends BaseEntity {
+export class Report extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number
 
@@ -25,21 +23,23 @@ export class Post extends BaseEntity {
   updatedAt: Date
 
   @Column('text', { nullable: false })
-  text: string
+  reason: string
 
-  @ManyToOne(() => User, user => user.posts, {
+  @ManyToOne(() => User, user => user.reports, {
     nullable: true,
     onDelete: 'SET NULL',
   })
-  author: User
+  reporter: User
 
   @Column('int', { nullable: true })
   threadId: number
 
-  @ManyToOne(() => Thread, thread => thread.posts, { onDelete: 'CASCADE' })
-  @JoinColumn()
+  @ManyToOne(() => Thread, thread => thread.reports, { onDelete: 'CASCADE' })
   thread: Thread
 
-  @OneToMany(() => Report, report => report.thread)
-  reports: Report[]
+  @Column('int', { nullable: true })
+  postId: number
+
+  @ManyToOne(() => Post, post => post.reports, { onDelete: 'CASCADE' })
+  post: Post
 }

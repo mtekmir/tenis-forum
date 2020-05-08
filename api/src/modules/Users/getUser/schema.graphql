@@ -1,14 +1,3 @@
 type Query {
   userGet(id: String!): UserInfo!
 }
-
-type UserInfo {
-  id: String!
-  username: String!
-  email: String!
-  createdAt: Date!
-  permissions: [UserPermissions!]!
-  profileImageUrl: String
-  password: String!
-  profile: UserProfile
-}

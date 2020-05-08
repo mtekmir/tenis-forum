@@ -72,12 +72,12 @@ export const StyledInput = styled.input<InputProps>`
   `};
 `
 
-const StyledTextArea = styled.textarea<InputProps>`
+export const StyledTextArea = styled.textarea<InputProps>`
   ${commonStyles}
-  height: 5em;
   border: none;
   outline: none;
   width: ${({ width }) => width || '25em'};
+  height: ${({ height }) => height || '5em'};
   ${({ error }) =>
     error &&
     `

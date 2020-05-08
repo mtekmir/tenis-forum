@@ -1,0 +1,9 @@
+input CreateReportInput {
+  reason: String!
+  threadId: Int
+  postId: Int
+}
+
+type Mutation {
+  reportCreate(input: CreateReportInput!): Response!
+}

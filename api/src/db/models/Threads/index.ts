@@ -8,39 +8,43 @@ import {
   Entity,
   Column,
   OneToOne,
-} from 'typeorm';
-import { Forum } from '../Forums';
-import { Post } from '../Posts';
-import { User } from '../User';
+} from 'typeorm'
+import { Forum } from '../Forums'
+import { Post } from '../Posts'
+import { User } from '../User'
+import { Report } from '../Report'
 
 interface ThreadOwner {
-  id: string;
-  username: string;
+  id: string
+  username: string
 }
 
 @Entity()
 export class Thread extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id: number
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Column('varchar', { nullable: false })
-  title: string;
+  title: string
 
   @OneToOne(() => Post, post => post.thread)
-  originalPost: Post;
+  originalPost: Post
 
   @ManyToOne(() => Forum, forum => forum.threads)
-  forum: Forum;
+  forum: Forum
 
   @ManyToOne(() => User, { nullable: true, eager: true, onDelete: 'SET NULL' })
-  owner: ThreadOwner;
+  owner: ThreadOwner
 
   @OneToMany(() => Post, post => post.thread)
-  posts: Post[];
+  posts: Post[]
+
+  @OneToMany(() => Report, report => report.post)
+  reports: Report[]
 }

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { PostsDiv, UserDiv, UserDivDate } from './threadStyle'
-import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import Layout from '../../components/Layout'
 import { Post } from './components/post'
 import { NewPost } from './components/newPost'
@@ -13,14 +12,15 @@ import { GetThread, GetThreadVariables } from '../../generated/GetThread'
 import { GetThreadPosts, GetThreadPostsVariables } from '../../generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
 import { UserContext } from '../../context/userContext'
-import { formatDate } from '../../utils/formatDate'
 import { ThreadTitle } from './components/title'
+import { ReportPostModal } from './components/reportPost'
 
 interface Props {}
 
 const Thread: React.FunctionComponent<Props> = () => {
   const router = useRouter()
   const [page, setPage] = useState(1)
+  const [postIdToReport, setPostIdToReport] = useState<number | null>(null)
   const { user } = useContext(UserContext)
 
   const { data: threadRes, loading: tLoading } = useQuery<GetThread, GetThreadVariables>(
@@ -51,18 +51,17 @@ const Thread: React.FunctionComponent<Props> = () => {
   } = postsRes
 
   const renderPosts = () => {
-    return posts.map(({ author, text, id, createdAt, updatedAt }, idx) => (
+    return posts.map(({ author, id, ...post }, idx) => (
       <Post
         {...author}
-        createdAt={createdAt}
-        updatedAt={updatedAt}
-        text={text}
+        {...post}
         key={id}
         index={idx + 1}
         postId={id}
         loggedInUser={user}
         page={page}
         threadId={rest.id}
+        setPostIdToReport={setPostIdToReport}
       />
     ))
   }
@@ -83,6 +82,7 @@ const Thread: React.FunctionComponent<Props> = () => {
 
   return (
     <Layout title={`${title} | Tenis Forum`}>
+      <ReportPostModal open={!!postIdToReport} onClose={() => setPostIdToReport(null)} />
       <ThreadTitle
         title={title}
         threadId={rest.id}

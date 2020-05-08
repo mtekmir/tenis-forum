@@ -22,14 +22,15 @@ export const ModalContent = styled.div`
   transform: translate(-50%, -50%);
 `
 
-export const CloseDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.5em;
+export const CloseDiv = styled.span`
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0.7em;
 
   svg {
-    width: 1.2em;
-    height: 1.2em;
+    width: 1em;
+    height: 1em;
     cursor: pointer;
   }
 `

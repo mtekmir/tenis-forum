@@ -13,6 +13,7 @@ import { UserPermissions } from './permissions'
 import { Post } from '../Posts'
 import { Thread } from '../Threads'
 import { UserProfile } from '../UserProfile'
+import { Report } from '../Report'
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -57,6 +58,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Thread, thread => thread.owner)
   threads: Thread[]
+
+  @OneToMany(() => Report, report => report.reporter)
+  reports: Report[]
 
   @Column('varchar', { nullable: true })
   profileImageKey: string

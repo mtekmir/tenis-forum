@@ -1,28 +1,24 @@
-import * as React from 'react';
-import { ModalDimmer, ModalContent, CloseDiv } from './styles';
-import { Portal } from './Portal';
-import { TiTimes } from 'react-icons/ti';
+import * as React from 'react'
+import { ModalDimmer, ModalContent, CloseDiv } from './styles'
+import { Portal } from './Portal'
+import { AiOutlineClose } from 'react-icons/ai'
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
+  open: boolean
+  onClose: () => void
 }
 
-export const Modal: React.FunctionComponent<Props> = ({
-  children,
-  open,
-  onClose,
-}) => {
+export const Modal: React.FunctionComponent<Props> = ({ children, open, onClose }) => {
   return open ? (
     <Portal>
       <ModalDimmer>
         <ModalContent>
           <CloseDiv>
-            <TiTimes onClick={onClose} />
+            <AiOutlineClose onClick={onClose} />
           </CloseDiv>
           {children}
         </ModalContent>
       </ModalDimmer>
     </Portal>
-  ) : null;
-};
+  ) : null
+}

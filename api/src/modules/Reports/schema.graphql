@@ -1,0 +1,9 @@
+type Report {
+  id: Int!
+  reason: String!
+  createdAt: Date!
+  updatedAt: Date!
+  reporter: UserInfo!
+  thread: Thread!
+  post: Post!
+}

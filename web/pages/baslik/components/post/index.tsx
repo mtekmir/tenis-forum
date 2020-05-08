@@ -20,6 +20,7 @@ interface Props {
   id: string
   page: number
   threadId: number
+  setPostIdToReport: (id: number) => void
 }
 
 const sanitizer = dompurify.sanitize
