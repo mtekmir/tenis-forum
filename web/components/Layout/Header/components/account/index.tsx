@@ -3,7 +3,7 @@ import { Button } from './Button'
 import { ButtonsDiv, AccountDiv } from './styles'
 import { LoggedInView } from './loggedIn/LoggedInView'
 import { BigMenuItem } from '../bigMenu/bigMenuItem'
-import { Me_me } from '../../../../../generated/Me'
+import { Me_me } from '../../../../../graphql/generated/Me'
 import { UserContext } from '../../../../../context/userContext'
 
 interface Props {

@@ -3,7 +3,7 @@ import dompurify from 'dompurify'
 import { PostDiv } from './styles/PostDiv'
 import { ProfileImage } from './styles/ProfileImage'
 import { UserDiv } from './styles/UserDiv'
-import { Me_me } from '../../../../generated/Me'
+import { Me_me } from '../../../../graphql/generated/Me'
 import { PostContent } from './components/PostContent'
 import { PostEditing } from './components/PostEditing'
 

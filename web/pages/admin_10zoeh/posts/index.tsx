@@ -5,7 +5,7 @@ import { TableContainer } from '../components/table/TableContainer'
 import { Type } from '../components/table/drawer/DrawerContainer'
 import { useQuery } from 'react-apollo'
 import { GET_ALL_POSTS } from '../../../graphql/query/admin/getAllPosts'
-import { GetAllPosts, GetAllPostsVariables } from '../../../generated/GetAllPosts'
+import { GetAllPosts, GetAllPostsVariables } from '../../../graphql/generated/GetAllPosts'
 
 interface Props {}
 

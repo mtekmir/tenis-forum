@@ -3,7 +3,7 @@ import { Title } from '../../styles'
 import { Args, Type } from '../../DrawerContainer'
 import { TableComponent } from '../../../TableComponent'
 import { CATEGORY_DETAIL_TABLE_HEADERS } from './tableHeaders'
-import { GetCategory_categoryGet } from '../../../../../../../generated/GetCategory'
+import { GetCategory_categoryGet } from '../../../../../../../graphql/generated/GetCategory'
 
 interface Props {
   category: GetCategory_categoryGet

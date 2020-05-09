@@ -5,11 +5,11 @@ import ApolloClient from 'apollo-client'
 import { getUploadUrlQuery } from '../../graphql/query/getUploadUrl'
 import { HesabimView } from './HesabimView'
 import { EDIT_USER_PROFILE } from '../../graphql/mutation/editUserProfile'
-import { EditUserProfile } from '../../generated/EditUserProfile'
+import { EditUserProfile } from '../../graphql/generated/EditUserProfile'
 import {
   GetUploadUrlQuery,
   GetUploadUrlQueryVariables,
-} from '../../generated/GetUploadUrlQuery'
+} from '../../graphql/generated/GetUploadUrlQuery'
 
 interface Props {}
 

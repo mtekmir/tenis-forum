@@ -5,7 +5,7 @@ import { useMutation, useQuery, useApolloClient } from 'react-apollo'
 import Router from 'next/router'
 import { LoginUI } from './LoginUI'
 import { ME_QUERY } from '../../../graphql/query/meQuery'
-import { LoginVariables, Login } from '../../../generated/Login'
+import { LoginVariables, Login } from '../../../graphql/generated/Login'
 
 const LoginContainer: React.FunctionComponent = () => {
   const [error, setError] = React.useState('')

@@ -3,7 +3,7 @@ import { StatsContainer, StatsDiv, IconDiv, Title, Stat } from './dashboardStyle
 import { STAT_PROPS } from './stats'
 import { useQuery } from 'react-apollo'
 import { GET_DASHBOARD } from '../../../graphql/query/getDashboard'
-import { GetDashboard } from '../../../generated/GetDashboard'
+import { GetDashboard } from '../../../graphql/generated/GetDashboard'
 import Layout from '../../../components/Layout'
 
 interface Props {}

@@ -3,7 +3,7 @@ import { Post, Posts } from './latestPostsStyle'
 import { timeLeft } from '../../../../utils/timeLeft'
 import { GET_ALL_POSTS } from '../../../../graphql/query/admin/getAllPosts'
 import { useQuery } from 'react-apollo'
-import { GetAllPosts, GetAllPostsVariables } from '../../../../generated/GetAllPosts'
+import { GetAllPosts, GetAllPostsVariables } from '../../../../graphql/generated/GetAllPosts'
 
 interface Props {}
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Layout from '../../components/Layout/index';
-import { LoginComponent } from '../../generated/apolloComponents';
+import { LoginComponent } from '../../graphql/generated/apolloComponents';
 
 const AboutPage: React.FunctionComponent = () => (
   <Layout title='About | Next.js + TypeScript Example'>

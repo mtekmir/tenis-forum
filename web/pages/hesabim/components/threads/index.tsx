@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { TableComponent, TableType } from '../../../../components/table/TableComponent'
 import { useQuery } from 'react-apollo'
 import { GET_ALL_THREADS } from '../../../../graphql/query/admin/getAllThreads'
-import { GetAllThreads, GetAllThreadsVariables } from '../../../../generated/GetAllThreads'
+import { GetAllThreads, GetAllThreadsVariables } from '../../../../graphql/generated/GetAllThreads'
 import { UserContext } from '../../../../context/userContext'
-import { FilterBy } from '../../../../generated/globalTypes'
+import { FilterBy } from '../../../../graphql/generated/globalTypes'
 
 interface Props {}
 

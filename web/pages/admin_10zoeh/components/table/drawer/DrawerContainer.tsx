@@ -9,13 +9,13 @@ import { ConfirmationModal } from '../../../../../components/modal/ConfirmationM
 import { DELETE_POST } from '../../../../../graphql/query/admin/deletePost'
 import { GET_CATEGORY } from '../../../../../graphql/query/admin/getCategory'
 import { GET_USER } from '../../../../../graphql/query/admin/getUser'
-import { DeleteThread, DeleteThreadVariables } from '../../../../../generated/DeleteThread'
-import { DeletePost, DeletePostVariables } from '../../../../../generated/DeletePost'
-import { GetCategory, GetCategoryVariables } from '../../../../../generated/GetCategory'
-import { GetThread, GetThreadVariables } from '../../../../../generated/GetThread'
-import { GetForum, GetForumVariables } from '../../../../../generated/GetForum'
-import { GetPost, GetPostVariables } from '../../../../../generated/GetPost'
-import { GetUser, GetUserVariables } from '../../../../../generated/GetUser'
+import { DeleteThread, DeleteThreadVariables } from '../../../../../graphql/generated/DeleteThread'
+import { DeletePost, DeletePostVariables } from '../../../../../graphql/generated/DeletePost'
+import { GetCategory, GetCategoryVariables } from '../../../../../graphql/generated/GetCategory'
+import { GetThread, GetThreadVariables } from '../../../../../graphql/generated/GetThread'
+import { GetForum, GetForumVariables } from '../../../../../graphql/generated/GetForum'
+import { GetPost, GetPostVariables } from '../../../../../graphql/generated/GetPost'
+import { GetUser, GetUserVariables } from '../../../../../graphql/generated/GetUser'
 
 export enum Type {
   U = 'User',

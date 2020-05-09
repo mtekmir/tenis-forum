@@ -6,7 +6,7 @@ import { DropzoneComponent } from './DropzoneComponent'
 import { PROFILE_FIELDS } from './profileFields'
 import { SelectInput } from '../../../../../components/forms/SelectInput'
 import { Button } from '../../../../../components/Button'
-import { Me_me } from '../../../../../generated/Me'
+import { Me_me } from '../../../../../graphql/generated/Me'
 
 interface Props {
   user: Me_me | null | undefined

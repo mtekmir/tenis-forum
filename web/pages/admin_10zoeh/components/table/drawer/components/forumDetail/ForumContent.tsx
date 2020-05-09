@@ -5,7 +5,7 @@ import { TableComponent } from '../../../TableComponent'
 import { FORUM_DETAIL_TABLE_HEADERS } from './tableHeaders'
 import { Type, Args } from '../../DrawerContainer'
 import { Title, Details } from '../../styles'
-import { GetForum_forumGet_forum } from '../../../../../../../generated/GetForum'
+import { GetForum_forumGet_forum } from '../../../../../../../graphql/generated/GetForum'
 
 interface Props {
   forum: GetForum_forumGet_forum

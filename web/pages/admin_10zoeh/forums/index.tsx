@@ -5,7 +5,7 @@ import { TableContainer } from '../components/table/TableContainer'
 import { Type } from '../components/table/drawer/DrawerContainer'
 import { useQuery } from 'react-apollo'
 import { GET_ALL_FORUMS } from '../../../graphql/query/admin/getAllForums'
-import { GetAllForums } from '../../../generated/GetAllForums'
+import { GetAllForums } from '../../../graphql/generated/GetAllForums'
 import { AddForum } from './components/addForum'
 
 interface Props {}

@@ -5,7 +5,7 @@ import { useQuery } from 'react-apollo'
 import {
   GetAllPosts,
   GetAllPostsVariables
-} from '../../../../../../../../generated/GetAllPosts'
+} from '../../../../../../../../graphql/generated/GetAllPosts'
 import { GET_ALL_POSTS } from '../../../../../../../../graphql/query/admin/getAllPosts'
 
 interface Props {

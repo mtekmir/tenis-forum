@@ -5,11 +5,11 @@ import { Align } from '../../../../../components/Align'
 import { Button } from '../../../../../components/Button'
 import { useMutation } from 'react-apollo'
 import { EDIT_POST } from '../../../../../graphql/mutation/editPost'
-import { EditPost, EditPostVariables } from '../../../../../generated/editPost'
+import { EditPost, EditPostVariables } from '../../../../../graphql/generated/editPost'
 import {
   GetThreadPosts,
   GetThreadPostsVariables,
-} from '../../../../../generated/GetThreadPosts'
+} from '../../../../../graphql/generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../../../../graphql/query/getThreadPosts'
 import { useBadInputError } from '../../../../../hooks/useBadInputError'
 import { Alert } from '../../../../../components/Alert'

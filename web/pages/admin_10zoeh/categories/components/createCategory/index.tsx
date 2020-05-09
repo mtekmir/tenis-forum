@@ -8,9 +8,9 @@ import { CREATE_CATEGORY } from '../../../../../graphql/mutation/createCategory'
 import {
   CreateCategory as ICreateCategory,
   CreateCategoryVariables
-} from '../../../../../generated/CreateCategory'
+} from '../../../../../graphql/generated/CreateCategory'
 import { GET_CATEGORIES } from '../../../../../graphql/query/getCategories'
-import { GetCategories } from '../../../../../generated/GetCategories'
+import { GetCategories } from '../../../../../graphql/generated/GetCategories'
 import { GET_ALL_CATEGORY_SUMMARY } from '../../../../../graphql/query/admin/getAllCategorySummary'
 
 interface Props {}

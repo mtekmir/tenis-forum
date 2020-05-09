@@ -5,7 +5,7 @@ import { ErrorMessage } from './components/ErrorMessage'
 import { FormDiv } from '../components/FormDiv'
 import { FormContainer } from '../components/FormContainer'
 import { Button } from '../components/Button'
-import { LoginVariables } from '../../../generated/Login'
+import { LoginVariables } from '../../../graphql/generated/Login'
 
 interface Props {
   onSubmit: (input: LoginVariables) => void

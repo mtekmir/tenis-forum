@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { TableComponent, TableType } from '../../../../components/table/TableComponent'
 import { useQuery } from 'react-apollo'
 import { GET_ALL_POSTS } from '../../../../graphql/query/admin/getAllPosts'
-import { GetAllPosts, GetAllPostsVariables } from '../../../../generated/GetAllPosts'
+import { GetAllPosts, GetAllPostsVariables } from '../../../../graphql/generated/GetAllPosts'
 import { UserContext } from '../../../../context/userContext'
-import { FilterBy } from '../../../../generated/globalTypes'
+import { FilterBy } from '../../../../graphql/generated/globalTypes'
 
 interface Props {}
 

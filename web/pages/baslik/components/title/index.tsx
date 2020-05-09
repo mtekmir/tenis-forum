@@ -9,15 +9,15 @@ import { TiUser, TiCalendarOutline } from 'react-icons/ti'
 import { formatDate } from '../../../../utils/formatDate'
 import { UnderlinedButton, Button } from '../../../../components/Button'
 import { Align } from '../../../../components/Align'
-import { Me_me } from '../../../../generated/Me'
+import { Me_me } from '../../../../graphql/generated/Me'
 import {
   GetThread_threadGet_thread_owner,
   GetThread,
   GetThreadVariables,
-} from '../../../../generated/GetThread'
+} from '../../../../graphql/generated/GetThread'
 import { useBadInputError } from '../../../../hooks/useBadInputError'
 import { EDIT_THREAD } from '../../../../graphql/mutation/editThread'
-import { EditThreadVariables, EditThread } from '../../../../generated/EditThread'
+import { EditThreadVariables, EditThread } from '../../../../graphql/generated/EditThread'
 import { GET_THREAD } from '../../../../graphql/query/getThread'
 import { Alert } from '../../../../components/Alert'
 

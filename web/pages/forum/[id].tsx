@@ -15,7 +15,7 @@ import { Button } from '../../components/Button'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-apollo'
 import { GET_FORUM } from '../../graphql/query/getForum'
-import { GetForum, GetForumVariables } from '../../generated/GetForum'
+import { GetForum, GetForumVariables } from '../../graphql/generated/GetForum'
 import { formatDate } from '../../utils/formatDate'
 
 interface Props {}

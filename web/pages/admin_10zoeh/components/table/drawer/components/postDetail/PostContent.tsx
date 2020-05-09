@@ -4,7 +4,7 @@ import { Title, Details, EditDelete } from '../../styles'
 import { formatDate } from '../../../../../../../utils/formatDate'
 import { Args, Type } from '../../DrawerContainer'
 import { Button } from '../../../../../../../components/Button'
-import { GetPost_postGet } from '../../../../../../../generated/GetPost'
+import { GetPost_postGet } from '../../../../../../../graphql/generated/GetPost'
 
 interface Props {
   post: GetPost_postGet

@@ -9,7 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "apollo:generate": "apollo codegen:generate --excludes=node_modules/* --includes=graphql/**/*.ts --endpoint http://localhost:5000/graphql --target typescript --tagName gql --outputFlat generated --passthroughCustomScalars"
+    "apollo:generate": "apollo codegen:generate --excludes=node_modules/* --includes=graphql/**/*.ts --endpoint http://localhost:5000/graphql --target typescript --tagName gql --outputFlat graphql/generated --passthroughCustomScalars"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",

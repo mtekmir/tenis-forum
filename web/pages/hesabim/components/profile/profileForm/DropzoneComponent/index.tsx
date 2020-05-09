@@ -2,7 +2,7 @@ import * as React from 'react'
 import Dropzone from 'react-dropzone'
 import { DropzoneHoverContentDiv, DropzoneDiv, DropzoneHoverInnerDiv } from './dropzoneStyle'
 import { TiCamera } from 'react-icons/ti'
-import { Me_me } from '../../../../../../generated/Me'
+import { Me_me } from '../../../../../../graphql/generated/Me'
 
 interface Props {
   user: Me_me | null | undefined

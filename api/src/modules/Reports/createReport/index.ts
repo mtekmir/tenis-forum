@@ -17,17 +17,19 @@ export const reportCreate: MutationResolvers['reportCreate'] = async (
   await getConnection().transaction(async manager => {
     const created = await manager.getRepository(Report).create({ reason }).save()
 
-    threadId &&
-      (await manager
+    if (threadId) {
+      await manager
         .createQueryBuilder()
         .relation(Thread, 'reports')
         .of(threadId)
-        .add(created.id))
+        .add(created.id)
+    }
 
     await manager.createQueryBuilder().relation(User, 'reports').of(userId).add(created.id)
 
-    postId &&
-      (await manager.createQueryBuilder().relation(Post, 'reports').of(postId).add(created.id))
+    if (postId) {
+      await manager.createQueryBuilder().relation(Post, 'reports').of(postId).add(created.id)
+    }
 
     return created
   })

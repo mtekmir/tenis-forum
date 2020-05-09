@@ -5,7 +5,7 @@ import { formatDate } from '../../../../../../../utils/formatDate'
 import { TableComponent } from '../../../TableComponent'
 import { THREAD_DETAIL_TABLE_HEADERS } from './tableHeaders'
 import { Button } from '../../../../../../../components/Button'
-import { GetThread_threadGet_thread } from '../../../../../../../generated/GetThread'
+import { GetThread_threadGet_thread } from '../../../../../../../graphql/generated/GetThread'
 
 interface Props {
   thread: GetThread_threadGet_thread

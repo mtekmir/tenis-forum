@@ -4,7 +4,7 @@ import { ADMIN_MENU, MENU } from '../../../menuItems'
 import { MobileMenuItem } from './mobileMenuItem'
 import { Divider } from '../../../../../Divider'
 import { UserContext } from '../../../../../../context/userContext'
-import { UserPermissions } from '../../../../../../generated/globalTypes'
+import { UserPermissions } from '../../../../../../graphql/generated/globalTypes'
 
 interface Props {
   open: boolean

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useQuery } from 'react-apollo'
 
 import { ME_QUERY } from '../graphql/query/meQuery'
-import { Me, Me_me } from '../generated/Me'
+import { Me, Me_me } from '../graphql/generated/Me'
 
 interface UserContext {
   user?: Me_me | null

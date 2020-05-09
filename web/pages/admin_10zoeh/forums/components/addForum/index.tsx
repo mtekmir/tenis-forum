@@ -5,10 +5,10 @@ import { Button } from '../../../../../components/Button'
 import { Select } from '../../../../../components/forms/SelectInput'
 import { StyledInput } from '../../../../../components/forms/TextInput'
 import { useMutation, useQuery } from 'react-apollo'
-import { CreateForum, CreateForumVariables } from '../../../../../generated/CreateForum'
+import { CreateForum, CreateForumVariables } from '../../../../../graphql/generated/CreateForum'
 import { CREATE_FORUM } from '../../../../../graphql/mutation/createForum'
 import { GET_ALL_CATEGORY_SUMMARY } from '../../../../../graphql/query/admin/getAllCategorySummary'
-import { GetAllCategorySummary } from '../../../../../generated/GetAllCategorySummary'
+import { GetAllCategorySummary } from '../../../../../graphql/generated/GetAllCategorySummary'
 import { GET_ALL_FORUMS } from '../../../../../graphql/query/admin/getAllForums'
 
 interface Props {}

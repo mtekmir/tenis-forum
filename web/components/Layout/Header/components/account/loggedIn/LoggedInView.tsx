@@ -4,8 +4,8 @@ import { TiUser } from 'react-icons/ti'
 import { UserPopoverDiv, UserPopoverItem } from './components/UserPopover'
 import { LoggedInDiv } from './styles'
 import { ADMIN_MENU_ITEMS, USER_MENU_ITEMS } from './loggedInMenuItems'
-import { Me_me } from '../../../../../../generated/Me'
-import { UserPermissions } from '../../../../../../generated/globalTypes'
+import { Me_me } from '../../../../../../graphql/generated/Me'
+import { UserPermissions } from '../../../../../../graphql/generated/globalTypes'
 
 interface Props {
   me: Me_me

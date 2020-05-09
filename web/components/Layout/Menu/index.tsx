@@ -4,8 +4,8 @@ import { ADMIN_MENU, MENU, MenuItem } from '../Header/menuItems'
 import { MobileMenuItem } from '../Header/components/mobileMenu/components/mobileMenuItem'
 import { Divider } from '../../Divider'
 import { BigMenuItem } from '../Header/components/bigMenu/bigMenuItem'
-import { Me_me } from '../../../generated/Me'
-import { UserPermissions } from '../../../generated/globalTypes'
+import { Me_me } from '../../../graphql/generated/Me'
+import { UserPermissions } from '../../../graphql/generated/globalTypes'
 
 interface Props {
   open: boolean

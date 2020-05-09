@@ -4,7 +4,7 @@ import { useApolloClient } from 'react-apollo'
 import {
   GetUploadUrlQuery,
   GetUploadUrlQueryVariables,
-} from '../../generated/GetUploadUrlQuery'
+} from '../../graphql/generated/GetUploadUrlQuery'
 import { getUploadUrlQuery } from '../../graphql/query/getUploadUrl'
 
 export default function useCKEditor() {

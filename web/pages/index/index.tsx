@@ -5,7 +5,7 @@ import { LatestPosts } from './components/latestPosts/LatestPosts'
 import { useQuery } from 'react-apollo'
 import { GET_CATEGORIES } from '../../graphql/query/getCategories'
 import Layout from '../../components/Layout'
-import { GetCategories } from '../../generated/GetCategories'
+import { GetCategories } from '../../graphql/generated/GetCategories'
 
 interface Props {}
 

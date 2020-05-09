@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { FormValues, RegisterView } from './RegisterView'
 import { useMutation } from 'react-apollo'
 import { REGISTER } from '../../../graphql/mutation/register'
-import { Register as IRegister, RegisterVariables } from '../../../generated/Register'
+import { Register as IRegister, RegisterVariables } from '../../../graphql/generated/Register'
 
 const Register: React.FC = () => {
   const [error, setError] = useState('')

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { UserContext } from '../../../../../context/userContext'
 import { BIG_MENU_ITEMS, BIG_ADMIN_MENU_ITEMS } from './menuItems'
 import { BigMenuItem } from './bigMenuItem'
-import { UserPermissions } from '../../../../../generated/globalTypes'
+import { UserPermissions } from '../../../../../graphql/generated/globalTypes'
 import { Account } from '../account'
 import { Align } from '../../../../Align'
 

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Title, Details } from '../../../styles'
 import { formatDate } from '../../../../../../../../utils/formatDate'
 import { TiCancel, TiEye } from 'react-icons/ti'
-import { GetUser_userGet } from '../../../../../../../../generated/GetUser'
+import { GetUser_userGet } from '../../../../../../../../graphql/generated/GetUser'
 
 interface Props {
   data: GetUser_userGet

@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from 'react'
 
 import { PostContentDiv, PostContentTopDiv, Divider } from '../styles/PostContent'
-import { Me_me } from '../../../../../generated/Me'
+import { Me_me } from '../../../../../graphql/generated/Me'
 import { formatDateWithTime, diffInMin } from '../../../../../utils/formatDate'
 import { UnderlinedButton } from '../../../../../components/Button'
 import { Align } from '../../../../../components/Align'

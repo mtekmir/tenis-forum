@@ -4,7 +4,7 @@ import Layout from '../../../components/Layout'
 import { TableContainer } from '../components/table/TableContainer'
 import { Type } from '../components/table/drawer/DrawerContainer'
 import { useQuery } from 'react-apollo'
-import { GetAllUsers } from '../../../generated/GetAllUsers'
+import { GetAllUsers } from '../../../graphql/generated/GetAllUsers'
 import { GET_ALL_USERS } from '../../../graphql/query/admin/getAllUsers'
 
 interface Props {}

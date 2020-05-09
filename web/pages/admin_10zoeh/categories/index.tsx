@@ -5,7 +5,7 @@ import { TableContainer } from '../components/table/TableContainer'
 import { Type } from '../components/table/drawer/DrawerContainer'
 import { useQuery } from 'react-apollo'
 import { GET_ALL_CATEGORY_SUMMARY } from '../../../graphql/query/admin/getAllCategorySummary'
-import { GetAllCategorySummary } from '../../../generated/GetAllCategorySummary'
+import { GetAllCategorySummary } from '../../../graphql/generated/GetAllCategorySummary'
 import { CreateCategory } from './components/createCategory'
 
 interface Props {}
