@@ -9,17 +9,21 @@ import { useQuery } from 'react-apollo'
 import { GET_THREAD } from '../../graphql/query/getThread'
 import { useRouter } from 'next/router'
 import { GetThread, GetThreadVariables } from '../../graphql/generated/GetThread'
-import { GetThreadPosts, GetThreadPostsVariables } from '../../graphql/generated/GetThreadPosts'
+import {
+  GetThreadPosts,
+  GetThreadPostsVariables,
+} from '../../graphql/generated/GetThreadPosts'
 import { GET_THREAD_POSTS } from '../../graphql/query/getThreadPosts'
 import { UserContext } from '../../context/userContext'
 import { ThreadTitle } from './components/title'
-import { ReportPostModal } from './components/reportPost'
+import { ReportModal } from './components/reportModal'
 
 interface Props {}
 
 const Thread: React.FunctionComponent<Props> = () => {
   const router = useRouter()
   const [page, setPage] = useState(1)
+  const [reportModalOpen, setReportModalOpen] = useState(false)
   const [postIdToReport, setPostIdToReport] = useState<number | null>(null)
   const { user } = useContext(UserContext)
 
@@ -50,6 +54,16 @@ const Thread: React.FunctionComponent<Props> = () => {
     threadGetPosts: { posts, count },
   } = postsRes
 
+  const closeModal = () => {
+    setReportModalOpen(false)
+    setPostIdToReport(null)
+  }
+
+  const openReportPostModal = (id: number) => {
+    setReportModalOpen(true)
+    setPostIdToReport(id)
+  }
+
   const renderPosts = () => {
     return posts.map(({ author, id, ...post }, idx) => (
       <Post
@@ -61,7 +75,7 @@ const Thread: React.FunctionComponent<Props> = () => {
         loggedInUser={user}
         page={page}
         threadId={rest.id}
-        setPostIdToReport={setPostIdToReport}
+        openReportPostModal={openReportPostModal}
       />
     ))
   }
@@ -82,13 +96,19 @@ const Thread: React.FunctionComponent<Props> = () => {
 
   return (
     <Layout title={`${title} | Tenis Forum`}>
-      <ReportPostModal open={!!postIdToReport} onClose={() => setPostIdToReport(null)} />
+      <ReportModal
+        open={reportModalOpen}
+        onClose={closeModal}
+        postId={postIdToReport}
+        threadId={rest.id}
+      />
       <ThreadTitle
         title={title}
         threadId={rest.id}
         owner={owner}
         createdAt={rest.createdAt}
         user={user}
+        openReportModal={() => setReportModalOpen(true)}
       />
       <PostsDiv>
         <Pagination

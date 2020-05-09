@@ -4,14 +4,29 @@ import { StyledTextArea } from '../../../../components/forms/TextInput'
 import { Align } from '../../../../components/Align'
 import { ReportPostStyles } from './style'
 import { Button, UnderlinedButton } from '../../../../components/Button'
+import { useMutation } from 'react-apollo'
+import { CREATE_REPORT } from '../../../../graphql/mutation/createReport'
+import {
+  CreateReport,
+  CreateReportVariables,
+} from '../../../../graphql/generated/CreateReport'
 
 interface Props {
   open: boolean
   onClose: () => void
+  postId: number
+  threadId: number
 }
 
-export const ReportPostModal: FC<Props> = ({ onClose, open }) => {
+export const ReportModal: FC<Props> = ({ onClose, open, postId, threadId }) => {
   const [reason, setReason] = useState('')
+  const [reportPost] = useMutation<CreateReport, CreateReportVariables>(CREATE_REPORT, {
+    onCompleted: data => data && data.reportCreate.success && onClose(),
+  })
+
+  const onSubmit = () => {
+    reportPost({ variables: { reason, postId, threadId } })
+  }
 
   useEffect(() => void setReason(''), [open])
 
@@ -30,7 +45,7 @@ export const ReportPostModal: FC<Props> = ({ onClose, open }) => {
         </Align>
         <Align justify='flex-end' padding={1}>
           <Button text='Iptal' color='grey' onClick={onClose} marginRight />
-          <Button text='Gönder' color='green' onClick={() => null} />
+          <Button text='Gönder' color='green' onClick={onSubmit} />
         </Align>
       </ReportPostStyles>
     </Modal>

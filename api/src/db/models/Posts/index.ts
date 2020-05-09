@@ -40,6 +40,6 @@ export class Post extends BaseEntity {
   @JoinColumn()
   thread: Thread
 
-  @OneToMany(() => Report, report => report.thread)
+  @OneToMany(() => Report, report => report.post)
   reports: Report[]
 }

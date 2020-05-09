@@ -45,6 +45,6 @@ export class Thread extends BaseEntity {
   @OneToMany(() => Post, post => post.thread)
   posts: Post[]
 
-  @OneToMany(() => Report, report => report.post)
+  @OneToMany(() => Report, report => report.thread)
   reports: Report[]
 }

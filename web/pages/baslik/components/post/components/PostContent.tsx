@@ -17,7 +17,7 @@ interface Props {
   id: string
   setEditing: (e: boolean) => void
   sanitizer: (s: string) => string
-  setPostIdToReport: (id: number) => void
+  openReportPostModal: (id: number) => void
 }
 
 export const PostContent: FC<Props> = ({
@@ -31,7 +31,7 @@ export const PostContent: FC<Props> = ({
   index,
   setEditing,
   sanitizer,
-  setPostIdToReport,
+  openReportPostModal,
 }) => {
   return (
     <PostContentDiv>
@@ -51,7 +51,9 @@ export const PostContent: FC<Props> = ({
         </Fragment>
       )}
       <Align align='center' padding='2em 0 0.2em 0'>
-        <UnderlinedButton onClick={() => setPostIdToReport(postId)}>Rapor et</UnderlinedButton>
+        <UnderlinedButton onClick={() => openReportPostModal(postId)}>
+          Rapor et
+        </UnderlinedButton>
         {loggedInUser && loggedInUser.id === id && (
           <UnderlinedButton onClick={() => setEditing(true)}>Duzenle</UnderlinedButton>
         )}

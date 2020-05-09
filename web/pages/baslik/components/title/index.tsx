@@ -27,9 +27,17 @@ interface Props {
   createdAt: Date
   owner: GetThread_threadGet_thread_owner
   user: Me_me | null
+  openReportModal: () => void
 }
 
-export const ThreadTitle: FC<Props> = ({ title, threadId, createdAt, owner, user }) => {
+export const ThreadTitle: FC<Props> = ({
+  title,
+  threadId,
+  createdAt,
+  owner,
+  user,
+  openReportModal,
+}) => {
   const [editing, setEditing] = useState(false)
   const [_title, setTitle] = useState(title)
   const [error, onError] = useBadInputError()
@@ -93,6 +101,7 @@ export const ThreadTitle: FC<Props> = ({ title, threadId, createdAt, owner, user
           </UserDivDate>
         </UserDiv>
         <Align align='center' padding='.5em 0 0 0.9'>
+          {user && <UnderlinedButton onClick={openReportModal}>Rapor et</UnderlinedButton>}
           {!editing && user && user.id === owner.id ? (
             <UnderlinedButton onClick={() => setEditing(true)}>Duzenle</UnderlinedButton>
           ) : null}
