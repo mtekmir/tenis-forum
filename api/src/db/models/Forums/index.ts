@@ -7,29 +7,32 @@ import {
   OneToMany,
   Entity,
   Column,
-} from 'typeorm';
-import { Category } from '../Category';
-import { Thread } from '../Threads';
+} from 'typeorm'
+import { Category } from '../Category'
+import { Thread } from '../Threads'
 
 @Entity()
 export class Forum extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id: number
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Column('varchar', { nullable: false, unique: true })
-  name: string;
+  name: string
+
+  @Column('timestamp', { nullable: true })
+  deleted: Date | null
 
   @ManyToOne(() => Category, category => category.forums, {
     onDelete: 'CASCADE',
   })
-  category: Category;
+  category: Category
 
   @OneToMany(() => Thread, thread => thread.forum)
-  threads: Thread[];
+  threads: Thread[]
 }

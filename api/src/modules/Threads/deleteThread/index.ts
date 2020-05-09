@@ -4,6 +4,7 @@ import { Thread } from '../../../db/models/Threads'
 import { AuthenticationError } from 'apollo-server-core'
 import { User } from '../../../db/models/User'
 import { UserPermissions } from '../../../db/models/User/permissions'
+import { getConnection } from 'typeorm'
 
 export const threadDelete: MutationResolvers['threadDelete'] = async (
   _,
@@ -27,7 +28,12 @@ export const threadDelete: MutationResolvers['threadDelete'] = async (
     throw new AuthenticationError('UNAUTHORIZED')
   }
 
-  await Thread.delete({ id })
+  await getConnection()
+    .createQueryBuilder()
+    .update(Thread)
+    .set({ deleted: new Date() })
+    .where('id = :id', { id })
+    .execute()
 
   return thread
 }

@@ -27,6 +27,9 @@ export class Post extends BaseEntity {
   @Column('text', { nullable: false })
   text: string
 
+  @Column('timestamp', { nullable: true })
+  deleted: Date | null
+
   @ManyToOne(() => User, user => user.posts, {
     nullable: true,
     onDelete: 'SET NULL',

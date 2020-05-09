@@ -28,7 +28,6 @@ export const reportCreate: MutationResolvers['reportCreate'] = async (
     await manager.createQueryBuilder().relation(User, 'reports').of(userId).add(created.id)
 
     if (postId) {
-      console.log(postId)
       await manager
         .createQueryBuilder()
         .relation(Post, 'reports')

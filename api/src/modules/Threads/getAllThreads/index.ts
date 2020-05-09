@@ -22,14 +22,16 @@ export const threadGetAll: QueryResolvers['threadGetAll'] = async (
         .select('COUNT(post.id)', 'postCount')
         .from(Post, 'post')
         .where('post."threadId" = thread.id')
+        .andWhere('post.deleted IS NULL')
     }, 'postCount')
 
   if (id) {
     query = query.where('thread."ownerId" = :id', { id })
+  } else {
+    query = query.where('thread.deleted IS NULL')
   }
 
   const threads = await query.limit(limit).offset(offset).getRawMany()
 
-  console.log(threads)
   return { threads }
 }

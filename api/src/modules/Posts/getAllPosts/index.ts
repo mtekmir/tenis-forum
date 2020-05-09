@@ -23,6 +23,8 @@ export const postGetAll: QueryResolvers['postGetAll'] = async (
 
   if (id) {
     query = query.where('post."authorId" = :id', { id })
+  } else {
+    query = query.where('post.deleted IS NULL')
   }
 
   const posts = await query.limit(limit).offset(offset).getRawMany()

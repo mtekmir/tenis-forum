@@ -33,6 +33,9 @@ export class Thread extends BaseEntity {
   @Column('varchar', { nullable: false })
   title: string
 
+  @Column('timestamp', { nullable: true })
+  deleted: Date | null
+
   @OneToOne(() => Post, post => post.thread)
   originalPost: Post
 

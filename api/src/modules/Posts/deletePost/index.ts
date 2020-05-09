@@ -1,12 +1,11 @@
 import { MutationResolvers } from '../../../types/schema'
-import { isAuthenticated } from '../../Users/auth/authenticateUser'
 import { Post } from '../../../db/models/Posts'
-import { AuthenticationError } from 'apollo-server-core'
 import { User } from '../../../db/models/User'
-import { UserPermissions } from '../../../db/models/User/permissions'
+import { getConnection } from 'typeorm'
+import { isAdmin } from '../../Admin/isAdmin'
 
 export const postDelete: MutationResolvers['postDelete'] = async (_, { id }, { userId }) => {
-  isAuthenticated(userId)
+  isAdmin(userId)
 
   const post = await Post.findOne({
     where: { id },
@@ -16,11 +15,13 @@ export const postDelete: MutationResolvers['postDelete'] = async (_, { id }, { u
     return null
   }
   const user = await User.findOne({ where: { id: userId } })
-  if (post.author.id !== userId && !user.permissions.includes(UserPermissions.Admin)) {
-    throw new AuthenticationError('UNAUTHORIZED')
-  }
 
-  await Post.delete({ id })
+  await getConnection()
+    .createQueryBuilder()
+    .update(Post)
+    .set({ deleted: new Date() })
+    .where('id = :id', { id })
+    .execute()
 
   return post
 }

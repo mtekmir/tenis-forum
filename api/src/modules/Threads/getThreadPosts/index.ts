@@ -6,7 +6,7 @@ export const threadGetPosts: QueryResolvers['threadGetPosts'] = async (
   { input: { threadId, page = 1 } }
 ) => {
   const [posts, count] = await Post.findAndCount({
-    where: { threadId },
+    where: { threadId, deleted: null },
     skip: (page - 1) * 50,
     take: 50,
     relations: ['author'],

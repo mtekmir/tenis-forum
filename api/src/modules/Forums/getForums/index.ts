@@ -15,7 +15,9 @@ export const forumGetAll: QueryResolvers['forumGetAll'] = async (_, __, { userId
         .select('COUNT(thread.id)', 'threadCount')
         .from(Thread, 'thread')
         .where('thread."forumId" = forum.id')
+        .andWhere('thread.deleted IS NULL')
     }, 'threadCount')
+    .where('forum.deleted IS NULL')
     .getRawMany()
 
   return { forums }

@@ -20,6 +20,7 @@ import { EDIT_THREAD } from '../../../../graphql/mutation/editThread'
 import { EditThreadVariables, EditThread } from '../../../../graphql/generated/EditThread'
 import { GET_THREAD } from '../../../../graphql/query/getThread'
 import { Alert } from '../../../../components/Alert'
+import { isAdmin } from '../../../../utils/isAdmin'
 
 interface Props {
   threadId: number
@@ -28,6 +29,7 @@ interface Props {
   owner: GetThread_threadGet_thread_owner
   user: Me_me | null
   openReportModal: () => void
+  deleteThread: (id: number) => void
 }
 
 export const ThreadTitle: FC<Props> = ({
@@ -37,6 +39,7 @@ export const ThreadTitle: FC<Props> = ({
   owner,
   user,
   openReportModal,
+  deleteThread,
 }) => {
   const [editing, setEditing] = useState(false)
   const [_title, setTitle] = useState(title)
@@ -105,6 +108,9 @@ export const ThreadTitle: FC<Props> = ({
           {!editing && user && user.id === owner.id ? (
             <UnderlinedButton onClick={() => setEditing(true)}>Duzenle</UnderlinedButton>
           ) : null}
+          {isAdmin(user) && (
+            <UnderlinedButton onClick={() => deleteThread(threadId)}>Sil</UnderlinedButton>
+          )}
         </Align>
       </Paper>
     </Fragment>

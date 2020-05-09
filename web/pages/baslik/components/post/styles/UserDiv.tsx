@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const UserDiv = styled.div`
   display: flex;
@@ -21,4 +21,4 @@ export const UserDiv = styled.div`
     width: 100%;
     flex-direction: row;
   }
-`;
+`
