@@ -8,6 +8,7 @@ import {
   Entity,
   Column,
   OneToOne,
+  AfterLoad,
 } from 'typeorm'
 import { Forum } from '../Forums'
 import { Post } from '../Posts'
@@ -35,6 +36,12 @@ export class Thread extends BaseEntity {
 
   @Column('timestamp', { nullable: true })
   deleted: Date | null
+
+  @Column('int', { default: 0 })
+  views: number
+
+  @Column('int', { default: 0 })
+  postCount: number
 
   @OneToOne(() => Post, post => post.thread)
   originalPost: Post

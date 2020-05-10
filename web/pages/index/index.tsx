@@ -1,5 +1,12 @@
 import * as React from 'react'
-import { CategoryTitle, ForumDiv, ForumTitle, CategoryDiv } from './indexStyle'
+import {
+  CategoryTitle,
+  ForumDiv,
+  ForumDivTitle,
+  CategoryDiv,
+  ForumDivStats,
+  ForumDivStat,
+} from './indexStyle'
 import Link from 'next/link'
 import { LatestPosts } from './components/latestPosts/LatestPosts'
 import { useQuery } from 'react-apollo'
@@ -17,20 +24,32 @@ const Index: React.FunctionComponent<Props> = () => {
   }
 
   const renderCategories = () => {
-    return data.categoryGetAll.categories.map(({ id, name, forums }) => (
-      <CategoryDiv key={id}>
-        <CategoryTitle>{name}</CategoryTitle>
-        {forums.map(({ id, name }) => (
-          <ForumDiv key={id}>
-            <ForumTitle>
-              <Link href={`/forum/${id}`}>
-                <a>{name}</a>
-              </Link>
-            </ForumTitle>
-          </ForumDiv>
-        ))}
-      </CategoryDiv>
-    ))
+    return data.categoryGetAll.categories.map(
+      ({ id, name, threadCount, postCount, forums }) => (
+        <CategoryDiv key={id}>
+          <CategoryTitle>{name}</CategoryTitle>
+          {forums.map(({ id, name }) => (
+            <ForumDiv key={id}>
+              <ForumDivTitle>
+                <Link href={`/forum/${id}`}>
+                  <a>{name}</a>
+                </Link>
+              </ForumDivTitle>
+              <ForumDivStats>
+                <ForumDivStat>
+                  <span>Basliklar</span>
+                  {threadCount}
+                </ForumDivStat>
+                <ForumDivStat>
+                  <span>Cevaplar</span>
+                  {postCount}
+                </ForumDivStat>
+              </ForumDivStats>
+            </ForumDiv>
+          ))}
+        </CategoryDiv>
+      )
+    )
   }
 
   return (

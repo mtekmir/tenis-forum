@@ -7,6 +7,8 @@ export const GET_CATEGORIES = gql`
       categories {
         id
         name
+        threadCount
+        postCount
         forums {
           id
           name

@@ -14,9 +14,11 @@ export interface GetCategories_categoryGetAll_categories_forums {
 }
 
 export interface GetCategories_categoryGetAll_categories {
-  __typename: "Category";
+  __typename: "HomepageCategory";
   id: number;
   name: string;
+  threadCount: number;
+  postCount: number;
   forums: GetCategories_categoryGetAll_categories_forums[];
 }
 

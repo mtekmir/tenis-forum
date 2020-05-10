@@ -5,11 +5,3 @@ type Query {
 type CategoryGetSummaryAllResponse {
   categories: [CategoryInfo!]!
 }
-
-type CategoryInfo {
-  id: Int!
-  name: String!
-  createdAt: Date!
-  updatedAt: Date!
-  forumCount: Int!
-}

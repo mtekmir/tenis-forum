@@ -1,5 +1,21 @@
+type HomepageCategory {
+  id: Int!
+  name: String!
+  threadCount: Int!
+  postCount: Int!
+  forums: [Forum!]!
+}
+
 type Category {
   id: Int!
   name: String!
   forums: [Forum!]!
+}
+
+type CategoryInfo {
+  id: Int!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+  forumCount: Int!
 }

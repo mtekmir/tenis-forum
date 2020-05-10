@@ -26,7 +26,7 @@ export type Category = {
 export type CategoryGetAllResponse = {
    __typename?: 'CategoryGetAllResponse';
   success: Scalars['Boolean'];
-  categories: Array<Category>;
+  categories: Array<HomepageCategory>;
 };
 
 export type CategoryGetSummaryAllResponse = {
@@ -189,6 +189,15 @@ export type GetUploadUrlResponse = {
   uploadKey?: Maybe<Scalars['String']>;
   uploadUrl?: Maybe<Scalars['String']>;
   previewUrl?: Maybe<Scalars['String']>;
+};
+
+export type HomepageCategory = {
+   __typename?: 'HomepageCategory';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  threadCount: Scalars['Int'];
+  postCount: Scalars['Int'];
+  forums: Array<Forum>;
 };
 
 export type LoginInput = {
@@ -639,10 +648,11 @@ export type ResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']>,
   CategoryGetAllResponse: ResolverTypeWrapper<CategoryGetAllResponse>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  Category: ResolverTypeWrapper<Category>,
+  HomepageCategory: ResolverTypeWrapper<HomepageCategory>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Forum: ResolverTypeWrapper<Forum>,
   Date: ResolverTypeWrapper<Scalars['Date']>,
+  Category: ResolverTypeWrapper<Category>,
   Thread: ResolverTypeWrapper<Thread>,
   Post: ResolverTypeWrapper<Post>,
   PostAuthor: ResolverTypeWrapper<PostAuthor>,
@@ -702,10 +712,11 @@ export type ResolversParentTypes = ResolversObject<{
   Int: Scalars['Int'],
   CategoryGetAllResponse: CategoryGetAllResponse,
   Boolean: Scalars['Boolean'],
-  Category: Category,
+  HomepageCategory: HomepageCategory,
   String: Scalars['String'],
   Forum: Forum,
   Date: Scalars['Date'],
+  Category: Category,
   Thread: Thread,
   Post: Post,
   PostAuthor: PostAuthor,
@@ -767,7 +778,7 @@ export type CategoryResolvers<ContextType = IContext, ParentType extends Resolve
 
 export type CategoryGetAllResponseResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['CategoryGetAllResponse'] = ResolversParentTypes['CategoryGetAllResponse']> = ResolversObject<{
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>,
+  categories?: Resolver<Array<ResolversTypes['HomepageCategory']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -866,6 +877,15 @@ export type GetUploadUrlResponseResolvers<ContextType = IContext, ParentType ext
   uploadKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   uploadUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   previewUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type HomepageCategoryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['HomepageCategory'] = ResolversParentTypes['HomepageCategory']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  postCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  forums?: Resolver<Array<ResolversTypes['Forum']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -1062,6 +1082,7 @@ export type Resolvers<ContextType = IContext> = ResolversObject<{
   GetThreadPostsResponse?: GetThreadPostsResponseResolvers<ContextType>,
   GetThreadResponse?: GetThreadResponseResolvers<ContextType>,
   GetUploadUrlResponse?: GetUploadUrlResponseResolvers<ContextType>,
+  HomepageCategory?: HomepageCategoryResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Post?: PostResolvers<ContextType>,
   PostAuthor?: PostAuthorResolvers<ContextType>,

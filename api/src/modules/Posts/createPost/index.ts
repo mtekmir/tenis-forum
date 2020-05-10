@@ -15,7 +15,6 @@ export const postCreate: MutationResolvers['postCreate'] = async (
   isAuthenticated(userId)
 
   if (!contentIsValid(text)) {
-    console.log('asd')
     throw new ApolloError('Inappropriate Content', '400')
   }
 
@@ -25,6 +24,13 @@ export const postCreate: MutationResolvers['postCreate'] = async (
     await manager.createQueryBuilder().relation(Thread, 'posts').of(threadId).add(created.id)
 
     await manager.createQueryBuilder().relation(User, 'posts').of(userId).add(created.id)
+
+    manager
+      .createQueryBuilder()
+      .update(Thread)
+      .set({ postCount: () => '"postCount" + 1' })
+      .where('id = :threadId', { threadId })
+      .execute()
 
     return created
   })
