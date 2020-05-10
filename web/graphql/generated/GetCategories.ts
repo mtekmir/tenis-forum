@@ -8,8 +8,10 @@
 // ====================================================
 
 export interface GetCategories_categoryGetAll_categories_forums {
-  __typename: "Forum";
+  __typename: "HomepageForum";
   id: number;
+  threadCount: number;
+  postCount: number;
   name: string;
 }
 
@@ -17,8 +19,6 @@ export interface GetCategories_categoryGetAll_categories {
   __typename: "HomepageCategory";
   id: number;
   name: string;
-  threadCount: number;
-  postCount: number;
   forums: GetCategories_categoryGetAll_categories_forums[];
 }
 

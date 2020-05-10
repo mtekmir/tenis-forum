@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const MenuContainer = styled.div<{ open: boolean }>`
   @media (${({ theme }) => theme.breakpoints.phone}) {
@@ -20,4 +20,4 @@ export const MenuContainer = styled.div<{ open: boolean }>`
     display: flex;
     width: 100vw;
   }
-`;
+`

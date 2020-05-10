@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-size: 1.5em; // 15px
     min-height: 100vh;
+    max-width: 100vw;
   }
 
   a, a:active {

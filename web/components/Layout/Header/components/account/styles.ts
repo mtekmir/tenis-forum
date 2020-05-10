@@ -12,6 +12,6 @@ export const AccountDiv = styled.div`
   padding-right: 1.5em;
 
   @media (${({ theme }) => theme.breakpoints.tabletPortrait}) {
-    width: 12em;
+    /* width: 12em; */
   }
 `
