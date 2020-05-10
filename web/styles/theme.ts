@@ -42,6 +42,7 @@ export const theme = {
   palette: {
     primary: '#393E41',
     secondary: '#F0544F',
+    tertiary: '#AAA',
     green_gradient: 'linear-gradient(to right, #44AF69, #00E599)',
     red_gradient: 'linear-gradient(to right, #F8333C, #F9585F)',
     green: '#56C596',

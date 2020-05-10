@@ -6,23 +6,26 @@ import {
   OneToMany,
   Column,
   Entity,
-} from 'typeorm';
-import { Forum } from '../Forums';
+} from 'typeorm'
+import { Forum } from '../Forums'
 
 @Entity()
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id: number
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Column('varchar', { nullable: false, unique: true })
-  name: string;
+  name: string
+
+  @Column('smallint', { default: 1 })
+  order: number
 
   @OneToMany(() => Forum, forum => forum.category)
-  forums: Forum[];
+  forums: Forum[]
 }

@@ -43,6 +43,13 @@ export const ForumDivTitle = styled.div`
   font-weight: 700;
   font-size: 1.1em;
   width: 65%;
+  display: flex;
+  flex-direction: column;
+
+  span {
+    color: ${({ theme: { palette } }) => palette.tertiary};
+    font-size: 0.7em;
+  }
 
   @media (${({ theme }) => theme.breakpoints.phone}) {
     width: 100%;

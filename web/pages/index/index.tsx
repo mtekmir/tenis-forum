@@ -30,7 +30,7 @@ const Index: React.FunctionComponent<Props> = () => {
   if (loading || !data) {
     return <div>Loading</div>
   }
-  console.log(data)
+
   const renderLatestThread = (forumId: number) => {
     return (
       latestThreads &&
@@ -56,13 +56,14 @@ const Index: React.FunctionComponent<Props> = () => {
     return data.categoryGetAll.categories.map(({ id, name, forums }) => (
       <CategoryDiv key={id}>
         <CategoryTitle>{name}</CategoryTitle>
-        {forums.map(({ id, name, threadCount, postCount }) => (
+        {forums.map(({ id, name, threadCount, postCount, description }) => (
           <ForumDiv key={id}>
             <ForumDivTitleDiv>
               <ForumDivTitle>
                 <Link href={`/forum/${id}`}>
                   <a>{name}</a>
                 </Link>
+                <span>{description}</span>
               </ForumDivTitle>
               <ForumDivStats>
                 <ForumDivStat>

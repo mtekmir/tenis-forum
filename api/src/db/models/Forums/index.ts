@@ -28,6 +28,12 @@ export class Forum extends BaseEntity {
   @Column('timestamp', { nullable: true })
   deleted: Date | null
 
+  @Column('smallint', { default: 1 })
+  order: number
+
+  @Column('varchar', { default: '' })
+  description: number
+
   @ManyToOne(() => Category, category => category.forums, {
     onDelete: 'CASCADE',
   })

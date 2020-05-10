@@ -119,6 +119,8 @@ export type Forum = {
   id: Scalars['Int'];
   name: Scalars['String'];
   createdAt: Scalars['Date'];
+  description: Scalars['String'];
+  order: Scalars['Int'];
   category: Category;
   threads: Array<Thread>;
 };
@@ -195,6 +197,7 @@ export type HomepageCategory = {
    __typename?: 'HomepageCategory';
   id: Scalars['Int'];
   name: Scalars['String'];
+  order: Scalars['Int'];
   forums: Array<HomepageForum>;
 };
 
@@ -202,6 +205,8 @@ export type HomepageForum = {
    __typename?: 'HomepageForum';
   id: Scalars['Int'];
   name: Scalars['String'];
+  order: Scalars['Int'];
+  description: Scalars['String'];
   threadCount: Scalars['Int'];
   postCount: Scalars['Int'];
 };
@@ -849,6 +854,8 @@ export type ForumResolvers<ContextType = IContext, ParentType extends ResolversP
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>,
   threads?: Resolver<Array<ResolversTypes['Thread']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
@@ -905,6 +912,7 @@ export type GetUploadUrlResponseResolvers<ContextType = IContext, ParentType ext
 export type HomepageCategoryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['HomepageCategory'] = ResolversParentTypes['HomepageCategory']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   forums?: Resolver<Array<ResolversTypes['HomepageForum']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
@@ -912,6 +920,8 @@ export type HomepageCategoryResolvers<ContextType = IContext, ParentType extends
 export type HomepageForumResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['HomepageForum'] = ResolversParentTypes['HomepageForum']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   threadCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   postCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,

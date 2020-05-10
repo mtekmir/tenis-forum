@@ -23,7 +23,11 @@ export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
     .getRepository(Category)
     .createQueryBuilder('category')
     .innerJoin('category.forums', 'forum')
-    .select(['forum.*', 'category.name as "categoryName"'])
+    .select([
+      'forum.*',
+      'category.name as "categoryName"',
+      'category.order as "categoryOrder"',
+    ])
     .addSelect(subQ => {
       return subQ
         .select('COUNT(thread.id)', 'threadCount')
@@ -42,7 +46,17 @@ export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
 
   const categories: HomepageCategory[] = Object.values(
     data.reduce(
-      (res, { categoryId: id, categoryName: name, threadCount: tc, postCount: pc, ...f }) => {
+      (
+        res,
+        {
+          categoryId: id,
+          categoryName: name,
+          categoryOrder,
+          threadCount: tc,
+          postCount: pc,
+          ...f
+        }
+      ) => {
         const forum = {
           threadCount: parseInt(tc),
           postCount: parseInt(pc),
@@ -55,6 +69,7 @@ export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
           res[id] = {
             id,
             name,
+            order: categoryOrder,
             forums: [forum],
           }
         }
