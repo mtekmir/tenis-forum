@@ -19,8 +19,6 @@ export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
   // from forum
   // join category on forum."categoryId" = category.id
 
-  // TODO in another route get last threads of each forum
-
   const data = await getConnection()
     .getRepository(Category)
     .createQueryBuilder('category')
@@ -44,18 +42,19 @@ export const categoryGetAll: QueryResolvers['categoryGetAll'] = async () => {
 
   const categories: HomepageCategory[] = Object.values(
     data.reduce(
-      (
-        res,
-        { categoryId: id, categoryName: name, threadCount: tc, postCount: pc, ...forum }
-      ) => {
+      (res, { categoryId: id, categoryName: name, threadCount: tc, postCount: pc, ...f }) => {
+        const forum = {
+          threadCount: parseInt(tc),
+          postCount: parseInt(pc),
+          ...f,
+        }
+
         if (res[id]) {
           res[id].forums.push(forum)
         } else {
           res[id] = {
             id,
             name,
-            threadCount: parseInt(tc),
-            postCount: parseInt(pc),
             forums: [forum],
           }
         }

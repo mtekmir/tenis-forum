@@ -1,9 +1,14 @@
 type HomepageCategory {
   id: Int!
   name: String!
+  forums: [HomepageForum!]!
+}
+
+type HomepageForum {
+  id: Int!
+  name: String!
   threadCount: Int!
   postCount: Int!
-  forums: [Forum!]!
 }
 
 type Category {

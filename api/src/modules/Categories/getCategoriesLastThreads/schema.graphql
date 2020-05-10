@@ -1,0 +1,13 @@
+type Query {
+  categoryGetLastThreads: [LastThreadOfCategory!]!
+}
+
+type LastThreadOfCategory {
+  id: Int!
+  createdAt: Date!
+  title: String!
+  forumId: Int!
+  ownerId: String!
+  profileImageUrl: String!
+  username: String!
+}
