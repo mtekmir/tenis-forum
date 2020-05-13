@@ -1,0 +1,15 @@
+input ThreadGetLastPostsInput {
+  forumId: Int!
+}
+
+type Query {
+  threadGetLastPosts(input: ThreadGetLastPostsInput!): [LastPostOfThread!]!
+}
+
+type LastPostOfThread {
+  id: Int!
+  createdAt: Date!
+  authorId: String!
+  profileImageUrl: String!
+  username: String!
+}

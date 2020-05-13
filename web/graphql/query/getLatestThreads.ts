@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const GET_LATEST_THREADS = gql`
   query GetLatestThreads {
-    categoryGetLastThreads {
+    forumGetLastThreads {
       id
       createdAt
       title

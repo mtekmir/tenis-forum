@@ -32,7 +32,7 @@ export class Forum extends BaseEntity {
   order: number
 
   @Column('varchar', { default: '' })
-  description: number
+  description: string
 
   @ManyToOne(() => Category, category => category.forums, {
     onDelete: 'CASCADE',

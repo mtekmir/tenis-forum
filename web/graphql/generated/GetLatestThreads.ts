@@ -7,8 +7,8 @@
 // GraphQL query operation: GetLatestThreads
 // ====================================================
 
-export interface GetLatestThreads_categoryGetLastThreads {
-  __typename: "LastThreadOfCategory";
+export interface GetLatestThreads_forumGetLastThreads {
+  __typename: "LastThreadOfForum";
   id: number;
   createdAt: Date;
   title: string;
@@ -19,5 +19,5 @@ export interface GetLatestThreads_categoryGetLastThreads {
 }
 
 export interface GetLatestThreads {
-  categoryGetLastThreads: GetLatestThreads_categoryGetLastThreads[];
+  forumGetLastThreads: GetLatestThreads_forumGetLastThreads[];
 }

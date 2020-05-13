@@ -34,7 +34,7 @@ const Index: React.FunctionComponent<Props> = () => {
   const renderLatestThread = (forumId: number) => {
     return (
       latestThreads &&
-      latestThreads.categoryGetLastThreads
+      latestThreads.forumGetLastThreads
         .filter(t => t.forumId === forumId)
         .map(({ title, profileImageUrl, createdAt, id, username }) => (
           <ForumDivLatestThread>

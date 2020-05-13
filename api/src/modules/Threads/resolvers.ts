@@ -4,6 +4,7 @@ import { threadGet } from './getThread'
 import { threadGetAll } from './getAllThreads'
 import { threadGetPosts } from './getThreadPosts'
 import { threadEdit } from './editThread'
+import { threadGetLastPosts } from './getThreadsLastPosts'
 
 export const resolvers = {
   Mutation: {
@@ -15,5 +16,6 @@ export const resolvers = {
     threadGet,
     threadGetPosts,
     threadGetAll,
+    threadGetLastPosts,
   },
 }

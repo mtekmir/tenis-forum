@@ -1,11 +1,12 @@
 import { QueryResolvers } from '../../../types/schema'
 import { getConnection } from 'typeorm'
 
-export const categoryGetLastThreads: QueryResolvers['categoryGetLastThreads'] = async (
+export const forumGetLastThreads: QueryResolvers['forumGetLastThreads'] = async (
   _,
   __,
   { s3BucketUrl }
 ) => {
+  // On homepage get last threads of all forums
   const data: any[] = await getConnection().query(`
     select thread.id, thread."createdAt", title, thread."forumId", "ownerId", "profileImageKey", username
     from forum f

@@ -1,8 +1,8 @@
 type Query {
-  categoryGetLastThreads: [LastThreadOfCategory!]!
+  forumGetLastThreads: [LastThreadOfForum!]!
 }
 
-type LastThreadOfCategory {
+type LastThreadOfForum {
   id: Int!
   createdAt: Date!
   title: String!

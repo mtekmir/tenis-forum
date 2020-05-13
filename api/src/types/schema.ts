@@ -211,8 +211,17 @@ export type HomepageForum = {
   postCount: Scalars['Int'];
 };
 
-export type LastThreadOfCategory = {
-   __typename?: 'LastThreadOfCategory';
+export type LastPostOfThread = {
+   __typename?: 'LastPostOfThread';
+  id: Scalars['Int'];
+  createdAt: Scalars['Date'];
+  ownerId: Scalars['String'];
+  profileImageUrl: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type LastThreadOfForum = {
+   __typename?: 'LastThreadOfForum';
   id: Scalars['Int'];
   createdAt: Scalars['Date'];
   title: Scalars['String'];
@@ -393,17 +402,18 @@ export type Query = {
    __typename?: 'Query';
   dashboardGet: GetDashboardResponse;
   categoryGetAll: CategoryGetAllResponse;
-  categoryGetLastThreads: Array<LastThreadOfCategory>;
   categoryGet: Category;
   categoryGetSummaryAll: CategoryGetSummaryAllResponse;
   getUploadUrl: GetUploadUrlResponse;
   forumGet: GetForumResponse;
   forumGetAll: ForumGetAllResponse;
+  forumGetLastThreads: Array<LastThreadOfForum>;
   postGetAll: PostGetAllResponse;
   postGet: PostInfo;
   threadGetAll: ThreadGetAllResponse;
   threadGet: GetThreadResponse;
   threadGetPosts: GetThreadPostsResponse;
+  threadGetLastPosts: Array<LastPostOfThread>;
   me?: Maybe<User>;
   userGetAll: UserGetAllResponse;
   userGet: UserInfo;
@@ -451,6 +461,11 @@ export type QueryThreadGetArgs = {
 
 export type QueryThreadGetPostsArgs = {
   input: GetThreadPostsInput;
+};
+
+
+export type QueryThreadGetLastPostsArgs = {
+  input: ThreadGetLastPostsInput;
 };
 
 
@@ -522,6 +537,10 @@ export type ThreadGetAllInput = {
 export type ThreadGetAllResponse = {
    __typename?: 'ThreadGetAllResponse';
   threads: Array<ThreadInfo>;
+};
+
+export type ThreadGetLastPostsInput = {
+  forumId: Scalars['Int'];
 };
 
 export type ThreadInfo = {
@@ -674,10 +693,9 @@ export type ResolversTypes = ResolversObject<{
   HomepageCategory: ResolverTypeWrapper<HomepageCategory>,
   String: ResolverTypeWrapper<Scalars['String']>,
   HomepageForum: ResolverTypeWrapper<HomepageForum>,
-  LastThreadOfCategory: ResolverTypeWrapper<LastThreadOfCategory>,
-  Date: ResolverTypeWrapper<Scalars['Date']>,
   Category: ResolverTypeWrapper<Category>,
   Forum: ResolverTypeWrapper<Forum>,
+  Date: ResolverTypeWrapper<Scalars['Date']>,
   Thread: ResolverTypeWrapper<Thread>,
   Post: ResolverTypeWrapper<Post>,
   PostAuthor: ResolverTypeWrapper<PostAuthor>,
@@ -689,6 +707,7 @@ export type ResolversTypes = ResolversObject<{
   GetForumResponse: ResolverTypeWrapper<GetForumResponse>,
   ForumGetAllResponse: ResolverTypeWrapper<ForumGetAllResponse>,
   ForumInfo: ResolverTypeWrapper<ForumInfo>,
+  LastThreadOfForum: ResolverTypeWrapper<LastThreadOfForum>,
   PostGetAllInput: PostGetAllInput,
   FilterBy: FilterBy,
   PostGetAllResponse: ResolverTypeWrapper<PostGetAllResponse>,
@@ -700,6 +719,8 @@ export type ResolversTypes = ResolversObject<{
   GetThreadResponse: ResolverTypeWrapper<GetThreadResponse>,
   GetThreadPostsInput: GetThreadPostsInput,
   GetThreadPostsResponse: ResolverTypeWrapper<GetThreadPostsResponse>,
+  ThreadGetLastPostsInput: ThreadGetLastPostsInput,
+  LastPostOfThread: ResolverTypeWrapper<LastPostOfThread>,
   User: ResolverTypeWrapper<User>,
   UserPermissions: UserPermissions,
   UserProfile: ResolverTypeWrapper<UserProfile>,
@@ -740,10 +761,9 @@ export type ResolversParentTypes = ResolversObject<{
   HomepageCategory: HomepageCategory,
   String: Scalars['String'],
   HomepageForum: HomepageForum,
-  LastThreadOfCategory: LastThreadOfCategory,
-  Date: Scalars['Date'],
   Category: Category,
   Forum: Forum,
+  Date: Scalars['Date'],
   Thread: Thread,
   Post: Post,
   PostAuthor: PostAuthor,
@@ -755,6 +775,7 @@ export type ResolversParentTypes = ResolversObject<{
   GetForumResponse: GetForumResponse,
   ForumGetAllResponse: ForumGetAllResponse,
   ForumInfo: ForumInfo,
+  LastThreadOfForum: LastThreadOfForum,
   PostGetAllInput: PostGetAllInput,
   FilterBy: FilterBy,
   PostGetAllResponse: PostGetAllResponse,
@@ -766,6 +787,8 @@ export type ResolversParentTypes = ResolversObject<{
   GetThreadResponse: GetThreadResponse,
   GetThreadPostsInput: GetThreadPostsInput,
   GetThreadPostsResponse: GetThreadPostsResponse,
+  ThreadGetLastPostsInput: ThreadGetLastPostsInput,
+  LastPostOfThread: LastPostOfThread,
   User: User,
   UserPermissions: UserPermissions,
   UserProfile: UserProfile,
@@ -927,7 +950,16 @@ export type HomepageForumResolvers<ContextType = IContext, ParentType extends Re
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
-export type LastThreadOfCategoryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['LastThreadOfCategory'] = ResolversParentTypes['LastThreadOfCategory']> = ResolversObject<{
+export type LastPostOfThreadResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['LastPostOfThread'] = ResolversParentTypes['LastPostOfThread']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  profileImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type LastThreadOfForumResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['LastThreadOfForum'] = ResolversParentTypes['LastThreadOfForum']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -1000,17 +1032,18 @@ export type PostInfoResolvers<ContextType = IContext, ParentType extends Resolve
 export type QueryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   dashboardGet?: Resolver<ResolversTypes['GetDashboardResponse'], ParentType, ContextType>,
   categoryGetAll?: Resolver<ResolversTypes['CategoryGetAllResponse'], ParentType, ContextType>,
-  categoryGetLastThreads?: Resolver<Array<ResolversTypes['LastThreadOfCategory']>, ParentType, ContextType>,
   categoryGet?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryCategoryGetArgs, 'id'>>,
   categoryGetSummaryAll?: Resolver<ResolversTypes['CategoryGetSummaryAllResponse'], ParentType, ContextType>,
   getUploadUrl?: Resolver<ResolversTypes['GetUploadUrlResponse'], ParentType, ContextType, RequireFields<QueryGetUploadUrlArgs, 'input'>>,
   forumGet?: Resolver<ResolversTypes['GetForumResponse'], ParentType, ContextType, RequireFields<QueryForumGetArgs, 'id'>>,
   forumGetAll?: Resolver<ResolversTypes['ForumGetAllResponse'], ParentType, ContextType>,
+  forumGetLastThreads?: Resolver<Array<ResolversTypes['LastThreadOfForum']>, ParentType, ContextType>,
   postGetAll?: Resolver<ResolversTypes['PostGetAllResponse'], ParentType, ContextType, RequireFields<QueryPostGetAllArgs, 'input'>>,
   postGet?: Resolver<ResolversTypes['PostInfo'], ParentType, ContextType, RequireFields<QueryPostGetArgs, never>>,
   threadGetAll?: Resolver<ResolversTypes['ThreadGetAllResponse'], ParentType, ContextType, RequireFields<QueryThreadGetAllArgs, 'input'>>,
   threadGet?: Resolver<ResolversTypes['GetThreadResponse'], ParentType, ContextType, RequireFields<QueryThreadGetArgs, 'input'>>,
   threadGetPosts?: Resolver<ResolversTypes['GetThreadPostsResponse'], ParentType, ContextType, RequireFields<QueryThreadGetPostsArgs, 'input'>>,
+  threadGetLastPosts?: Resolver<Array<ResolversTypes['LastPostOfThread']>, ParentType, ContextType, RequireFields<QueryThreadGetLastPostsArgs, 'input'>>,
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   userGetAll?: Resolver<ResolversTypes['UserGetAllResponse'], ParentType, ContextType>,
   userGet?: Resolver<ResolversTypes['UserInfo'], ParentType, ContextType, RequireFields<QueryUserGetArgs, 'id'>>,
@@ -1134,7 +1167,8 @@ export type Resolvers<ContextType = IContext> = ResolversObject<{
   GetUploadUrlResponse?: GetUploadUrlResponseResolvers<ContextType>,
   HomepageCategory?: HomepageCategoryResolvers<ContextType>,
   HomepageForum?: HomepageForumResolvers<ContextType>,
-  LastThreadOfCategory?: LastThreadOfCategoryResolvers<ContextType>,
+  LastPostOfThread?: LastPostOfThreadResolvers<ContextType>,
+  LastThreadOfForum?: LastThreadOfForumResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Post?: PostResolvers<ContextType>,
   PostAuthor?: PostAuthorResolvers<ContextType>,
