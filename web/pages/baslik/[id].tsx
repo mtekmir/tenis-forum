@@ -1,4 +1,6 @@
 import React from 'react'
+import Router from 'next/router'
+
 import { PostsDiv } from './threadStyle'
 import Layout from '../../components/Layout'
 import { Post } from './components/post'
@@ -7,6 +9,8 @@ import { Pagination } from '../../components/pagination'
 import { ThreadTitle } from './components/title'
 import { ReportModal } from './components/reportModal'
 import { useThreadState } from './useThreadState'
+import { UnderlinedButton } from '../../components/Button'
+import { Align } from '../../components/Align'
 
 interface Props {}
 
@@ -81,7 +85,15 @@ const Thread: React.FunctionComponent<Props> = () => {
           getRows={offset => handleFetchMore(offset, rest.id)}
         />
         {renderPosts()}
-        <NewPost threadId={rest.id} page={page} count={count} />
+        {user ? (
+          <NewPost threadId={rest.id} page={page} count={count} />
+        ) : (
+          <Align justify='flex-end' padding={0.5}>
+            <UnderlinedButton onClick={() => Router.push('/uyelik/giris')}>
+              Cevap yazabilmek için üye olmanız gerekiyor
+            </UnderlinedButton>
+          </Align>
+        )}
       </PostsDiv>
     </Layout>
   )

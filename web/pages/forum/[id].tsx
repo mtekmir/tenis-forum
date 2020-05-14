@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Layout from '../../components/Layout'
 import { TopDiv, ForumTitle, Breadcrumbs, TitleDiv } from './forumStyle'
 import { Pagination } from '../../components/pagination'
@@ -11,9 +11,11 @@ import { GetForum, GetForumVariables } from '../../graphql/generated/GetForum'
 import { GetLatestPosts } from '../../graphql/generated/GetLatestPosts'
 import { GET_LATEST_POSTS } from '../../graphql/query/getThreadsLastPosts'
 import { ForumThread } from './components/Thread'
+import { UserContext } from '../../context/userContext'
 
 interface Props {}
 const Forum: React.FC<Props> = ({}) => {
+  const { user } = useContext(UserContext)
   const {
     query: { id },
   } = useRouter()
@@ -66,7 +68,13 @@ const Forum: React.FC<Props> = ({}) => {
             <Breadcrumbs>{`Forum > ${forum.category.name} >`}</Breadcrumbs>
             <ForumTitle>{forum.name}</ForumTitle>
           </TitleDiv>
-          <Button color='primary' url={`/forum/${forum.id}/baslik/yeni`} text='Yeni Başlık' />
+          {user && (
+            <Button
+              color='primary'
+              url={`/forum/${forum.id}/baslik/yeni`}
+              text='Yeni Başlık'
+            />
+          )}
         </TopDiv>
         <Pagination count={forum.threads.length} getRows={offset => handleFetchMore(offset)} />
       </div>
