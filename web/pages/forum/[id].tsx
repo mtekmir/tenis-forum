@@ -1,14 +1,6 @@
 import React from 'react'
-import Link from 'next/link'
 import Layout from '../../components/Layout'
-import {
-  ForumDiv,
-  OwnerAndDate,
-  TopDiv,
-  ForumTitle,
-  Breadcrumbs,
-  TitleDiv
-} from './forumStyle'
+import { TopDiv, ForumTitle, Breadcrumbs, TitleDiv } from './forumStyle'
 import { Pagination } from '../../components/pagination'
 import { FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-boost'
 import { Button } from '../../components/Button'
@@ -16,15 +8,22 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-apollo'
 import { GET_FORUM } from '../../graphql/query/getForum'
 import { GetForum, GetForumVariables } from '../../graphql/generated/GetForum'
-import { formatDate } from '../../utils/formatDate'
+import { GetLatestPosts } from '../../graphql/generated/GetLatestPosts'
+import { GET_LATEST_POSTS } from '../../graphql/query/getThreadsLastPosts'
+import { ForumThread } from './components/Thread'
 
 interface Props {}
 const Forum: React.FC<Props> = ({}) => {
   const {
-    query: { id }
+    query: { id },
   } = useRouter()
+  const forumId = parseInt(id as string, 10)
   const { data, loading, fetchMore } = useQuery<GetForum, GetForumVariables>(GET_FORUM, {
-    variables: { id: parseInt(id as string, 10) }
+    variables: { id: forumId },
+  })
+
+  const { data: latestPosts } = useQuery<GetLatestPosts>(GET_LATEST_POSTS, {
+    variables: { forumId },
   })
 
   if (loading) {
@@ -32,21 +31,17 @@ const Forum: React.FC<Props> = ({}) => {
   }
 
   const {
-    forumGet: { forum }
+    forumGet: { forum },
   } = data
 
   const renderThreads = () => {
-    return forum.threads.map(({ id, title, owner, createdAt }) => (
-      <ForumDiv key={id}>
-        <Link href={`/baslik/${id}`}>
-          <a>{title}</a>
-        </Link>
-        <OwnerAndDate>
-          <div>{owner.username}</div>
-          &#183;
-          <div>{formatDate(createdAt)}</div>
-        </OwnerAndDate>
-      </ForumDiv>
+    return forum.threads.map(thread => (
+      <ForumThread
+        {...thread}
+        latestPost={
+          latestPosts && latestPosts.threadGetLastPosts.find(p => p.threadId === thread.id)
+        }
+      />
     ))
   }
 
@@ -59,7 +54,7 @@ const Forum: React.FC<Props> = ({}) => {
         }
 
         return fetchMoreResult
-      }
+      },
     })
   }
 

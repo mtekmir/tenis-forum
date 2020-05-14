@@ -1,4 +1,4 @@
 [submodule "ckeditor"]
-	path = ckeditor
+	path = web/ckeditor
 	url = https://github.com/ckeditor/ckeditor5-build-classic.git
 	branch = stable

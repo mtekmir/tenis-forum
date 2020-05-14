@@ -15,12 +15,14 @@ export interface GetForum_forumGet_forum_category {
 export interface GetForum_forumGet_forum_threads_owner {
   __typename: "ThreadOwner";
   username: string;
+  profileImageUrl: string;
 }
 
 export interface GetForum_forumGet_forum_threads {
   __typename: "Thread";
   id: number;
   title: string;
+  postCount: number;
   owner: GetForum_forumGet_forum_threads_owner;
   createdAt: Date;
 }

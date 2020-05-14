@@ -9,7 +9,7 @@ export const threadGetLastPosts: QueryResolvers['threadGetLastPosts'] = async (
   // On forum detail page get last posts of all threads
   const data: any[] = await getConnection().query(
     `
-    select post.id, post."createdAt", "authorId", "profileImageKey", username
+    select post.id, post."createdAt", "authorId", "profileImageKey", username, t.id as "threadId"
     from thread t
     left outer join (
       select post."threadId", MAX("createdAt") latest

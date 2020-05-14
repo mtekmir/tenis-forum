@@ -37,4 +37,7 @@ export const resolvers = {
   PostAuthor: {
     profileImageUrl,
   },
+  ThreadOwner: {
+    profileImageUrl,
+  },
 }

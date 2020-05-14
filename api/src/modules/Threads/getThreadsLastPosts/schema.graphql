@@ -12,4 +12,5 @@ type LastPostOfThread {
   authorId: String!
   profileImageUrl: String!
   username: String!
+  threadId: Int!
 }

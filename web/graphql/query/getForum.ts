@@ -13,8 +13,10 @@ export const GET_FORUM = gql`
         threads {
           id
           title
+          postCount
           owner {
             username
+            profileImageUrl
           }
           createdAt
         }

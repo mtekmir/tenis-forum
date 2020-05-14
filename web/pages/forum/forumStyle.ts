@@ -20,16 +20,3 @@ export const ForumTitle = styled.div`
 export const Breadcrumbs = styled.div`
   font-size: 0.7em;
 `;
-
-export const ForumDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.5em;
-  border-bottom: 1px solid #8f91ad;
-`;
-
-export const OwnerAndDate = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 0.7em;
-`;

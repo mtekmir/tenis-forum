@@ -1,7 +1,7 @@
 import { format, differenceInMinutes } from 'date-fns'
 import { tr } from 'date-fns/locale'
 
-export const formatDate = (date: Date) => 
+export const formatDate = (date: Date | string) => 
   format(new Date(date), 'd MMMM yyyy', { locale: tr })
 
 

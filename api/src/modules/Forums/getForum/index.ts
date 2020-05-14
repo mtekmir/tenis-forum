@@ -26,8 +26,10 @@ export const forumGet: QueryResolvers['forumGet'] = async (
       'thread.title',
       'thread.id',
       'thread.createdAt',
+      'thread.postCount',
       'thread.forum',
       'owner.username',
+      'owner.profileImageKey',
     ])
     .where('forum.id = :id', { id })
     .orderBy('thread.createdAt', 'DESC')

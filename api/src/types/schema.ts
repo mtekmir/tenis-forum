@@ -215,9 +215,10 @@ export type LastPostOfThread = {
    __typename?: 'LastPostOfThread';
   id: Scalars['Int'];
   createdAt: Scalars['Date'];
-  ownerId: Scalars['String'];
+  authorId: Scalars['String'];
   profileImageUrl: Scalars['String'];
   username: Scalars['String'];
+  threadId: Scalars['Int'];
 };
 
 export type LastThreadOfForum = {
@@ -953,9 +954,10 @@ export type HomepageForumResolvers<ContextType = IContext, ParentType extends Re
 export type LastPostOfThreadResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['LastPostOfThread'] = ResolversParentTypes['LastPostOfThread']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
-  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  authorId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   profileImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  threadId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
