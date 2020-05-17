@@ -4,7 +4,6 @@ import validateRegister from './validateRegister'
 import { createConfirmEmailLink } from './createConfirmEmailLink'
 import { respond } from '../../../common/genericResponse'
 import { UserPermissions } from '../../../../db/models/User/permissions'
-import { sendConfirmationEmail } from '../../../../services/Email/sendConfirmationEmail'
 import { getConnection } from 'typeorm'
 import { UserProfile } from '../../../../db/models/UserProfile'
 import { generateProfileImage } from './generateProfileImage'
@@ -12,7 +11,7 @@ import { generateProfileImage } from './generateProfileImage'
 export const register: MutationResolvers['register'] = async (
   _,
   { input: { username, email, password } },
-  { url }
+  { url, emailService }
 ) => {
   const error = await validateRegister({ email, password })
   if (error) {
@@ -37,6 +36,6 @@ export const register: MutationResolvers['register'] = async (
 
   const link = await createConfirmEmailLink(url, user.id)
 
-  await sendConfirmationEmail(email, link)
+  await emailService.sendConfirmationEmail(email, link)
   return respond()
 }

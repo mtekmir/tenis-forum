@@ -3,12 +3,11 @@ import { User } from '../../../../db/models/User'
 import { createResetPasswordLink } from './createResetPasswordLink'
 import { getConnection } from 'typeorm'
 import { respond } from '../../../common/genericResponse'
-import { sendPasswordResetEmail } from '../../../../services/Email/sendPasswordResetEmail'
 
 export const requestResetPassword: MutationResolvers['requestResetPassword'] = async (
   _,
   { input: { email } },
-  { url }
+  { url, emailService }
 ) => {
   const user = await User.findOne({ where: { email } })
   if (!user) {
@@ -25,6 +24,6 @@ export const requestResetPassword: MutationResolvers['requestResetPassword'] = a
     .execute()
   // send email
 
-  await sendPasswordResetEmail(email, link)
+  await emailService.sendPasswordResetEmail(email, link)
   return respond()
 }

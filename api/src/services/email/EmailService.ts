@@ -1,31 +1,41 @@
-import nodemailer from 'nodemailer'
-import Mail from 'nodemailer/lib/mailer'
-import { SentMessageInfo } from 'nodemailer/lib/smtp-connection'
+import sgMail from '@sendgrid/mail'
+import { MailData, EmailSendResponse } from './types'
 
+type Response = Promise<[EmailSendResponse, {}]>
 export interface EmailService {
-  sendEmail: (o: Mail.Options) => Promise<SentMessageInfo>
+  sendEmail: (o: MailData) => Response
+  sendConfirmationEmail: (to: string, link: string) => Response
+  sendPasswordResetEmail: (to: string, link: string) => Response
 }
 
 export const EmailService: () => Promise<EmailService> = async () => {
-  try {
-    const account = await nodemailer.createTestAccount()
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: account.user,
-        pass: account.pass,
-      },
+  const sendEmail = async (options: MailData) => {
+    return sgMail.send(options as any)
+  }
+
+  const sendConfirmationEmail = async (to: string, link: string) => {
+    return sendEmail({
+      from: 'mert09581@gmail.com',
+      to,
+      subject: 'Lutfen email adresinizi dogrulayin',
+      text: `<a href="${link}">link</a>`,
     })
+  }
 
-    const sendEmail = async (options: Mail.Options) => transporter.sendMail(options)
+  const sendPasswordResetEmail = async (to: string, link: string) => {
+    return sendEmail({
+      from: 'info@tenisforum.com',
+      to,
+      subject: 'Sifre sifirlama',
+      text: `<a href="${link}">link</a>`,
+    })
+  }
 
-    return {
-      sendEmail,
-    }
-  } catch (err) {
-    console.log(err)
+  return {
+    sendEmail,
+    sendConfirmationEmail,
+    sendPasswordResetEmail,
   }
 }
