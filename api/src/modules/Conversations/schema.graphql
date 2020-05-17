@@ -1,0 +1,21 @@
+type ConversationParticipant {
+  id: String!
+  username: String!
+  profileImageUrl: String!
+}
+
+# type Message {
+#   id: Int!
+#   createdAt: Date!
+#   updatedAt: Date!
+#   content: String!
+#   author: ConversationParticipant!
+# }
+
+# type Conversation {
+#   id: Int!
+#   createdAt: Date!
+#   title: String!
+#   participants: [ConversationParticipant!]!
+#   starter: ConversationParticipant!
+# }

@@ -7,21 +7,25 @@ export interface EmailService {
 }
 
 export const EmailService: () => Promise<EmailService> = async () => {
-  const account = await nodemailer.createTestAccount()
+  try {
+    const account = await nodemailer.createTestAccount()
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false,
-    auth: {
-      user: account.user,
-      pass: account.pass,
-    },
-  })
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: account.user,
+        pass: account.pass,
+      },
+    })
 
-  const sendEmail = async (options: Mail.Options) => transporter.sendMail(options)
+    const sendEmail = async (options: Mail.Options) => transporter.sendMail(options)
 
-  return {
-    sendEmail,
+    return {
+      sendEmail,
+    }
+  } catch (err) {
+    console.log(err)
   }
 }

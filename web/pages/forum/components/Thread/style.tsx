@@ -21,6 +21,10 @@ export const ThreadContainer = styled.div`
       margin-left: 0;
     }
   }
+
+  @media (${({ theme }) => theme.breakpoints.phone}) {
+    flex-direction: column;
+  }
 `
 
 export const OwnerAndDate = styled.div`

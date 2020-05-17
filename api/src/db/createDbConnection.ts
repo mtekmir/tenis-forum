@@ -6,6 +6,8 @@ import { Thread } from './models/Threads'
 import { Post } from './models/Posts'
 import { UserProfile } from './models/UserProfile'
 import { Report } from './models/Report'
+import { Conversation } from './models/Conversation'
+import { Message } from './models/Message'
 
 export const createDbConnection = async (connType: string) => {
   const { DATABASE_URL } = process.env
@@ -14,7 +16,7 @@ export const createDbConnection = async (connType: string) => {
     synchronize: connType === 'PROD' ? false : true,
     dropSchema: connType === 'TEST',
     logging: false,
-    entities: [User, UserProfile, Category, Forum, Thread, Post, Report],
+    entities: [User, UserProfile, Category, Forum, Thread, Post, Report, Conversation, Message],
     url: DATABASE_URL,
     name: 'default',
   })

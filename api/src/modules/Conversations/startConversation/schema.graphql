@@ -1,0 +1,7 @@
+input StartConversationInput {
+  a: String
+}
+
+# type Mutation {
+#   conversationStart(input: StartConversationInput!): String
+# }

@@ -8,7 +8,6 @@ import {
   Entity,
   Column,
   OneToOne,
-  AfterLoad,
 } from 'typeorm'
 import { Forum } from '../Forums'
 import { Post } from '../Posts'

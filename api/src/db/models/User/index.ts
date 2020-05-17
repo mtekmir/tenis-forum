@@ -8,20 +8,21 @@ import {
   OneToMany,
   OneToOne,
   CreateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm'
 import { UserPermissions } from './permissions'
 import { Post } from '../Posts'
 import { Thread } from '../Threads'
 import { UserProfile } from '../UserProfile'
 import { Report } from '../Report'
+import { Conversation } from '../Conversation'
+import { Message } from '../Message'
 
 @Entity('users')
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
-
-  @Column('text', { nullable: true })
-  googleId: string
 
   @CreateDateColumn()
   createdAt: Date
@@ -67,6 +68,13 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserProfile, profile => profile.user)
   profile: UserProfile
+
+  @ManyToMany(() => Conversation, conversation => conversation.participants)
+  @JoinTable()
+  conversations: Conversation[]
+
+  @OneToMany(() => Message, _ => _.author)
+  messages: Message[]
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {

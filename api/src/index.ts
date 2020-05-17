@@ -25,7 +25,7 @@ const server = new ApolloServer({
     reportErrors(err)
     return err
   },
-  debug: false,
+  debug: process.env.NODE_ENV !== 'production',
 })
 const app = Express()
 middlewares(app)
